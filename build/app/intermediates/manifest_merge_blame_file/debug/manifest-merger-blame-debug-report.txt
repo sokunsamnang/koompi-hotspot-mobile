@@ -1,0 +1,217 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.example.koompi_hotspot"
+4    android:versionCode="1"
+5    android:versionName="1.0.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="16"
+9        android:targetSdkVersion="28" />
+10    <!--
+11         Flutter needs it to communicate with the running application
+12         to allow setting breakpoints, to provide hot reload, etc.
+13    -->
+14    <uses-permission android:name="android.permission.INTERNET" />
+14-->/home/samallen/Desktop/koom_hotspot_clone/android/app/src/main/AndroidManifest.xml:9:5-66
+14-->/home/samallen/Desktop/koom_hotspot_clone/android/app/src/main/AndroidManifest.xml:9:22-64
+15    <!--
+16     io.flutter.app.FlutterApplication is an android.app.Application that
+17         calls FlutterMain.startInitialization(this); in its onCreate method.
+18         In most cases you can leave this as-is, but you if you want to provide
+19         additional functionality it is fine to subclass or reimplement
+20         FlutterApplication and put your custom class here.
+21    -->
+22    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+22-->/home/samallen/Desktop/koom_hotspot_clone/android/app/src/main/AndroidManifest.xml:8:5-79
+22-->/home/samallen/Desktop/koom_hotspot_clone/android/app/src/main/AndroidManifest.xml:8:22-76
+23    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+23-->[:simple_connectivity] /home/samallen/Desktop/koom_hotspot_clone/build/simple_connectivity/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-79
+23-->[:simple_connectivity] /home/samallen/Desktop/koom_hotspot_clone/build/simple_connectivity/intermediates/library_manifest/debug/AndroidManifest.xml:7:22-76
+24    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+24-->[:simple_connectivity] /home/samallen/Desktop/koom_hotspot_clone/build/simple_connectivity/intermediates/library_manifest/debug/AndroidManifest.xml:8:5-76
+24-->[:simple_connectivity] /home/samallen/Desktop/koom_hotspot_clone/build/simple_connectivity/intermediates/library_manifest/debug/AndroidManifest.xml:8:22-73
+25    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+25-->[:image_picker] /home/samallen/Desktop/koom_hotspot_clone/build/image_picker/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-80
+25-->[:image_picker] /home/samallen/Desktop/koom_hotspot_clone/build/image_picker/intermediates/library_manifest/debug/AndroidManifest.xml:7:22-77
+26    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+26-->[:image_picker] /home/samallen/Desktop/koom_hotspot_clone/build/image_picker/intermediates/library_manifest/debug/AndroidManifest.xml:8:5-81
+26-->[:image_picker] /home/samallen/Desktop/koom_hotspot_clone/build/image_picker/intermediates/library_manifest/debug/AndroidManifest.xml:8:22-78
+27
+28    <application
+28-->/home/samallen/Desktop/koom_hotspot_clone/android/app/src/main/AndroidManifest.xml:12:5-55:19
+29        android:name="io.flutter.app.FlutterApplication"
+29-->/home/samallen/Desktop/koom_hotspot_clone/android/app/src/main/AndroidManifest.xml:13:9-57
+30        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+30-->[androidx.core:core:1.1.0] /home/samallen/.gradle/caches/transforms-2/files-2.1/a528b13ac93e64cafa3d0480e2c93207/core-1.1.0/AndroidManifest.xml:24:18-86
+31        android:debuggable="true"
+32        android:icon="@mipmap/ic_launcher"
+32-->/home/samallen/Desktop/koom_hotspot_clone/android/app/src/main/AndroidManifest.xml:15:9-43
+33        android:label="koompi_hotspot"
+33-->/home/samallen/Desktop/koom_hotspot_clone/android/app/src/main/AndroidManifest.xml:14:9-39
+34        android:supportsRtl="true" >
+34-->[com.facebook.android:facebook-login:5.5.1] /home/samallen/.gradle/caches/transforms-2/files-2.1/5e09031e3e462a15c5cacb6405694982/jetified-facebook-login-5.5.1/AndroidManifest.xml:28:18-44
+35        <activity
+35-->/home/samallen/Desktop/koom_hotspot_clone/android/app/src/main/AndroidManifest.xml:17:9-28:20
+36            android:name="com.example.koompi_hotspot.MainActivity"
+36-->/home/samallen/Desktop/koom_hotspot_clone/android/app/src/main/AndroidManifest.xml:18:13-41
+37            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
+37-->/home/samallen/Desktop/koom_hotspot_clone/android/app/src/main/AndroidManifest.xml:21:13-163
+38            android:hardwareAccelerated="true"
+38-->/home/samallen/Desktop/koom_hotspot_clone/android/app/src/main/AndroidManifest.xml:22:13-47
+39            android:launchMode="singleTop"
+39-->/home/samallen/Desktop/koom_hotspot_clone/android/app/src/main/AndroidManifest.xml:19:13-43
+40            android:theme="@style/LaunchTheme"
+40-->/home/samallen/Desktop/koom_hotspot_clone/android/app/src/main/AndroidManifest.xml:20:13-47
+41            android:windowSoftInputMode="adjustResize" >
+41-->/home/samallen/Desktop/koom_hotspot_clone/android/app/src/main/AndroidManifest.xml:23:13-55
+42            <intent-filter>
+42-->/home/samallen/Desktop/koom_hotspot_clone/android/app/src/main/AndroidManifest.xml:24:13-27:29
+43                <action android:name="android.intent.action.MAIN" />
+43-->/home/samallen/Desktop/koom_hotspot_clone/android/app/src/main/AndroidManifest.xml:25:17-68
+43-->/home/samallen/Desktop/koom_hotspot_clone/android/app/src/main/AndroidManifest.xml:25:25-66
+44
+45                <category android:name="android.intent.category.LAUNCHER" />
+45-->/home/samallen/Desktop/koom_hotspot_clone/android/app/src/main/AndroidManifest.xml:26:17-76
+45-->/home/samallen/Desktop/koom_hotspot_clone/android/app/src/main/AndroidManifest.xml:26:27-74
+46            </intent-filter>
+47        </activity>
+48
+49        <!--
+50             Don't delete the meta-data below.
+51             This is used by the Flutter tool to generate GeneratedPluginRegistrant.java
+52        -->
+53        <meta-data
+53-->/home/samallen/Desktop/koom_hotspot_clone/android/app/src/main/AndroidManifest.xml:32:9-34:33
+54            android:name="flutterEmbedding"
+54-->/home/samallen/Desktop/koom_hotspot_clone/android/app/src/main/AndroidManifest.xml:33:13-44
+55            android:value="2" />
+55-->/home/samallen/Desktop/koom_hotspot_clone/android/app/src/main/AndroidManifest.xml:34:13-30
+56
+57        <!-- Facebook Login configuration -->
+58        <meta-data
+58-->/home/samallen/Desktop/koom_hotspot_clone/android/app/src/main/AndroidManifest.xml:37:9-38:58
+59            android:name="com.facebook.sdk.ApplicationId"
+59-->/home/samallen/Desktop/koom_hotspot_clone/android/app/src/main/AndroidManifest.xml:37:20-65
+60            android:value="@string/facebook_app_id" />
+60-->/home/samallen/Desktop/koom_hotspot_clone/android/app/src/main/AndroidManifest.xml:38:17-56
+61
+62        <activity
+62-->/home/samallen/Desktop/koom_hotspot_clone/android/app/src/main/AndroidManifest.xml:40:9-43:48
+63            android:name="com.facebook.FacebookActivity"
+63-->/home/samallen/Desktop/koom_hotspot_clone/android/app/src/main/AndroidManifest.xml:40:19-63
+64            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+64-->/home/samallen/Desktop/koom_hotspot_clone/android/app/src/main/AndroidManifest.xml:41:13-117
+65            android:label="@string/app_name"
+65-->/home/samallen/Desktop/koom_hotspot_clone/android/app/src/main/AndroidManifest.xml:43:13-45
+66            android:theme="@style/com_facebook_activity_theme" />
+66-->[com.facebook.android:facebook-common:5.5.1] /home/samallen/.gradle/caches/transforms-2/files-2.1/845503c1e99d0a3cacd81d06afed530a/jetified-facebook-common-5.5.1/AndroidManifest.xml:32:13-63
+67        <activity
+67-->/home/samallen/Desktop/koom_hotspot_clone/android/app/src/main/AndroidManifest.xml:44:9-53:20
+68            android:name="com.facebook.CustomTabActivity"
+68-->/home/samallen/Desktop/koom_hotspot_clone/android/app/src/main/AndroidManifest.xml:45:13-58
+69            android:exported="true" >
+69-->/home/samallen/Desktop/koom_hotspot_clone/android/app/src/main/AndroidManifest.xml:46:13-36
+70            <intent-filter>
+70-->/home/samallen/Desktop/koom_hotspot_clone/android/app/src/main/AndroidManifest.xml:47:13-52:29
+71                <action android:name="android.intent.action.VIEW" />
+71-->/home/samallen/Desktop/koom_hotspot_clone/android/app/src/main/AndroidManifest.xml:48:17-69
+71-->/home/samallen/Desktop/koom_hotspot_clone/android/app/src/main/AndroidManifest.xml:48:25-66
+72
+73                <category android:name="android.intent.category.DEFAULT" />
+73-->/home/samallen/Desktop/koom_hotspot_clone/android/app/src/main/AndroidManifest.xml:49:17-76
+73-->/home/samallen/Desktop/koom_hotspot_clone/android/app/src/main/AndroidManifest.xml:49:27-73
+74                <category android:name="android.intent.category.BROWSABLE" />
+74-->/home/samallen/Desktop/koom_hotspot_clone/android/app/src/main/AndroidManifest.xml:50:17-78
+74-->/home/samallen/Desktop/koom_hotspot_clone/android/app/src/main/AndroidManifest.xml:50:27-75
+75
+76                <data android:scheme="@string/fb_login_protocol_scheme" />
+76-->/home/samallen/Desktop/koom_hotspot_clone/android/app/src/main/AndroidManifest.xml:51:17-75
+76-->/home/samallen/Desktop/koom_hotspot_clone/android/app/src/main/AndroidManifest.xml:51:23-72
+77            </intent-filter>
+78        </activity>
+79
+80        <provider
+80-->[:image_picker] /home/samallen/Desktop/koom_hotspot_clone/build/image_picker/intermediates/library_manifest/debug/AndroidManifest.xml:11:9-19:20
+81            android:name="io.flutter.plugins.imagepicker.ImagePickerFileProvider"
+81-->[:image_picker] /home/samallen/Desktop/koom_hotspot_clone/build/image_picker/intermediates/library_manifest/debug/AndroidManifest.xml:12:13-82
+82            android:authorities="com.example.koompi_hotspot.flutter.image_provider"
+82-->[:image_picker] /home/samallen/Desktop/koom_hotspot_clone/build/image_picker/intermediates/library_manifest/debug/AndroidManifest.xml:13:13-74
+83            android:exported="false"
+83-->[:image_picker] /home/samallen/Desktop/koom_hotspot_clone/build/image_picker/intermediates/library_manifest/debug/AndroidManifest.xml:14:13-37
+84            android:grantUriPermissions="true" >
+84-->[:image_picker] /home/samallen/Desktop/koom_hotspot_clone/build/image_picker/intermediates/library_manifest/debug/AndroidManifest.xml:15:13-47
+85            <meta-data
+85-->[:image_picker] /home/samallen/Desktop/koom_hotspot_clone/build/image_picker/intermediates/library_manifest/debug/AndroidManifest.xml:16:13-18:75
+86                android:name="android.support.FILE_PROVIDER_PATHS"
+86-->[:image_picker] /home/samallen/Desktop/koom_hotspot_clone/build/image_picker/intermediates/library_manifest/debug/AndroidManifest.xml:17:17-67
+87                android:resource="@xml/flutter_image_picker_file_paths" />
+87-->[:image_picker] /home/samallen/Desktop/koom_hotspot_clone/build/image_picker/intermediates/library_manifest/debug/AndroidManifest.xml:18:17-72
+88        </provider>
+89
+90        <activity android:name="com.facebook.CustomTabMainActivity" />
+90-->[com.facebook.android:facebook-common:5.5.1] /home/samallen/.gradle/caches/transforms-2/files-2.1/845503c1e99d0a3cacd81d06afed530a/jetified-facebook-common-5.5.1/AndroidManifest.xml:33:9-71
+90-->[com.facebook.android:facebook-common:5.5.1] /home/samallen/.gradle/caches/transforms-2/files-2.1/845503c1e99d0a3cacd81d06afed530a/jetified-facebook-common-5.5.1/AndroidManifest.xml:33:19-68
+91        <activity
+91-->[com.google.android.gms:play-services-base:17.0.0] /home/samallen/.gradle/caches/transforms-2/files-2.1/5ac9ad6f13ea0190a3570ea7a43d9f59/play-services-base-17.0.0/AndroidManifest.xml:23:9-26:75
+92            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+92-->[com.google.android.gms:play-services-base:17.0.0] /home/samallen/.gradle/caches/transforms-2/files-2.1/5ac9ad6f13ea0190a3570ea7a43d9f59/play-services-base-17.0.0/AndroidManifest.xml:24:13-79
+93            android:exported="false"
+93-->[com.google.android.gms:play-services-base:17.0.0] /home/samallen/.gradle/caches/transforms-2/files-2.1/5ac9ad6f13ea0190a3570ea7a43d9f59/play-services-base-17.0.0/AndroidManifest.xml:25:13-37
+94            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+94-->[com.google.android.gms:play-services-base:17.0.0] /home/samallen/.gradle/caches/transforms-2/files-2.1/5ac9ad6f13ea0190a3570ea7a43d9f59/play-services-base-17.0.0/AndroidManifest.xml:26:13-72
+95
+96        <meta-data
+96-->[com.google.android.gms:play-services-basement:17.0.0] /home/samallen/.gradle/caches/transforms-2/files-2.1/320c324a2572cf7cc99b96b8b6c8c9a3/jetified-play-services-basement-17.0.0/AndroidManifest.xml:23:9-25:69
+97            android:name="com.google.android.gms.version"
+97-->[com.google.android.gms:play-services-basement:17.0.0] /home/samallen/.gradle/caches/transforms-2/files-2.1/320c324a2572cf7cc99b96b8b6c8c9a3/jetified-play-services-basement-17.0.0/AndroidManifest.xml:24:13-58
+98            android:value="@integer/google_play_services_version" />
+98-->[com.google.android.gms:play-services-basement:17.0.0] /home/samallen/.gradle/caches/transforms-2/files-2.1/320c324a2572cf7cc99b96b8b6c8c9a3/jetified-play-services-basement-17.0.0/AndroidManifest.xml:25:13-66
+99        <!--
+100         The initialization ContentProvider will call FacebookSdk.sdkInitialize automatically
+101         with the application context. This config is merged in with the host app's manifest,
+102         but there can only be one provider with the same authority activated at any given
+103         point; so if the end user has two or more different apps that use Facebook SDK, only the
+104         first one will be able to use the provider. To work around this problem, we use the
+105         following placeholder in the authority to identify each host application as if it was
+106         a completely different provider.
+107        -->
+108        <provider
+108-->[com.facebook.android:facebook-core:5.5.1] /home/samallen/.gradle/caches/transforms-2/files-2.1/811fffe32657aaa6af33322949565d76/jetified-facebook-core-5.5.1/AndroidManifest.xml:39:9-42:40
+109            android:name="com.facebook.internal.FacebookInitProvider"
+109-->[com.facebook.android:facebook-core:5.5.1] /home/samallen/.gradle/caches/transforms-2/files-2.1/811fffe32657aaa6af33322949565d76/jetified-facebook-core-5.5.1/AndroidManifest.xml:40:13-70
+110            android:authorities="com.example.koompi_hotspot.FacebookInitProvider"
+110-->[com.facebook.android:facebook-core:5.5.1] /home/samallen/.gradle/caches/transforms-2/files-2.1/811fffe32657aaa6af33322949565d76/jetified-facebook-core-5.5.1/AndroidManifest.xml:41:13-72
+111            android:exported="false" />
+111-->[com.facebook.android:facebook-core:5.5.1] /home/samallen/.gradle/caches/transforms-2/files-2.1/811fffe32657aaa6af33322949565d76/jetified-facebook-core-5.5.1/AndroidManifest.xml:42:13-37
+112
+113        <receiver
+113-->[com.facebook.android:facebook-core:5.5.1] /home/samallen/.gradle/caches/transforms-2/files-2.1/811fffe32657aaa6af33322949565d76/jetified-facebook-core-5.5.1/AndroidManifest.xml:44:9-50:20
+114            android:name="com.facebook.CurrentAccessTokenExpirationBroadcastReceiver"
+114-->[com.facebook.android:facebook-core:5.5.1] /home/samallen/.gradle/caches/transforms-2/files-2.1/811fffe32657aaa6af33322949565d76/jetified-facebook-core-5.5.1/AndroidManifest.xml:45:13-86
+115            android:exported="false" >
+115-->[com.facebook.android:facebook-core:5.5.1] /home/samallen/.gradle/caches/transforms-2/files-2.1/811fffe32657aaa6af33322949565d76/jetified-facebook-core-5.5.1/AndroidManifest.xml:46:13-37
+116            <intent-filter>
+116-->[com.facebook.android:facebook-core:5.5.1] /home/samallen/.gradle/caches/transforms-2/files-2.1/811fffe32657aaa6af33322949565d76/jetified-facebook-core-5.5.1/AndroidManifest.xml:47:13-49:29
+117                <action android:name="com.facebook.sdk.ACTION_CURRENT_ACCESS_TOKEN_CHANGED" />
+117-->[com.facebook.android:facebook-core:5.5.1] /home/samallen/.gradle/caches/transforms-2/files-2.1/811fffe32657aaa6af33322949565d76/jetified-facebook-core-5.5.1/AndroidManifest.xml:48:17-95
+117-->[com.facebook.android:facebook-core:5.5.1] /home/samallen/.gradle/caches/transforms-2/files-2.1/811fffe32657aaa6af33322949565d76/jetified-facebook-core-5.5.1/AndroidManifest.xml:48:25-92
+118            </intent-filter>
+119        </receiver>
+120        <receiver
+120-->[com.facebook.android:facebook-core:5.5.1] /home/samallen/.gradle/caches/transforms-2/files-2.1/811fffe32657aaa6af33322949565d76/jetified-facebook-core-5.5.1/AndroidManifest.xml:51:9-58:20
+121            android:name="com.facebook.CampaignTrackingReceiver"
+121-->[com.facebook.android:facebook-core:5.5.1] /home/samallen/.gradle/caches/transforms-2/files-2.1/811fffe32657aaa6af33322949565d76/jetified-facebook-core-5.5.1/AndroidManifest.xml:52:13-65
+122            android:exported="true"
+122-->[com.facebook.android:facebook-core:5.5.1] /home/samallen/.gradle/caches/transforms-2/files-2.1/811fffe32657aaa6af33322949565d76/jetified-facebook-core-5.5.1/AndroidManifest.xml:53:13-36
+123            android:permission="android.permission.INSTALL_PACKAGES" >
+123-->[com.facebook.android:facebook-core:5.5.1] /home/samallen/.gradle/caches/transforms-2/files-2.1/811fffe32657aaa6af33322949565d76/jetified-facebook-core-5.5.1/AndroidManifest.xml:54:13-69
+124            <intent-filter>
+124-->[com.facebook.android:facebook-core:5.5.1] /home/samallen/.gradle/caches/transforms-2/files-2.1/811fffe32657aaa6af33322949565d76/jetified-facebook-core-5.5.1/AndroidManifest.xml:55:13-57:29
+125                <action android:name="com.android.vending.INSTALL_REFERRER" />
+125-->[com.facebook.android:facebook-core:5.5.1] /home/samallen/.gradle/caches/transforms-2/files-2.1/811fffe32657aaa6af33322949565d76/jetified-facebook-core-5.5.1/AndroidManifest.xml:56:17-79
+125-->[com.facebook.android:facebook-core:5.5.1] /home/samallen/.gradle/caches/transforms-2/files-2.1/811fffe32657aaa6af33322949565d76/jetified-facebook-core-5.5.1/AndroidManifest.xml:56:25-76
+126            </intent-filter>
+127        </receiver>
+128    </application>
+129
+130</manifest>

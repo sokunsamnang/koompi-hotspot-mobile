@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AndroidLayouts">
+    <shared>
+      <config />
+    </shared>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="97f261bb-4f27-4f69-8102-b6281cb421c9" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.dart_tool/flutter_build/dd8576fbb17e9e6917efbb4d25d65aed/.filecache" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/flutter_build/dd8576fbb17e9e6917efbb4d25d65aed/.filecache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.dart_tool/flutter_build/dd8576fbb17e9e6917efbb4d25d65aed/app.dill" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/flutter_build/dd8576fbb17e9e6917efbb4d25d65aed/app.dill" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/.flutter-plugins-dependencies" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/app/intermediates/flutter/debug/flutter_assets/kernel_blob.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/intermediates/flutter/debug/flutter_assets/kernel_blob.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/app/intermediates/incremental/packageDebug/tmp/debug/dex-renamer-state.txt" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/intermediates/incremental/packageDebug/tmp/debug/dex-renamer-state.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/app/intermediates/merged_assets/debug/out/flutter_assets/kernel_blob.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/intermediates/merged_assets/debug/out/flutter_assets/kernel_blob.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/app/outputs/apk/app.apk" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/outputs/apk/app.apk" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/app/outputs/apk/app.apk.sha1" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/outputs/apk/app.apk.sha1" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/app/outputs/apk/debug/app-debug.apk" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/outputs/apk/debug/app-debug.apk" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/app/outputs/flutter-apk/app-debug.apk" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/outputs/flutter-apk/app-debug.apk" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/model/database.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/model/database.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/screen/login/forgot_password.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/screen/login/forgot_password.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/screen/login/login_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/screen/login/login_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/screen/option_page/more_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/screen/option_page/more_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/widgets/formcardLogin.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/widgets/formcardLogin.dart" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="192.168.1.13:5555" />
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IgnoredFileRootStore">
+    <option name="generatedRoots">
+      <set>
+        <option value="$PROJECT_DIR$/.idea" />
+      </set>
+    </option>
+  </component>
+  <component name="ProjectId" id="1dFsZOxxZNh7lMWlpdLsqT9AZP1" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="dart.analysis.tool.window.force.activate" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="show.migrate.to.gradle.popup" value="false" />
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="97f261bb-4f27-4f69-8102-b6281cb421c9" name="Default Changelist" comment="" />
+      <created>1592032232983</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1592032232983</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="449" y="158" width="1022" height="737" key="SettingsEditor" timestamp="1592032493362">
+      <screen x="0" y="27" width="1920" height="993" />
+    </state>
+    <state x="449" y="158" width="1022" height="737" key="SettingsEditor/0.27.1920.993@0.27.1920.993" timestamp="1592032493362" />
+    <state x="100" y="127" width="1720" height="793" key="com.android.tools.idea.avdmanager.AvdListDialog" timestamp="1592723625262">
+      <screen x="0" y="27" width="1920" height="993" />
+    </state>
+    <state x="100" y="127" width="1720" height="793" key="com.android.tools.idea.avdmanager.AvdListDialog/0.27.1920.993@0.27.1920.993" timestamp="1592723625262" />
+    <state x="616" y="351" key="com.intellij.ide.util.TipDialog" timestamp="1593027991783">
+      <screen x="0" y="27" width="1920" height="993" />
+    </state>
+    <state x="616" y="351" key="com.intellij.ide.util.TipDialog/0.27.1920.993/1920.0.1024.768@0.27.1920.993" timestamp="1593027991783" />
+    <state x="616" y="351" key="com.intellij.ide.util.TipDialog/0.27.1920.993@0.27.1920.993" timestamp="1592723595997" />
+  </component>
+</project>
