@@ -12,8 +12,6 @@ class _UserPlanState extends State<UserPlan>
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController planUserController = TextEditingController();
-  final TextEditingController planDateController = TextEditingController();
-  final TextEditingController planTimeController = TextEditingController();
 
   int user;
 
@@ -80,8 +78,6 @@ class _UserPlanState extends State<UserPlan>
   }
 
 
-
-
   //User Plan Button variable
   List<int> userButton = [1, 3, 5];
   int userSelectedIndex = 0;
@@ -89,16 +85,12 @@ class _UserPlanState extends State<UserPlan>
   String userText = '';
 
   void userChangeIndex(
-      int userIndex, TextEditingController planUserController) {
+    int userIndex, TextEditingController planUserController) {
     setState(() {
       userSelectedIndex = userIndex;
       userText = planUserController.text;
     });
   }
-
-  //Plan Time Dropdown variable
-  String _selectedPlan;
-  String _selectedDate;
 
   // Initially password is obscure
   bool _obscureText = true;
@@ -184,6 +176,7 @@ class _UserPlanState extends State<UserPlan>
               SizedBox(height: 16.0),
               Row(
                 children: <Widget>[
+                  //First DropdownBox
                   DropdownButton<String>(
                     items: [
                       DropdownMenuItem<String>(
@@ -198,12 +191,14 @@ class _UserPlanState extends State<UserPlan>
                           child: Text("Day"),
                         ),
                       ),
-                    ],
+                    ].toList(),
                     onChanged: (_value) => firstDropdownselected(_value),
                     hint: Text(
                       "Select Plan"
                     ),
                   ),
+                  
+                  //Second DropdownBox
                   DropdownButton<String>(
                     items: menuitems,
                     onChanged: disabledropdown ? null : (_value) => secondDropdownselected(_value),
@@ -238,16 +233,15 @@ class _UserPlanState extends State<UserPlan>
                       borderRadius: BorderRadius.circular(18.0),
                       side: BorderSide(color: Colors.deepOrange)),
                   onPressed: () async {
-                    print(user);
-                    // Navigator.push(
-                    //     context,
-                    //     MaterialPageRoute(
-                    //         builder: (context) => _reviewPlan(
-                    //             usernameController,
-                    //             passwordController,
-                    //             planUserController,
-                    //             planDateController,
-                    //             planTimeController)));
+                    //print(user);
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => _reviewPlan(
+                                usernameController,
+                                passwordController,
+                                planUserController,                             
+                                value)));
                   },
                 ),
               ),
@@ -258,8 +252,7 @@ class _UserPlanState extends State<UserPlan>
     );
   }
 
-  Widget userCustomRadio(int userButton, int userIndex,
-      TextEditingController planUserController) {
+  Widget userCustomRadio(int userButton, int userIndex, TextEditingController planUserController) {
     return ButtonTheme(
       height: 50.0,
       child: OutlineButton(
@@ -282,52 +275,19 @@ class _UserPlanState extends State<UserPlan>
     );
   }
 
-  Widget planDropdown(Function plandropdown) {
-    return DropdownButton<String>(
-      hint: Text('Select Plan'),
-      value: _selectedPlan,
-      items: ['Hour', 'Day']
-          .map((plan) =>
-              DropdownMenuItem<String>(child: Text(plan), value: plan))
-          .toList(),
-      onChanged: (newValue) {
-        setState(() {
-          _selectedPlan = newValue;
-        });
-      },
-    );
-  }
-
-  Widget _addSecondDropdown(List select) {
-    return select != null
-        ? DropdownButton<String>(
-            hint: Text('Select Date'),
-            value: _selectedDate,
-            items: select
-                .map((date) =>
-                    DropdownMenuItem<String>(child: Text(date), value: date))
-                .toList(),
-            onChanged: (newValue) {
-              setState(() {
-                _selectedDate = newValue;
-              });
-            })
-        : Container(); // Return an empty Container instead.
-  }
-
   Widget _reviewPlan(
       TextEditingController usernameController,
       passwordController,
       planUserController,
-      planDateController,
-      planTimeController) {
+      value) {
     return Scaffold(
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text('Username: ${usernameController.text}'),
-            Text('User: ${planUserController.text}')
+            Text('User: $userText'),
+            Text('Plan: $value')
           ],
         ),
       ),
