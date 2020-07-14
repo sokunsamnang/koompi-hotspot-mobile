@@ -13,74 +13,63 @@ class _UserPlanState extends State<UserPlan>
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController planUserController = TextEditingController();
 
-  int user;
+  //DropDown Variable
+  
+  final _planDropdown = const [
+    "Hour",
+    "Day",
+  ];
 
-  String value = "";
-  List<DropdownMenuItem<String>> menuitems = List();  
-  bool disabledropdown = true;
-
-  final hour = {
-    "1" : "1 Hour",
-    "2" : "3 Hours",
-    "3" : "5 Hours",
+  final hour = const {
+    "1": "1 Hour",
+    "2": "3 Hours",
+    "3": "5 Hours"
   };
 
-  final day = {
-    "1" : "1 Days",
-    "2" : "3 Days",
-    "3" : "5 Days",
+  final day = const {
+    "1": "1 Day",
+    "2": "5 Days",
+    "3": "7 Days",
   };
+  
+  var _selectedPlanVal;
+  var _selectedDateVal;
+  List<String> _dateItem = [];
 
-  void dropdownHour(){
-    for(String key in hour.keys){
-      menuitems.add(DropdownMenuItem<String>(
-        child : Center(
-          child: Text(
-            hour[key]
-          ),
-        ),
-        value: hour[key],
-      ));
-    }
+ void _changeDept({String currentPlan}) {
+    setState(
+      () {
+        // update current university
+        _selectedPlanVal = currentPlan;
+        // reset dept val
+        _selectedDateVal = 'Select Date';
+        // update corresponding department
+        // clear list
+        _dateItem = ['Select Date'];
+        _dateItem.addAll(_getDateItem(_selectedPlanVal));
+      },
+    );
   }
 
-  void dropdownDay(){
-    for(String key in day.keys){
-      menuitems.add(DropdownMenuItem<String>(
-        child : Center(
-          child: Text(
-            day[key]
-          ),
-        ),
-        value: day[key],
-      ));
+  List<String> _getDateItem(String currentPlan) {
+    switch (currentPlan) {
+      case 'Hour':
+        return hour.values.toList();
+        break;
+      case 'Day':
+        return day.values.toList();
+        break;
+      default:
+        return null;
     }
-  }
-
-  void firstDropdownselected(_value){
-    if(_value == "Hour"){
-      menuitems = [];
-      dropdownHour();
-    }else if(_value == "Day"){
-      menuitems = [];
-      dropdownDay();
-    }
-    setState(() {
-      value = _value;
-      disabledropdown = false;
-    });
-  }
-
-  void secondDropdownselected(_value){
-    setState(() {
-      value = _value;    
-    });
   }
 
 
   //User Plan Button variable
+
+  int user;
   List<int> userButton = [1, 3, 5];
-  int userSelectedIndex = 0;
+  int userSelectedIndex;
 
   String userText = '';
 
@@ -155,6 +144,8 @@ class _UserPlanState extends State<UserPlan>
                 obscureText: _obscureText,
               ),
               SizedBox(height: 16.0),
+              Text('Select user:'),
+              SizedBox(height: 5.0),
               Row(
                 children: <Widget>[
                   Expanded(
@@ -174,45 +165,45 @@ class _UserPlanState extends State<UserPlan>
                 ],
               ),
               SizedBox(height: 16.0),
+              Text('Select plan:'),
+              SizedBox(height: 5.0),
               Row(
                 children: <Widget>[
-                  //First DropdownBox
-                  DropdownButton<String>(
-                    items: [
-                      DropdownMenuItem<String>(
-                        value: "Hour",
-                        child: Center(
-                          child: Text("Hour"),
-                        ),
+                  //First DropdownBox              
+                  Expanded(
+                    child: DropdownButtonHideUnderline(
+                      child: DropdownButton(
+                        hint: Text('Select Plan'),
+                        value: _selectedPlanVal,
+                        onChanged: (val) => _changeDept(currentPlan: val),
+                        items: _planDropdown.map(
+                          (item) {
+                            return DropdownMenuItem(
+                              child: Text('$item'),
+                              value: item,
+                            );
+                          },
+                        ).toList(),
                       ),
-                      DropdownMenuItem<String>(
-                        value: "Day",
-                        child: Center(
-                          child: Text("Day"),
-                        ),
-                      ),
-                    ].toList(),
-                    onChanged: (_value) => firstDropdownselected(_value),
-                    hint: Text(
-                      "Select Plan"
                     ),
                   ),
-                  
+
                   //Second DropdownBox
-                  DropdownButton<String>(
-                    items: menuitems,
-                    onChanged: disabledropdown ? null : (_value) => secondDropdownselected(_value),
-                    hint: Text(
-                      "Select Date"
-                    ),
-                    disabledHint: Text(
-                      "First Select Plan"
-                    ),
-                  ),
-                  Text(
-                    "$value",
-                    style: TextStyle(
-                      fontSize: 20.0,
+                  Expanded(        
+                    child: DropdownButtonHideUnderline(
+                      child: DropdownButton(
+                        hint: Text('Select Date'),
+                        value: _selectedDateVal,
+                        onChanged: (val) => setState(() => _selectedDateVal = val),
+                        items: _dateItem.map(
+                          (item) {
+                            return DropdownMenuItem(
+                              child: Text('$item'),
+                              value: item,
+                            );
+                          },
+                        ).toList(),
+                      ), 
                     ),
                   ),
                 ],
@@ -233,15 +224,14 @@ class _UserPlanState extends State<UserPlan>
                       borderRadius: BorderRadius.circular(18.0),
                       side: BorderSide(color: Colors.deepOrange)),
                   onPressed: () async {
-                    //print(user);
+                    print(user);
                     Navigator.push(
                         context,
                         MaterialPageRoute(
                             builder: (context) => _reviewPlan(
                                 usernameController,
-                                passwordController,
-                                planUserController,                             
-                                value)));
+                                user,
+                                _selectedDateVal,)));
                   },
                 ),
               ),
@@ -277,20 +267,20 @@ class _UserPlanState extends State<UserPlan>
 
   Widget _reviewPlan(
       TextEditingController usernameController,
-      passwordController,
-      planUserController,
-      value) {
+      user,
+      _selectedDateVal) {
     return Scaffold(
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text('Username: ${usernameController.text}'),
-            Text('User: $userText'),
-            Text('Plan: $value')
+            Text('User: $user user'),
+            Text('User: $_selectedDateVal'),
           ],
         ),
       ),
     );
   }
 }
+
