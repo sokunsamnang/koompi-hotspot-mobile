@@ -1,4 +1,7 @@
+import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
+import 'package:koompi_hotspot/src/widgets/navbar.dart';
+import 'package:intl/intl.dart';
 
 class UserPlan extends StatefulWidget {
   @override
@@ -12,6 +15,19 @@ class _UserPlanState extends State<UserPlan>
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController planUserController = TextEditingController();
+
+
+  // DATE
+
+  String finalDate = '';
+
+  String finalDate1Hour = '';
+  String finalDate3Hour = '';
+  String finalDate5Hour = '';
+
+  String finalDate1Day = '';
+  String finalDate5Day = '';
+  String finalDate7Day = '';
 
   //DropDown Variable
   
@@ -95,6 +111,33 @@ class _UserPlanState extends State<UserPlan>
   void initState() {
     super.initState();
     _controller = AnimationController(vsync: this);
+
+    //DATE FORMAT
+
+    var date = new DateTime.now().toString();
+ 
+    var dateParse = DateTime.parse(date);
+
+    var formattedDate1Hour = "Time ${dateParse.hour + 1}:${dateParse.minute} Date ${dateParse.day}-${dateParse.month}-${dateParse.year}";
+    var formattedDate3Hour = "Time ${dateParse.hour + 3}:${dateParse.minute} Date ${dateParse.day}-${dateParse.month}-${dateParse.year}";
+    var formattedDate5Hour = "Time ${dateParse.hour + 5}:${dateParse.minute} Date ${dateParse.day}-${dateParse.month}-${dateParse.year}";
+ 
+    var formattedDate1day = "${dateParse.day + 1}-${dateParse.month}-${dateParse.year}";
+    var formattedDate5day = "${dateParse.day + 5}-${dateParse.month}-${dateParse.year}";
+    var formattedDate7day = "${dateParse.day + 7}-${dateParse.month}-${dateParse.year}";
+ 
+    setState(() {
+
+      finalDate1Hour = formattedDate1Hour.toString();
+      finalDate3Hour = formattedDate3Hour.toString();
+      finalDate5Hour = formattedDate5Hour.toString();
+      
+      finalDate1Day = formattedDate1day.toString();
+      finalDate5Day = formattedDate5day.toString();
+      finalDate7Day = formattedDate7day.toString();
+ 
+    });
+
   }
 
   @override
@@ -103,6 +146,26 @@ class _UserPlanState extends State<UserPlan>
     _controller.dispose();
   }
 
+  Widget _expirationDate(){
+    if(_selectedDateVal == day['1']){
+      return Text('Expiration: $finalDate1Day ', style: TextStyle(fontSize: 20.0));
+    }
+    else if(_selectedDateVal == day['2']){
+      return Text('Expiration: $finalDate5Day', style: TextStyle(fontSize: 20.0));
+    }
+    else if(_selectedDateVal == day['3']){
+      return Text('Expiration: $finalDate7Day', style: TextStyle(fontSize: 20.0));
+    }
+    else if(_selectedDateVal == hour['1']){
+      return Text('Expiration: $finalDate1Hour', style: TextStyle(fontSize: 20.0));
+    }
+    else if(_selectedDateVal == hour['2']){
+      return Text('Expiration: $finalDate3Hour', style: TextStyle(fontSize: 20.0));
+    }
+    else if(_selectedDateVal == hour['3']){
+      return Text('Expiration: $finalDate5Hour', style: TextStyle(fontSize: 20.0));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -224,7 +287,6 @@ class _UserPlanState extends State<UserPlan>
                       borderRadius: BorderRadius.circular(18.0),
                       side: BorderSide(color: Colors.deepOrange)),
                   onPressed: () async {
-                    print(user);
                     Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -266,17 +328,83 @@ class _UserPlanState extends State<UserPlan>
   }
 
   Widget _reviewPlan(
-      TextEditingController usernameController,
+      usernameController,
       user,
       _selectedDateVal) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text('Username: ${usernameController.text}'),
-            Text('User: $user user'),
-            Text('User: $_selectedDateVal'),
+            Container(
+              child: IconButton(
+                icon: Icon(Icons.arrow_back, color: Colors.black, size: 30,),
+                onPressed: () => Navigator.of(context).pop(),
+              ),
+            ),
+            Column(
+              children: <Widget>[
+                Container(
+                  width: 300,
+                  height: 300,
+                  child: FlareActor( 
+                    'assets/animations/alert_icon.flr', 
+                    alignment: Alignment.topCenter,
+                    fit: BoxFit.contain,
+                    animation: 'show',
+                  ),
+                ),
+                Center(
+                  child: Text('Please review before buy', 
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+                  ),
+                ),
+                SizedBox(height: 25.0),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    SizedBox(height: 10.0),
+                    Container(
+                      child: Text('Username: ${usernameController.text}',style: TextStyle(fontSize: 20.0)),
+                    ),
+                    SizedBox(height: 10.0),
+                    Container(
+                      child: Text('User: $user user',style: TextStyle(fontSize: 20.0)),
+                    ),
+                    SizedBox(height: 10.0),
+                    Container(
+                      child: Text('Date: $_selectedDateVal',style: TextStyle(fontSize: 20.0)),
+                    ),
+                    SizedBox(height: 10.0),
+                    _expirationDate(),
+                  ],
+                ),
+                
+                SizedBox(height: 50.0),
+                Center(
+                  child: RaisedButton(
+                    child: Text(
+                      'BUY',
+                      style: TextStyle(
+                        fontFamily: 'Poppins-Bold',
+                        fontSize: 20,
+                        letterSpacing: 1,
+                      ),
+                    ),
+                    color: Colors.white,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18.0),
+                        side: BorderSide(color: Colors.deepOrange)),
+                    onPressed: () async {
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(builder: (context) => Navbar()));
+                    },
+                  ),
+                )
+              ],
+            ),
           ],
         ),
       ),
