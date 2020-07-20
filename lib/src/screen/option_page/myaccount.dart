@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 
 class MyAccount extends StatefulWidget {
   @override
@@ -16,6 +17,7 @@ class _MyAccountState extends State<MyAccount>
 
   List<String> lst = ['Male', 'Female'];
   int selectedIndex = 0;
+  
 
   @override
   void initState() {
@@ -29,6 +31,23 @@ class _MyAccountState extends State<MyAccount>
     });
   }
 
+  DateTime selectedDate = DateTime.now();
+
+  final dateFormart = new DateFormat('dd-MM-yyyy');
+
+  Future<Null> _selectDate(BuildContext context) async {
+    final DateTime picked = await showDatePicker(
+        context: context,
+        initialDate: selectedDate,
+        firstDate: DateTime(1770, 1),
+        lastDate: DateTime(2101));
+    if (picked != null && picked != selectedDate)
+      setState(() {
+        selectedDate = picked;
+      });
+  }
+  
+
   @override
   void dispose() {
     super.dispose();
@@ -37,6 +56,7 @@ class _MyAccountState extends State<MyAccount>
 
   @override
   Widget build(BuildContext context) {
+
     Future getImage() async {
       var image = await ImagePicker.pickImage(source: ImageSource.gallery);
 
@@ -161,6 +181,8 @@ class _MyAccountState extends State<MyAccount>
                 ],
               ),
               SizedBox(height: 16.0),
+              dateOfbirth(selectedDate, _selectDate, context),
+              SizedBox(height: 16.0),
               Row(
                 children: <Widget>[
                   Expanded(
@@ -193,6 +215,57 @@ class _MyAccountState extends State<MyAccount>
           txt,
           style: TextStyle(
               color: selectedIndex == index ? Colors.black : Colors.grey),
+        ),
+      ),
+    );
+  }
+}
+
+  Widget dateOfbirth(DateTime selectedDate, _selectDate, context){
+    return _InputDropdown(
+      labelText: 'Date Of Birth',
+      valueText: DateFormat.yMMMMd().format(selectedDate),
+      onPressed: (){
+        _selectDate(context);
+      },
+    );
+  }
+
+class _InputDropdown extends StatelessWidget {
+  const _InputDropdown(
+      {Key key,
+      this.child,
+      this.labelText,
+      this.valueText,
+      this.valueStyle,
+      this.onPressed})
+      : super(key: key);
+
+  final String labelText;
+  final String valueText;
+  final TextStyle valueStyle;
+  final VoidCallback onPressed;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return new InkWell(
+      onTap: onPressed,
+      child: new InputDecorator(
+        decoration: new InputDecoration(
+          labelText: labelText,
+        ),
+        baseStyle: valueStyle,
+        child: new Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            new Text(valueText, style: valueStyle),
+            new Icon(Icons.date_range,
+                color: Theme.of(context).brightness == Brightness.light
+                    ? Colors.grey.shade700
+                    : Colors.white70),
+          ],
         ),
       ),
     );

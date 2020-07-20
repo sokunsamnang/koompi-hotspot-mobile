@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:koompi_hotspot/model/database.dart';
 import 'package:koompi_hotspot/src/screen/create_account/create_page.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:koompi_hotspot/src/screen/home_page/home_page.dart';
 import 'package:koompi_hotspot/src/widgets/formcardLogin.dart';
 import 'package:koompi_hotspot/src/widgets/navbar.dart';
 import 'package:koompi_hotspot/src/widgets/socialmedia.dart';

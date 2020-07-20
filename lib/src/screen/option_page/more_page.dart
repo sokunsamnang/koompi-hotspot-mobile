@@ -6,6 +6,7 @@ import 'package:koompi_hotspot/src/screen/option_page/change_password.dart';
 import 'package:koompi_hotspot/src/screen/option_page/myaccount.dart';
 import 'package:koompi_hotspot/src/screen/option_page/speedtest.dart';
 import 'package:koompi_hotspot/src/screen/option_page/topup.dart';
+import 'package:koompi_hotspot/src/widgets/navbar.dart';
 import 'package:line_icons/line_icons.dart';
 
 class MorePage extends StatefulWidget {

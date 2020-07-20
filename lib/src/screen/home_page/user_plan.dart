@@ -1,7 +1,7 @@
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
+import 'package:koompi_hotspot/src/screen/home_page/home_page.dart';
 import 'package:koompi_hotspot/src/widgets/navbar.dart';
-import 'package:intl/intl.dart';
 
 class UserPlan extends StatefulWidget {
   @override
@@ -122,9 +122,9 @@ class _UserPlanState extends State<UserPlan>
     var formattedDate3Hour = "Time ${dateParse.hour + 3}:${dateParse.minute} Date ${dateParse.day}-${dateParse.month}-${dateParse.year}";
     var formattedDate5Hour = "Time ${dateParse.hour + 5}:${dateParse.minute} Date ${dateParse.day}-${dateParse.month}-${dateParse.year}";
  
-    var formattedDate1day = "${dateParse.day + 1}-${dateParse.month}-${dateParse.year}";
-    var formattedDate5day = "${dateParse.day + 5}-${dateParse.month}-${dateParse.year}";
-    var formattedDate7day = "${dateParse.day + 7}-${dateParse.month}-${dateParse.year}";
+    var formattedDate1day = "Time ${dateParse.hour}:${dateParse.minute} Date ${dateParse.day + 1}-${dateParse.month}-${dateParse.year}";
+    var formattedDate5day = "Time ${dateParse.hour}:${dateParse.minute} Date ${dateParse.day + 5}-${dateParse.month}-${dateParse.year}";
+    var formattedDate7day = "Time ${dateParse.hour}:${dateParse.minute} Date ${dateParse.day + 7}-${dateParse.month}-${dateParse.year}";
  
     setState(() {
 
@@ -164,6 +164,9 @@ class _UserPlanState extends State<UserPlan>
     }
     else if(_selectedDateVal == hour['3']){
       return Text('Expiration: $finalDate5Hour', style: TextStyle(fontSize: 20.0));
+    }
+    else{
+      return Container();
     }
   }
 
