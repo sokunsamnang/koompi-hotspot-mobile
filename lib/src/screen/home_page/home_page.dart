@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:koompi_hotspot/model/database.dart';
 import 'package:koompi_hotspot/src/screen/home_page/home_page_body.dart';
 
 class HomePage extends StatefulWidget{

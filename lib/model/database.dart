@@ -92,7 +92,7 @@ Future loginConnection(String userName, String passWord) async {
   }
 }
 
-Future userData(var userName) async {
+Future userData(String userName) async {
   try {
     var connection = new PostgreSQLConnection(
         "ec2-52-221-199-235.ap-southeast-1.compute.amazonaws.com",
@@ -112,7 +112,7 @@ Future userData(var userName) async {
   }
 }
 
-Future updatePassword(var userName, var passWord) async {
+Future updatePassword(String userName, String passWord) async {
   try {
     var connection = new PostgreSQLConnection(
         "ec2-52-221-199-235.ap-southeast-1.compute.amazonaws.com",

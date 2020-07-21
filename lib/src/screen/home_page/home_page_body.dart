@@ -20,6 +20,7 @@ Widget bodyPage(BuildContext context) {
               SizedBox(height: 40),
               Text('Your Plan', style: TextStyle(fontWeight: FontWeight.bold),),
               SizedBox(height: 20),
+              _plan(context),
 
             ],
           ),
@@ -43,7 +44,7 @@ Widget bodyPage(BuildContext context) {
             fontSize: 18,
           ),
         ),
-        Text(' Koompi',
+        Text(' Admin',
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.w600,
@@ -135,12 +136,10 @@ Widget _balanceTokens(context) {
                                  SizedBox(width: 5),
                                 Text("Top up",
                                   style: TextStyle(color: Colors.white),
-                                ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
-                          
-                         
+                        ),
                       ],
                     ),
                   ),
@@ -176,6 +175,87 @@ Widget _balanceTokens(context) {
                 child: CircleAvatar(
                   radius: 130,
                   backgroundColor: Colors.orangeAccent,
+                ),
+              )
+            ],
+          ),
+        )),
+    );
+}
+
+Widget _plan(context) {
+  return Container(
+    child: ClipRRect(
+        borderRadius: BorderRadius.all(Radius.circular(40)),
+        child: Container(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height * .27,
+          color: Colors.blueGrey[900],
+          child: Stack(
+            fit: StackFit.expand,
+            children: <Widget>[
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    'Username: koompi',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  Text(
+                    'User: 5 Users',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w800,
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  Text(
+                    'Expiring in 999 days',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w800,
+                    ),
+                  )
+                ],
+              ),
+              Positioned(
+                right: -170,
+                top: -170,
+                child: CircleAvatar(
+                  radius: 130,
+                  backgroundColor: Colors.lightBlueAccent,
+                ),
+              ),
+              Positioned(
+                right: -160,
+                top: -190,
+                child: CircleAvatar(
+                  radius: 130,
+                  backgroundColor: Colors.lightBlue,
+                ),
+              ),
+              Positioned(
+                left: -170,
+                bottom: -170,
+                child: CircleAvatar(
+                  radius: 130,
+                  backgroundColor: Colors.orange,
+                ),
+              ),
+              Positioned(
+                left: -160,
+                bottom: -190,
+                child: CircleAvatar(
+                  radius: 130,
+                  backgroundColor: Colors.deepOrange,
                 ),
               )
             ],

@@ -119,11 +119,10 @@ class _MyAccountState extends State<MyAccount>
                               _image,
                               fit: BoxFit.cover,
                             )
-                          : Image.asset(
-                              'assets/images/koompi_logo.png',
-                              width: 100,
-                              height: 100,
-                            ),
+                          : CircleAvatar(
+                              backgroundImage: NetworkImage(
+                                "https://jshopping.in/images/detailed/591/ibboll-Fashion-Mens-Optical-Glasses-Frames-Classic-Square-Wrap-Frame-Luxury-Brand-Men-Clear-Eyeglasses-Frame.jpg"),
+                      ),
                     ),
                   ),
                 ),

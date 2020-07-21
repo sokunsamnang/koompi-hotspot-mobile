@@ -180,6 +180,8 @@ class _LoginPageState extends State<LoginPage> {
                                       builder: (context) => Navbar()));
                             } else {
                               print('Login not Successful');
+                              print(usernameController.text);
+                              print(passwordController.text);
                               return showErrorDialog();
                             }
                           },

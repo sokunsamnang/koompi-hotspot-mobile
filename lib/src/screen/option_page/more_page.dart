@@ -56,7 +56,8 @@ class _MorePageState extends State<MorePage>
                         color: Colors.black, fontWeight: FontWeight.w500),
                   ),
                   leading: CircleAvatar(
-                    child: Image.asset('assets/images/koompi_logo.png'),
+                    backgroundImage: NetworkImage(
+                      "https://jshopping.in/images/detailed/591/ibboll-Fashion-Mens-Optical-Glasses-Frames-Classic-Square-Wrap-Frame-Luxury-Brand-Men-Clear-Eyeglasses-Frame.jpg"),
                   ),
                   trailing: Icon(LineIcons.edit),
                 ),
