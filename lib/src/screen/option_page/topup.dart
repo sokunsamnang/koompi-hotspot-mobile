@@ -47,8 +47,8 @@ class TopUp extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.deepOrange[100],
-                          blurRadius: 30,
+                          color: Colors.blueGrey[100],
+                          blurRadius: 20,
                           offset: Offset(0, 10),
                         ),
                       ],

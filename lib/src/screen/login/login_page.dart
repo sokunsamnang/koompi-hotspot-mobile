@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:koompi_hotspot/model/database.dart';
+import 'package:koompi_hotspot/src/backend/database.dart';
+import 'package:koompi_hotspot/src/components/formcard/formcardLogin.dart';
+import 'package:koompi_hotspot/src/components/navbar.dart';
+import 'package:koompi_hotspot/src/components/socialmedia.dart';
 import 'package:koompi_hotspot/src/screen/create_account/create_page.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:koompi_hotspot/src/screen/home_page/home_page.dart';
-import 'package:koompi_hotspot/src/widgets/formcardLogin.dart';
-import 'package:koompi_hotspot/src/widgets/navbar.dart';
-import 'package:koompi_hotspot/src/widgets/socialmedia.dart';
+import 'dart:io';
 
 class LoginPage extends StatefulWidget {
   _LoginPageState createState() => _LoginPageState();
@@ -18,6 +18,32 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     super.initState();
+  }
+
+  //check connection
+  _login() async {
+    try {
+      final result = await InternetAddress.lookup('google.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        print('connected');
+        var loginPage = await loginConnection(
+          usernameController.value.text,
+          passwordController.value.text);
+        if (loginPage.isNotEmpty) {
+          await loadData(context);
+          Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => Navbar()));
+        } else {
+          print('Login not Successful');
+          return showErrorDialog();
+        }
+      }
+    } on SocketException catch (_) {
+      print('not connected');
+      errorDialog(context);
+    }
   }
 
   // Initially password is obscure
@@ -62,28 +88,28 @@ class _LoginPageState extends State<LoginPage> {
 
   showErrorDialog() async {
     return showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text('Error'),
-            content: SingleChildScrollView(
-              child: ListBody(
-                children: <Widget>[
-                  Text('Login failed the username or password is incorrect'),
-                ],
-              ),
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Error'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('Login failed, Please enter the correct username or password'),
+              ],
             ),
-            actions: <Widget>[
-              FlatButton(
-                child: Text('OK'),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
-          );
-        });
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      });
   }
 
   Widget horizontalLine() => Padding(
@@ -117,7 +143,7 @@ class _LoginPageState extends State<LoginPage> {
               Expanded(
                 child: Container(),
               ),
-              Expanded(child: Image.asset("assets/images/image_02.png"))
+              Expanded(child: Image.asset("assets/images/image_02.png")),
             ],
           ),
           SingleChildScrollView(
@@ -145,7 +171,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   formLogin(context, usernameController, passwordController,
                       _obscureText, _toggle),
-                  SizedBox(height: ScreenUtil.getInstance().setHeight(50)),
+                  SizedBox(height: ScreenUtil.getInstance().setHeight(40)),
                   Center(
                       child: InkWell(
                     child: Container(
@@ -169,21 +195,7 @@ class _LoginPageState extends State<LoginPage> {
                             //     context,
                             //     MaterialPageRoute(
                             //         builder: (context) => Navbar()));
-                            var loginPage = await loginConnection(
-                                usernameController.value.text,
-                                passwordController.value.text);
-                            if (loginPage.isNotEmpty) {
-                              await loadData(context);
-                              Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => Navbar()));
-                            } else {
-                              print('Login not Successful');
-                              print(usernameController.text);
-                              print(passwordController.text);
-                              return showErrorDialog();
-                            }
+                            _login();
                           },
                           child: Center(
                             child: Text("SIGN IN",
@@ -197,6 +209,54 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                   )),
+                  SizedBox(
+                    height: ScreenUtil.getInstance().setHeight(40),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      horizontalLine(),
+                      Text("Sign In With",
+                          style: TextStyle(
+                              fontSize: 16.0, fontFamily: "Poppins-Medium")),
+                      horizontalLine()
+                    ],
+                  ),
+                  SizedBox(
+                    height: ScreenUtil.getInstance().setHeight(30),
+                  ),
+                  Center(
+                    child: Row(
+                      children: <Widget>[
+                        onPressFB(context),
+                        onPressGoogle(context),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: ScreenUtil.getInstance().setHeight(30),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Text(
+                        "DON'T HAVE AN ACCOUNT? ",
+                        style: TextStyle(fontFamily: "Poppins-Medium"),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => CreatePage()));
+                        },
+                        child: Text("SIGN UP",
+                            style: TextStyle(
+                                color: Color(0xFF5d74e3),
+                                fontFamily: "Poppins-Bold")),
+                      )
+                    ],
+                  )
                 ],
               ),
             ),

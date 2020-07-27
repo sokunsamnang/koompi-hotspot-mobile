@@ -1,0 +1,14 @@
+[
+    {
+        "merged": "/home/samallen/Desktop/koom_hotspot_clone/build/geolocation/intermediates/res/merged/release/color/common_google_signin_btn_tint.xml",
+        "source": "/home/samallen/.gradle/caches/transforms-2/files-2.1/5ac9ad6f13ea0190a3570ea7a43d9f59/play-services-base-17.0.0/res/color/common_google_signin_btn_tint.xml"
+    },
+    {
+        "merged": "/home/samallen/Desktop/koom_hotspot_clone/build/geolocation/intermediates/res/merged/release/color/common_google_signin_btn_text_light.xml",
+        "source": "/home/samallen/.gradle/caches/transforms-2/files-2.1/5ac9ad6f13ea0190a3570ea7a43d9f59/play-services-base-17.0.0/res/color/common_google_signin_btn_text_light.xml"
+    },
+    {
+        "merged": "/home/samallen/Desktop/koom_hotspot_clone/build/geolocation/intermediates/res/merged/release/color/common_google_signin_btn_text_dark.xml",
+        "source": "/home/samallen/.gradle/caches/transforms-2/files-2.1/5ac9ad6f13ea0190a3570ea7a43d9f59/play-services-base-17.0.0/res/color/common_google_signin_btn_text_dark.xml"
+    }
+]

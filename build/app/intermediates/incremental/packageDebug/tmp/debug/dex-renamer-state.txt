@@ -1,4 +1,4 @@
-#Tue Jul 21 16:44:37 ICT 2020
+#Mon Jul 27 14:39:33 ICT 2020
 base.0=/home/samallen/Desktop/koom_hotspot_clone/build/app/intermediates/dex/debug/mergeDexDebug/out/classes.dex
 path.0=classes.dex
 renamed.0=classes.dex

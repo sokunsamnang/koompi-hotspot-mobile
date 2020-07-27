@@ -145,8 +145,15 @@ class _MyAccountState extends State<MyAccount>
                   Expanded(
                     child: TextFormField(
                       decoration: InputDecoration(
-                        labelText: 'First Name',
-                        border: OutlineInputBorder(),
+                        hintText: 'First Name',
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.black),
+                          borderRadius: BorderRadius.all(Radius.circular(30.0))
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey),
+                          borderRadius: BorderRadius.all(Radius.circular(30.0)),
+                        ),
                       ),
                     ),
                   ),
@@ -154,8 +161,15 @@ class _MyAccountState extends State<MyAccount>
                   Expanded(
                     child: TextFormField(
                       decoration: InputDecoration(
-                        labelText: 'Last Name',
-                        border: OutlineInputBorder(),
+                        hintText: 'Last Name',
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.black),
+                          borderRadius: BorderRadius.all(Radius.circular(30.0))
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey),
+                          borderRadius: BorderRadius.all(Radius.circular(30.0)),
+                        ),
                       ),
                     ),
                   ),
@@ -164,15 +178,29 @@ class _MyAccountState extends State<MyAccount>
               SizedBox(height: 16.0),
               TextFormField(
                 decoration: InputDecoration(
-                  labelText: 'Email',
-                  border: OutlineInputBorder(),
+                  hintText: 'Email',
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.black),
+                    borderRadius: BorderRadius.all(Radius.circular(30.0))
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.grey),
+                    borderRadius: BorderRadius.all(Radius.circular(30.0)),
+                  ),
                 ),
               ),
               SizedBox(height: 16.0),
               TextFormField(
                 decoration: InputDecoration(
-                  labelText: 'Phone Number',
-                  border: OutlineInputBorder(),
+                  hintText: 'Phone Number',
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.black),
+                    borderRadius: BorderRadius.all(Radius.circular(30.0))
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.grey),
+                    borderRadius: BorderRadius.all(Radius.circular(30.0)),
+                  ),
                 ),
                 keyboardType: TextInputType.number,
                 inputFormatters: <TextInputFormatter>[
@@ -206,7 +234,7 @@ class _MyAccountState extends State<MyAccount>
       child: OutlineButton(
         onPressed: () => changeIndex(index),
         shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
         splashColor: Colors.transparent,
         borderSide: BorderSide(
             color: selectedIndex == index ? Colors.cyan : Colors.grey),

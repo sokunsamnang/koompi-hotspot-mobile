@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:koompi_hotspot/src/components/formcard/formcardForgotPassword.dart';
+import 'package:koompi_hotspot/src/components/formcard/formcardForgotpasswordPhonenumber.dart';
 import 'package:koompi_hotspot/src/screen/login/login_page.dart';
-import 'package:koompi_hotspot/src/widgets/formcardForgotPassword.dart';
-import 'package:koompi_hotspot/src/widgets/formcardForgotpasswordPhonenumber.dart';
 
 Widget forgetPasswordBody(BuildContext context) {
   ScreenUtil.instance = ScreenUtil.getInstance()..init(context);

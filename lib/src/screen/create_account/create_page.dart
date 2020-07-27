@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:koompi_hotspot/src/screen/create_account/create_account.dart';
-import 'package:koompi_hotspot/src/screen/create_account/phone_number.dart';
-import 'package:koompi_hotspot/src/screen/create_account/register.dart';
+import 'package:koompi_hotspot/src/screen/create_account/create_email.dart';
+import 'package:koompi_hotspot/src/screen/create_account/create_phone_number.dart';
 import 'package:koompi_hotspot/src/screen/login/login_page.dart';
 
 class CreatePage extends StatefulWidget {
@@ -25,7 +24,7 @@ class _CreatePageState extends State<CreatePage> {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: <Widget>[
               Padding(
-                padding: EdgeInsets.only(top: 60.0, right: 15.0),
+                padding: EdgeInsets.only(top: 80.0, right: 15.0),
                 child: Image.asset("assets/images/digital_nomad.png",
                     width: 240.0, scale: 8.3),
               ),
@@ -74,7 +73,7 @@ class _CreatePageState extends State<CreatePage> {
                         textColor: Colors.black,
                         padding: EdgeInsets.only(left: 50.0, right: 50.0),
                         onPressed: () {
-                          Navigator.push(
+                          Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
                                   builder: (context) => CreateEmail()));
@@ -101,7 +100,7 @@ class _CreatePageState extends State<CreatePage> {
                         textColor: Colors.black,
                         padding: EdgeInsets.only(left: 15.0, right: 15.0),
                         onPressed: () {
-                          Navigator.push(
+                          Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
                                   builder: (context) => PhoneNumber()));
@@ -110,34 +109,7 @@ class _CreatePageState extends State<CreatePage> {
                     ],
                   ),
                   SizedBox(
-                    height: ScreenUtil.getInstance().setHeight(30),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      FlatButton.icon(
-                        icon: Icon(Icons.phone),
-                        label: Text(
-                          'Sign up',
-                          style: TextStyle(fontSize: 15),
-                        ),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30.0),
-                            side: BorderSide(color: Colors.red)),
-                        color: Colors.white,
-                        textColor: Colors.black,
-                        padding: EdgeInsets.only(left: 15.0, right: 15.0),
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => Register()));
-                        },
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: ScreenUtil.getInstance().setHeight(50),
+                    height: ScreenUtil.getInstance().setHeight(100),
                   ),
                   Container(
                     margin: EdgeInsets.symmetric(vertical: 20),
@@ -156,7 +128,7 @@ class _CreatePageState extends State<CreatePage> {
                         ),
                         InkWell(
                           onTap: () {
-                            Navigator.pop(
+                            Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => LoginPage()));
