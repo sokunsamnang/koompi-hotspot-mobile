@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:koompi_hotspot/src/backend/database.dart';
 import 'package:koompi_hotspot/src/components/formcard/formcardEmail.dart';
+import 'package:koompi_hotspot/src/screen/create_account/verfication_account.dart';
 import 'package:koompi_hotspot/src/screen/login/login_page.dart';
 
 class CreateEmail extends StatefulWidget {
@@ -100,9 +100,12 @@ class _CreateEmailState extends State<CreateEmail> {
                             color: Colors.transparent,
                             child: InkWell(
                               onTap: () {
-                                registerEmailConnection(
-                                  emailController.value.text,
-                                  passwordController.value.text,
+                                // registerEmailConnection(
+                                //   emailController.value.text,
+                                //   passwordController.value.text,
+                                // );
+                                Navigator.pushReplacement(context, 
+                                  MaterialPageRoute(builder: (context) => VerificationAccount())
                                 );
                               },
                               child: Center(

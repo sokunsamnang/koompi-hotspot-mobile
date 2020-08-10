@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:koompi_hotspot/src/backend/database.dart';
 import 'package:koompi_hotspot/src/components/formcard/formcardPhoneNumber.dart';
 import 'package:koompi_hotspot/src/screen/login/login_page.dart';
+
+import 'verfication_account.dart';
 
 class PhoneNumber extends StatefulWidget {
   _PhoneNumberState createState() => _PhoneNumberState();
@@ -107,10 +108,14 @@ class _PhoneNumberState extends State<PhoneNumber> {
                             color: Colors.transparent,
                             child: InkWell(
                               onTap: () async {
-                                registerPhoneNumberConnection(
-                                    phonenumberController.value.text,
-                                    usernameController.value.text,
-                                    passwordController.value.text);
+                                // registerPhoneNumberConnection(
+                                //     phonenumberController.value.text,
+                                //     usernameController.value.text,
+                                //     passwordController.value.text);
+                                
+                                Navigator.pushReplacement(context, 
+                                  MaterialPageRoute(builder: (context) => VerificationAccount())
+                                );
                               },
                               child: Center(
                                 child: Text("SIGN UP",

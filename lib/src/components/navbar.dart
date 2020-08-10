@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:koompi_hotspot/src/models/model_userdata.dart';
 import 'package:koompi_hotspot/src/screen/home/home_page/home_page.dart';
 import 'package:koompi_hotspot/src/screen/home/map.dart';
 import 'package:koompi_hotspot/src/screen/home/user_plan.dart';
@@ -14,13 +15,20 @@ class Navbar extends StatefulWidget {
 class _NavbarState extends State<Navbar> {
   int _selectedIndex = 0;
 
+  static String myName = mData.fullname;
+
   final List<Widget> _widgetOptions = <Widget>[
-    HomePage(),
+    HomePage(myName),
     Maps(),
     UserPlan(),
     MorePage(),
   ];
 
+  @override
+  void initState(){
+    super.initState();
+  }
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:koompi_hotspot/src/screen/login/login_page.dart';
 import 'package:koompi_hotspot/src/screen/onboarding/onboarding_screen.dart';
@@ -7,6 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class App extends StatelessWidget{
   Widget build (context){
     return MaterialApp(
+      initialRoute: '/',
       title: 'Koompi Hotspot',
       home: new Splash(),
     );
@@ -23,7 +25,7 @@ class _SplashState extends State<Splash> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool firstTime = prefs.getBool('first_time');
 
-    var _duration = new Duration(milliseconds: 200);
+    var _duration = new Duration(seconds: 4);
 
     if (firstTime != null && !firstTime) {// Not first time
       return new Timer(_duration, navigationLoginPage);
@@ -54,8 +56,12 @@ class _SplashState extends State<Splash> {
   @override
   Widget build(BuildContext context) {
       return new Scaffold(
-      body: new Center(
-          child: new Text('LOADING....!!!!'),
+        backgroundColor: Colors.black,
+        body: Center(
+          child: FlareActor( 
+            'assets/animations/koompi_splash_screen.flr', 
+            animation: 'splash_screen',
+        ),
       ),
     );
   }

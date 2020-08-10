@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'package:koompi_hotspot/src/backend/database.dart';
+import 'package:koompi_hotspot/src/backend/get_request.dart';
+import 'package:koompi_hotspot/src/backend/post_request.dart';
 import 'package:koompi_hotspot/src/components/formcard/formcardLogin.dart';
 import 'package:koompi_hotspot/src/components/navbar.dart';
 import 'package:koompi_hotspot/src/components/socialmedia.dart';
@@ -7,37 +10,58 @@ import 'package:koompi_hotspot/src/screen/create_account/create_page.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'dart:io';
 
+import 'package:shared_preferences/shared_preferences.dart';
+
 class LoginPage extends StatefulWidget {
   _LoginPageState createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
+
   final TextEditingController usernameController = new TextEditingController();
   final TextEditingController passwordController = new TextEditingController();
+
+  String token;
+  String messageAlert;
+  bool _isLoading = false;
 
   @override
   void initState() {
     super.initState();
   }
 
-  //check connection
-  _login() async {
+  //check connection and login
+  login() async {
     try {
       final result = await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-        print('connected');
-        var loginPage = await loginConnection(
-          usernameController.value.text,
-          passwordController.value.text);
-        if (loginPage.isNotEmpty) {
-          await loadData(context);
-          Navigator.pushReplacement(
+        print('Internet connected');
+        var response = await PostRequest().userLogIn(
+          usernameController.text,
+          passwordController.text);
+        if (response.statusCode == 200) {
+          SharedPreferences isToken = await SharedPreferences.getInstance();
+          var responseJson = json.decode(response.body);
+          token = responseJson['token'];
+          GetRequest().getUserName(token);
+          
+          if(token != null){
+            isToken.setString('token', token);
+            Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                  builder: (context) => Navbar()));
+                builder: (context) => Navbar()));
+          }
+          else {
+            try {
+              messageAlert = responseJson['error']['message'];
+            } catch (e) {
+              messageAlert = responseJson['message'];
+            }
+          }
         } else {
           print('Login not Successful');
-          return showErrorDialog();
+          return showErrorDialog(context);
         }
       }
     } on SocketException catch (_) {
@@ -56,37 +80,61 @@ class _LoginPageState extends State<LoginPage> {
     });
   }
 
-  loadData(BuildContext context) async {
-    showDialog(
-        barrierDismissible: false,
+  errorDialog(context) async {
+    return showDialog(
         context: context,
-        builder: (context) {
-          return Material(
-            color: Colors.transparent,
-            child: Stack(
-              alignment: Alignment.center,
-              children: <Widget>[
-                Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    CircularProgressIndicator(
-                        backgroundColor: Colors.transparent,
-                        valueColor: AlwaysStoppedAnimation(Colors.blue)),
-                  ],
-                )
-              ],
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Error'),
+            content: SingleChildScrollView(
+              child: ListBody(
+                children: <Widget>[
+                  Text('Error Services'),
+                ],
+              ),
             ),
+            actions: <Widget>[
+              FlatButton(
+                child: Text('OK'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
           );
         });
-    await loginConnection(
-            usernameController.value.text, passwordController.value.text)
-        .then((value) {
-      print("Length ${value[0]}");
-      Navigator.pop(context);
-    });
   }
 
-  showErrorDialog() async {
+  // loadData(BuildContext context) async {
+  //   showDialog(
+  //       barrierDismissible: false,
+  //       context: context,
+  //       builder: (context) {
+  //         return Material(
+  //           color: Colors.transparent,
+  //           child: Stack(
+  //             alignment: Alignment.center,
+  //             children: <Widget>[
+  //               Column(
+  //                 mainAxisSize: MainAxisSize.min,
+  //                 children: <Widget>[
+  //                   CircularProgressIndicator(
+  //                       backgroundColor: Colors.transparent,
+  //                       valueColor: AlwaysStoppedAnimation(Colors.blue)),
+  //                 ],
+  //               )
+  //             ],
+  //           ),
+  //         );
+  //       });
+  //   await GetRequest().getUserName(mData.fullname)
+  //       .then((values) {
+  //     Navigator.pop(context);
+  //   });
+  // }
+
+  showErrorDialog(context) async {
     return showDialog(
       context: context,
       barrierDismissible: false,
@@ -173,20 +221,20 @@ class _LoginPageState extends State<LoginPage> {
                       _obscureText, _toggle),
                   SizedBox(height: ScreenUtil.getInstance().setHeight(40)),
                   Center(
-                      child: InkWell(
-                    child: Container(
-                      width: ScreenUtil.getInstance().setWidth(330),
-                      height: ScreenUtil.getInstance().setHeight(100),
-                      decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                              colors: [Color(0xFF17ead9), Color(0xFF6078ea)]),
-                          borderRadius: BorderRadius.circular(6.0),
-                          boxShadow: [
-                            BoxShadow(
-                                color: Color(0xFF6078ea).withOpacity(.3),
-                                offset: Offset(0.0, 8.0),
-                                blurRadius: 8.0)
-                          ]),
+                    child: InkWell(
+                      child: Container(
+                        width: ScreenUtil.getInstance().setWidth(330),
+                        height: ScreenUtil.getInstance().setHeight(100),
+                        decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                                colors: [Color(0xFF17ead9), Color(0xFF6078ea)]),
+                            borderRadius: BorderRadius.circular(6.0),
+                            boxShadow: [
+                              BoxShadow(
+                                  color: Color(0xFF6078ea).withOpacity(.3),
+                                  offset: Offset(0.0, 8.0),
+                                  blurRadius: 8.0)
+                            ]),
                       child: Material(
                         color: Colors.transparent,
                         child: InkWell(
@@ -195,7 +243,9 @@ class _LoginPageState extends State<LoginPage> {
                             //     context,
                             //     MaterialPageRoute(
                             //         builder: (context) => Navbar()));
-                            _login();
+                            login();
+                            //PostRequest().userLogIn(usernameController.value.text, passwordController.value.text);
+                            
                           },
                           child: Center(
                             child: Text("SIGN IN",
@@ -245,7 +295,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       InkWell(
                         onTap: () {
-                          Navigator.push(
+                          Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
                                   builder: (context) => CreatePage()));

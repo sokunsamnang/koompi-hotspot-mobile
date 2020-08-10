@@ -3,14 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
-import 'package:koompi_hotspot/src/models/model_userdata.dart';
 
-class MyAccount extends StatefulWidget {
+class VerificationAccount extends StatefulWidget {
   @override
-  _MyAccountState createState() => _MyAccountState();
+  _VerificationAccountState createState() => _VerificationAccountState();
 }
 
-class _MyAccountState extends State<MyAccount>
+class _VerificationAccountState extends State<VerificationAccount>
     with SingleTickerProviderStateMixin {
   AnimationController _controller;
 
@@ -70,17 +69,7 @@ class _MyAccountState extends State<MyAccount>
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Text('Edit Account', style: TextStyle(color: Colors.black)),
-        leading: Builder(builder: (BuildContext context) {
-          return IconButton(
-              icon: Icon(
-                Icons.arrow_back,
-                color: Colors.black,
-              ),
-              onPressed: () {
-                Navigator.pop(context);
-              });
-        }),
+        title: Text('User Infomation', style: TextStyle(color: Colors.black)),
         actions: <Widget>[
           Padding(
             padding: EdgeInsets.only(right: 5.0),
@@ -131,7 +120,7 @@ class _MyAccountState extends State<MyAccount>
               Center(
                 child: FlatButton(
                   colorBrightness: Brightness.dark,
-                  child: Text('Edit Profile',
+                  child: Text('Add Profile',
                       style: TextStyle(
                           color: Colors.blue,
                           fontSize: 20.0,
@@ -141,45 +130,9 @@ class _MyAccountState extends State<MyAccount>
                 ),
               ),
               SizedBox(height: 16.0),
-              Row(
-                children: <Widget>[
-                  Expanded(
-                    child: TextFormField(
-                      decoration: InputDecoration(
-                        hintText: 'First Name',
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.black),
-                          borderRadius: BorderRadius.all(Radius.circular(30.0))
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey),
-                          borderRadius: BorderRadius.all(Radius.circular(30.0)),
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(width: 20.0),
-                  Expanded(
-                    child: TextFormField(
-                      decoration: InputDecoration(
-                        hintText: 'Last Name',
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.black),
-                          borderRadius: BorderRadius.all(Radius.circular(30.0))
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey),
-                          borderRadius: BorderRadius.all(Radius.circular(30.0)),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 16.0),
               TextFormField(
                 decoration: InputDecoration(
-                  hintText: 'Email',
+                  hintText: 'First Name',
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.black),
                     borderRadius: BorderRadius.all(Radius.circular(30.0))
@@ -193,7 +146,7 @@ class _MyAccountState extends State<MyAccount>
               SizedBox(height: 16.0),
               TextFormField(
                 decoration: InputDecoration(
-                  hintText: 'Phone Number',
+                  hintText: 'Last Name',
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.black),
                     borderRadius: BorderRadius.all(Radius.circular(30.0))
@@ -203,14 +156,10 @@ class _MyAccountState extends State<MyAccount>
                     borderRadius: BorderRadius.all(Radius.circular(30.0)),
                   ),
                 ),
-                keyboardType: TextInputType.number,
-                inputFormatters: <TextInputFormatter>[
-                  WhitelistingTextInputFormatter.digitsOnly
-                ],
               ),
               SizedBox(height: 16.0),
-              dateOfbirth(selectedDate, _selectDate, context),
-              SizedBox(height: 16.0),
+              Text('Gender:'),
+              SizedBox(height: 10.0),
               Row(
                 children: <Widget>[
                   Expanded(
@@ -222,6 +171,8 @@ class _MyAccountState extends State<MyAccount>
                   ),
                 ],
               ),
+              SizedBox(height: 16.0),
+              dateOfbirth(selectedDate, _selectDate, context),
             ],
           ),
         ),
@@ -233,7 +184,9 @@ class _MyAccountState extends State<MyAccount>
     return ButtonTheme(
       height: 50.0,
       child: OutlineButton(
-        onPressed: () => changeIndex(index),
+        onPressed: () async {
+          changeIndex(index);
+        },
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
         splashColor: Colors.transparent,

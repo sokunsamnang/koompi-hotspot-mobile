@@ -329,7 +329,7 @@ class _UserPlanState extends State<UserPlan>
           user = userButton;
         },
         shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
         splashColor: Colors.transparent,
         borderSide: BorderSide(
             color: userSelectedIndex == userIndex ? Colors.cyan : Colors.grey),

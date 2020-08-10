@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:koompi_hotspot/src/models/model_userdata.dart';
 import 'package:koompi_hotspot/src/screen/home/home_page/plan_view.dart';
 import 'package:koompi_hotspot/src/screen/option_page/topup.dart';
 
 Widget bodyPage(BuildContext context) {
+  
   return Scaffold(
     body: SafeArea(
       child: SingleChildScrollView(
@@ -21,7 +23,6 @@ Widget bodyPage(BuildContext context) {
               Text('Your Plans', style: TextStyle(fontWeight: FontWeight.bold),),
               SizedBox(height: 20),
               _plan(context),
-
             ],
           ),
         ),
@@ -30,7 +31,12 @@ Widget bodyPage(BuildContext context) {
   );
 }
 
+
+
   Widget _appBar(context) {
+
+    String myName = mData.fullname;
+
     return Row(
       children: <Widget>[
         CircleAvatar(
@@ -38,24 +44,18 @@ Widget bodyPage(BuildContext context) {
               "https://jshopping.in/images/detailed/591/ibboll-Fashion-Mens-Optical-Glasses-Frames-Classic-Square-Wrap-Frame-Luxury-Brand-Men-Clear-Eyeglasses-Frame.jpg"),
         ),
         SizedBox(width: 15),
-        Text("Hello,", 
+        Text("Hello, ", 
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 18,
           ),
         ),
-        Text(' Admin',
+        Text( 
+          myName ?? 'KOOMPI',
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.w600,
               color: Colors.blueAccent)),
-        // Expanded(
-        //   child: SizedBox(),
-        // ),
-        // Icon(
-        //   Icons.short_text,
-        //   color: Theme.of(context).iconTheme.color,
-        // )
       ],
     );
   }

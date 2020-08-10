@@ -22,8 +22,7 @@ dependencies:
   simple_animations: ^2.2.1
   font_awesome_flutter: ^8.8.1
   shared_preferences: ^0.5.7+3
-  connectivity_widget: ^0.1.5
-  flutter_map: ^0.9.0
+  flutter_map: ^0.10.1
   geolocation: ^1.1.2
   flutter_screenutil: ^0.4.2
   google_nav_bar: ^2.0.0
@@ -33,6 +32,9 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
   google_fonts: ^1.1.0
+  flutter_secure_storage: ^3.3.3
+  connectivity: ^0.4.9
+  flutter_launcher_icons: ^0.7.5
 
   cached_network_image: ^2.2.0+1
   http: ^0.12.1
@@ -46,6 +48,12 @@ dependencies:
   custom_radio_grouped_button: any
   flare_flutter: any
 
+flutter_icons:
+  image_path: "assets/images/koompi_logo_signal.png"
+  ios: true
+  android: true
+
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -80,6 +88,7 @@ flutter:
     - assets/images/image_01.png
     - assets/images/image_02.png
     - assets/animations/alert_icon.flr
+    - assets/animations/koompi_splash_screen.flr
   #  - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -125,3 +134,4 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+

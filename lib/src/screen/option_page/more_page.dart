@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:koompi_hotspot/src/backend/get_request.dart';
+import 'package:koompi_hotspot/src/models/model_userdata.dart';
 import 'package:koompi_hotspot/src/screen/option_page/myaccount.dart';
 import 'package:koompi_hotspot/src/screen/login/login_page.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'change_password.dart';
 import 'speedtest.dart';
 import 'topup.dart';
@@ -16,10 +19,14 @@ class _MorePageState extends State<MorePage>
     with SingleTickerProviderStateMixin {
   AnimationController _controller;
 
+  String myName = mData.fullname;
+  String token;
+
   @override
   void initState() {
     super.initState();
     _controller = AnimationController(vsync: this);
+    GetRequest().getUserName(token);
   }
 
   @override
@@ -49,7 +56,7 @@ class _MorePageState extends State<MorePage>
                         MaterialPageRoute(builder: (context) => MyAccount()));
                   },
                   title: Text(
-                    'KOOMPI',
+                    myName ?? 'KOOMPI',
                     style: TextStyle(
                         color: Colors.black, fontWeight: FontWeight.w500),
                   ),
@@ -160,10 +167,13 @@ showLogoutDialog(context) async {
             ),
             FlatButton(
               child: Text('Yes'),
-              onPressed: () {
-                Navigator.pushReplacement(
+              onPressed: () async {
+                // SharedPreferences isToken = await SharedPreferences.getInstance();
+                // isToken.clear();
+                Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(builder: (context) => LoginPage()),
+                  ModalRoute.withName('/'),
                 );
               },
             ),
