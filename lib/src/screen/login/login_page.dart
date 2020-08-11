@@ -6,6 +6,7 @@ import 'package:koompi_hotspot/src/backend/post_request.dart';
 import 'package:koompi_hotspot/src/components/formcard/formcardLogin.dart';
 import 'package:koompi_hotspot/src/components/navbar.dart';
 import 'package:koompi_hotspot/src/components/socialmedia.dart';
+import 'package:koompi_hotspot/src/models/model_userdata.dart';
 import 'package:koompi_hotspot/src/screen/create_account/create_page.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'dart:io';
@@ -30,8 +31,16 @@ class _LoginPageState extends State<LoginPage> {
     super.initState();
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+    usernameController.dispose();
+    passwordController.dispose();
+  }
+
+
   //check connection and login
-  login() async {
+  Future <void> login() async {
     try {
       final result = await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
@@ -43,14 +52,18 @@ class _LoginPageState extends State<LoginPage> {
           SharedPreferences isToken = await SharedPreferences.getInstance();
           var responseJson = json.decode(response.body);
           token = responseJson['token'];
-          GetRequest().getUserName(token);
+          // await GetRequest().getUserName(token).then((value) {
+          //   setState(() {
+          //     _isLoading = true;
+          //   });
+          // });
+          await loadData(context);
           
           if(token != null){
-            isToken.setString('token', token);
+            await isToken.setString('token', token);
             Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                builder: (context) => Navbar()));
+                  context,
+                  MaterialPageRoute(builder: (context) => Navbar()));
           }
           else {
             try {
@@ -106,33 +119,36 @@ class _LoginPageState extends State<LoginPage> {
         });
   }
 
-  // loadData(BuildContext context) async {
-  //   showDialog(
-  //       barrierDismissible: false,
-  //       context: context,
-  //       builder: (context) {
-  //         return Material(
-  //           color: Colors.transparent,
-  //           child: Stack(
-  //             alignment: Alignment.center,
-  //             children: <Widget>[
-  //               Column(
-  //                 mainAxisSize: MainAxisSize.min,
-  //                 children: <Widget>[
-  //                   CircularProgressIndicator(
-  //                       backgroundColor: Colors.transparent,
-  //                       valueColor: AlwaysStoppedAnimation(Colors.blue)),
-  //                 ],
-  //               )
-  //             ],
-  //           ),
-  //         );
-  //       });
-  //   await GetRequest().getUserName(mData.fullname)
-  //       .then((values) {
-  //     Navigator.pop(context);
-  //   });
-  // }
+  loadData(BuildContext context) async {
+    showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (context) {
+          return Material(
+            color: Colors.transparent,
+            child: Stack(
+              alignment: Alignment.center,
+              children: <Widget>[
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    CircularProgressIndicator(
+                        backgroundColor: Colors.transparent,
+                        valueColor: AlwaysStoppedAnimation(Colors.blue)),
+                  ],
+                )
+              ],
+            ),
+          );
+        });
+    await GetRequest().getUserName(token)
+        .then((values) {
+          setState(() {
+            _isLoading = true;
+          });
+      Navigator.pop(context);
+    });
+  }
 
   showErrorDialog(context) async {
     return showDialog(
@@ -239,13 +255,7 @@ class _LoginPageState extends State<LoginPage> {
                         color: Colors.transparent,
                         child: InkWell(
                           onTap: () async {
-                            // Navigator.pushReplacement(
-                            //     context,
-                            //     MaterialPageRoute(
-                            //         builder: (context) => Navbar()));
                             login();
-                            //PostRequest().userLogIn(usernameController.value.text, passwordController.value.text);
-                            
                           },
                           child: Center(
                             child: Text("SIGN IN",

@@ -100,10 +100,6 @@ class _CreateEmailState extends State<CreateEmail> {
                             color: Colors.transparent,
                             child: InkWell(
                               onTap: () {
-                                // registerEmailConnection(
-                                //   emailController.value.text,
-                                //   passwordController.value.text,
-                                // );
                                 Navigator.pushReplacement(context, 
                                   MaterialPageRoute(builder: (context) => VerificationAccount())
                                 );

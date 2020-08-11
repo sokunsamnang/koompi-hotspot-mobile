@@ -4,20 +4,14 @@ import 'package:koompi_hotspot/src/screen/home/home_page/home_page_body.dart';
 
 class HomePage extends StatefulWidget{
 
-  final String name;
-  HomePage(this.name);
-
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage>{
 
-  String token;
-
   void iniState() {
     super.initState();
-    GetRequest().getUserName(token);
   }
   
   Widget build(BuildContext context){

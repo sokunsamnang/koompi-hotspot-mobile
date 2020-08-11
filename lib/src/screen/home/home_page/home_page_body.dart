@@ -14,7 +14,7 @@ Widget bodyPage(BuildContext context) {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               SizedBox(height: 15),
-              _appBar(context),
+              _nameBar(context),
               SizedBox(height: 40),
               Text('My Wallet', style: TextStyle(fontWeight: FontWeight.bold),),
               SizedBox(height: 20),
@@ -32,8 +32,7 @@ Widget bodyPage(BuildContext context) {
 }
 
 
-
-  Widget _appBar(context) {
+  Widget _nameBar(context) {
 
     String myName = mData.fullname;
 

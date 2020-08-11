@@ -2,6 +2,8 @@
 connectivity=/home/samallen/flutter/.pub-cache/hosted/pub.dartlang.org/connectivity-0.4.9/
 connectivity_for_web=/home/samallen/flutter/.pub-cache/hosted/pub.dartlang.org/connectivity_for_web-0.3.1/
 connectivity_macos=/home/samallen/flutter/.pub-cache/hosted/pub.dartlang.org/connectivity_macos-0.1.0+3/
+file_picker=/home/samallen/flutter/.pub-cache/hosted/pub.dartlang.org/file_picker-1.13.2/
+file_picker_web=/home/samallen/flutter/.pub-cache/hosted/pub.dartlang.org/file_picker_web-1.0.2+1/
 flutter_facebook_login=/home/samallen/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_facebook_login-3.0.0/
 flutter_plugin_android_lifecycle=/home/samallen/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_plugin_android_lifecycle-1.0.8/
 flutter_secure_storage=/home/samallen/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_secure_storage-3.3.3/

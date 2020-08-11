@@ -15,10 +15,8 @@ class Navbar extends StatefulWidget {
 class _NavbarState extends State<Navbar> {
   int _selectedIndex = 0;
 
-  static String myName = mData.fullname;
-
   final List<Widget> _widgetOptions = <Widget>[
-    HomePage(myName),
+    HomePage(),
     Maps(),
     UserPlan(),
     MorePage(),

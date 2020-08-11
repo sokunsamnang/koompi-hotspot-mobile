@@ -47,20 +47,19 @@ dependencies:
   fancy_bottom_navigation: ^0.3.2
   custom_radio_grouped_button: any
   flare_flutter: any
+  flutter_material_pickers: ^1.7.1
 
 flutter_icons:
   image_path: "assets/images/koompi_logo_signal.png"
   ios: true
   android: true
 
-  
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
-
 # The following section is specific to Flutter.
 flutter:
   # The following line ensures that the Material Icons font is
@@ -90,19 +89,15 @@ flutter:
     - assets/animations/alert_icon.flr
     - assets/animations/koompi_splash_screen.flr
   #  - images/a_dot_ham.jpeg
-
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
-
   # For details regarding adding assets from package dependencies, see
   # https://flutter.dev/assets-and-images/#from-packages
-
   # To add custom fonts to your application, add a fonts section here,
   # in this "flutter" section. Each entry in this list should have a
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-
   #   - family: Schyler
   fonts:
     - family: Bold

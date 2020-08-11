@@ -7,7 +7,7 @@ class GetRequest{
 
   String messageAlert;
 
-  Future<String> getUserName(String _token) async {
+  Future<void> getUserName(String _token) async {
     var response = await http.get("${ApiService.url}/dashboard", 
         headers: <String, String>{
         "accept": "application/json",
@@ -16,8 +16,6 @@ class GetRequest{
     });
     var responseBody = json.decode(response.body);
     mData = ModelUserData.fromJson(responseBody);
-    
-    return mData.fullname;
   }
   
 }
