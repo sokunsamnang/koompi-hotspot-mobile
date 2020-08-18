@@ -414,9 +414,11 @@ class _UserPlanState extends State<UserPlan>
                         borderRadius: BorderRadius.circular(18.0),
                         side: BorderSide(color: Colors.blueAccent)),
                     onPressed: () async {
-                      Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(builder: (context) => Navbar()));
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(builder: (context) => Navbar()),
+                        ModalRoute.withName('/navbar')
+                      );
                     },
                   ),
                 )

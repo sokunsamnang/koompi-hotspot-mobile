@@ -25,7 +25,7 @@ class _SplashState extends State<Splash> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool firstTime = prefs.getBool('first_time');
 
-    var _duration = new Duration(seconds: 4);
+    var _duration = new Duration(seconds: 3);
 
     if (firstTime != null && !firstTime) {// Not first time
       return new Timer(_duration, navigationLoginPage);

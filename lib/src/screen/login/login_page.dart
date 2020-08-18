@@ -6,8 +6,7 @@ import 'package:koompi_hotspot/src/backend/post_request.dart';
 import 'package:koompi_hotspot/src/components/formcard/formcardLogin.dart';
 import 'package:koompi_hotspot/src/components/navbar.dart';
 import 'package:koompi_hotspot/src/components/socialmedia.dart';
-import 'package:koompi_hotspot/src/models/model_userdata.dart';
-import 'package:koompi_hotspot/src/screen/create_account/create_page.dart';
+import 'package:koompi_hotspot/src/screen/create_account/create_email.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'dart:io';
 
@@ -52,18 +51,13 @@ class _LoginPageState extends State<LoginPage> {
           SharedPreferences isToken = await SharedPreferences.getInstance();
           var responseJson = json.decode(response.body);
           token = responseJson['token'];
-          // await GetRequest().getUserName(token).then((value) {
-          //   setState(() {
-          //     _isLoading = true;
-          //   });
-          // });
           await loadData(context);
           
           if(token != null){
             await isToken.setString('token', token);
             Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => Navbar()));
+              context,
+              MaterialPageRoute(builder: (context) => Navbar()));
           }
           else {
             try {
@@ -72,7 +66,11 @@ class _LoginPageState extends State<LoginPage> {
               messageAlert = responseJson['message'];
             }
           }
-        } else {
+        } 
+        else if (response.statusCode == 500){
+          return showErrorDialog(context);
+        }
+        else {
           print('Login not Successful');
           return showErrorDialog(context);
         }
@@ -93,7 +91,7 @@ class _LoginPageState extends State<LoginPage> {
     });
   }
 
-  errorDialog(context) async {
+  errorDialog(BuildContext context) async {
     return showDialog(
         context: context,
         barrierDismissible: false,
@@ -150,7 +148,7 @@ class _LoginPageState extends State<LoginPage> {
     });
   }
 
-  showErrorDialog(context) async {
+  showErrorDialog(BuildContext context) async {
     return showDialog(
       context: context,
       barrierDismissible: false,
@@ -161,6 +159,32 @@ class _LoginPageState extends State<LoginPage> {
             child: ListBody(
               children: <Widget>[
                 Text('Login failed, Please enter the correct username or password'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      });
+  }
+
+  showErrorServerDialog(BuildContext context) async {
+    return showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Error'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('Server in maintenance'),
               ],
             ),
           ),
@@ -235,7 +259,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   formLogin(context, usernameController, passwordController,
                       _obscureText, _toggle),
-                  SizedBox(height: ScreenUtil.getInstance().setHeight(40)),
+                  SizedBox(height: ScreenUtil.getInstance().setHeight(80)),
                   Center(
                     child: InkWell(
                       child: Container(
@@ -269,32 +293,32 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                   )),
+                  // SizedBox(
+                  //   height: ScreenUtil.getInstance().setHeight(40),
+                  // ),
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.center,
+                  //   children: <Widget>[
+                  //     horizontalLine(),
+                  //     Text("Sign In With",
+                  //         style: TextStyle(
+                  //             fontSize: 16.0, fontFamily: "Poppins-Medium")),
+                  //     horizontalLine()
+                  //   ],
+                  // ),
+                  // SizedBox(
+                  //   height: ScreenUtil.getInstance().setHeight(30),
+                  // ),
+                  // Center(
+                  //   child: Row(
+                  //     children: <Widget>[
+                  //       onPressFB(context),
+                  //       onPressGoogle(context),
+                  //     ],
+                  //   ),
+                  // ),
                   SizedBox(
-                    height: ScreenUtil.getInstance().setHeight(40),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      horizontalLine(),
-                      Text("Sign In With",
-                          style: TextStyle(
-                              fontSize: 16.0, fontFamily: "Poppins-Medium")),
-                      horizontalLine()
-                    ],
-                  ),
-                  SizedBox(
-                    height: ScreenUtil.getInstance().setHeight(30),
-                  ),
-                  Center(
-                    child: Row(
-                      children: <Widget>[
-                        onPressFB(context),
-                        onPressGoogle(context),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: ScreenUtil.getInstance().setHeight(30),
+                    height: ScreenUtil.getInstance().setHeight(60),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -305,10 +329,10 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       InkWell(
                         onTap: () {
-                          Navigator.pushReplacement(
+                          Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => CreatePage()));
+                                  builder: (context) => CreateEmail()));
                         },
                         child: Text("SIGN UP",
                             style: TextStyle(

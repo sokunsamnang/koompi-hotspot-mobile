@@ -5,7 +5,6 @@ import 'package:koompi_hotspot/src/models/model_userdata.dart';
 import 'package:koompi_hotspot/src/screen/option_page/myaccount.dart';
 import 'package:koompi_hotspot/src/screen/login/login_page.dart';
 import 'package:line_icons/line_icons.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'change_password.dart';
 import 'speedtest.dart';
 import 'topup.dart';
@@ -121,6 +120,8 @@ class _MorePageState extends State<MorePage>
                         showLogoutDialog(context);
                       },
                     ),
+                    _buildDivider(),
+                    Text('Demo Version: 0.0.1'),
                   ],
                 ),
               ),

@@ -9,16 +9,27 @@ class CreateEmail extends StatefulWidget {
 }
 
 class _CreateEmailState extends State<CreateEmail> {
+
+  String newEmail;
+
+  final TextEditingController usernameController = new TextEditingController();
   final TextEditingController emailController = new TextEditingController();
   final TextEditingController passwordController = new TextEditingController();
-
+  final TextEditingController confirmPasswordController = new TextEditingController();
   // Initially password is obscure
   bool _obscureText = true;
+  bool _secondObscureText = true;
 
   // Toggles the password show status
   void _toggle() {
     setState(() {
       _obscureText = !_obscureText;
+    });
+  }
+
+  void _secondToggle() {
+    setState(() {
+      _secondObscureText = !_secondObscureText;
     });
   }
 
@@ -68,14 +79,18 @@ class _CreateEmailState extends State<CreateEmail> {
                     ],
                   ),
                   SizedBox(
-                    height: ScreenUtil.getInstance().setHeight(220),
+                    height: ScreenUtil.getInstance().setHeight(80),
                   ),
                   formCardEmail(
                       context,
+                      usernameController,
                       emailController,
                       passwordController,
+                      confirmPasswordController,
                       _obscureText,
-                      _toggle),
+                      _toggle,
+                      _secondObscureText,
+                      _secondToggle),
                   SizedBox(height: ScreenUtil.getInstance().setHeight(40)),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -101,7 +116,7 @@ class _CreateEmailState extends State<CreateEmail> {
                             child: InkWell(
                               onTap: () {
                                 Navigator.pushReplacement(context, 
-                                  MaterialPageRoute(builder: (context) => VerificationAccount())
+                                  MaterialPageRoute(builder: (context) => VerificationAccount(email: null,))
                                 );
                               },
                               child: Center(
@@ -135,10 +150,12 @@ class _CreateEmailState extends State<CreateEmail> {
                         ),
                         InkWell(
                           onTap: () {
-                            Navigator.pushReplacement(
+                            Navigator.pushAndRemoveUntil(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => LoginPage()));
+                                    builder: (context) => LoginPage()),
+                                ModalRoute.withName('/loginScreen')  
+                              );
                           },
                           splashColor: Colors.transparent,
                           highlightColor: Colors.transparent,

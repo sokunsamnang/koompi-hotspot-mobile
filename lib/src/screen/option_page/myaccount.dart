@@ -1,8 +1,13 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_material_pickers/helpers/show_scroll_picker.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:koompi_hotspot/src/components/navbar.dart';
+import 'package:koompi_hotspot/src/models/model_location.dart';
+import 'package:koompi_hotspot/src/models/model_update_data.dart';
 import 'package:koompi_hotspot/src/models/model_userdata.dart';
 
 class MyAccount extends StatefulWidget {
@@ -14,10 +19,16 @@ class _MyAccountState extends State<MyAccount>
     with SingleTickerProviderStateMixin {
   AnimationController _controller;
 
+  String newName;
+
+  TextEditingController fullnameController = TextEditingController(text: '${mData.fullname}') ;
+
+  var model = LocationSearch();
+
   File _image;
 
   List<String> lst = ['Male', 'Female'];
-  int selectedIndex = 0;
+  int selectedIndex;
   
 
   @override
@@ -34,7 +45,7 @@ class _MyAccountState extends State<MyAccount>
 
   DateTime selectedDate = DateTime.now();
 
-  final dateFormart = new DateFormat('dd-MM-yyyy');
+  final dateFormart = new DateFormat('dd-MMM-yyyy');
 
   Future<Null> _selectDate(BuildContext context) async {
     final DateTime picked = await showDatePicker(
@@ -54,6 +65,8 @@ class _MyAccountState extends State<MyAccount>
     super.dispose();
     _controller.dispose();
   }
+
+  String myName = mData.fullname;
 
   @override
   Widget build(BuildContext context) {
@@ -90,7 +103,13 @@ class _MyAccountState extends State<MyAccount>
                   Icons.check,
                   color: Colors.blueAccent,
                 ),
-                onPressed: () {},
+                onPressed: () async {
+                  UpdateUserData().updateData(newName).then((value){
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => Navbar()));
+                  });
+                },
               ),
             ),
           ),
@@ -131,7 +150,7 @@ class _MyAccountState extends State<MyAccount>
               Center(
                 child: FlatButton(
                   colorBrightness: Brightness.dark,
-                  child: Text('Edit Profile',
+                  child: Text('Edit Profile Photo',
                       style: TextStyle(
                           color: Colors.blue,
                           fontSize: 20.0,
@@ -141,41 +160,55 @@ class _MyAccountState extends State<MyAccount>
                 ),
               ),
               SizedBox(height: 16.0),
-              Row(
-                children: <Widget>[
-                  Expanded(
-                    child: TextFormField(
-                      decoration: InputDecoration(
-                        hintText: 'First Name',
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.black),
-                          borderRadius: BorderRadius.all(Radius.circular(30.0))
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey),
-                          borderRadius: BorderRadius.all(Radius.circular(30.0)),
-                        ),
-                      ),
-                    ),
+              TextFormField(
+                controller: fullnameController,
+                decoration: InputDecoration(
+                  hintText: 'Username',
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.black),
+                    borderRadius: BorderRadius.all(Radius.circular(30.0))
                   ),
-                  SizedBox(width: 20.0),
-                  Expanded(
-                    child: TextFormField(
-                      decoration: InputDecoration(
-                        hintText: 'Last Name',
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.black),
-                          borderRadius: BorderRadius.all(Radius.circular(30.0))
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey),
-                          borderRadius: BorderRadius.all(Radius.circular(30.0)),
-                        ),
-                      ),
-                    ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.grey),
+                    borderRadius: BorderRadius.all(Radius.circular(30.0)),
                   ),
-                ],
+                ),
               ),
+              // Row(
+              //   children: <Widget>[
+              //     Expanded(
+              //       child: TextFormField(
+              //         decoration: InputDecoration(
+              //           hintText: 'First Name',
+              //           focusedBorder: OutlineInputBorder(
+              //             borderSide: BorderSide(color: Colors.black),
+              //             borderRadius: BorderRadius.all(Radius.circular(30.0))
+              //           ),
+              //           enabledBorder: OutlineInputBorder(
+              //             borderSide: BorderSide(color: Colors.grey),
+              //             borderRadius: BorderRadius.all(Radius.circular(30.0)),
+              //           ),
+              //         ),
+              //       ),
+              //     ),
+              //     SizedBox(width: 20.0),
+              //     Expanded(
+              //       child: TextFormField(
+              //         decoration: InputDecoration(
+              //           hintText: 'Last Name',
+              //           focusedBorder: OutlineInputBorder(
+              //             borderSide: BorderSide(color: Colors.black),
+              //             borderRadius: BorderRadius.all(Radius.circular(30.0))
+              //           ),
+              //           enabledBorder: OutlineInputBorder(
+              //             borderSide: BorderSide(color: Colors.grey),
+              //             borderRadius: BorderRadius.all(Radius.circular(30.0)),
+              //           ),
+              //         ),
+              //       ),
+              //     ),
+              //   ],
+              // ),
               SizedBox(height: 16.0),
               TextFormField(
                 decoration: InputDecoration(
@@ -190,26 +223,29 @@ class _MyAccountState extends State<MyAccount>
                   ),
                 ),
               ),
+              // SizedBox(height: 16.0),
+              // TextFormField(
+              //   decoration: InputDecoration(
+              //     hintText: 'Phone Number',
+              //     focusedBorder: OutlineInputBorder(
+              //       borderSide: BorderSide(color: Colors.black),
+              //       borderRadius: BorderRadius.all(Radius.circular(30.0))
+              //     ),
+              //     enabledBorder: OutlineInputBorder(
+              //       borderSide: BorderSide(color: Colors.grey),
+              //       borderRadius: BorderRadius.all(Radius.circular(30.0)),
+              //     ),
+              //   ),
+              //   keyboardType: TextInputType.number,
+              //   inputFormatters: <TextInputFormatter>[
+              //     WhitelistingTextInputFormatter.digitsOnly
+              //   ],
+              // ),
               SizedBox(height: 16.0),
-              TextFormField(
-                decoration: InputDecoration(
-                  hintText: 'Phone Number',
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.black),
-                    borderRadius: BorderRadius.all(Radius.circular(30.0))
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey),
-                    borderRadius: BorderRadius.all(Radius.circular(30.0)),
-                  ),
-                ),
-                keyboardType: TextInputType.number,
-                inputFormatters: <TextInputFormatter>[
-                  WhitelistingTextInputFormatter.digitsOnly
-                ],
-              ),
+              Text('Date Of Birth'),
+              dateOfbirth(selectedDate, _selectDate, dateFormart, context),
               SizedBox(height: 16.0),
-              dateOfbirth(selectedDate, _selectDate, context),
+              Text('Gender'),
               SizedBox(height: 16.0),
               Row(
                 children: <Widget>[
@@ -222,6 +258,9 @@ class _MyAccountState extends State<MyAccount>
                   ),
                 ],
               ),
+              SizedBox(height: 16.0),
+              Text('Location'),
+              locationPicker(context),
             ],
           ),
         ),
@@ -247,17 +286,47 @@ class _MyAccountState extends State<MyAccount>
       ),
     );
   }
+
+    Row locationPicker(BuildContext context) {
+    return Row(
+      children: <Widget>[
+        Container(
+          width: 150.0,
+          child: RaisedButton(
+            child: Text("Select Location"),
+            onPressed: () => showMaterialScrollPicker(
+              context: context,
+              title: "Pick Your Location",
+              items: model.khLocation,
+              selectedItem: model.selectedKhLocation,
+              onChanged: (value) =>
+                  setState(() => model.selectedKhLocation = value),
+              onCancelled: () => print("Scroll Picker cancelled"),
+              onConfirmed: () => print("Scroll Picker confirmed"),
+            ),
+          ),
+        ),
+        Expanded(
+          child: Text(
+            model.selectedKhLocation.toString(),
+            textAlign: TextAlign.right,
+          ),
+        ),
+      ],
+    );
+  }
 }
 
-  Widget dateOfbirth(DateTime selectedDate, _selectDate, context){
+  Widget dateOfbirth(DateTime selectedDate, _selectDate, dateFormart, context){
     return _InputDropdown(
-      labelText: 'Date Of Birth',
-      valueText: DateFormat.yMMMMd().format(selectedDate),
+      valueText: dateFormart.format(selectedDate),
       onPressed: (){
         _selectDate(context);
       },
     );
   }
+
+
 
 class _InputDropdown extends StatelessWidget {
   const _InputDropdown(
