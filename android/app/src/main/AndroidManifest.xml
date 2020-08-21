@@ -39,7 +39,7 @@
 
         <!--Google Map API-->
          <meta-data android:name="com.google.android.geo.API_KEY" 
-                android:value="AIzaSyCv_cqB34j7gvlqT97n7Z6r78HYK2zlyeg"/>
+                android:value="AIzaSyAnTYG477vn1DDm2Pj4tPLvZa198cY8zN4"/>
 
         <!-- Facebook Login configuration -->
         <meta-data android:name="com.facebook.sdk.ApplicationId" 

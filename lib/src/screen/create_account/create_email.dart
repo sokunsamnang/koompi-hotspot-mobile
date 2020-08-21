@@ -10,8 +10,6 @@ class CreateEmail extends StatefulWidget {
 
 class _CreateEmailState extends State<CreateEmail> {
 
-  String newEmail;
-
   final TextEditingController usernameController = new TextEditingController();
   final TextEditingController emailController = new TextEditingController();
   final TextEditingController passwordController = new TextEditingController();
@@ -37,7 +35,7 @@ class _CreateEmailState extends State<CreateEmail> {
   Widget build(BuildContext context) {
     ScreenUtil.instance = ScreenUtil.getInstance()..init(context);
     ScreenUtil.instance =
-        ScreenUtil(width: 750, height: 1334, allowFontScaling: true);
+        ScreenUtil(width: 750, height: 1410, allowFontScaling: true);
     return new Scaffold(
       backgroundColor: Colors.white,
       resizeToAvoidBottomPadding: true,
@@ -45,17 +43,9 @@ class _CreateEmailState extends State<CreateEmail> {
         fit: StackFit.expand,
         children: <Widget>[
           Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
-              Padding(
-                padding: EdgeInsets.only(top: 60.0, right: 15.0),
-                child: Image.asset("assets/images/digital_nomad.png",
-                    width: 240.0, scale: 8.3),
-              ),
-              Expanded(
-                child: Container(),
-              ),
-              Expanded(child: Image.asset("assets/images/image_02.png"))
+              Image.asset("assets/images/image_02.png"),
             ],
           ),
           SingleChildScrollView(
@@ -78,19 +68,21 @@ class _CreateEmailState extends State<CreateEmail> {
                               fontWeight: FontWeight.bold))
                     ],
                   ),
-                  SizedBox(
-                    height: ScreenUtil.getInstance().setHeight(80),
+                  Stack(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(left: 150.0),
+                        child: Image.asset("assets/images/digital_nomad.png",
+                          width: 200.0,),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top: 80.0),
+                        child: formCardEmail(context, usernameController, emailController, 
+                          passwordController, confirmPasswordController, 
+                          _obscureText, _toggle, _secondObscureText, _secondToggle),
+                      ),
+                    ],
                   ),
-                  formCardEmail(
-                      context,
-                      usernameController,
-                      emailController,
-                      passwordController,
-                      confirmPasswordController,
-                      _obscureText,
-                      _toggle,
-                      _secondObscureText,
-                      _secondToggle),
                   SizedBox(height: ScreenUtil.getInstance().setHeight(40)),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,

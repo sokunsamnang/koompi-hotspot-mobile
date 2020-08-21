@@ -1,12 +1,16 @@
 import 'dart:ui';
+
+import 'package:flutter/cupertino.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-class PinInformation {
+class PinData{
   String pinPath;
-  String avatarPath;
+  String address;
   LatLng location;
   String locationName;
   Color labelColor;
 
-  PinInformation({this.pinPath, this.avatarPath, this.location, this.locationName, this.labelColor});
+  PinData({this.pinPath,this.address, this.location, this.locationName, this.labelColor});
+
+
 }

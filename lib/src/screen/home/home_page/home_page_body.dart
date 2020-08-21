@@ -7,8 +7,7 @@ Widget bodyPage(BuildContext context) {
   
   return Scaffold(
     body: SafeArea(
-      child: SingleChildScrollView(
-        child: Container(
+      child: Container(
           padding: EdgeInsets.symmetric(horizontal: 20.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -22,9 +21,9 @@ Widget bodyPage(BuildContext context) {
               SizedBox(height: 40),
               Text('Your Plans', style: TextStyle(fontWeight: FontWeight.bold),),
               SizedBox(height: 20),
-              _plan(context),
+              Expanded(child: PlanView()),
             ],
-          ),
+          
         ),
       ),
     ),
@@ -181,106 +180,106 @@ Widget _balanceTokens(context) {
     );
 }
 
-Widget _plan(context) {
-  return InkWell(
-    child: ClipRRect(
-        borderRadius: BorderRadius.all(Radius.circular(40)),
-        child: Container(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height * .27,
-          color: Colors.blueGrey[900],
-          child: Stack(
-            fit: StackFit.expand,
-            children: <Widget>[
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    'Username: koompi',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  SizedBox(height: 10),
-                  Text(
-                    'User: 5 Users',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w800,
-                    ),
-                  ),
-                  SizedBox(height: 10),
-                  Text(
-                    'Expiring in: 999 days',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w800,
-                    ),
-                  )
-                ],
-              ),
-              Positioned(
-                right: -170,
-                top: -170,
-                child: CircleAvatar(
-                  radius: 130,
-                  backgroundColor: Colors.lightBlueAccent,
-                ),
-              ),
-              Positioned(
-                right: -160,
-                top: -190,
-                child: CircleAvatar(
-                  radius: 130,
-                  backgroundColor: Colors.lightBlue,
-                ),
-              ),
-              Positioned(
-                left: -170,
-                bottom: -170,
-                child: CircleAvatar(
-                  radius: 130,
-                  backgroundColor: Colors.orange,
-                ),
-              ),
-              Positioned(
-                left: -160,
-                bottom: -190,
-                child: CircleAvatar(
-                  radius: 130,
-                  backgroundColor: Colors.deepOrange,
-                ),
-              ),
-              Positioned(
-                right: 10,
-                bottom: 0,
-                child: FlatButton(
-                  highlightColor: Colors.transparent,
-                  splashColor: Colors.transparent,
-                  onPressed: () => Navigator.push(context,
-                        MaterialPageRoute(
-                          builder: (context) => PlanView())), 
-                  child: Row(
-                    children: <Widget>[
-                      Text('Details ', style: TextStyle(fontSize: 17, color: Colors.deepOrange),),
-                      Icon(Icons.arrow_forward_ios, color: Colors.deepOrange,),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-      splashColor: Colors.transparent,
-      highlightColor: Colors.transparent,
-      onTap: () => Navigator.push(context,
-                      MaterialPageRoute(
-                        builder: (context) => PlanView())),
-    );
-}
+// Widget _plan(context) {
+//   return InkWell(
+//     child: ClipRRect(
+//         borderRadius: BorderRadius.all(Radius.circular(40)),
+//         child: Container(
+//           width: MediaQuery.of(context).size.width,
+//           height: MediaQuery.of(context).size.height * .27,
+//           color: Colors.blueGrey[900],
+//           child: Stack(
+//             fit: StackFit.expand,
+//             children: <Widget>[
+//               Column(
+//                 crossAxisAlignment: CrossAxisAlignment.center,
+//                 mainAxisAlignment: MainAxisAlignment.center,
+//                 children: <Widget>[
+//                   Text(
+//                     'Username: koompi',
+//                     style: TextStyle(
+//                       color: Colors.white,
+//                       fontSize: 14,
+//                       fontWeight: FontWeight.w500,
+//                     ),
+//                   ),
+//                   SizedBox(height: 10),
+//                   Text(
+//                     'User: 5 Users',
+//                     style: TextStyle(
+//                       color: Colors.white,
+//                       fontSize: 14,
+//                       fontWeight: FontWeight.w800,
+//                     ),
+//                   ),
+//                   SizedBox(height: 10),
+//                   Text(
+//                     'Expiring in: 999 days',
+//                     style: TextStyle(
+//                       color: Colors.white,
+//                       fontSize: 14,
+//                       fontWeight: FontWeight.w800,
+//                     ),
+//                   )
+//                 ],
+//               ),
+//               Positioned(
+//                 right: -170,
+//                 top: -170,
+//                 child: CircleAvatar(
+//                   radius: 130,
+//                   backgroundColor: Colors.lightBlueAccent,
+//                 ),
+//               ),
+//               Positioned(
+//                 right: -160,
+//                 top: -190,
+//                 child: CircleAvatar(
+//                   radius: 130,
+//                   backgroundColor: Colors.lightBlue,
+//                 ),
+//               ),
+//               Positioned(
+//                 left: -170,
+//                 bottom: -170,
+//                 child: CircleAvatar(
+//                   radius: 130,
+//                   backgroundColor: Colors.orange,
+//                 ),
+//               ),
+//               Positioned(
+//                 left: -160,
+//                 bottom: -190,
+//                 child: CircleAvatar(
+//                   radius: 130,
+//                   backgroundColor: Colors.deepOrange,
+//                 ),
+//               ),
+//               Positioned(
+//                 right: 10,
+//                 bottom: 0,
+//                 child: FlatButton(
+//                   highlightColor: Colors.transparent,
+//                   splashColor: Colors.transparent,
+//                   onPressed: () => Navigator.push(context,
+//                         MaterialPageRoute(
+//                           builder: (context) => PlanView())), 
+//                   child: Row(
+//                     children: <Widget>[
+//                       Text('Details ', style: TextStyle(fontSize: 17, color: Colors.deepOrange),),
+//                       Icon(Icons.arrow_forward_ios, color: Colors.deepOrange,),
+//                     ],
+//                   ),
+//                 ),
+//               ),
+//             ],
+//           ),
+//         ),
+//       ),
+//       splashColor: Colors.transparent,
+//       highlightColor: Colors.transparent,
+//       onTap: () => Navigator.push(context,
+//                       MaterialPageRoute(
+//                         builder: (context) => PlanView())),
+//     );
+// }

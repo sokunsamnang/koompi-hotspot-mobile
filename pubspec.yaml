@@ -19,6 +19,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  geolocator: ^5.1.5
+  permission_handler: ^5.0.1+1
   google_maps_flutter: ^0.5.24+1
   location: ^2.5.4
   flutter_polyline_points: ^0.1.0
@@ -48,6 +50,7 @@ dependencies:
   custom_radio_grouped_button: any
   flare_flutter: any
   flutter_material_pickers: ^1.7.1
+  carousel_slider: ^1.4.1
 
 flutter_icons:
   image_path: "assets/images/koompi_logo_signal.png"
@@ -94,6 +97,7 @@ flutter:
     - assets/images/driving_pin.png
     - assets/images/friend1.jpg
     - assets/images/friend2.jpg
+    - assets/map_style.json
   #  - images/a_dot_ham.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

@@ -8,6 +8,7 @@ import 'package:koompi_hotspot/src/components/navbar.dart';
 import 'package:koompi_hotspot/src/components/socialmedia.dart';
 import 'package:koompi_hotspot/src/screen/create_account/create_email.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:koompi_hotspot/src/screen/map/map.dart';
 import 'dart:io';
 
 import 'package:shared_preferences/shared_preferences.dart';
@@ -28,6 +29,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     super.initState();
+    
   }
 
   @override
@@ -67,8 +69,8 @@ class _LoginPageState extends State<LoginPage> {
             }
           }
         } 
-        else if (response.statusCode == 500){
-          return showErrorDialog(context);
+        else if (response.statusCode >= 500 && response.statusCode <600){
+          return showErrorServerDialog(context);
         }
         else {
           print('Login not Successful');
@@ -180,7 +182,7 @@ class _LoginPageState extends State<LoginPage> {
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Error'),
+          title: Text('Server Error'),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
@@ -221,17 +223,9 @@ class _LoginPageState extends State<LoginPage> {
         fit: StackFit.expand,
         children: <Widget>[
           Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
-              Padding(
-                padding: EdgeInsets.only(top: 60.0, right: 15.0),
-                child: Image.asset("assets/images/digital_nomad.png",
-                    width: 240.0, scale: 8.3),
-              ),
-              Expanded(
-                child: Container(),
-              ),
-              Expanded(child: Image.asset("assets/images/image_02.png")),
+              Image.asset("assets/images/image_02.png"),
             ],
           ),
           SingleChildScrollView(
@@ -251,14 +245,25 @@ class _LoginPageState extends State<LoginPage> {
                               fontFamily: "Poppins-Bold",
                               fontSize: ScreenUtil.getInstance().setSp(46),
                               letterSpacing: .6,
-                              fontWeight: FontWeight.bold))
+                              fontWeight: FontWeight.bold)
+                      ),
                     ],
                   ),
-                  SizedBox(
-                    height: ScreenUtil.getInstance().setHeight(200),
+                  Stack(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(left: 150.0),
+                        child: Image.asset("assets/images/digital_nomad.png",
+                          width: 200.0,),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top: 140.0),
+                        child: formLogin(context, usernameController, passwordController,
+                        _obscureText, _toggle),
+                      ),
+                      
+                    ],
                   ),
-                  formLogin(context, usernameController, passwordController,
-                      _obscureText, _toggle),
                   SizedBox(height: ScreenUtil.getInstance().setHeight(80)),
                   Center(
                     child: InkWell(
@@ -279,7 +284,10 @@ class _LoginPageState extends State<LoginPage> {
                         color: Colors.transparent,
                         child: InkWell(
                           onTap: () async {
-                            login();
+                            // login();
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(builder: (context) => Navbar()));
                           },
                           child: Center(
                             child: Text("SIGN IN",
