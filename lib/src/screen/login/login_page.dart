@@ -1,14 +1,13 @@
 import 'dart:convert';
-
+import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:koompi_hotspot/src/backend/component.dart';
 import 'package:koompi_hotspot/src/backend/get_request.dart';
 import 'package:koompi_hotspot/src/backend/post_request.dart';
 import 'package:koompi_hotspot/src/components/formcard/formcardLogin.dart';
 import 'package:koompi_hotspot/src/components/navbar.dart';
-import 'package:koompi_hotspot/src/components/socialmedia.dart';
-import 'package:koompi_hotspot/src/screen/create_account/create_email.dart';
+import 'package:koompi_hotspot/src/screen/create_account/create_email/create_email.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:koompi_hotspot/src/screen/map/map.dart';
 import 'dart:io';
 
 import 'package:shared_preferences/shared_preferences.dart';
@@ -18,10 +17,17 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final formKey = GlobalKey<FormState>();
+  bool _autoValidate = false;
+
+  String _email;
+  String _password;
 
   final TextEditingController usernameController = new TextEditingController();
   final TextEditingController passwordController = new TextEditingController();
 
+  Backend _backend = Backend();
+  
   String token;
   String messageAlert;
   bool _isLoading = false;
@@ -39,9 +45,22 @@ class _LoginPageState extends State<LoginPage> {
     passwordController.dispose();
   }
 
+  void _submit(){
+    final form = formKey.currentState;
+
+    if(form.validate()){
+      form.save();
+    }
+    else{
+      setState(() {
+        _autoValidate = true;
+      });
+    }
+  }
 
   //check connection and login
   Future <void> login() async {
+    _submit();
     try {
       final result = await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
@@ -62,6 +81,7 @@ class _LoginPageState extends State<LoginPage> {
               MaterialPageRoute(builder: (context) => Navbar()));
           }
           else {
+            showErrorDialog(context);
             try {
               messageAlert = responseJson['error']['message'];
             } catch (e) {
@@ -72,10 +92,10 @@ class _LoginPageState extends State<LoginPage> {
         else if (response.statusCode >= 500 && response.statusCode <600){
           return showErrorServerDialog(context);
         }
-        else {
-          print('Login not Successful');
-          return showErrorDialog(context);
-        }
+        // else {
+        //   print('Login not Successful');
+        //   return _submit();
+        // }
       }
     } on SocketException catch (_) {
       print('not connected');
@@ -160,7 +180,7 @@ class _LoginPageState extends State<LoginPage> {
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Text('Login failed, Please enter the correct username or password'),
+                Text('Login failed, Please enter the correct email or password'),
               ],
             ),
           ),
@@ -177,16 +197,19 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   showErrorServerDialog(BuildContext context) async {
+    var response = await PostRequest().userLogIn(
+          usernameController.text,
+          passwordController.text);
     return showDialog(
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Server Error'),
+          title: Text('Error'),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Text('Server in maintenance'),
+                Text('${response.body}'),
               ],
             ),
           ),
@@ -259,7 +282,7 @@ class _LoginPageState extends State<LoginPage> {
                       Padding(
                         padding: EdgeInsets.only(top: 140.0),
                         child: formLogin(context, usernameController, passwordController,
-                        _obscureText, _toggle),
+                        _obscureText, _toggle, _email, _password, formKey, _autoValidate),
                       ),
                       
                     ],
@@ -284,6 +307,7 @@ class _LoginPageState extends State<LoginPage> {
                         color: Colors.transparent,
                         child: InkWell(
                           onTap: () async {
+                            
                             // login();
                             Navigator.pushReplacement(
                               context,
@@ -336,11 +360,16 @@ class _LoginPageState extends State<LoginPage> {
                         style: TextStyle(fontFamily: "Poppins-Medium"),
                       ),
                       InkWell(
+                        splashColor: Colors.transparent,
+                        highlightColor: Colors.transparent,
                         onTap: () {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => CreateEmail()));
+                                  builder: (context) => CreateEmail())).then((value) {
+                                    usernameController.clear();
+                                    passwordController.clear();
+                                  });
                         },
                         child: Text("SIGN UP",
                             style: TextStyle(

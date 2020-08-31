@@ -112,7 +112,6 @@ class _UserPlanState extends State<UserPlan>
     _controller = AnimationController(vsync: this);
 
     //DATE FORMAT
-
     var date = new DateTime.now().toString();
  
     var dateParse = DateTime.parse(date);
@@ -176,150 +175,165 @@ class _UserPlanState extends State<UserPlan>
         backgroundColor: Colors.white,
         title: Text('Hotspot Plan', style: TextStyle(color: Colors.black)),
       ),
-      body: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
-        child: Padding(
-          padding: EdgeInsets.only(left: 28.0, right: 28.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              SizedBox(height: 16.0),
-              TextFormField(
-                controller: usernameController,
-                decoration: InputDecoration(
-                  hintText: 'Username',
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.black),
-                    borderRadius: BorderRadius.all(Radius.circular(30.0))
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey),
-                    borderRadius: BorderRadius.all(Radius.circular(30.0)),
-                  ),
-                ),
-              ),
-              SizedBox(height: 16.0),
-              TextFormField(
-                controller: passwordController,
-                decoration: InputDecoration(
-                  hintText: 'Password',
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.black),
-                    borderRadius: BorderRadius.all(Radius.circular(30.0))
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey),
-                    borderRadius: BorderRadius.all(Radius.circular(30.0)),
-                  ),
-                  suffixIcon: GestureDetector(
-                    onTap: () {
-                      _toggle();
-                    },
-                    child: Icon(
-                      _obscureText ? Icons.visibility_off : Icons.visibility,
+      body: Container(
+        height: MediaQuery.of(context).size.height * 2,
+        child: SingleChildScrollView(
+          physics: BouncingScrollPhysics(),
+          child: Padding(
+            padding: EdgeInsets.only(left: 28.0, right: 28.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                SizedBox(height: 16.0),
+                TextFormField(
+                  controller: usernameController,
+                  decoration: InputDecoration(
+                    hintText: 'Username',
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black),
+                      borderRadius: BorderRadius.all(Radius.circular(30.0))
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.grey),
+                      borderRadius: BorderRadius.all(Radius.circular(30.0)),
                     ),
                   ),
                 ),
-                obscureText: _obscureText,
-              ),
-              SizedBox(height: 16.0),
-              Text('Select user:'),
-              SizedBox(height: 5.0),
-              Row(
-                children: <Widget>[
-                  Expanded(
-                    child:
-                        userCustomRadio(userButton[0], 0, planUserController),
-                  ),
-                  SizedBox(width: 20.0),
-                  Expanded(
-                    child:
-                        userCustomRadio(userButton[1], 1, planUserController),
-                  ),
-                  SizedBox(width: 20.0),
-                  Expanded(
-                    child:
-                        userCustomRadio(userButton[2], 2, planUserController),
-                  ),
-                ],
-              ),
-              SizedBox(height: 16.0),
-              Text('Select plan:'),
-              SizedBox(height: 5.0),
-              Row(
-                children: <Widget>[
-                  //First DropdownBox              
-                  Expanded(
-                    child: DropdownButtonHideUnderline(
-                      child: DropdownButton(
-                        hint: Text('Select Plan'),
-                        value: _selectedPlanVal,
-                        onChanged: (val) => _changeDept(currentPlan: val),
-                        items: _planDropdown.map(
-                          (item) {
-                            return DropdownMenuItem(
-                              child: Text('$item'),
-                              value: item,
-                            );
-                          },
-                        ).toList(),
+                SizedBox(height: 16.0),
+                TextFormField(
+                  controller: passwordController,
+                  decoration: InputDecoration(
+                    hintText: 'Password',
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black),
+                      borderRadius: BorderRadius.all(Radius.circular(30.0))
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.grey),
+                      borderRadius: BorderRadius.all(Radius.circular(30.0)),
+                    ),
+                    suffixIcon: GestureDetector(
+                      onTap: () {
+                        _toggle();
+                      },
+                      child: Icon(
+                        _obscureText ? Icons.visibility_off : Icons.visibility,
                       ),
                     ),
                   ),
-
-                  //Second DropdownBox
-                  Expanded(        
-                    child: DropdownButtonHideUnderline(
-                      child: DropdownButton(
-                        hint: Text('Select Date'),
-                        value: _selectedDateVal,
-                        onChanged: (val) => setState(() => _selectedDateVal = val),
-                        items: _dateItem.map(
-                          (item) {
-                            return DropdownMenuItem(
-                              child: Text('$item'),
-                              value: item,
-                            );
-                          },
-                        ).toList(),
-                      ), 
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 50.0),
-              Center(
-                child: RaisedButton(
-                  child: Text(
-                    'SUBMIT',
-                    style: TextStyle(
-                      fontFamily: 'Poppins-Bold',
-                      fontSize: 20,
-                      letterSpacing: 1,
-                    ),
-                  ),
-                  color: Colors.white,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(18.0),
-                      side: BorderSide(color: Colors.blueAccent)),
-                  onPressed: () async {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => _reviewPlan(
-                                usernameController,
-                                user,
-                                _selectedDateVal,)));
-                  },
+                  obscureText: _obscureText,
                 ),
-              ),
-            ],
+                SizedBox(height: 16.0),
+                Text('Select user:'),
+                SizedBox(height: 5.0),
+                Row(
+                  children: <Widget>[
+                    Expanded(
+                      child:
+                          userCustomRadio(userButton[0], 0, planUserController),
+                    ),
+                    SizedBox(width: 20.0),
+                    Expanded(
+                      child:
+                          userCustomRadio(userButton[1], 1, planUserController),
+                    ),
+                    SizedBox(width: 20.0),
+                    Expanded(
+                      child:
+                          userCustomRadio(userButton[2], 2, planUserController),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 16.0),
+                Text('Select plan:'),
+                SizedBox(height: 5.0),
+                selectPlan(),
+                SizedBox(height: 50.0),
+                Center(
+                  child: RaisedButton(
+                    child: Text(
+                      'SUBMIT',
+                      style: TextStyle(
+                        fontFamily: 'Poppins-Bold',
+                        fontSize: 20,
+                        letterSpacing: 1,
+                      ),
+                    ),
+                    color: Colors.white,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18.0),
+                        side: BorderSide(color: Colors.blueAccent)),
+                    onPressed: () async {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => _reviewPlan(
+                                  usernameController,
+                                  user,
+                                  _selectedDateVal,)));
+                    },
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
     );
   }
 
+  Widget selectPlan(){
+    print(_selectedDateVal);
+    print(_selectedPlanVal);
+    return Row(
+      children: <Widget>[
+        //First DropdownBox              
+        Expanded(
+            child: DropdownButtonFormField(
+              decoration: InputDecoration(
+                border: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.black),
+                  borderRadius: BorderRadius.all(Radius.circular(30.0))
+                )),
+              hint: Text('Select Plan'),
+              value: _selectedPlanVal,
+              onChanged: (val) => _changeDept(currentPlan: val),
+              items: _planDropdown.map(
+                (item) {
+                  return DropdownMenuItem(
+                    child: Text('$item'),
+                    value: item,
+                  );
+                },
+              ).toList(),
+            ),
+          
+        ),
+        SizedBox(width: 20),
+        //Second DropdownBox
+        Expanded(        
+          child: DropdownButtonFormField(
+            decoration: InputDecoration(
+                border: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.black),
+                  borderRadius: BorderRadius.all(Radius.circular(30.0))
+                )),
+              hint: Text('Select Date'),
+              value: _selectedDateVal,
+              onChanged: (val) => setState(() => _selectedDateVal = val),
+              items: _dateItem.map(
+                (item) {
+                  return DropdownMenuItem(
+                    child: Text('$item'),
+                    value: item,
+                );
+              },
+            ).toList(),
+          ), 
+        ),
+      ],
+    );
+  }
   Widget userCustomRadio(int userButton, int userIndex, TextEditingController planUserController) {
     return ButtonTheme(
       height: 50.0,

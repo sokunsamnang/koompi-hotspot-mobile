@@ -1,39 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:koompi_hotspot/src/components/formcard/formcardPhoneNumber.dart';
+import 'package:koompi_hotspot/src/components/formcard/formcardEmail.dart';
+import 'package:koompi_hotspot/src/screen/create_account/verfication/verfication_account.dart';
 import 'package:koompi_hotspot/src/screen/login/login_page.dart';
 
-
-class PhoneNumber extends StatefulWidget {
-  _PhoneNumberState createState() => _PhoneNumberState();
-}
-
-class _PhoneNumberState extends State<PhoneNumber> {
-  final TextEditingController phonenumberController =
-      new TextEditingController();
-  final TextEditingController usernameController = new TextEditingController();
-  final TextEditingController passwordController = new TextEditingController();
-
   @override
-  void initState() {
-    super.initState();
-  }
+  Widget createEmailBody(
+    BuildContext context, 
+    TextEditingController emailController, 
+    TextEditingController passwordController, 
+    bool _obscureText,
+    Function _toggle,
+    String _email,
+    String _password,
+    Function _submit,
+    GlobalKey formKey,
+    bool _autoValidate) {
 
-  // Initially password is obscure
-  bool _obscureText = true;
-
-  // Toggles the password show status
-  void _toggle() {
-    setState(() {
-      _obscureText = !_obscureText;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
     ScreenUtil.instance = ScreenUtil.getInstance()..init(context);
-    ScreenUtil.instance =
-        ScreenUtil(width: 750, height: 1334, allowFontScaling: true);
+    ScreenUtil.instance = ScreenUtil(width: 750, height: 1410, allowFontScaling: true);
     return new Scaffold(
       backgroundColor: Colors.white,
       resizeToAvoidBottomPadding: true,
@@ -41,17 +26,9 @@ class _PhoneNumberState extends State<PhoneNumber> {
         fit: StackFit.expand,
         children: <Widget>[
           Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
-              Padding(
-                padding: EdgeInsets.only(top: 60.0, right: 15.0),
-                child: Image.asset("assets/images/digital_nomad.png",
-                    width: 240.0, scale: 8.3),
-              ),
-              Expanded(
-                child: Container(),
-              ),
-              Expanded(child: Image.asset("assets/images/image_02.png"))
+              Image.asset("assets/images/image_02.png"),
             ],
           ),
           SingleChildScrollView(
@@ -74,16 +51,20 @@ class _PhoneNumberState extends State<PhoneNumber> {
                               fontWeight: FontWeight.bold))
                     ],
                   ),
-                  SizedBox(
-                    height: ScreenUtil.getInstance().setHeight(220),
+                  Stack(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(left: 150.0),
+                        child: Image.asset("assets/images/digital_nomad.png",
+                          width: 200.0,),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top: 140.0),
+                        child: formCardEmail(context, emailController, passwordController, _obscureText, _toggle, _email, _password, formKey, _autoValidate),
+                      ),
+                    ],
                   ),
-                  formCardPhoneNumber(
-                      context,
-                      phonenumberController,
-                      passwordController,
-                      _obscureText,
-                      _toggle),
-                  SizedBox(height: ScreenUtil.getInstance().setHeight(40)),
+                  SizedBox(height: ScreenUtil.getInstance().setHeight(80)),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
@@ -106,8 +87,19 @@ class _PhoneNumberState extends State<PhoneNumber> {
                           child: Material(
                             color: Colors.transparent,
                             child: InkWell(
-                              onTap: () async {
-                              
+                              onTap: () {
+                                _submit();
+                                // if(_submit() == false){
+                                //   Navigator.pushReplacement(
+                                //     context,
+                                //     MaterialPageRoute(builder: (context) => VerificationAccount()));
+                                // }
+                                // else{
+                                //   print('Validated');
+                                // }
+                                // Navigator.pushReplacement(
+                                //   context,
+                                //   MaterialPageRoute(builder: (context) => VerificationAccount()));
                               },
                               child: Center(
                                 child: Text("SIGN UP",
@@ -140,10 +132,12 @@ class _PhoneNumberState extends State<PhoneNumber> {
                         ),
                         InkWell(
                           onTap: () {
-                            Navigator.pushReplacement(
+                            Navigator.pushAndRemoveUntil(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => LoginPage()));
+                                    builder: (context) => LoginPage()),
+                                ModalRoute.withName('/loginScreen')  
+                              );
                           },
                           splashColor: Colors.transparent,
                           highlightColor: Colors.transparent,
@@ -165,4 +159,3 @@ class _PhoneNumberState extends State<PhoneNumber> {
       ),
     );
   }
-}

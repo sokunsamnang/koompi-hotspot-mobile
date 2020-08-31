@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:koompi_hotspot/index.dart';
 
 @override
 Widget formCardEmail(
     BuildContext context,
-    TextEditingController usernameController,
     TextEditingController emailController,
     TextEditingController passwordController,
-    TextEditingController confirmPasswordController,
     bool _obscureText,
     Function _toggle,
-    bool _secondObscureText,
-    Function _secondToggle) {
+    String _email,
+    String _password,
+    GlobalKey<FormState> formKey,
+    bool _autoValidate) {
 
     return new Container(
       width: double.infinity,
@@ -30,90 +31,67 @@ Widget formCardEmail(
                 offset: Offset(0.0, -10.0),
                 blurRadius: 10.0),
           ]),
-    child: Padding(
-      padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text("Sign Up",
-              style: TextStyle(
-                  fontSize: ScreenUtil().setSp(45),
-                  fontFamily: "Poppins-Bold",
-                  letterSpacing: .6)),
-          SizedBox(
-            height: ScreenUtil().setHeight(30),
-          ),
-          Text("Username",
-              style: TextStyle(
-                  fontFamily: "Poppins-Medium",
-                  fontSize: ScreenUtil().setSp(26))),
-          TextFormField(
-            controller: usernameController,
-            decoration: InputDecoration(
-                hintText: "Username",
-                hintStyle: TextStyle(color: Colors.grey, fontSize: 12.0)),
-          ),
-          SizedBox(
-            height: ScreenUtil().setHeight(30),
-          ),
-          Text("Email",
-              style: TextStyle(
-                  fontFamily: "Poppins-Medium",
-                  fontSize: ScreenUtil().setSp(26))),
-          TextFormField(
-            controller: emailController,
-            decoration: InputDecoration(
-                hintText: "Email",
-                hintStyle: TextStyle(color: Colors.grey, fontSize: 12.0)),
-          ),
-          SizedBox(
-            height: ScreenUtil().setHeight(30),
-          ),
-          Text("Password",
-              style: TextStyle(
-                  fontFamily: "Poppins-Medium",
-                  fontSize: ScreenUtil().setSp(26))),
-          TextFormField(
-            controller: passwordController,
-            obscureText: _obscureText,
-            decoration: InputDecoration(
-                suffixIcon: GestureDetector(
-                  onTap: () {
-                    _toggle();
-                  },
-                  child: Icon(
-                    _obscureText ? Icons.visibility_off : Icons.visibility,
-                  ),
-                ),
-                hintText: "Password",
-                hintStyle: TextStyle(color: Colors.grey, fontSize: 12.0)),
-          ),
-          SizedBox(
-            height: ScreenUtil().setHeight(30),
-          ),
-          Text("Confirm Password",
-              style: TextStyle(
-                  fontFamily: "Poppins-Medium",
-                  fontSize: ScreenUtil().setSp(26))),
-          TextFormField(
-            controller: confirmPasswordController,
-            obscureText: _secondObscureText,
-            decoration: InputDecoration(
-                suffixIcon: GestureDetector(
-                  onTap: () {
-                    _secondToggle();
-                  },
-                  child: Icon(
-                    _secondObscureText ? Icons.visibility_off : Icons.visibility,
-                  ),
-                ),
-                hintText: "Confirm Password",
-                hintStyle: TextStyle(color: Colors.grey, fontSize: 12.0)),
-          ),
-          SizedBox(
-            height: ScreenUtil().setHeight(35),
-          ),
-        ],
+      child: Form(
+        key: formKey,
+        autovalidate: _autoValidate,
+        child: Padding(
+          padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text("Sign Up",
+                  style: TextStyle(
+                      fontSize: ScreenUtil().setSp(45),
+                      fontFamily: "Poppins-Bold",
+                      letterSpacing: .6)),
+              SizedBox(
+                height: ScreenUtil().setHeight(30),
+              ),
+              Text("Email",
+                  style: TextStyle(
+                      fontFamily: "Poppins-Medium",
+                      fontSize: ScreenUtil().setSp(26))),
+              TextFormField(
+                validator: (val) => !val.contains('@') ? 'Invalid Email' : null,
+                onSaved: (val) => _email = val,
+                autovalidate: _autoValidate,
+                controller: emailController,
+                keyboardType: TextInputType.emailAddress,
+                decoration: InputDecoration(
+                    hintText: "Email",
+                    hintStyle: TextStyle(color: Colors.grey, fontSize: 12.0)),
+              ),
+              SizedBox(
+                height: ScreenUtil().setHeight(30),
+              ),
+              Text("Password",
+                  style: TextStyle(
+                      fontFamily: "Poppins-Medium",
+                      fontSize: ScreenUtil().setSp(26))),
+              TextFormField(
+                validator: (val) => val.length < 6 ? 'Password too short' : null,
+                onSaved: (val) => _password = val,
+                autovalidate: _autoValidate,
+                controller: passwordController,
+                obscureText: _obscureText,
+                keyboardType: TextInputType.visiblePassword,
+                decoration: InputDecoration(
+                    suffixIcon: GestureDetector(
+                      onTap: () {
+                        _toggle();
+                      },
+                      child: Icon(
+                        _obscureText ? Icons.visibility_off : Icons.visibility,
+                      ),
+                    ),
+                    hintText: "Password",
+                    hintStyle: TextStyle(color: Colors.grey, fontSize: 12.0)),
+              ),
+              SizedBox(
+                height: ScreenUtil().setHeight(35),
+            ),
+          ],
+        ),
       ),
     ),
   );

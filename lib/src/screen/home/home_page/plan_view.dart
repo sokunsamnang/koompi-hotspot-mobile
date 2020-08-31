@@ -60,10 +60,6 @@ class PlanView extends StatelessWidget {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10.0),
                 color: Colors.grey[900],
-                // image: DecorationImage(
-                //   image: AssetImage('assets/yoga/yoga_2.jpg'),
-                //   fit: BoxFit.cover,
-                // ),
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,

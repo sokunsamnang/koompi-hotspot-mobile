@@ -4,18 +4,20 @@ import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:koompi_hotspot/src/screen/create_account/complete_info/complete_info.dart';
 
 class VerificationAccount extends StatefulWidget {
-  final String email;
-  final String newEmail;
-  final bool isGuestCheckOut;
+  
+  // final String email;
+  // final String newEmail;
+  // final bool isGuestCheckOut;
 
-  const VerificationAccount({
-    Key key,
-    @required this.email,
-    this.newEmail = "",
-    this.isGuestCheckOut,
-  }) : super(key: key);
+  // const VerificationAccount({
+  //   Key key,
+  //   @required this.email,
+  //   this.newEmail = "",
+  //   this.isGuestCheckOut,
+  // }) : super(key: key);
 
   @override
   _VerificationAccountState createState() => new _VerificationAccountState();
@@ -33,6 +35,9 @@ class _VerificationAccountState extends State<VerificationAccount> with SingleTi
   int _secondDigit;
   int _thirdDigit;
   int _fourthDigit;
+  int _fifthDigit;
+  int _sixthDigit;
+
 
   Timer timer;
   int totalTimeInSeconds;
@@ -90,6 +95,8 @@ class _VerificationAccountState extends State<VerificationAccount> with SingleTi
         _otpTextField(_secondDigit),
         _otpTextField(_thirdDigit),
         _otpTextField(_fourthDigit),
+        _otpTextField(_fifthDigit),
+        _otpTextField(_sixthDigit),
       ],
     );
   }
@@ -256,13 +263,22 @@ class _VerificationAccountState extends State<VerificationAccount> with SingleTi
                       ),
                       onPressed: () {
                         setState(() {
-                          if (_fourthDigit != null) {
+                          if(_sixthDigit != null) {
+                            _sixthDigit = null;
+                          }
+                          else if(_fifthDigit != null) {
+                            _fifthDigit = null;
+                          }
+                          else if (_fourthDigit != null) {
                             _fourthDigit = null;
-                          } else if (_thirdDigit != null) {
+                          } 
+                          else if (_thirdDigit != null) {
                             _thirdDigit = null;
-                          } else if (_secondDigit != null) {
+                          } 
+                          else if (_secondDigit != null) {
                             _secondDigit = null;
-                          } else if (_firstDigit != null) {
+                          } 
+                          else if (_firstDigit != null) {
                             _firstDigit = null;
                           }
                         });
@@ -382,24 +398,41 @@ class _VerificationAccountState extends State<VerificationAccount> with SingleTi
   }
 
   // Current digit
-  void _setCurrentDigit(int i) {
+  void _setCurrentDigit(int i) async{
     setState(() {
       _currentDigit = i;
       if (_firstDigit == null) {
         _firstDigit = _currentDigit;
-      } else if (_secondDigit == null) {
+      } 
+      else if (_secondDigit == null) {
         _secondDigit = _currentDigit;
-      } else if (_thirdDigit == null) {
+      } 
+      else if (_thirdDigit == null) {
         _thirdDigit = _currentDigit;
-      } else if (_fourthDigit == null) {
+      } 
+      else if (_fourthDigit == null) {
         _fourthDigit = _currentDigit;
+      }
+      else if (_fifthDigit == null) {
+        _fifthDigit = _currentDigit;
+      }
+      else if(_sixthDigit == null) {
+        _sixthDigit = _currentDigit;
+
 
         var otp = _firstDigit.toString() +
-            _secondDigit.toString() +
-            _thirdDigit.toString() +
-            _fourthDigit.toString();
+          _secondDigit.toString() +
+          _thirdDigit.toString() +
+          _fourthDigit.toString()+
+          _fifthDigit.toString()+
+          _sixthDigit.toString();
 
-        // Verify your otp by here. API call
+      // Verify your otp by here. API call
+        if(otp != null){
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => CompleteInfo()));
+        }
       }
     });
   }

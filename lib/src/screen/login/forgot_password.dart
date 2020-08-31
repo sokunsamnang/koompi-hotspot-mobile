@@ -6,12 +6,21 @@ class ForgotPassword extends StatefulWidget {
 }
 
 class _ForgotPasswordState extends State<ForgotPassword> {
+  // Widget build(BuildContext context) {
+  //   return Scaffold(
+  //     backgroundColor: Colors.white,
+  //     body: DefaultTabController(
+  //       initialIndex: 0,
+  //       length: 2,
+  //       child: forgetPasswordBody(context),
+  //     ),
+  //   );
+  // }
+
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: DefaultTabController(
-        initialIndex: 0,
-        length: 2,
+      body: Container(
         child: forgetPasswordBody(context),
       ),
     );

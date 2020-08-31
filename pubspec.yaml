@@ -72,6 +72,7 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
+    - assets/images/avatar.png
     - assets/images/koompi_logo.png
     - assets/images/koompi_logo_signal.png
     - assets/images/password.jpg
@@ -93,6 +94,7 @@ flutter:
     - assets/animations/alert_icon.flr
     - assets/animations/koompi_splash_screen.flr
     - assets/animations/otp.flr
+    - assets/animations/Loading.flr
     - assets/images/destination_map_marker.png
     - assets/images/driving_pin.png
     - assets/images/friend1.jpg

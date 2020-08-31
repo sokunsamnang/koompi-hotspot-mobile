@@ -1,5 +1,5 @@
 
-class LocationSearch {
+class LocationList {
 
   var selectedKhLocation = "Phnom Penh";
   List<String> khLocation = <String>[
