@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:koompi_hotspot/src/backend/api_service.dart';
 import 'package:koompi_hotspot/src/backend/component.dart';
 import 'package:koompi_hotspot/src/backend/get_request.dart';
 import 'package:koompi_hotspot/src/backend/post_request.dart';
@@ -35,6 +36,10 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     super.initState();
+    
+    setState(() {
+      AppService.noInternetConnection();
+    });
     
   }
 
@@ -81,7 +86,6 @@ class _LoginPageState extends State<LoginPage> {
               MaterialPageRoute(builder: (context) => Navbar()));
           }
           else {
-            showErrorDialog(context);
             try {
               messageAlert = responseJson['error']['message'];
             } catch (e) {
@@ -89,6 +93,9 @@ class _LoginPageState extends State<LoginPage> {
             }
           }
         } 
+        else if (response.statusCode == 401){
+          return showErrorDialog(context);
+        }
         else if (response.statusCode >= 500 && response.statusCode <600){
           return showErrorServerDialog(context);
         }
@@ -308,10 +315,10 @@ class _LoginPageState extends State<LoginPage> {
                         child: InkWell(
                           onTap: () async {
                             
-                            // login();
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(builder: (context) => Navbar()));
+                            login();
+                            // Navigator.pushReplacement(
+                            //   context,
+                            //   MaterialPageRoute(builder: (context) => Navbar()));
                           },
                           child: Center(
                             child: Text("SIGN IN",

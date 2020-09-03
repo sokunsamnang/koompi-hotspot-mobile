@@ -21,12 +21,13 @@ class _UserPlanState extends State<UserPlan>
   String finalDate = '';
 
   String finalDate1Hour = '';
-  String finalDate3Hour = '';
-  String finalDate5Hour = '';
+  String finalDate7Hour = '';
+  String finalDate12Hour = '';
 
   String finalDate1Day = '';
-  String finalDate5Day = '';
   String finalDate7Day = '';
+  String finalDate14Day = '';
+  String finalDate31Day = '';
 
   //DropDown Variable
   
@@ -37,14 +38,15 @@ class _UserPlanState extends State<UserPlan>
 
   final hour = const {
     "1": "1 Hour",
-    "2": "3 Hours",
-    "3": "5 Hours"
+    "2": "7 Hours",
+    "3": "12 Hours"
   };
 
   final day = const {
     "1": "1 Day",
-    "2": "5 Days",
-    "3": "7 Days",
+    "2": "7 Days",
+    "3": "14 Days",
+    "4": "31 Days",
   };
   
   var _selectedPlanVal;
@@ -57,10 +59,10 @@ class _UserPlanState extends State<UserPlan>
         // update current university
         _selectedPlanVal = currentPlan;
         // reset dept val
-        _selectedDateVal = 'Select Date';
+        _selectedDateVal = null;
         // update corresponding department
         // clear list
-        _dateItem = ['Select Date'];
+        _dateItem = [];
         _dateItem.addAll(_getDateItem(_selectedPlanVal));
       },
     );
@@ -111,31 +113,7 @@ class _UserPlanState extends State<UserPlan>
     super.initState();
     _controller = AnimationController(vsync: this);
 
-    //DATE FORMAT
-    var date = new DateTime.now().toString();
- 
-    var dateParse = DateTime.parse(date);
-
-    var formattedDate1Hour = "Time ${dateParse.hour + 1}:${dateParse.minute} Date ${dateParse.day}-${dateParse.month}-${dateParse.year}";
-    var formattedDate3Hour = "Time ${dateParse.hour + 3}:${dateParse.minute} Date ${dateParse.day}-${dateParse.month}-${dateParse.year}";
-    var formattedDate5Hour = "Time ${dateParse.hour + 5}:${dateParse.minute} Date ${dateParse.day}-${dateParse.month}-${dateParse.year}";
- 
-    var formattedDate1day = "Time ${dateParse.hour}:${dateParse.minute} Date ${dateParse.day + 1}-${dateParse.month}-${dateParse.year}";
-    var formattedDate5day = "Time ${dateParse.hour}:${dateParse.minute} Date ${dateParse.day + 5}-${dateParse.month}-${dateParse.year}";
-    var formattedDate7day = "Time ${dateParse.hour}:${dateParse.minute} Date ${dateParse.day + 7}-${dateParse.month}-${dateParse.year}";
- 
-    setState(() {
-
-      finalDate1Hour = formattedDate1Hour.toString();
-      finalDate3Hour = formattedDate3Hour.toString();
-      finalDate5Hour = formattedDate5Hour.toString();
-      
-      finalDate1Day = formattedDate1day.toString();
-      finalDate5Day = formattedDate5day.toString();
-      finalDate7Day = formattedDate7day.toString();
- 
-    });
-
+    dateFormatter();
   }
 
   @override
@@ -144,28 +122,38 @@ class _UserPlanState extends State<UserPlan>
     _controller.dispose();
   }
 
-  Widget _expirationDate(){
-    if(_selectedDateVal == day['1']){
-      return Text('Expiration: $finalDate1Day ', style: TextStyle(fontSize: 20.0));
-    }
-    else if(_selectedDateVal == day['2']){
-      return Text('Expiration: $finalDate5Day', style: TextStyle(fontSize: 20.0));
-    }
-    else if(_selectedDateVal == day['3']){
-      return Text('Expiration: $finalDate7Day', style: TextStyle(fontSize: 20.0));
-    }
-    else if(_selectedDateVal == hour['1']){
-      return Text('Expiration: $finalDate1Hour', style: TextStyle(fontSize: 20.0));
-    }
-    else if(_selectedDateVal == hour['2']){
-      return Text('Expiration: $finalDate3Hour', style: TextStyle(fontSize: 20.0));
-    }
-    else if(_selectedDateVal == hour['3']){
-      return Text('Expiration: $finalDate5Hour', style: TextStyle(fontSize: 20.0));
-    }
-    else{
-      return Container();
-    }
+  void dateFormatter(){
+    //DATE FORMAT Expiration
+    var date1Days = DateTime.now().add(Duration(days: 1));
+    var date7Days = DateTime.now().add(Duration(days: 7));
+    var date14Days = DateTime.now().add(Duration(days: 15));
+    var date31Days = DateTime.now().add(Duration(days: 31));
+
+    var date1Hour = DateTime.now().add(Duration(hours: 1));
+    var date7Hour = DateTime.now().add(Duration(hours: 7));
+    var date12Hour = DateTime.now().add(Duration(hours: 12));
+
+    var formattedDate1day = "Time ${date1Days.hour}:${date1Days.minute} Date ${date1Days.day}-${date1Days.month}-${date1Days.year}";
+    var formattedDate7day = "Time ${date7Days.hour}:${date7Days.minute} Date ${date7Days.day}-${date7Days.month}-${date7Days.year}";
+    var formattedDate14day = "Time ${date14Days.hour}:${date14Days.minute} Date ${date14Days.day}-${date14Days.month}-${date14Days.year}";
+    var formattedDate31day = "Time ${date31Days.hour}:${date31Days.minute} Date ${date31Days.day}-${date31Days.month}-${date31Days.year}";
+    
+    var formattedDate1Hour = "Time ${date1Hour.hour}:${date1Hour.minute} Date ${date1Hour.day}-${date1Hour.month}-${date1Hour.year}";
+    var formattedDate7Hour = "Time ${date7Hour.hour}:${date7Hour.minute} Date ${date7Hour.day}-${date7Hour.month}-${date7Hour.year}";
+    var formattedDate12Hour = "Time ${date12Hour.hour}:${date12Hour.minute} Date ${date12Hour.day}-${date12Hour.month}-${date12Hour.year}";
+
+    setState(() {
+      
+      finalDate1Day = formattedDate1day;
+      finalDate7Day = formattedDate7day;
+      finalDate14Day = formattedDate14day;
+      finalDate31Day = formattedDate31day;
+
+      finalDate1Hour = formattedDate1Hour;
+      finalDate7Hour = formattedDate7Hour;
+      finalDate12Hour = formattedDate12Hour;
+
+    });
   }
 
   @override
@@ -355,6 +343,33 @@ class _UserPlanState extends State<UserPlan>
         ),
       ),
     );
+  }
+
+  Widget _expirationDate(){
+    if(_selectedDateVal == day['1']){
+      return Text('Expiration: $finalDate1Day ', style: TextStyle(fontSize: 20.0));
+    }
+    else if(_selectedDateVal == day['2']){
+      return Text('Expiration: $finalDate7Day', style: TextStyle(fontSize: 20.0));
+    }
+    else if(_selectedDateVal == day['3']){
+      return Text('Expiration: $finalDate14Day', style: TextStyle(fontSize: 20.0));
+    }
+    else if(_selectedDateVal == day['4']){
+      return Text('Expiration: $finalDate31Day', style: TextStyle(fontSize: 20.0));
+    }
+    else if(_selectedDateVal == hour['1']){
+      return Text('Expiration: $finalDate1Hour', style: TextStyle(fontSize: 20.0));
+    }
+    else if(_selectedDateVal == hour['2']){
+      return Text('Expiration: $finalDate7Hour', style: TextStyle(fontSize: 20.0));
+    }
+    else if(_selectedDateVal == hour['3']){
+      return Text('Expiration: $finalDate12Hour', style: TextStyle(fontSize: 20.0));
+    }
+    else{
+      return Container();
+    }
   }
 
   Widget _reviewPlan(

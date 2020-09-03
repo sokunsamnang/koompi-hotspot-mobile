@@ -92,6 +92,7 @@ flutter:
     - assets/images/image_02.png
     - assets/images/verify.png
     - assets/animations/alert_icon.flr
+    - assets/animations/no_internet_connection.flr
     - assets/animations/koompi_splash_screen.flr
     - assets/animations/otp.flr
     - assets/animations/Loading.flr

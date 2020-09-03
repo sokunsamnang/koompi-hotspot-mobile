@@ -30,9 +30,15 @@ class _MyAccountState extends State<MyAccount>
 
 
   //Get Data
-  String myName = mData.fullname;
+  String name = mData.name;
+  String gender = mData.gender;
+  String email = mData.email;
+  String birthdate = mData.birthdate;
+  String address = mData.address;
+  
 
-  TextEditingController fullnameController = TextEditingController(text: '${mData.fullname}') ;
+  TextEditingController fullnameController = TextEditingController(text: '${mData.name}');
+  TextEditingController emailController = TextEditingController(text: '${mData.email}');
 
   //LocationPicker
   var locationModel = LocationList();
@@ -42,11 +48,11 @@ class _MyAccountState extends State<MyAccount>
 
   //Gender Select 
   List<String> lst = ['Male', 'Female'];
-  int selectedIndex;
+  String selectedIndex;
   
-  void changeIndex(int index) {
+  void changeIndex(String index) {
     setState(() {
-      selectedIndex = index;
+      gender = index;
     });
   }
 
@@ -57,13 +63,14 @@ class _MyAccountState extends State<MyAccount>
 
   Future<Null> _selectDate(BuildContext context) async {
     final DateTime picked = await showDatePicker(
-        context: context,
-        initialDate: selectedDate,
-        firstDate: DateTime(1770, 1),
-        lastDate: DateTime(2101));
+      context: context,
+      initialDate: selectedDate,
+      firstDate: DateTime(1770, 1),
+      lastDate: DateTime(2101));
     if (picked != null && picked != selectedDate)
       setState(() {
         selectedDate = picked;
+        birthdate = dateFormart.format(selectedDate);
       });
   }
   
@@ -157,9 +164,9 @@ class _MyAccountState extends State<MyAccount>
                 ),
                 SizedBox(height: 16.0),
                 TextFormField(
-                  controller: fullnameController,
+                  controller: fullnameController ?? '',
                   decoration: InputDecoration(
-                    hintText: 'Username',
+                    hintText: 'Full Name',
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.black),
                       borderRadius: BorderRadius.all(Radius.circular(30.0))
@@ -172,6 +179,7 @@ class _MyAccountState extends State<MyAccount>
                 ),
                 SizedBox(height: 16.0),
                 TextFormField(
+                  controller: emailController ?? '',
                   decoration: InputDecoration(
                     hintText: 'Email',
                     focusedBorder: OutlineInputBorder(
@@ -194,11 +202,11 @@ class _MyAccountState extends State<MyAccount>
                 Row(
                   children: <Widget>[
                     Expanded(
-                      child: genderCustomRadio(lst[0], 0),
+                      child: genderCustomRadio(lst[0], 'Male'),
                     ),
                     SizedBox(width: 20.0),
                     Expanded(
-                      child: genderCustomRadio(lst[1], 1),
+                      child: genderCustomRadio(lst[1], 'Female'),
                     ),
                   ],
                 ),
@@ -214,7 +222,7 @@ class _MyAccountState extends State<MyAccount>
     );
   }
 
-  Widget genderCustomRadio(String txt, int index) {
+  Widget genderCustomRadio(String txt, String index) {
     return ButtonTheme(
       height: 50.0,
       child: OutlineButton(
@@ -223,11 +231,10 @@ class _MyAccountState extends State<MyAccount>
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
         splashColor: Colors.transparent,
         borderSide: BorderSide(
-            color: selectedIndex == index ? Colors.cyan : Colors.grey),
-        child: Text(
-          txt,
+            color: gender == index ? Colors.cyan : Colors.grey),
+        child: Text(txt,
           style: TextStyle(
-              color: selectedIndex == index ? Colors.black : Colors.grey),
+              color: gender == index ? Colors.black : Colors.grey),
         ),
       ),
     );
@@ -235,32 +242,35 @@ class _MyAccountState extends State<MyAccount>
 
   Widget locationPicker(BuildContext context) {
     print(locationModel.selectedKhLocation);
-
+    print(address);
     return _LocationDropdown(
-      valueText: locationModel.selectedKhLocation.toString(),
+      valueText: address ?? locationModel.selectedKhLocation.toString(),
       onPressed: () => showMaterialScrollPicker(
         context: context,
         title: "Pick Your Location",
         items: locationModel.khLocation,
         selectedItem: locationModel.selectedKhLocation,
         onChanged: (value) =>
-            setState(() => locationModel.selectedKhLocation = value),
+          setState(() => locationModel.selectedKhLocation = value),
         onCancelled: () => print("Scroll Picker cancelled"),
-        onConfirmed: () => print("Scroll Picker confirmed"),
+        onConfirmed: () => address = locationModel.selectedKhLocation,
       ),
     );
   }
-}
 
   Widget dateOfbirth(DateTime selectedDate, _selectDate, dateFormart, context){
+    print(dateFormart.format(selectedDate));
+    print(birthdate);
     return _DateDropdown(
-      valueText: dateFormart.format(selectedDate),
+      valueText: birthdate ?? dateFormart.format(selectedDate),
       onPressed: (){
         _selectDate(context);
+        
       },
     );
   }
 
+}
 
 
 class _DateDropdown extends StatelessWidget {

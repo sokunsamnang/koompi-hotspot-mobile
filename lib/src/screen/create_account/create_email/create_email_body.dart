@@ -15,7 +15,9 @@ import 'package:koompi_hotspot/src/screen/login/login_page.dart';
     String _password,
     Function _submit,
     GlobalKey formKey,
-    bool _autoValidate) {
+    bool _autoValidate,
+    Future <void> register()
+    ) {
 
     ScreenUtil.instance = ScreenUtil.getInstance()..init(context);
     ScreenUtil.instance = ScreenUtil(width: 750, height: 1410, allowFontScaling: true);
@@ -88,18 +90,7 @@ import 'package:koompi_hotspot/src/screen/login/login_page.dart';
                             color: Colors.transparent,
                             child: InkWell(
                               onTap: () {
-                                _submit();
-                                // if(_submit() == false){
-                                //   Navigator.pushReplacement(
-                                //     context,
-                                //     MaterialPageRoute(builder: (context) => VerificationAccount()));
-                                // }
-                                // else{
-                                //   print('Validated');
-                                // }
-                                // Navigator.pushReplacement(
-                                //   context,
-                                //   MaterialPageRoute(builder: (context) => VerificationAccount()));
+                                register();
                               },
                               child: Center(
                                 child: Text("SIGN UP",

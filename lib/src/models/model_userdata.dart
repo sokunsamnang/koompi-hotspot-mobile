@@ -1,13 +1,21 @@
 class ModelUserData{
 
-  String fullname;
+  String name;
+  String gender;
+  String email;
+  String birthdate;
+  String address;
 
   ModelUserData({
-    this.fullname
+    this.name
   });
 
   ModelUserData.fromJson(Map<String,dynamic> parseJson){
-    fullname = parseJson['full_name'];
+    name = parseJson['name'];
+    gender = parseJson['gender'];
+    email = parseJson['email'];
+    birthdate = parseJson['birthdate'];
+    address = parseJson['address'];
   }
 
 }

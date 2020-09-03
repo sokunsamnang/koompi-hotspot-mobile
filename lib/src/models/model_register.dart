@@ -13,7 +13,6 @@ class RegisterModel {
         this.name,
         this.gender,
         this.email,
-        this.password,
         this.birthdate,
         this.address,
     });
@@ -29,7 +28,6 @@ class RegisterModel {
         name: json["name"],
         gender: json["gender"],
         email: json["email"],
-        password: json["password"],
         birthdate: json["birthdate"],
         address: json["address"],
     );
@@ -38,7 +36,6 @@ class RegisterModel {
         "name": name,
         "gender": gender,
         "email": email,
-        "password": password,
         "birthdate": birthdate,
         "address": address,
     };

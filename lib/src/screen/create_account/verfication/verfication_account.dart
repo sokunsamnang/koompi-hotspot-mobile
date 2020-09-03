@@ -1,10 +1,13 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:koompi_hotspot/src/backend/get_request.dart';
 import 'package:koompi_hotspot/src/screen/create_account/complete_info/complete_info.dart';
+import 'package:koompi_hotspot/src/screen/login/login_page.dart';
 
 class VerificationAccount extends StatefulWidget {
   
@@ -27,6 +30,9 @@ class _VerificationAccountState extends State<VerificationAccount> with SingleTi
   // Constants
   final int time = 30;
   AnimationController _controller;
+
+  TextEditingController email = TextEditingController();
+  TextEditingController vCode = TextEditingController();
 
   // Variables
   Size _screenSize;
@@ -399,7 +405,7 @@ class _VerificationAccountState extends State<VerificationAccount> with SingleTi
 
   // Current digit
   void _setCurrentDigit(int i) async{
-    setState(() {
+    setState(() async {
       _currentDigit = i;
       if (_firstDigit == null) {
         _firstDigit = _currentDigit;
@@ -428,14 +434,22 @@ class _VerificationAccountState extends State<VerificationAccount> with SingleTi
           _sixthDigit.toString();
 
       // Verify your otp by here. API call
-        if(otp != null){
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => CompleteInfo()));
+        if(otp == vCode.text){
+          var response = await GetRequest().confirmAccount(email.text, vCode.text);
+
+          if(response.statusCode == 200){
+
+            if(response.body != null){
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => LoginPage()));
+            }
+          }
         }
       }
     });
   }
+
 
   Future<Null> _startCountdown() async {
     setState(() {

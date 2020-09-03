@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
+import 'package:koompi_hotspot/src/backend/api_service.dart';
 import 'package:koompi_hotspot/src/screen/login/login_page.dart';
 import 'package:koompi_hotspot/src/screen/onboarding/onboarding_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -51,6 +52,10 @@ class _SplashState extends State<Splash> {
   void initState() {
     super.initState();
     startTime();
+  
+    setState(() {
+      AppService.noInternetConnection();
+    });
   }
 
   @override

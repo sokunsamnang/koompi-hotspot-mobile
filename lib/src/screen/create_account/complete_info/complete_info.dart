@@ -184,11 +184,11 @@ class _CompleteInfoState extends State<CompleteInfo>{
                   Text('Username'),
                   SizedBox(height: 10.0),
                   TextFormField(
-                    validator: (val) => val.length < 3 ? 'Username is required' : null,
+                    validator: (val) => val.length < 3 ? 'Full Name is required' : null,
                     onSaved: (val) => _username = val,
                     autovalidate: true,
                     decoration: InputDecoration(
-                      hintText: 'Username',
+                      hintText: 'Full Name',
                       border: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.black),
                         borderRadius: BorderRadius.all(Radius.circular(30.0))

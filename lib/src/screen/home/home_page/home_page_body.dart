@@ -45,7 +45,7 @@ Widget bodyPage(BuildContext context) {
 
   Widget _nameBar(context) {
 
-    String myName = mData.fullname;
+    String name = mData.name;
 
     return Row(
       children: <Widget>[
@@ -60,7 +60,7 @@ Widget bodyPage(BuildContext context) {
           ),
         ),
         Text( 
-          myName ?? 'KOOMPI',
+          name ?? 'KOOMPI',
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.w600,

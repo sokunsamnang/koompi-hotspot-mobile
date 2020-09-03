@@ -18,7 +18,7 @@ class _MorePageState extends State<MorePage>
     with SingleTickerProviderStateMixin {
   AnimationController _controller;
 
-  String myName = mData.fullname;
+  String name = mData.name;
   String token;
 
   @override
@@ -55,7 +55,7 @@ class _MorePageState extends State<MorePage>
                         MaterialPageRoute(builder: (context) => MyAccount()));
                   },
                   title: Text(
-                    myName ?? 'KOOMPI',
+                    name ?? 'KOOMPI',
                     style: TextStyle(
                         color: Colors.black, fontWeight: FontWeight.w500),
                   ),

@@ -21,14 +21,14 @@ class GetRequest{
   }
 
   // Confirm User Account By Phone Number
-  Future<void> confirmAccount(String email, String code) async {
+  Future<http.Response> confirmAccount(String email, String vCode) async {
 
     _backend.bodyEncode = json.encode({
       "email": email,
-      "vCode": code
+      "vCode": vCode
     });
     _backend.response = await http.get(
-      "${ApiService.url}/auth/verification",
+      "${ApiService.url}/auth/confirm-code",
       headers: _backend.conceteHeader(null, null),
     );
     return _backend.response;
