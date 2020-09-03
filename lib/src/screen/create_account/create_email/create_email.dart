@@ -59,7 +59,7 @@ class _CreateEmailState extends State<CreateEmail> {
         if (response.statusCode == 200) {
           var responseJson = json.decode(response.body);
 
-          if(response.body != null){
+          if(response.body == null){
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(builder: (context) => VerificationAccount()));
