@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:koompi_hotspot/src/backend/api_service.dart';
+import 'package:koompi_hotspot/src/backend/get_request.dart';
+import 'package:koompi_hotspot/src/models/model_userdata.dart';
 import 'package:koompi_hotspot/src/screen/home/home_page/home_page.dart';
 import 'package:koompi_hotspot/src/screen/home/user_plan.dart';
-import 'package:koompi_hotspot/src/screen/map/map.dart';
 import 'package:koompi_hotspot/src/screen/option_page/more_page.dart';
+import 'package:koompi_hotspot/src/screen/osm/map.dart';
 import 'package:line_icons/line_icons.dart';
 
 class Navbar extends StatefulWidget {
@@ -17,7 +19,7 @@ class _NavbarState extends State<Navbar> {
 
   final List<Widget> _widgetOptions = <Widget>[
     HomePage(),
-    MapPage(),
+    MapScreen(),
     UserPlan(),
     MorePage(),
   ];

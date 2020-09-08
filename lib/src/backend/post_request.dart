@@ -28,10 +28,10 @@ class PostRequest {
     _backend.bodyEncode = json.encode(/* Convert to Json Data ( String ) */
       {
         "name": name,
-        "gender": gender,
         "email": email,
+        "gender": gender,
         "birthdate": birthdate,
-        "adress": address
+        "address": address
         }
     );
     _backend.response = await http.post('${ApiService.url}/auth/complete-info', 
@@ -41,7 +41,7 @@ class PostRequest {
   }
 
   /*register account by email */
-  Future<http.Response> register(String email, String password) async {
+  Future<http.Response> signUpWithEmail(String email, String password) async {
     _backend.bodyEncode = json.encode({ /* Convert to Json String */
       "email": email,
       "password": password
@@ -55,4 +55,18 @@ class PostRequest {
     return _backend.response;
   }
 
+  // Confirm User Account By Phone Number
+  Future<http.Response> confirmAccount(String email, String vCode) async {
+
+    _backend.bodyEncode = json.encode({
+      "email": email,
+      "vCode": vCode
+    });
+    _backend.response = await http.post(
+      "${ApiService.url}/auth/confirm-code",
+      headers: _backend.conceteHeader(null, null),
+    );
+    return _backend.response;
+  }
+  
 }

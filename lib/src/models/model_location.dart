@@ -1,14 +1,13 @@
 
 class LocationList {
 
-  var selectedKhLocation = "Phnom Penh";
+  var selectedKhLocation = "Select City/Province";
   List<String> khLocation = <String>[
     'Banteay Meanchey',
     'Battambang',
     'Kampong Cham',
     'Kampong Chhnang',
     'Kampong Speu',
-    'Kampong Thom',
     'Kampong Thom',
     'Kandal',
     'Kep',

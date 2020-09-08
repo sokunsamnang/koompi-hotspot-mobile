@@ -4,10 +4,15 @@ import 'package:flutter/services.dart';
 import 'package:flutter_material_pickers/helpers/show_scroll_picker.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:koompi_hotspot/src/backend/post_request.dart';
 import 'package:koompi_hotspot/src/models/model_location.dart';
 import 'package:koompi_hotspot/src/screen/login/login_page.dart';
 
 class CompleteInfo extends StatefulWidget {
+
+  final String email;
+  CompleteInfo(this.email);
+  
   @override
   _CompleteInfoState createState() => _CompleteInfoState();
 }
@@ -16,6 +21,10 @@ class _CompleteInfoState extends State<CompleteInfo>{
   final formKey = GlobalKey<FormState>();
   bool _autoValidate = false;
 
+  TextEditingController _usernameController = TextEditingController();
+  TextEditingController _emailController = TextEditingController();
+
+  
   @override
   void initState() {
     super.initState();
@@ -25,9 +34,9 @@ class _CompleteInfoState extends State<CompleteInfo>{
   void dispose() {
     super.dispose();
   }
-
-  String _username;
-
+  
+  String _address;
+  
   //Location
   var locationModel = LocationList();
 
@@ -36,24 +45,22 @@ class _CompleteInfoState extends State<CompleteInfo>{
 
   //Gender 
   
-  List<String> genderList = ['Male', 'Female'];
+  List<String> lst = ['Male', 'Female'];
+  String selectedIndex;
   String _gender;
-
-  // List<String> lst = <String>['Male', 'Female'];
-  // int selectedIndex;
-  
-  // void changeIndex(int index) {
-  //   setState(() {
-  //     selectedIndex = index;
-  //   });
-  // }
-
+  void changeIndex(String index) {
+    setState(() {
+      _gender = index;
+    });
+  }
 
   //DOB Picker
   DateTime selectedDate = DateTime.now();
+  
+  String _birthdate;
 
   final dateFormart = new DateFormat('dd-MMM-yyyy');
-
+  
   Future<Null> _selectDate(BuildContext context) async {
     final DateTime picked = await showDatePicker(
         context: context,
@@ -63,6 +70,7 @@ class _CompleteInfoState extends State<CompleteInfo>{
     if (picked != null && picked != selectedDate)
       setState(() {
         selectedDate = picked;
+        _birthdate = dateFormart.format(selectedDate);
       });
   }
   
@@ -72,12 +80,11 @@ class _CompleteInfoState extends State<CompleteInfo>{
     if(form.validate()){
       form.save();
       print('Validated');
-      print(_username);
-      Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(builder: (context) => LoginPage()),
-        ModalRoute.withName('/'),
-      );
+      print(_usernameController.text);
+      print(_emailController.text);
+      print(_birthdate);
+      print(_gender);
+      print(_address);
     }
     else{
       setState(() {
@@ -86,8 +93,34 @@ class _CompleteInfoState extends State<CompleteInfo>{
     }
   }
   
+  Future <void> _onSubmitBtn() async {
+    _submit();
+    try {
+      final result = await InternetAddress.lookup('google.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        print('Internet connected');
+        var response = await PostRequest().completeInfoUser(
+          _emailController.text,
+          _usernameController.text,
+          _gender,
+          _birthdate,
+          _address);
 
-
+        if (response.statusCode == 200) {
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => LoginPage()),
+            ModalRoute.withName('/'),
+          );
+        } 
+        else {
+          print('register not Successful');
+        }
+      }
+    } on SocketException catch (_) {
+      print('not connected');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -125,7 +158,7 @@ class _CompleteInfoState extends State<CompleteInfo>{
                   color: Colors.blueAccent,
                 ),
                 onPressed: () async {              
-                  _submit();
+                  _onSubmitBtn();
                 },
               ),
             ),
@@ -184,11 +217,26 @@ class _CompleteInfoState extends State<CompleteInfo>{
                   Text('Username'),
                   SizedBox(height: 10.0),
                   TextFormField(
+                    controller: _usernameController,
                     validator: (val) => val.length < 3 ? 'Full Name is required' : null,
-                    onSaved: (val) => _username = val,
+                    onSaved: (val) => _usernameController.text = val,
                     autovalidate: true,
                     decoration: InputDecoration(
                       hintText: 'Full Name',
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black),
+                        borderRadius: BorderRadius.all(Radius.circular(30.0))
+                      )
+                    ),
+                  ),
+                  SizedBox(height: 16.0),
+                  TextFormField(
+                    controller: _emailController ?? widget.email,
+                    autovalidate: true,
+                    validator: (val) => !val.contains('@') ? 'Invalid Email' : null,
+                    onSaved: (val) => _emailController.text = val,
+                    decoration: InputDecoration(
+                      hintText: 'Email',
                       border: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.black),
                         borderRadius: BorderRadius.all(Radius.circular(30.0))
@@ -202,18 +250,18 @@ class _CompleteInfoState extends State<CompleteInfo>{
                   SizedBox(height: 16.0),
                   Text('Gender'),
                   SizedBox(height: 10.0),
-                  // Row(
-                  //   children: <Widget>[
-                  //     Expanded(
-                  //       child: genderCustomRadio(lst[0], 0),
-                  //     ),
-                  //     SizedBox(width: 20.0),
-                  //     Expanded(
-                  //       child: genderCustomRadio(lst[1], 1),
-                  //     ),
-                  //   ],
-                  // ),
-                  genderPicker(context),
+                  Row(
+                    children: <Widget>[
+                      Expanded(
+                        child: genderCustomRadio(lst[0], 'Male'),
+                      ),
+                      SizedBox(width: 20.0),
+                      Expanded(
+                        child: genderCustomRadio(lst[1], 'Female'),
+                      ),
+                    ],
+                  ),
+
                   SizedBox(height: 16.0),
                   Text('Location'),
                   SizedBox(height: 10.0),
@@ -227,83 +275,46 @@ class _CompleteInfoState extends State<CompleteInfo>{
     );
   }
 
-  Widget genderPicker(BuildContext context){
-    print(_gender);
-    return DropdownButtonFormField<String>(
-      hint: Text('Select Gender'),
-      validator: (val) => val == null ? 'Gender is required' : null,
-      onSaved: (val) => _gender = val,
-      autovalidate: true,
-      decoration: InputDecoration(
-        prefixIcon: Icon(
-          Icons.people,
-          color: Theme.of(context).brightness == Brightness.light
-            ? Colors.grey.shade700
-            : Colors.white70),
-        border: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.black),
-          borderRadius: BorderRadius.all(Radius.circular(30.0))
-        )),
-      items: genderList.map((value) {
-        return DropdownMenuItem<String>(
-          child: Text(value), value: value);
-      }).toList(),
-      value: _gender,
-      onChanged: (newValue) {
-        setState(() {
-          _gender = newValue;
-        });
-      },
+  Widget genderCustomRadio(String txt, String index) {
+    return ButtonTheme(
+      height: 50.0,
+      child: OutlineButton(
+        onPressed: () => changeIndex(index),
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
+        splashColor: Colors.transparent,
+        borderSide: BorderSide(
+            color: _gender == index ? Colors.cyan : Colors.grey),
+        child: Text(txt,
+          style: TextStyle(
+              color: _gender == index ? Colors.black : Colors.grey),
+        ),
+      ),
     );
   }
 
   Widget locationPicker(BuildContext context) {
-    print(locationModel.selectedKhLocation);
-
     return _LocationDropdown(
-      valueText: locationModel.selectedKhLocation.toString(),
+      valueText: _address ?? locationModel.selectedKhLocation.toString(),
       onPressed: () => showMaterialScrollPicker(
         context: context,
         title: "Pick Your Location",
         items: locationModel.khLocation,
         selectedItem: locationModel.selectedKhLocation,
         onChanged: (value) =>
-            setState(() => locationModel.selectedKhLocation = value),
+          setState(() => locationModel.selectedKhLocation = value),
         onCancelled: () => print("Scroll Picker cancelled"),
-        onConfirmed: () => print("Scroll Picker confirmed"),
+        onConfirmed: () => _address = locationModel.selectedKhLocation,
       ),
     );
   }
 
-  // Widget genderCustomRadio(String txt, int index) {
-  //   return ButtonTheme(
-  //     height: 50.0,
-  //     child: OutlineButton(
-  //       onPressed: () {
-  //         setState(() {
-  //           changeIndex(index);
-  //           print(txt);
-  //         });
-  //       },
-  //       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
-  //       splashColor: Colors.transparent,
-  //       borderSide: BorderSide(
-  //           color: selectedIndex == index ? Colors.cyan : Colors.grey),
-  //       child: Text(
-  //         txt,
-  //         style: TextStyle(
-  //             color: selectedIndex == index ? Colors.black : Colors.grey),
-  //       ),
-  //     ),
-  //   );
-  // }
-
   Widget dateOfbirth(DateTime selectedDate, _selectDate, dateFormart, context){
-    print('${dateFormart.format(selectedDate)}');
     return _DateDropdown(
-      valueText: dateFormart.format(selectedDate),
+      valueText: _birthdate ?? dateFormart.format(selectedDate),
       onPressed: (){
         _selectDate(context);
+        
       },
     );
   }
@@ -334,11 +345,6 @@ class _DateDropdown extends StatelessWidget {
       onTap: onPressed,
       child: new InputDecorator(
         decoration: new InputDecoration(
-          prefixIcon: Icon(
-            Icons.date_range,
-              color: Theme.of(context).brightness == Brightness.light
-                  ? Colors.grey.shade700
-                  : Colors.white70),
           border: OutlineInputBorder(
             borderSide: BorderSide(color: Colors.black),
             borderRadius: BorderRadius.all(Radius.circular(30.0))
@@ -352,7 +358,7 @@ class _DateDropdown extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             new Text(valueText, style: valueStyle),
-            new Icon(Icons.arrow_drop_down,
+            new Icon(Icons.date_range,
                 color: Theme.of(context).brightness == Brightness.light
                     ? Colors.grey.shade700
                     : Colors.white70),
@@ -388,11 +394,6 @@ class _LocationDropdown extends StatelessWidget {
       onTap: onPressed,
       child: new InputDecorator(
         decoration: new InputDecoration(
-          prefixIcon: Icon(
-            Icons.location_city,
-            color: Theme.of(context).brightness == Brightness.light
-              ? Colors.grey.shade700
-              : Colors.white70),
           border: OutlineInputBorder(
             borderSide: BorderSide(color: Colors.black),
             borderRadius: BorderRadius.all(Radius.circular(30.0))
@@ -406,7 +407,7 @@ class _LocationDropdown extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             new Text(valueText, style: valueStyle),
-            new Icon(Icons.arrow_drop_down,
+            new Icon(Icons.location_city,
                 color: Theme.of(context).brightness == Brightness.light
                     ? Colors.grey.shade700
                     : Colors.white70),

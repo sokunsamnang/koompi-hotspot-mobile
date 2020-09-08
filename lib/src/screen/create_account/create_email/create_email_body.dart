@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:koompi_hotspot/src/components/formcard/formcardEmail.dart';
-import 'package:koompi_hotspot/src/screen/create_account/verfication/verfication_account.dart';
 import 'package:koompi_hotspot/src/screen/login/login_page.dart';
 
   @override
@@ -13,10 +12,10 @@ import 'package:koompi_hotspot/src/screen/login/login_page.dart';
     Function _toggle,
     String _email,
     String _password,
-    Function _submit,
+    dynamic _submit,
     GlobalKey formKey,
     bool _autoValidate,
-    Future <void> register()
+    Function onSignUpByEmail
     ) {
 
     ScreenUtil.instance = ScreenUtil.getInstance()..init(context);
@@ -90,8 +89,8 @@ import 'package:koompi_hotspot/src/screen/login/login_page.dart';
                             color: Colors.transparent,
                             child: InkWell(
                               onTap: () {
-                                register();
-                              },
+                                onSignUpByEmail();
+                              },  
                               child: Center(
                                 child: Text("SIGN UP",
                                     style: TextStyle(

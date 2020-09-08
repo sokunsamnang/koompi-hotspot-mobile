@@ -4,6 +4,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_material_pickers/helpers/show_scroll_picker.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:koompi_hotspot/src/backend/post_request.dart';
+import 'package:koompi_hotspot/src/components/navbar.dart';
 import 'package:koompi_hotspot/src/models/model_location.dart';
 import 'package:koompi_hotspot/src/models/model_userdata.dart';
 
@@ -16,6 +18,90 @@ class _MyAccountState extends State<MyAccount>
     with SingleTickerProviderStateMixin {
   AnimationController _controller;
 
+  final formKey = GlobalKey<FormState>();
+  bool _autoValidate = false;
+
+  void _submit(){
+    final form = formKey.currentState;
+
+    if(form.validate()){
+      form.save();
+      print('Validated');
+      print(fullnameController.text);
+      print(birthdate);
+      print(gender);
+      print(address);
+    }
+    else{
+      setState(() {
+        _autoValidate = true;
+      });
+    }
+  }
+  
+  Future <void> _onSubmitBtn() async {
+    _submit();
+    try {
+      final result = await InternetAddress.lookup('google.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        print('Internet connected');
+        var response = await PostRequest().completeInfoUser(
+          emailController.text,
+          fullnameController.text,
+          gender,
+          birthdate,
+          address);
+          
+        if (response.statusCode == 200) {
+          setState(() {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => Navbar()),
+              // ModalRoute.withName('/'),
+            );
+          });
+        } 
+        else {
+          print('update info not Successful');
+          showErrorServerDialog(context);
+        }
+      }
+    } on SocketException catch (_) {
+      print('not connected');
+    }
+  }
+  showErrorServerDialog(BuildContext context) async {
+    var response = await PostRequest().completeInfoUser(
+          emailController.text,
+          fullnameController.text,
+          gender,
+          birthdate,
+          address);
+    return showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Error'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('${response.body}'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      });
+  }
+  
   @override
   void initState() {
     super.initState();
@@ -110,7 +196,9 @@ class _MyAccountState extends State<MyAccount>
                   color: Colors.blueAccent,
                 ),
                 onPressed: () async {
-                  
+                  setState(() {
+                    _onSubmitBtn();
+                  });
                 },
               ),
             ),
@@ -119,102 +207,101 @@ class _MyAccountState extends State<MyAccount>
       ),
       body: Container(
         height: MediaQuery.of(context).size.height * 2,
-        child: SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
-          child: Padding(
-            padding: EdgeInsets.only(left: 28.0, right: 28.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                SizedBox(
-                  height: 10.0,
-                ),
-                Align(
-                  alignment: Alignment.center,
-                  child: CircleAvatar(
-                    radius: 50.0,
-                    backgroundColor: const Color(0xff476cfb),
-                    child: ClipOval(
-                      child: SizedBox(
-                        width: 100.0,
-                        height: 100.0,
-                        child: (_image != null)
-                            ? Image.file(
-                                _image,
-                                fit: BoxFit.cover,
-                              )
-                            : CircleAvatar(
-                                backgroundImage: AssetImage('assets/images/avatar.png'),
+        child: Form(
+          key: formKey,
+          autovalidate: _autoValidate,
+          child: SingleChildScrollView(
+            physics: BouncingScrollPhysics(),
+            child: Padding(
+              padding: EdgeInsets.only(left: 28.0, right: 28.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  SizedBox(
+                    height: 10.0,
+                  ),
+                  Align(
+                    alignment: Alignment.center,
+                    child: CircleAvatar(
+                      radius: 50.0,
+                      backgroundColor: const Color(0xff476cfb),
+                      child: ClipOval(
+                        child: SizedBox(
+                          width: 100.0,
+                          height: 100.0,
+                          child: (_image != null)
+                              ? Image.file(
+                                  _image,
+                                  fit: BoxFit.cover,
+                                )
+                              : CircleAvatar(
+                                  backgroundImage: AssetImage('assets/images/avatar.png'),
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
-                Center(
-                  child: FlatButton(
-                    colorBrightness: Brightness.dark,
-                    child: Text('Edit Profile Photo',
-                        style: TextStyle(
-                            color: Colors.blue,
-                            fontSize: 20.0,
-                            fontFamily: 'Medium')
-                          ),
-                    onPressed: () => getImage(),
-                  ),
-                ),
-                SizedBox(height: 16.0),
-                TextFormField(
-                  controller: fullnameController ?? '',
-                  decoration: InputDecoration(
-                    hintText: 'Full Name',
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.black),
-                      borderRadius: BorderRadius.all(Radius.circular(30.0))
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.grey),
-                      borderRadius: BorderRadius.all(Radius.circular(30.0)),
+                  Center(
+                    child: FlatButton(
+                      colorBrightness: Brightness.dark,
+                      child: Text('Edit Profile Photo',
+                          style: TextStyle(
+                              color: Colors.blue,
+                              fontSize: 20.0,
+                              fontFamily: 'Medium')
+                            ),
+                      onPressed: () => getImage(),
                     ),
                   ),
-                ),
-                SizedBox(height: 16.0),
-                TextFormField(
-                  controller: emailController ?? '',
-                  decoration: InputDecoration(
-                    hintText: 'Email',
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.black),
-                      borderRadius: BorderRadius.all(Radius.circular(30.0))
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.grey),
-                      borderRadius: BorderRadius.all(Radius.circular(30.0)),
+                  SizedBox(height: 16.0),
+                  TextFormField(
+                    validator: (val) => val.length < 3 ? 'Full Name is required' : null,
+                    onSaved: (val) => fullnameController.text = val,
+                    autovalidate: true,
+                    controller: fullnameController ?? '',
+                    decoration: InputDecoration(
+                      hintText: 'Full Name',
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black),
+                        borderRadius: BorderRadius.all(Radius.circular(30.0))
+                      )
                     ),
                   ),
-                ),
-                SizedBox(height: 16.0),
-                Text('Date Of Birth'),
-                SizedBox(height: 10.0),
-                dateOfbirth(selectedDate, _selectDate, dateFormart, context),
-                SizedBox(height: 16.0),
-                Text('Gender'),
-                SizedBox(height: 10.0),
-                Row(
-                  children: <Widget>[
-                    Expanded(
-                      child: genderCustomRadio(lst[0], 'Male'),
+                  SizedBox(height: 16.0),
+                  TextFormField(
+                    controller: emailController ?? '',
+                    decoration: InputDecoration(
+                      hintText: 'Email',
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black),
+                        borderRadius: BorderRadius.all(Radius.circular(30.0))
+                      )
                     ),
-                    SizedBox(width: 20.0),
-                    Expanded(
-                      child: genderCustomRadio(lst[1], 'Female'),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 16.0),
-                Text('Location'),
-                SizedBox(height: 10.0),
-                locationPicker(context),
-              ],
+                  ),
+                  SizedBox(height: 16.0),
+                  Text('Date Of Birth'),
+                  SizedBox(height: 10.0),
+                  dateOfbirth(selectedDate, _selectDate, dateFormart, context),
+                  SizedBox(height: 16.0),
+                  Text('Gender'),
+                  SizedBox(height: 10.0),
+                  Row(
+                    children: <Widget>[
+                      Expanded(
+                        child: genderCustomRadio(lst[0], 'Male'),
+                      ),
+                      SizedBox(width: 20.0),
+                      Expanded(
+                        child: genderCustomRadio(lst[1], 'Female'),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 16.0),
+                  Text('Location'),
+                  SizedBox(height: 10.0),
+                  locationPicker(context),
+                ],
+              ),
             ),
           ),
         ),
@@ -259,17 +346,15 @@ class _MyAccountState extends State<MyAccount>
   }
 
   Widget dateOfbirth(DateTime selectedDate, _selectDate, dateFormart, context){
-    print(dateFormart.format(selectedDate));
     print(birthdate);
     return _DateDropdown(
-      valueText: birthdate ?? dateFormart.format(selectedDate),
+      valueText: birthdate ?? 'Select Date of Birth',
       onPressed: (){
         _selectDate(context);
         
       },
     );
   }
-
 }
 
 
