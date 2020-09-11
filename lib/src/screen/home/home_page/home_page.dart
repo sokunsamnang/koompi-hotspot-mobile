@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:koompi_hotspot/src/backend/api_service.dart';
 import 'package:koompi_hotspot/src/screen/home/home_page/home_page_body.dart';
+import 'package:koompi_hotspot/src/services/services.dart';
 
 class HomePage extends StatefulWidget{
 

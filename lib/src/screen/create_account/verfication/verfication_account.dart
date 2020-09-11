@@ -5,6 +5,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:koompi_hotspot/index.dart';
 import 'package:koompi_hotspot/src/backend/post_request.dart';
+import 'package:koompi_hotspot/src/components/reuse_widget.dart';
 import 'package:koompi_hotspot/src/screen/create_account/complete_info/complete_info.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
@@ -51,13 +52,15 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
     super.dispose();
   }
 
-  void _submitOtp(String vCode) async {
-    String apiUrl =
-    'https://api-hotspot.koompi.org/api/auth/confirm-email';
-    setState(() {
-      _isLoading = true;
-    });
-    var response = await http.post(apiUrl,
+  Future<void> _submitOtp(String vCode) async {
+    dialogLoading(context);
+    var responseBody;
+    try {
+      String apiUrl = 'https://api-hotspot.koompi.org/api/auth/confirm-email';
+      setState(() {
+        _isLoading = true;
+      });
+      var response = await http.post(apiUrl,
         headers: <String, String>{
           "accept": "application/json",
           "Content-Type": "application/json"
@@ -66,28 +69,18 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
           "email": widget.email,
           "vCode": vCode,
         }));
-      if (response.statusCode == 200) {
-        setState(() {
-          _isLoading = false;
-        });
-        var responseBody = json.decode(response.body);
-        print(responseBody);
-        print(response.body);
-        try {
-          alertText = responseBody['error']['message'];
-        } catch (e) {
-          await PostRequest()
-              .userLogIn(widget.email, widget.password);
-          alertText = responseBody['message'];
+        if (response.statusCode == 200) {
+          print(response.body);
           Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => CompleteInfo(widget.email)));
-        }
-      } else {
-        print(response.body);
-        setState(() {
-          _isLoading = false;
-      });
+        } else {
+          Navigator.pop(context);
+          print(response.body);
+      }
+    } catch (e) {
+      alertText = responseBody['message'];
     }
+    
   }
   @override
   Widget build(BuildContext context) {
@@ -180,11 +173,8 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
                       errorAnimationController: errorController,
                       controller: textEditingController,
                       onCompleted: (v) {
-                        print("Completed");
+                        print("Completed");              
                       },
-                      // onTap: () {
-                      //   print("Pressed");
-                      // },
                       onChanged: (value) {
                         print(value);
                         setState(() {
@@ -212,21 +202,21 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
               SizedBox(
                 height: 20,
               ),
-              RichText(
-                textAlign: TextAlign.center,
-                text: TextSpan(
-                    text: "Didn't receive the code? ",
-                    style: TextStyle(color: Colors.black54, fontSize: 15),
-                    children: [
-                      TextSpan(
-                          text: " RESEND",
-                          recognizer: onTapRecognizer,
-                          style: TextStyle(
-                              color: Color(0xFF91D3B3),
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16))
-                    ]),
-              ),
+              // RichText(
+              //   textAlign: TextAlign.center,
+              //   text: TextSpan(
+              //       text: "Didn't receive the code? ",
+              //       style: TextStyle(color: Colors.black54, fontSize: 15),
+              //       children: [
+              //         TextSpan(
+              //             text: " RESEND",
+              //             recognizer: onTapRecognizer,
+              //             style: TextStyle(
+              //                 color: Color(0xFF91D3B3),
+              //                 fontWeight: FontWeight.bold,
+              //                 fontSize: 16))
+              //       ]),
+              // ),
               SizedBox(
                 height: 14,
               ),
@@ -236,7 +226,7 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
                 child: ButtonTheme(
                   height: 50,
                   child: FlatButton(
-                    onPressed: () {
+                    onPressed: () async {
                       formKey.currentState.validate();
                       // conditions for validating
                       if (currentText.length != 6) {
@@ -246,14 +236,14 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
                           hasError = true;
                         });
                       } else {
-                        _submitOtp(currentText);
-                        setState(() {
-                          hasError = false;
-                          scaffoldKey.currentState.showSnackBar(SnackBar(
-                            content: Text("Aye!!"),
-                            duration: Duration(seconds: 2),
-                          ));
-                        });
+                        await _submitOtp(currentText);
+                        // setState(() {
+                        //   hasError = false;
+                        //   scaffoldKey.currentState.showSnackBar(SnackBar(
+                        //     content: Text("Aye!!"),
+                        //     duration: Duration(seconds: 2),
+                        //   ));
+                        // });
                       }
                     },
                     child: Center(
@@ -292,12 +282,12 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
                       textEditingController.clear();
                     },
                   ),
-                  FlatButton(
-                    child: Text("Set Text"),
-                    onPressed: () {
-                      textEditingController.text = "123456";
-                    },
-                  ),
+                  // FlatButton(
+                  //   child: Text("Set Text"),
+                  //   onPressed: () {
+                  //     textEditingController.text = "123456";
+                  //   },
+                  // ),
                 ],
               )
             ],

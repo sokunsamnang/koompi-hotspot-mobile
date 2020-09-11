@@ -4,10 +4,13 @@ import 'package:flutter/services.dart';
 import 'package:flutter_material_pickers/helpers/show_scroll_picker.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:koompi_hotspot/src/backend/get_request.dart';
 import 'package:koompi_hotspot/src/backend/post_request.dart';
 import 'package:koompi_hotspot/src/components/navbar.dart';
+import 'package:koompi_hotspot/src/components/reuse_widget.dart';
 import 'package:koompi_hotspot/src/models/model_location.dart';
 import 'package:koompi_hotspot/src/models/model_userdata.dart';
+import 'package:koompi_hotspot/src/screen/login/login_page.dart';
 
 class MyAccount extends StatefulWidget {
   @override
@@ -38,9 +41,11 @@ class _MyAccountState extends State<MyAccount>
       });
     }
   }
+
   
   Future <void> _onSubmitBtn() async {
     _submit();
+    dialogLoading(context);
     try {
       final result = await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
@@ -53,11 +58,12 @@ class _MyAccountState extends State<MyAccount>
           address);
           
         if (response.statusCode == 200) {
+          
           setState(() {
-            Navigator.pushReplacement(
+            Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(builder: (context) => Navbar()),
-              // ModalRoute.withName('/'),
+              ModalRoute.withName('/'),
             );
           });
         } 
@@ -254,6 +260,8 @@ class _MyAccountState extends State<MyAccount>
                     ),
                   ),
                   SizedBox(height: 16.0),
+                  Text('Full Name'),
+                  SizedBox(height: 10.0),
                   TextFormField(
                     validator: (val) => val.length < 3 ? 'Full Name is required' : null,
                     onSaved: (val) => fullnameController.text = val,
@@ -268,6 +276,8 @@ class _MyAccountState extends State<MyAccount>
                     ),
                   ),
                   SizedBox(height: 16.0),
+                  Text('Email'),
+                  SizedBox(height: 10.0),
                   TextFormField(
                     controller: emailController ?? '',
                     decoration: InputDecoration(

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:koompi_hotspot/src/backend/component.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'api_service.dart';
 
 class PostRequest {
@@ -34,7 +35,7 @@ class PostRequest {
         "address": address
         }
     );
-    _backend.response = await http.post('${ApiService.url}/auth/complete-info', 
+    _backend.response = await http.put('${ApiService.url}/auth/complete-info', 
     headers: _backend.conceteHeader(null, null), 
     body: _backend.bodyEncode);
     return _backend.response;
@@ -62,11 +63,11 @@ class PostRequest {
       "email": email,
       "vCode": vCode
     });
-    _backend.response = await http.post(
-      "${ApiService.url}/auth/confirm-code",
+    _backend.response = await http.post('${ApiService.url}/auth/confirm-email',
       headers: _backend.conceteHeader(null, null),
     );
+    print(_backend.response.body);
     return _backend.response;
   }
-  
+
 }

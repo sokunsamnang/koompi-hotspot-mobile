@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:koompi_hotspot/src/backend/api_service.dart';
 import 'package:koompi_hotspot/src/screen/login/login_page.dart';
 import 'package:koompi_hotspot/src/screen/onboarding/onboarding_screen.dart';
+import 'package:koompi_hotspot/src/services/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class App extends StatelessWidget{
@@ -11,7 +12,7 @@ class App extends StatelessWidget{
     return MaterialApp(
       initialRoute: '/',
       title: 'Koompi Hotspot',
-      home: new Splash(),
+      home: Splash(),
     );
   }
 }
@@ -29,33 +30,35 @@ class _SplashState extends State<Splash> {
     var _duration = new Duration(seconds: 3);
 
     if (firstTime != null && !firstTime) {// Not first time
-      return new Timer(_duration, navigationLoginPage);
-    } else {// First time
+      return new Timer(_duration, isLoggedIn);
+    } 
+    else {// First time
       prefs.setBool('first_time', false);
       return new Timer(_duration, navigationOnboardingScreen);
     }
   }
 
-  void navigationLoginPage() {
-    Navigator.pushReplacement(context,
-      MaterialPageRoute(builder: (context) => LoginPage())
-      ); 
-  }
+  // void navigationLoginPage() {
+  //   Navigator.pushReplacement(context,
+  //     MaterialPageRoute(builder: (context) => LoginPage())
+  //   ); 
+  // }
 
   void navigationOnboardingScreen() {
     Navigator.pushReplacement(context,
       MaterialPageRoute(builder: (context) => OnboardingScreen())
-      ); 
+    ); 
+  }
+
+  void isLoggedIn() {
+    StorageServices().checkUser(context);
   }
 
   @override
   void initState() {
     super.initState();
     startTime();
-  
-    setState(() {
-      AppService.noInternetConnection();
-    });
+    //StorageServices().checkUser(context);
   }
 
   @override

@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:koompi_hotspot/src/backend/api_service.dart';
 import 'package:koompi_hotspot/src/backend/post_request.dart';
+import 'package:koompi_hotspot/src/components/reuse_widget.dart';
 import 'package:koompi_hotspot/src/screen/create_account/create_email/create_email_body.dart';
 import 'package:koompi_hotspot/src/screen/create_account/verfication/verfication_account.dart';
 
@@ -11,6 +12,8 @@ class CreateEmail extends StatefulWidget {
 }
 
 class _CreateEmailState extends State<CreateEmail> {
+
+
 
   final formKey = GlobalKey<FormState>();
   bool _autoValidate = false;
@@ -56,6 +59,7 @@ class _CreateEmailState extends State<CreateEmail> {
 
   Future <void> onSignUpByEmail() async {
     _submit();
+    dialogLoading(context);
     try {
       final result = await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
@@ -84,9 +88,11 @@ class _CreateEmailState extends State<CreateEmail> {
           // }
         } 
         else if (response.statusCode == 401){
+          Navigator.pop(context);
           return showErrorDialog(context);
         }
         else if (response.statusCode >= 500 && response.statusCode <600){
+          Navigator.pop(context);
           return showErrorServerDialog(context);
         }
         // else {
@@ -95,6 +101,7 @@ class _CreateEmailState extends State<CreateEmail> {
         // }
       }
     } on SocketException catch (_) {
+      Navigator.pop(context);
       print('not connected');
     }
   }

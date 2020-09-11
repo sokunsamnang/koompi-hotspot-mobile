@@ -1,45 +1,74 @@
 /* Dialog of response from server */
 import 'package:flutter/material.dart';
 
-Future dialog(
-  BuildContext context, 
-  var text, 
-  var title,
-  {FlatButton action, Color bgColor}
-) async {
-  var result = await showDialog(
+
+/* Loading Progress */
+Widget loading() {
+  return Center(
+    child: CircularProgressIndicator(
+      backgroundColor: Colors.transparent,
+      valueColor: AlwaysStoppedAnimation(Colors.blueAccent)
+    ),
+  );
+}
+
+/* Progress */
+Widget progress({String content}) {
+  return Material(
+    color: Colors.transparent,
+    child: Stack(
+      alignment: Alignment.center,
+      children: <Widget>[
+        Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            CircularProgressIndicator(
+              backgroundColor: Colors.transparent,
+              valueColor: AlwaysStoppedAnimation(Colors.blueAccent)
+            ),
+            content == null 
+            ? Container() 
+            : Padding(
+              child: textScale(
+                text: content,
+                hexaColor: "#FFFFFF"
+              ),
+              padding: EdgeInsets.only(bottom: 10.0, top: 10.0)
+            ),
+          ],
+        )
+      ],
+    ),
+  );
+}
+
+void dialogLoading(BuildContext context, {String content}) {
+  showDialog(
+    barrierDismissible: false,
     context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        backgroundColor: bgColor,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-        title: Align(
-          alignment: Alignment.center,
-          child: title,
-        ),
-        content: Padding(
-          padding: EdgeInsets.only(top: 15.0, bottom: 15.0),
-          child: text,
-        ),
-        actions: <Widget>[
-          FlatButton(
-            child: Text('Close'),
-            onPressed: () => Navigator.of(context).pop(text),
-          ), 
-          action
-        ],
-      );
-    }
-  );
-  return result;
+    builder: (context) {
+      return progress(content: content);
+    });
 }
 
-Widget textMessage({String text: "Message", fontSize: 20.0}){
+Widget textScale({
+  String text,
+  double fontSize = 18.0,
+  String hexaColor = "#1BD2FA",
+  TextDecoration underline,
+  BoxFit fit = BoxFit.contain,
+  FontWeight fontWeight}
+) {
   return FittedBox(
-    child: Text(text, style: TextStyle(fontSize: fontSize, fontWeight: FontWeight.w600)),
+    fit: fit,
+    child: Text(
+      text,
+      style: TextStyle(
+        color: Colors.blueAccent,
+        decoration: underline,
+        fontSize: fontSize,
+        fontWeight: fontWeight
+      ),
+    ),
   );
-}
-
-Widget textAlignCenter({String text: ""}){
-  return Text(text, textAlign: TextAlign.center);
 }

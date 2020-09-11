@@ -6,6 +6,8 @@ class ModelUserData{
   String birthdate;
   String address;
 
+  Map<String, dynamic> userData;
+  
   ModelUserData({
     this.name
   });

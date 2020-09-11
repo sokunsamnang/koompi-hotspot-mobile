@@ -7,7 +7,9 @@ import 'package:koompi_hotspot/src/screen/home/home_page/home_page.dart';
 import 'package:koompi_hotspot/src/screen/home/user_plan.dart';
 import 'package:koompi_hotspot/src/screen/option_page/more_page.dart';
 import 'package:koompi_hotspot/src/screen/osm/map.dart';
+import 'package:koompi_hotspot/src/services/services.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Navbar extends StatefulWidget {
   @override
@@ -27,7 +29,6 @@ class _NavbarState extends State<Navbar> {
   @override
   void initState(){
     super.initState();
-    
     setState(() {
       AppService.noInternetConnection();
     });

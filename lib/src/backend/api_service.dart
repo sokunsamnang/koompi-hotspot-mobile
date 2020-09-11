@@ -5,8 +5,6 @@ class ApiService{
 
   static final url = 'https://api-hotspot.koompi.org/api';
 
-
-
 }
 
 class ApiHeader {

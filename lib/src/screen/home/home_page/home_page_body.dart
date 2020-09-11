@@ -97,7 +97,7 @@ Widget _balanceTokens(context) {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Text(
-                        '6,354',
+                        '0.00',
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 35,

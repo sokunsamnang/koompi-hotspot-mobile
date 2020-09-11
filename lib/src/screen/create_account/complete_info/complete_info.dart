@@ -5,6 +5,7 @@ import 'package:flutter_material_pickers/helpers/show_scroll_picker.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:koompi_hotspot/src/backend/post_request.dart';
+import 'package:koompi_hotspot/src/components/reuse_widget.dart';
 import 'package:koompi_hotspot/src/models/model_location.dart';
 import 'package:koompi_hotspot/src/screen/login/login_page.dart';
 
@@ -22,11 +23,13 @@ class _CompleteInfoState extends State<CompleteInfo>{
   bool _autoValidate = false;
 
   TextEditingController _usernameController = TextEditingController();
-  TextEditingController _emailController = TextEditingController();
+  TextEditingController _emailController;
 
   
   @override
   void initState() {
+    
+    _emailController = TextEditingController(text: widget.email);
     super.initState();
   }
 
@@ -95,6 +98,7 @@ class _CompleteInfoState extends State<CompleteInfo>{
   
   Future <void> _onSubmitBtn() async {
     _submit();
+    dialogLoading(context);
     try {
       final result = await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
@@ -105,7 +109,7 @@ class _CompleteInfoState extends State<CompleteInfo>{
           _gender,
           _birthdate,
           _address);
-
+        
         if (response.statusCode == 200) {
           Navigator.pushAndRemoveUntil(
             context,
@@ -114,10 +118,12 @@ class _CompleteInfoState extends State<CompleteInfo>{
           );
         } 
         else {
+          Navigator.pop(context);
           print('register not Successful');
         }
       }
     } on SocketException catch (_) {
+      Navigator.pop(context);
       print('not connected');
     }
   }
@@ -214,7 +220,7 @@ class _CompleteInfoState extends State<CompleteInfo>{
                     ),
                   ),
                   SizedBox(height: 16.0),
-                  Text('Username'),
+                  Text('Full Name'),
                   SizedBox(height: 10.0),
                   TextFormField(
                     controller: _usernameController,
@@ -230,6 +236,8 @@ class _CompleteInfoState extends State<CompleteInfo>{
                     ),
                   ),
                   SizedBox(height: 16.0),
+                  Text('Email'),
+                  SizedBox(height: 10.0),
                   TextFormField(
                     controller: _emailController ?? widget.email,
                     autovalidate: true,
@@ -311,7 +319,7 @@ class _CompleteInfoState extends State<CompleteInfo>{
 
   Widget dateOfbirth(DateTime selectedDate, _selectDate, dateFormart, context){
     return _DateDropdown(
-      valueText: _birthdate ?? dateFormart.format(selectedDate),
+      valueText: _birthdate ?? 'Select Date of Birth',
       onPressed: (){
         _selectDate(context);
         

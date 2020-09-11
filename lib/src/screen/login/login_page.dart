@@ -5,6 +5,7 @@ import 'package:koompi_hotspot/src/backend/get_request.dart';
 import 'package:koompi_hotspot/src/backend/post_request.dart';
 import 'package:koompi_hotspot/src/components/formcard/formcardLogin.dart';
 import 'package:koompi_hotspot/src/components/navbar.dart';
+import 'package:koompi_hotspot/src/components/reuse_widget.dart';
 import 'package:koompi_hotspot/src/screen/create_account/create_email/create_email.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'dart:io';
@@ -33,12 +34,12 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     super.initState();
-    
     setState(() {
       AppService.noInternetConnection();
     });
     
   }
+
 
   @override
   void dispose() {
@@ -63,6 +64,7 @@ class _LoginPageState extends State<LoginPage> {
   //check connection and login
   Future <void> login() async {
     _submit();
+    dialogLoading(context);
     try {
       final result = await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
@@ -74,8 +76,13 @@ class _LoginPageState extends State<LoginPage> {
           SharedPreferences isToken = await SharedPreferences.getInstance();
           var responseJson = json.decode(response.body);
           token = responseJson['token'];
-          await loadData(context);
-          
+            await GetRequest().getUserProfile(token)
+              .then((values) {
+                setState(() {
+                  _isLoading = true;
+                });
+            Navigator.pop(context);
+          });
           if(token != null){
             await isToken.setString('token', token);
             Navigator.pushReplacement(
@@ -83,6 +90,7 @@ class _LoginPageState extends State<LoginPage> {
               MaterialPageRoute(builder: (context) => Navbar()));
           }
           else {
+            Navigator.pop(context);
             try {
               messageAlert = responseJson['error']['message'];
             } catch (e) {
@@ -91,9 +99,11 @@ class _LoginPageState extends State<LoginPage> {
           }
         } 
         else if (response.statusCode == 401){
+          Navigator.pop(context);
           return showErrorDialog(context);
         }
         else if (response.statusCode >= 500 && response.statusCode <600){
+          Navigator.pop(context);
           return showErrorServerDialog(context);
         }
         // else {
@@ -102,6 +112,7 @@ class _LoginPageState extends State<LoginPage> {
         // }
       }
     } on SocketException catch (_) {
+      Navigator.pop(context);
       print('not connected');
       errorDialog(context);
     }
@@ -141,37 +152,6 @@ class _LoginPageState extends State<LoginPage> {
             ],
           );
         });
-  }
-
-  loadData(BuildContext context) async {
-    showDialog(
-        barrierDismissible: false,
-        context: context,
-        builder: (context) {
-          return Material(
-            color: Colors.transparent,
-            child: Stack(
-              alignment: Alignment.center,
-              children: <Widget>[
-                Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    CircularProgressIndicator(
-                        backgroundColor: Colors.transparent,
-                        valueColor: AlwaysStoppedAnimation(Colors.blue)),
-                  ],
-                )
-              ],
-            ),
-          );
-        });
-    await GetRequest().getUserName(token)
-        .then((values) {
-          setState(() {
-            _isLoading = true;
-          });
-      Navigator.pop(context);
-    });
   }
 
   showErrorDialog(BuildContext context) async {

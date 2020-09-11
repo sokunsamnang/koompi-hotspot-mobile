@@ -1,9 +1,13 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:koompi_hotspot/src/backend/get_request.dart';
+import 'package:koompi_hotspot/src/components/reuse_widget.dart';
 import 'package:koompi_hotspot/src/models/model_userdata.dart';
 import 'package:koompi_hotspot/src/screen/option_page/myaccount.dart';
 import 'package:koompi_hotspot/src/screen/login/login_page.dart';
+import 'package:koompi_hotspot/src/services/services.dart';
 import 'package:line_icons/line_icons.dart';
 import 'change_password.dart';
 import 'speedtest.dart';
@@ -19,13 +23,11 @@ class _MorePageState extends State<MorePage>
   AnimationController _controller;
 
   String name = mData.name;
-  String token;
-
+  
   @override
   void initState() {
     super.initState();
     _controller = AnimationController(vsync: this);
-    GetRequest().getUserName(token);
   }
 
   @override
@@ -33,6 +35,8 @@ class _MorePageState extends State<MorePage>
     super.dispose();
     _controller.dispose();
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -168,13 +172,21 @@ showLogoutDialog(context) async {
             FlatButton(
               child: Text('Yes'),
               onPressed: () async {
-                // SharedPreferences isToken = await SharedPreferences.getInstance();
-                // isToken.clear();
-                Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(builder: (context) => LoginPage()),
-                  ModalRoute.withName('/'),
-                );
+                dialogLoading(context);
+                StorageServices().clearPref();
+                Future.delayed(Duration(seconds: 2), () {
+                  Timer(Duration(milliseconds: 500), () => Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (context) => LoginPage()),
+                    ModalRoute.withName('/'),
+                  ));
+                });
+                // StorageServices().clearPref();
+                // Navigator.pushAndRemoveUntil(
+                //   context,
+                //   MaterialPageRoute(builder: (context) => LoginPage()),
+                //   ModalRoute.withName('/'),
+                // );
               },
             ),
           ],
