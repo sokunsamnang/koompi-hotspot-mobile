@@ -161,7 +161,7 @@ class _UserPlanState extends State<UserPlan>
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Text('Hotspot Plan', style: TextStyle(color: Colors.black)),
+        title: Text('Buy Hotspot Plan', style: TextStyle(color: Colors.black)),
       ),
       body: Container(
         height: MediaQuery.of(context).size.height * 2,

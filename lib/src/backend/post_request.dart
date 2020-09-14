@@ -41,6 +41,22 @@ class PostRequest {
     return _backend.response;
   }
 
+  /* Change password user account */
+  Future<http.Response> changePassword(String email, String oldPassword, String newPassword) async {
+    _backend.bodyEncode = json.encode(/* Convert to Json Data ( String ) */
+      {
+        "email": email,
+        "old_password": oldPassword,
+        "new_password": newPassword,
+        }
+    );
+    _backend.response = await http.put('${ApiService.url}/reset-password/account', 
+    headers: _backend.conceteHeader(null, null), 
+    body: _backend.bodyEncode);
+    return _backend.response;
+  }
+
+
   /*register account by email */
   Future<http.Response> signUpWithEmail(String email, String password) async {
     _backend.bodyEncode = json.encode({ /* Convert to Json String */

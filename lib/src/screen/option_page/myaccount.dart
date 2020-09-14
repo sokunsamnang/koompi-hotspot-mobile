@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_material_pickers/helpers/show_scroll_picker.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:koompi_hotspot/src/backend/component.dart';
 import 'package:koompi_hotspot/src/backend/get_request.dart';
 import 'package:koompi_hotspot/src/backend/post_request.dart';
 import 'package:koompi_hotspot/src/components/navbar.dart';
@@ -11,6 +12,8 @@ import 'package:koompi_hotspot/src/components/reuse_widget.dart';
 import 'package:koompi_hotspot/src/models/model_location.dart';
 import 'package:koompi_hotspot/src/models/model_userdata.dart';
 import 'package:koompi_hotspot/src/screen/login/login_page.dart';
+import 'package:koompi_hotspot/src/services/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MyAccount extends StatefulWidget {
   @override
@@ -23,6 +26,8 @@ class _MyAccountState extends State<MyAccount>
 
   final formKey = GlobalKey<FormState>();
   bool _autoValidate = false;
+  ModelUserData _modelUserData = ModelUserData();
+  Backend _backend = Backend();
 
   void _submit(){
     final form = formKey.currentState;
@@ -41,12 +46,12 @@ class _MyAccountState extends State<MyAccount>
       });
     }
   }
-
   
   Future <void> _onSubmitBtn() async {
     _submit();
     dialogLoading(context);
     try {
+      
       final result = await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
         print('Internet connected');

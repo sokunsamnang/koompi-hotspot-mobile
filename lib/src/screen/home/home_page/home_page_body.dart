@@ -106,7 +106,7 @@ Widget _balanceTokens(context) {
                         
                       ),
                       Text(
-                        ' \$',
+                        ' \៛',
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 35,

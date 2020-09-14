@@ -20,6 +20,7 @@ class ModelUserData{
     address = parseJson['address'];
   }
 
+  Map<String, dynamic> fetchEmail = {};
 }
   
 var mData = ModelUserData();
