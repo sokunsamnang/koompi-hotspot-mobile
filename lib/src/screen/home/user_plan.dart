@@ -16,85 +16,22 @@ class _UserPlanState extends State<UserPlan>
   final TextEditingController planUserController = TextEditingController();
 
 
-  // DATE
+  // Expiration DATE
 
   String finalDate = '';
 
-  String finalDate1Hour = '';
-  String finalDate7Hour = '';
-  String finalDate12Hour = '';
+  String finalDate30Days = '';
+  String finalDate365Days = '';
 
-  String finalDate1Day = '';
-  String finalDate7Day = '';
-  String finalDate14Day = '';
-  String finalDate31Day = '';
 
-  //DropDown Variable
+  //Plan Select 
+
+  List<String> planList = ['30 Days', '365 Days'];
+  var selectedPlanIndex;
   
-  final _planDropdown = const [
-    "Hour",
-    "Day",
-  ];
-
-  final hour = const {
-    "1": "1 Hour",
-    "2": "7 Hours",
-    "3": "12 Hours"
-  };
-
-  final day = const {
-    "1": "1 Day",
-    "2": "7 Days",
-    "3": "14 Days",
-    "4": "31 Days",
-  };
-  
-  var _selectedPlanVal;
-  var _selectedDateVal;
-  List<String> _dateItem = [];
-
- void _changeDept({String currentPlan}) {
-    setState(
-      () {
-        // update current university
-        _selectedPlanVal = currentPlan;
-        // reset dept val
-        _selectedDateVal = null;
-        // update corresponding department
-        // clear list
-        _dateItem = [];
-        _dateItem.addAll(_getDateItem(_selectedPlanVal));
-      },
-    );
-  }
-
-  List<String> _getDateItem(String currentPlan) {
-    switch (currentPlan) {
-      case 'Hour':
-        return hour.values.toList();
-        break;
-      case 'Day':
-        return day.values.toList();
-        break;
-      default:
-        return null;
-    }
-  }
-
-
-  //User Plan Button variable
-
-  int user;
-  List<int> userButton = [1, 3, 5];
-  int userSelectedIndex;
-
-  String userText = '';
-
-  void userChangeIndex(
-    int userIndex, TextEditingController planUserController) {
+  void changeIndex(String index) {
     setState(() {
-      userSelectedIndex = userIndex;
-      userText = planUserController.text;
+      selectedPlanIndex = index;
     });
   }
 
@@ -124,34 +61,16 @@ class _UserPlanState extends State<UserPlan>
 
   void dateFormatter(){
     //DATE FORMAT Expiration
-    var date1Days = DateTime.now().add(Duration(days: 1));
-    var date7Days = DateTime.now().add(Duration(days: 7));
-    var date14Days = DateTime.now().add(Duration(days: 15));
-    var date31Days = DateTime.now().add(Duration(days: 31));
+    var date30Days = DateTime.now().add(Duration(days: 30));
+    var date365Days = DateTime.now().add(Duration(days: 365));
 
-    var date1Hour = DateTime.now().add(Duration(hours: 1));
-    var date7Hour = DateTime.now().add(Duration(hours: 7));
-    var date12Hour = DateTime.now().add(Duration(hours: 12));
-
-    var formattedDate1day = "Time ${date1Days.hour}:${date1Days.minute} Date ${date1Days.day}-${date1Days.month}-${date1Days.year}";
-    var formattedDate7day = "Time ${date7Days.hour}:${date7Days.minute} Date ${date7Days.day}-${date7Days.month}-${date7Days.year}";
-    var formattedDate14day = "Time ${date14Days.hour}:${date14Days.minute} Date ${date14Days.day}-${date14Days.month}-${date14Days.year}";
-    var formattedDate31day = "Time ${date31Days.hour}:${date31Days.minute} Date ${date31Days.day}-${date31Days.month}-${date31Days.year}";
-    
-    var formattedDate1Hour = "Time ${date1Hour.hour}:${date1Hour.minute} Date ${date1Hour.day}-${date1Hour.month}-${date1Hour.year}";
-    var formattedDate7Hour = "Time ${date7Hour.hour}:${date7Hour.minute} Date ${date7Hour.day}-${date7Hour.month}-${date7Hour.year}";
-    var formattedDate12Hour = "Time ${date12Hour.hour}:${date12Hour.minute} Date ${date12Hour.day}-${date12Hour.month}-${date12Hour.year}";
+    var formattedDate30days = "Time ${date30Days.hour}:${date30Days.minute} Date ${date30Days.day}-${date30Days.month}-${date30Days.year}";
+    var formattedDate365days = "Time ${date365Days.hour}:${date365Days.minute} Date ${date365Days.day}-${date365Days.month}-${date365Days.year}";
 
     setState(() {
       
-      finalDate1Day = formattedDate1day;
-      finalDate7Day = formattedDate7day;
-      finalDate14Day = formattedDate14day;
-      finalDate31Day = formattedDate31day;
-
-      finalDate1Hour = formattedDate1Hour;
-      finalDate7Hour = formattedDate7Hour;
-      finalDate12Hour = formattedDate12Hour;
+      finalDate30Days = formattedDate30days;
+      finalDate365Days = formattedDate365days;
 
     });
   }
@@ -217,25 +136,14 @@ class _UserPlanState extends State<UserPlan>
                 Row(
                   children: <Widget>[
                     Expanded(
-                      child:
-                          userCustomRadio(userButton[0], 0, planUserController),
+                      child: planCustomRadio(planList[0], '30 Days'),
                     ),
                     SizedBox(width: 20.0),
                     Expanded(
-                      child:
-                          userCustomRadio(userButton[1], 1, planUserController),
-                    ),
-                    SizedBox(width: 20.0),
-                    Expanded(
-                      child:
-                          userCustomRadio(userButton[2], 2, planUserController),
+                      child: planCustomRadio(planList[1], '365 Days'),
                     ),
                   ],
                 ),
-                SizedBox(height: 16.0),
-                Text('Select plan:'),
-                SizedBox(height: 5.0),
-                selectPlan(),
                 SizedBox(height: 50.0),
                 Center(
                   child: RaisedButton(
@@ -257,8 +165,7 @@ class _UserPlanState extends State<UserPlan>
                           MaterialPageRoute(
                               builder: (context) => _reviewPlan(
                                   usernameController,
-                                  user,
-                                  _selectedDateVal,)));
+                                  selectedPlanIndex)));
                     },
                   ),
                 ),
@@ -270,102 +177,30 @@ class _UserPlanState extends State<UserPlan>
     );
   }
 
-  Widget selectPlan(){
-    print(_selectedDateVal);
-    print(_selectedPlanVal);
-    return Row(
-      children: <Widget>[
-        //First DropdownBox              
-        Expanded(
-            child: DropdownButtonFormField(
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.black),
-                  borderRadius: BorderRadius.all(Radius.circular(30.0))
-                )),
-              hint: Text('Select Plan'),
-              value: _selectedPlanVal,
-              onChanged: (val) => _changeDept(currentPlan: val),
-              items: _planDropdown.map(
-                (item) {
-                  return DropdownMenuItem(
-                    child: Text('$item'),
-                    value: item,
-                  );
-                },
-              ).toList(),
-            ),
-          
-        ),
-        SizedBox(width: 20),
-        //Second DropdownBox
-        Expanded(        
-          child: DropdownButtonFormField(
-            decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.black),
-                  borderRadius: BorderRadius.all(Radius.circular(30.0))
-                )),
-              hint: Text('Select Date'),
-              value: _selectedDateVal,
-              onChanged: (val) => setState(() => _selectedDateVal = val),
-              items: _dateItem.map(
-                (item) {
-                  return DropdownMenuItem(
-                    child: Text('$item'),
-                    value: item,
-                );
-              },
-            ).toList(),
-          ), 
-        ),
-      ],
-    );
-  }
-  Widget userCustomRadio(int userButton, int userIndex, TextEditingController planUserController) {
+  Widget planCustomRadio(String txt, String index) {
     return ButtonTheme(
       height: 50.0,
       child: OutlineButton(
-        onPressed: () async {
-          userChangeIndex(userIndex, planUserController);
-          user = userButton;
-        },
+        onPressed: () => changeIndex(index),
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
         splashColor: Colors.transparent,
         borderSide: BorderSide(
-            color: userSelectedIndex == userIndex ? Colors.cyan : Colors.grey),
-        child: Text(
-          "$userButton User",
+            color: selectedPlanIndex == index ? Colors.cyan : Colors.grey),
+        child: Text(txt,
           style: TextStyle(
-              color:
-                  userSelectedIndex == userIndex ? Colors.black : Colors.grey),
+              color: selectedPlanIndex == index ? Colors.black : Colors.grey),
         ),
       ),
     );
   }
 
   Widget _expirationDate(){
-    if(_selectedDateVal == day['1']){
-      return Text('Expiration: $finalDate1Day ', style: TextStyle(fontSize: 20.0));
+    if(selectedPlanIndex == planList[0]){
+      return Text('Expiration: $finalDate30Days ', style: TextStyle(fontSize: 20.0));
     }
-    else if(_selectedDateVal == day['2']){
-      return Text('Expiration: $finalDate7Day', style: TextStyle(fontSize: 20.0));
-    }
-    else if(_selectedDateVal == day['3']){
-      return Text('Expiration: $finalDate14Day', style: TextStyle(fontSize: 20.0));
-    }
-    else if(_selectedDateVal == day['4']){
-      return Text('Expiration: $finalDate31Day', style: TextStyle(fontSize: 20.0));
-    }
-    else if(_selectedDateVal == hour['1']){
-      return Text('Expiration: $finalDate1Hour', style: TextStyle(fontSize: 20.0));
-    }
-    else if(_selectedDateVal == hour['2']){
-      return Text('Expiration: $finalDate7Hour', style: TextStyle(fontSize: 20.0));
-    }
-    else if(_selectedDateVal == hour['3']){
-      return Text('Expiration: $finalDate12Hour', style: TextStyle(fontSize: 20.0));
+    else if(selectedPlanIndex == planList[1]){
+      return Text('Expiration: $finalDate365Days', style: TextStyle(fontSize: 20.0));
     }
     else{
       return Container();
@@ -374,8 +209,7 @@ class _UserPlanState extends State<UserPlan>
 
   Widget _reviewPlan(
       usernameController,
-      user,
-      _selectedDateVal) {
+      _selectPlanDate) {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -416,11 +250,7 @@ class _UserPlanState extends State<UserPlan>
                     ),
                     SizedBox(height: 10.0),
                     Container(
-                      child: Text('User: $user user',style: TextStyle(fontSize: 20.0)),
-                    ),
-                    SizedBox(height: 10.0),
-                    Container(
-                      child: Text('Date: $_selectedDateVal',style: TextStyle(fontSize: 20.0)),
+                      child: Text('Date: $_selectPlanDate',style: TextStyle(fontSize: 20.0)),
                     ),
                     SizedBox(height: 10.0),
                     _expirationDate(),
@@ -459,4 +289,3 @@ class _UserPlanState extends State<UserPlan>
     );
   }
 }
-

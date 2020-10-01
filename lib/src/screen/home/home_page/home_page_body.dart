@@ -127,11 +127,11 @@ Widget _balanceTokens(context) {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: <Widget>[
                           FlatButton(
-                            onPressed: () async {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => TopUp()));
+                            onPressed: () {
+                              showModalBottomSheet<void>(
+                                context: context,
+                                builder: (BuildContext context) => bottomBar(context),
+                              );
                             },
                             child: Row(
                               children: <Widget>[
@@ -190,3 +190,102 @@ Widget _balanceTokens(context) {
       ),
     );
 }
+
+  Widget bottomBar(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        titleSpacing: 25,
+        title: Text('Top Up', style: TextStyle(color: Colors.black),),
+        elevation: 0.0,
+        automaticallyImplyLeading: false,
+        backgroundColor: Colors.white,
+        actions: <Widget>[
+          Padding(
+            padding: EdgeInsets.only(right: 5.0),
+            child: GestureDetector(
+              child: IconButton(
+                iconSize: 35.0,
+                icon: Icon(
+                  Icons.cancel,
+                  color: Colors.black,
+                ),
+                onPressed: () async {
+                  Navigator.pop(context);
+                },
+              ),
+            ),
+          ),
+        ],
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            SizedBox(
+              height: 16,
+            ),
+            Container(
+              height: 180,
+              padding: EdgeInsets.only(top: 4),
+              color: Colors.white,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Image.asset(
+                    'assets/images/topup_Payment.jpg',
+                    height: 500,
+                    width: 260,
+                    fit: BoxFit.fitWidth
+                  ),
+                ]
+              ),
+            ),
+            SizedBox(
+              height: 16,
+            ),
+            Card(
+              elevation: 8.0,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+              margin: const EdgeInsets.all(8.0),
+              color: Colors.white,
+              child: ListTile(
+                onTap: () async {
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (context) => TopUp()));
+                },
+                title: Text('Top up for my account',
+                  style: TextStyle(
+                      color: Colors.black, fontWeight: FontWeight.w500),
+                ),
+                trailing: Icon(Icons.chevron_right),
+              ),
+            ),
+            Card(
+              elevation: 8.0,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+              margin: const EdgeInsets.all(8.0),
+              color: Colors.white,
+              child: ListTile(
+                onTap: () async {
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (context) => null));
+                },
+                title: Text('Top up for others',
+                  style: TextStyle(
+                      color: Colors.black, fontWeight: FontWeight.w500),
+                ),
+                trailing: Icon(Icons.chevron_right),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }

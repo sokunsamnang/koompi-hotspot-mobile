@@ -2,7 +2,6 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:koompi_hotspot/src/components/behavior.dart';
 
-
 class PlanView extends StatelessWidget {
   
   @override
@@ -16,7 +15,7 @@ class PlanView extends StatelessWidget {
           enlargeCenterPage: true,
           aspectRatio: 16 / 9,
           enableInfiniteScroll: false,
-          viewportFraction: 0.8,
+          viewportFraction: 0.85,
           items: [
             Container(
               width: MediaQuery.of(context).copyWith().size.height / 2,
@@ -39,86 +38,14 @@ class PlanView extends StatelessWidget {
                   ),
                   SizedBox(height: 10),
                   Text(
-                    'User: 5 Users',
+                    'Device: 2 Devices',
                     style: TextStyle(
                       color: Colors.white,
                     ),
                   ),
                   SizedBox(height: 10),
                   Text(
-                    'Expiration: 999 Days',
-                    style: TextStyle(
-                      color: Colors.white,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              width: MediaQuery.of(context).copyWith().size.height / 2,
-              margin: EdgeInsets.all(5.0),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10.0),
-                color: Colors.grey[900],
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    'Username: allen',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18.0,
-                    ),
-                  ),
-                  SizedBox(height: 10),
-                  Text(
-                    'User: 1 Users',
-                    style: TextStyle(
-                      color: Colors.white,
-                    ),
-                  ),
-                  SizedBox(height: 10),
-                  Text(
-                    'Expiration: 30 Days',
-                    style: TextStyle(
-                      color: Colors.white,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              width: MediaQuery.of(context).copyWith().size.height / 2,
-              margin: EdgeInsets.all(5.0),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10.0),
-                color: Colors.grey[900],
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    'Username: hotspot',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18.0,
-                    ),
-                  ),
-                  SizedBox(height: 10),
-                  Text(
-                    'User: 3 Users',
-                    style: TextStyle(
-                      color: Colors.white,
-                    ),
-                  ),
-                  SizedBox(height: 10),
-                  Text(
-                    'Expiration: Unlimited Days',
+                    'Expiration: 365 Days',
                     style: TextStyle(
                       color: Colors.white,
                       ),
