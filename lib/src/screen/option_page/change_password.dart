@@ -5,8 +5,11 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:koompi_hotspot/src/backend/post_request.dart';
 import 'package:koompi_hotspot/src/components/reuse_widget.dart';
+import 'package:koompi_hotspot/src/components/validator_mixin.dart';
+import 'package:koompi_hotspot/src/models/model_change_password.dart';
 import 'package:koompi_hotspot/src/models/model_userdata.dart';
 import 'package:koompi_hotspot/src/screen/login/login_page.dart';
+import 'package:koompi_hotspot/src/services/services.dart';
 
 class ChangePassword extends StatefulWidget {
   @override
@@ -17,13 +20,10 @@ class _ChangePasswordState extends State<ChangePassword>
     with SingleTickerProviderStateMixin {
   AnimationController _controller;
 
-  TextEditingController _oldPasswordController = TextEditingController();
-  TextEditingController _newPasswordController = TextEditingController();
-  TextEditingController _newPasswordConfirmController = TextEditingController();
-
-  final formKey = GlobalKey<FormState>();
-  bool _autoValidate = false;
   String messageAlert;
+  bool enable = false;
+  ModelChangePassword _modelChangePassword = ModelChangePassword();
+  
   
   @override
   void initState() {
@@ -32,9 +32,115 @@ class _ChangePasswordState extends State<ChangePassword>
   }
 
   @override
-  void dispose() {
+  void dispose(){
+    removeAllFocus();
+    _modelChangePassword.controlOldPassword.clear();
+    _modelChangePassword.controlNewPassword.clear();
+    _modelChangePassword.controlConfirmPassword.clear();
     super.dispose();
-    _controller.dispose();
+  }
+
+  void popScreen() {
+    Navigator.pop(context);
+  }
+
+  void onChanged(String changed) {
+    _modelChangePassword.formStateChangePassword.currentState.validate();
+  }
+
+  void onSubmit(String submut){
+    if (_modelChangePassword.nodeOldPassword.hasFocus) {
+      FocusScope.of(context).requestFocus(_modelChangePassword.nodeNewPassword);
+    } else if (_modelChangePassword.nodeNewPassword.hasFocus){
+      FocusScope.of(context).requestFocus(_modelChangePassword.nodeConfirmPassword);
+    } else {
+      if (_modelChangePassword.enable == true) changePassword();
+    }
+  }
+
+  String validateOldPass(String value){
+    if(_modelChangePassword.nodeOldPassword.hasFocus){
+      _modelChangePassword.responseOldPass = instanceValidate.validatePassword(value);
+      validateAllFieldNotEmpty();
+    }
+    return _modelChangePassword.responseOldPass;
+  } 
+
+  String validateNewPass(String value){
+    if (_modelChangePassword.nodeNewPassword.hasFocus){
+      _modelChangePassword.responseNewPass = instanceValidate.validatePassword(value);
+      if (_modelChangePassword.responseNewPass == null) {
+        _modelChangePassword.responseConfirm = newPasswordIsmatch();
+      } 
+      else if (_modelChangePassword.responseConfirm == "Confirm password does not match"){ // Remove Not Match Error When New Pass Error
+        _modelChangePassword.responseConfirm = null;
+      }
+      validateAllFieldNotEmpty();
+    }
+    return _modelChangePassword.responseNewPass;
+  } 
+
+  String validateConfirmPass(String value){
+    if(_modelChangePassword.nodeConfirmPassword.hasFocus){
+      _modelChangePassword.responseConfirm = instanceValidate.validatePassword(value);
+      if (_modelChangePassword.responseConfirm == null) _modelChangePassword.responseConfirm = confirmPasswordIsMatch();
+      validateAllFieldNotEmpty();
+    }
+    return _modelChangePassword.responseConfirm;
+  } 
+
+  void validateAllFieldNotEmpty(){ /* Enable And Disable Button */
+    if (
+      _modelChangePassword.controlOldPassword.text.length >= 5 &&
+      _modelChangePassword.controlNewPassword.text.length >= 5 &&
+      _modelChangePassword.controlConfirmPassword.text.length >= 5 
+    ) validateAllFieldNoError();
+    else if (_modelChangePassword.enable == true) enableButton(false);
+  }
+
+  void validateAllFieldNoError(){
+    if (
+      _modelChangePassword.responseOldPass == null &&
+      _modelChangePassword.responseNewPass == null &&
+      _modelChangePassword.responseConfirm == null 
+    ) enableButton(true); 
+    else if (_modelChangePassword.enable == true) enableButton(false);
+  }
+
+  String newPasswordIsmatch(){
+    if (_modelChangePassword.controlConfirmPassword.text.length >= 5){
+      if (_modelChangePassword.controlNewPassword.text == _modelChangePassword.controlConfirmPassword.text){
+        enableButton(true);
+        _modelChangePassword.responseConfirm = null;
+      } else {
+        if (_modelChangePassword.enable == true) enableButton(false);
+        _modelChangePassword.responseConfirm = "Confirm password does not match";
+      }
+    }
+    return _modelChangePassword.responseConfirm;
+  }
+
+  String confirmPasswordIsMatch(){
+    if (_modelChangePassword.controlNewPassword.text.length >= 5){
+      if (_modelChangePassword.controlNewPassword.text == _modelChangePassword.controlConfirmPassword.text){
+        enableButton(true);
+        _modelChangePassword.responseConfirm = null;
+      } else {
+        if (_modelChangePassword.enable == true) enableButton(false);
+        _modelChangePassword.responseConfirm = "Confirm password does not match";
+      }
+    }
+    return _modelChangePassword.responseConfirm;
+  }
+
+  void enableButton(bool enable){
+    setState(() => _modelChangePassword.enable = enable);
+  }
+
+  void removeAllFocus() {
+    _modelChangePassword.nodeOldPassword.unfocus( );
+    _modelChangePassword.nodeNewPassword.unfocus();
+    _modelChangePassword.nodeConfirmPassword.unfocus();
   }
 
   /* Current password toggle */
@@ -73,20 +179,8 @@ class _ChangePasswordState extends State<ChangePassword>
     });
   }
 
-  void _submitValidate(){
-    final form = formKey.currentState;
-    if(form.validate()){
-      form.save();
-    }
-    else{
-      setState(() {
-        _autoValidate = true;
-      });
-    }
-  }
 
   Future <void> changePassword() async {
-    _submitValidate();
     dialogLoading(context);
     try {
       final result = await InternetAddress.lookup('google.com');
@@ -94,16 +188,17 @@ class _ChangePasswordState extends State<ChangePassword>
         print('Internet connected');
         var response = await PostRequest().changePassword(
           mData.email,
-          _oldPasswordController.text,
-          _newPasswordController.text);
+          _modelChangePassword.controlOldPassword.text,
+          _modelChangePassword.controlConfirmPassword.text);
         if (response.statusCode == 200) {
-          Future.delayed(Duration(seconds: 2), () {
-            Timer(Duration(milliseconds: 500), () => Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (context) => LoginPage()),
-              ModalRoute.withName('/'),
-            ));
-          });
+          showChangePasswordDialog(context);
+          // Future.delayed(Duration(seconds: 2), () {
+          //   Timer(Duration(milliseconds: 500), () => Navigator.pushAndRemoveUntil(
+          //     context,
+          //     MaterialPageRoute(builder: (context) => LoginPage()),
+          //     ModalRoute.withName('/'),
+          //   ));
+          // });
         } 
         else if (response.statusCode == 401){
           Navigator.pop(context);
@@ -124,6 +219,46 @@ class _ChangePasswordState extends State<ChangePassword>
       errorDialog(context);
     }
   }
+
+showChangePasswordDialog(context) async {
+  return showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return WillPopScope(
+          onWillPop: () {},
+          child: AlertDialog(
+            title: Text(
+              'Completed',
+              textAlign: TextAlign.center,
+            ),
+            content: SingleChildScrollView(
+              child: ListBody(
+                children: <Widget>[
+                  Text('You have changed password Successfully, Please login again.'),
+                ],
+              ),
+            ),
+            actions: <Widget>[
+              FlatButton(
+                child: Text('OK'),
+                onPressed: () async {
+                  dialogLoading(context);
+                  StorageServices().clearPref();
+                  Future.delayed(Duration(seconds: 2), () {
+                    Timer(Duration(milliseconds: 500), () => Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(builder: (context) => LoginPage()),
+                      ModalRoute.withName('/'),
+                    ));
+                  });
+                },
+              ),
+            ],
+          ),
+        );
+      });
+}
 
   errorDialog(BuildContext context) async {
     return showDialog(
@@ -161,7 +296,7 @@ class _ChangePasswordState extends State<ChangePassword>
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Text('You may enter incorrect password'),
+                Text('Your old password was entered incorrectly, Please enter it again'),
               ],
             ),
           ),
@@ -206,6 +341,7 @@ class _ChangePasswordState extends State<ChangePassword>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _modelChangePassword.globalKey,
       appBar: AppBar(
         backgroundColor: Colors.white,
         title: Text('Change Password', style: TextStyle(color: Colors.black)),
@@ -224,17 +360,14 @@ class _ChangePasswordState extends State<ChangePassword>
             padding: EdgeInsets.only(right: 5.0),
             child: GestureDetector(
               child: IconButton(
+                splashColor: _modelChangePassword.enable == false ? Colors.transparent : null,
+                highlightColor: _modelChangePassword.enable == false ? Colors.transparent: null,
                 icon: Icon(
                   Icons.check,
-                  color: Colors.blueAccent,
+                  color: _modelChangePassword.enable == true ? Colors.blueAccent : Colors.grey
                 ),
                 onPressed: () async {
-                  print(_oldPasswordController.text);
-                  print(_newPasswordController.text);
-                  print(_newPasswordConfirmController.text);
-                  setState(() {
-                    changePassword();
-                  });
+                  _modelChangePassword.enable == false ? null : changePassword();
                 },
               ),
             ),
@@ -243,8 +376,7 @@ class _ChangePasswordState extends State<ChangePassword>
       ),
       body: Container(
         child: Form(
-          key: formKey,
-          autovalidate: _autoValidate,
+          key: _modelChangePassword.formStateChangePassword,
           child: SingleChildScrollView(
             physics: BouncingScrollPhysics(),
               child: Padding(
@@ -255,9 +387,11 @@ class _ChangePasswordState extends State<ChangePassword>
                       SizedBox(height: 16.0),
                       TextFormField(
                         obscureText: _obscureText,
-                        validator: (val) => val.length < 6 ? 'Password is required more than 6 characters' : null,
-                        onSaved: (val) => _oldPasswordController.text = val,
-                        controller: _oldPasswordController,
+                        onFieldSubmitted: onSubmit,
+                        controller: _modelChangePassword.controlOldPassword,
+                        focusNode: _modelChangePassword.nodeOldPassword,
+                        validator: validateOldPass, 
+                        onChanged: onChanged, 
                         keyboardType: TextInputType.visiblePassword,
                         decoration: InputDecoration(
                           suffixIcon: GestureDetector(
@@ -279,15 +413,11 @@ class _ChangePasswordState extends State<ChangePassword>
                       SizedBox(height: 16.0),
                       TextFormField(
                         obscureText: _obscureText2,
-                        validator: (val){
-                          if(val.isEmpty)
-                            return 'New Password Is Empty';
-                          if(val != _newPasswordConfirmController.text)
-                            return 'Password Not Match';
-                          return null;
-                          },
-                        onSaved: (val) => _newPasswordController.text = val,
-                        controller: _newPasswordController,
+                        onFieldSubmitted: onSubmit,
+                        controller: _modelChangePassword.controlNewPassword,
+                        focusNode: _modelChangePassword.nodeNewPassword,
+                        validator: validateNewPass, 
+                        onChanged: onChanged,
                         decoration: InputDecoration(
                           suffixIcon: GestureDetector(
                             onTap: () {
@@ -307,14 +437,11 @@ class _ChangePasswordState extends State<ChangePassword>
                       SizedBox(height: 16.0),
                       TextFormField(
                         obscureText: _obscureText3,
-                        controller: _newPasswordConfirmController,
-                        validator: (val){
-                          if(val.isEmpty)
-                            return 'New Password Is Empty';
-                          if(val != _newPasswordController.text)
-                            return 'Password Not Match';
-                          return null;
-                          },
+                        onFieldSubmitted: onSubmit,
+                        controller: _modelChangePassword.controlConfirmPassword,
+                        focusNode: _modelChangePassword.nodeConfirmPassword,
+                        validator: validateConfirmPass, 
+                        onChanged: onChanged,
                         decoration: InputDecoration(
                           suffixIcon: GestureDetector(
                             onTap: () {

@@ -47,7 +47,7 @@ void dialogLoading(BuildContext context, {String content}) {
     barrierDismissible: false,
     context: context,
     builder: (context) {
-      return progress(content: content);
+      return WillPopScope(child: progress(content: content), onWillPop: () async{return false;},);
     });
 }
 

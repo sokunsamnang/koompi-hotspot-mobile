@@ -83,8 +83,8 @@ class _MyAccountState extends State<MyAccount>
   }
   showErrorServerDialog(BuildContext context) async {
     var response = await PostRequest().completeInfoUser(
-          emailController.text,
-          fullnameController.text,
+          emailController.value.text,
+          fullnameController.value.text,
           gender,
           birthdate,
           address);
@@ -343,8 +343,6 @@ class _MyAccountState extends State<MyAccount>
   }
 
   Widget locationPicker(BuildContext context) {
-    print(locationModel.selectedKhLocation);
-    print(address);
     return _LocationDropdown(
       valueText: address ?? locationModel.selectedKhLocation.toString(),
       onPressed: () => showMaterialScrollPicker(
@@ -361,7 +359,6 @@ class _MyAccountState extends State<MyAccount>
   }
 
   Widget dateOfbirth(DateTime selectedDate, _selectDate, dateFormart, context){
-    print(birthdate);
     return _DateDropdown(
       valueText: birthdate ?? 'Select Date of Birth',
       onPressed: (){
