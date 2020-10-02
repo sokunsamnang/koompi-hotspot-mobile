@@ -10,12 +10,12 @@ class HomePage extends StatefulWidget{
 }
 
 class _HomePageState extends State<HomePage>{
-
+  GlobalKey<ScaffoldState> globalKey = GlobalKey<ScaffoldState>();
+  var snackBar;
+  
   void iniState() {
     super.initState();
-    setState(() {
-      AppService.noInternetConnection();
-    });
+    AppServices.noInternetConnection(globalKey);
   }
   
   Widget build(BuildContext context){

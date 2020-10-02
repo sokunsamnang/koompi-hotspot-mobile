@@ -16,24 +16,3 @@ class ApiHeader {
   
 }
 
-class AppService{
-
-  static void noInternetConnection() async {
-    try {
-      Connectivity _connectivity = new Connectivity();
-      final myResult = await _connectivity.checkConnectivity();
-      _connectivity.onConnectivityChanged.listen((ConnectivityResult result) {
-        if (result == ConnectivityResult.none) {
-          print('no internet');
-          NoInterntConnection();
-        } else {
-          return null;
-        }
-      });
-      if (myResult == ConnectivityResult.none) {
-        NoInterntConnection();
-      }
-    } catch (e) {}
-  }
-
-}

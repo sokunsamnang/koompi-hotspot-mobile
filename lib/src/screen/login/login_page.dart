@@ -34,10 +34,6 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     super.initState();
-    setState(() {
-      AppService.noInternetConnection();
-    });
-    
   }
 
 
@@ -106,10 +102,6 @@ class _LoginPageState extends State<LoginPage> {
           Navigator.pop(context);
           return showErrorServerDialog(context);
         }
-        // else {
-        //   print('Login not Successful');
-        //   return _submit();
-        // }
       }
     } on SocketException catch (_) {
       Navigator.pop(context);

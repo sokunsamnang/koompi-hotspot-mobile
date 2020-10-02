@@ -1,11 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:koompi_hotspot/src/backend/component.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'api_service.dart';
 
-class PostRequest {
+class PostRequest with ChangeNotifier{
 
   Backend _backend = Backend();
 

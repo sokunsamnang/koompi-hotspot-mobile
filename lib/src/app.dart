@@ -67,8 +67,8 @@ class _SplashState extends State<Splash> {
         backgroundColor: Colors.black,
         body: Center(
           child: FlareActor( 
-            'assets/animations/koompi_splash_screen.flr', 
-            animation: 'splash_screen',
+            'assets/animations/splash_screen.flr', 
+            animation: 'Splash_Loop',
         ),
       ),
     );

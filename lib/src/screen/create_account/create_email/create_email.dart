@@ -50,11 +50,6 @@ class _CreateEmailState extends State<CreateEmail> {
   @override
   void initState() {
     super.initState();
-
-    setState(() {
-      AppService.noInternetConnection();
-    });
-    
   }
 
   Future <void> onSignUpByEmail() async {
