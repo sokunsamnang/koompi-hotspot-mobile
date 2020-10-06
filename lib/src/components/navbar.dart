@@ -1,3 +1,4 @@
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:koompi_hotspot/src/backend/api_service.dart';
@@ -7,6 +8,7 @@ import 'package:koompi_hotspot/src/screen/home/home_page/home_page.dart';
 import 'package:koompi_hotspot/src/screen/home/user_plan.dart';
 import 'package:koompi_hotspot/src/screen/option_page/more_page.dart';
 import 'package:koompi_hotspot/src/screen/osm/map.dart';
+import 'package:koompi_hotspot/src/services/network_status.dart';
 import 'package:koompi_hotspot/src/services/services.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -26,9 +28,21 @@ class _NavbarState extends State<Navbar> {
     MorePage(),
   ];
 
+  NetworkStatus _networkStatus = NetworkStatus();
+  
   @override
   void initState(){
+    internet();
     super.initState();
+  }
+
+  void internet() async {
+    _networkStatus.connectivityResult = await Connectivity().checkConnectivity();
+    _networkStatus.connectivitySubscription = _networkStatus.connectivity.onConnectivityChanged.listen((event) {
+      setState(() {
+        _networkStatus.connectivityResult = event;
+      });
+    });
   }
   
   @override
@@ -39,7 +53,7 @@ class _NavbarState extends State<Navbar> {
           child: _widgetOptions.elementAt(_selectedIndex),
         ),
       ),
-      bottomNavigationBar: Container(
+      bottomNavigationBar: _networkStatus.connectivityResult != ConnectivityResult.none ? Container(
         decoration: BoxDecoration(color: Colors.white, boxShadow: [
           BoxShadow(blurRadius: 20, color: Colors.black.withOpacity(.1))
         ]),
@@ -79,7 +93,7 @@ class _NavbarState extends State<Navbar> {
                 }),
           ),
         ),
-      ),
+      ) : _networkStatus.noNetwork(context),
     );
   }
 }

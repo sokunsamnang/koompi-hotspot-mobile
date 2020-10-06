@@ -78,7 +78,7 @@ import 'package:koompi_hotspot/src/screen/login/login_page.dart';
                                 Color(0xFF17ead9),
                                 Color(0xFF6078ea)
                               ]),
-                              borderRadius: BorderRadius.circular(6.0),
+                              borderRadius: BorderRadius.circular(30),
                               boxShadow: [
                                 BoxShadow(
                                     color: Color(0xFF6078ea).withOpacity(.3),
@@ -88,6 +88,8 @@ import 'package:koompi_hotspot/src/screen/login/login_page.dart';
                           child: Material(
                             color: Colors.transparent,
                             child: InkWell(
+                              highlightColor: Colors.transparent,
+                              splashColor: Colors.transparent,
                               onTap: () {
                                 onSignUpByEmail();
                               },  

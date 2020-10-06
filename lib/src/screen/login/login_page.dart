@@ -1,5 +1,8 @@
 import 'dart:convert';
+import 'package:connectivity/connectivity.dart';
+import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
+import 'package:koompi_hotspot/index.dart';
 import 'package:koompi_hotspot/src/backend/api_service.dart';
 import 'package:koompi_hotspot/src/backend/get_request.dart';
 import 'package:koompi_hotspot/src/backend/post_request.dart';
@@ -8,6 +11,7 @@ import 'package:koompi_hotspot/src/components/navbar.dart';
 import 'package:koompi_hotspot/src/components/reuse_widget.dart';
 import 'package:koompi_hotspot/src/screen/create_account/create_email/create_email.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:koompi_hotspot/src/services/network_status.dart';
 import 'dart:io';
 
 import 'package:shared_preferences/shared_preferences.dart';
@@ -26,14 +30,25 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController usernameController = new TextEditingController();
   final TextEditingController passwordController = new TextEditingController();
 
-  
   String token;
   String messageAlert;
   bool _isLoading = false;
 
+  NetworkStatus _networkStatus = NetworkStatus();
+  
   @override
   void initState() {
+    internet();
     super.initState();
+  }
+
+  void internet() async {
+    _networkStatus.connectivityResult = await Connectivity().checkConnectivity();
+    _networkStatus.connectivitySubscription = _networkStatus.connectivity.onConnectivityChanged.listen((event) {
+      setState(() {
+        _networkStatus.connectivityResult = event;
+      });
+    });
   }
 
 
@@ -210,15 +225,31 @@ class _LoginPageState extends State<LoginPage> {
         ),
       );
 
+  
+  Widget networkCheck(){
+    return Container(
+          color: Colors.white,
+          child: Stack(
+            fit: StackFit.expand,
+            children: [
+              FlareActor(
+                'assets/lost_network.flr',
+                animation: 'no_network',
+                fit: BoxFit.contain,
+              ),
+            ],
+          )
+        );
+  }
   @override
   Widget build(BuildContext context) {
     ScreenUtil.instance = ScreenUtil.getInstance()..init(context);
-    ScreenUtil.instance =
-        ScreenUtil(width: 750, height: 1334, allowFontScaling: true);
-    return new Scaffold(
+    ScreenUtil.instance = ScreenUtil(width: 750, height: 1334, allowFontScaling: true);
+
+    return Scaffold(
       backgroundColor: Colors.white,
       resizeToAvoidBottomPadding: true,
-      body: Stack(
+      body: _networkStatus.connectivityResult != ConnectivityResult.none ? Stack(
         fit: StackFit.expand,
         children: <Widget>[
           Column(
@@ -272,7 +303,7 @@ class _LoginPageState extends State<LoginPage> {
                         decoration: BoxDecoration(
                             gradient: LinearGradient(
                                 colors: [Color(0xFF17ead9), Color(0xFF6078ea)]),
-                            borderRadius: BorderRadius.circular(6.0),
+                            borderRadius: BorderRadius.circular(30),
                             boxShadow: [
                               BoxShadow(
                                   color: Color(0xFF6078ea).withOpacity(.3),
@@ -282,6 +313,8 @@ class _LoginPageState extends State<LoginPage> {
                       child: Material(
                         color: Colors.transparent,
                         child: InkWell(
+                          highlightColor: Colors.transparent,
+                          splashColor: Colors.transparent,
                           onTap: () async {
                             
                             login();
@@ -359,7 +392,7 @@ class _LoginPageState extends State<LoginPage> {
             ),
           )
         ],
-      ),
+      ) : _networkStatus.noNetwork(context),
     );
   }
 }

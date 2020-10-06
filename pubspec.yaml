@@ -100,6 +100,7 @@ flutter:
     - assets/animations/otp.flr
     - assets/animations/Loading.flr
     - assets/animations/splash_screen.flr
+    - assets/animations/lost_network.flr
     - assets/images/destination_map_marker.png
     - assets/images/topup_Payment.jpg
     - assets/images/driving_pin.png

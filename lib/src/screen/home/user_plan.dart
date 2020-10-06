@@ -1,6 +1,8 @@
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:koompi_hotspot/src/components/navbar.dart';
+import 'package:koompi_hotspot/src/components/reuse_widget.dart';
 
 class UserPlan extends StatefulWidget {
   @override
@@ -64,8 +66,8 @@ class _UserPlanState extends State<UserPlan>
     var date30Days = DateTime.now().add(Duration(days: 30));
     var date365Days = DateTime.now().add(Duration(days: 365));
 
-    var formattedDate30days = "Time ${date30Days.hour}:${date30Days.minute} Date ${date30Days.day}-${date30Days.month}-${date30Days.year}";
-    var formattedDate365days = "Time ${date365Days.hour}:${date365Days.minute} Date ${date365Days.day}-${date365Days.month}-${date365Days.year}";
+    var formattedDate30days = "Time ${date30Days.hour}:${date30Days.minute}, Date ${date30Days.day}-${date30Days.month}-${date30Days.year}";
+    var formattedDate365days = "Time ${date365Days.hour}:${date365Days.minute}, Date ${date365Days.day}-${date365Days.month}-${date365Days.year}";
 
     setState(() {
       
@@ -96,6 +98,7 @@ class _UserPlanState extends State<UserPlan>
                   controller: usernameController,
                   decoration: InputDecoration(
                     hintText: 'Username',
+                    contentPadding: new EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.black),
                       borderRadius: BorderRadius.all(Radius.circular(30.0))
@@ -111,6 +114,7 @@ class _UserPlanState extends State<UserPlan>
                   controller: passwordController,
                   decoration: InputDecoration(
                     hintText: 'Password',
+                    contentPadding: new EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.black),
                       borderRadius: BorderRadius.all(Radius.circular(30.0))
@@ -146,27 +150,47 @@ class _UserPlanState extends State<UserPlan>
                 ),
                 SizedBox(height: 50.0),
                 Center(
-                  child: RaisedButton(
-                    child: Text(
-                      'SUBMIT',
-                      style: TextStyle(
-                        fontFamily: 'Poppins-Bold',
-                        fontSize: 20,
-                        letterSpacing: 1,
+                  child: InkWell(
+                    child: Container(
+                      width: 150,
+                      height: 50,
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [Color(0xFF17ead9), Color(0xFF6078ea)]),
+                        borderRadius: BorderRadius.circular(30),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Color(0xFF6078ea).withOpacity(.3),
+                            offset: Offset(0.0, 8.0),
+                            blurRadius: 8.0)
+                        ]),
+                      child: Material(
+                        color: Colors.transparent,
+                        child: InkWell(
+                          highlightColor: Colors.transparent,
+                          splashColor: Colors.transparent,
+                          onTap: () async {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => _reviewPlan(
+                                    usernameController,
+                                    selectedPlanIndex
+                                )
+                              )
+                            );
+                          },
+                          child: Center(
+                            child: Text("SUBMIT",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: "Poppins-Bold",
+                                    fontSize: 18,
+                                    letterSpacing: 1.0)),
+                          ),
+                        ),
                       ),
                     ),
-                    color: Colors.white,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(18.0),
-                        side: BorderSide(color: Colors.blueAccent)),
-                    onPressed: () async {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => _reviewPlan(
-                                  usernameController,
-                                  selectedPlanIndex)));
-                    },
                   ),
                 ),
               ],
@@ -177,13 +201,15 @@ class _UserPlanState extends State<UserPlan>
     );
   }
 
+
+
   Widget planCustomRadio(String txt, String index) {
     return ButtonTheme(
       height: 50.0,
+      padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
       child: OutlineButton(
         onPressed: () => changeIndex(index),
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
         splashColor: Colors.transparent,
         borderSide: BorderSide(
             color: selectedPlanIndex == index ? Colors.cyan : Colors.grey),
@@ -197,10 +223,22 @@ class _UserPlanState extends State<UserPlan>
 
   Widget _expirationDate(){
     if(selectedPlanIndex == planList[0]){
-      return Text('Expiration: $finalDate30Days ', style: TextStyle(fontSize: 20.0));
+      return Text(
+        'Expiration: $finalDate30Days ', 
+        style: TextStyle(
+          fontSize: 15.0,
+          fontFamily: 'Poppins-Medium'
+          )
+        );
     }
     else if(selectedPlanIndex == planList[1]){
-      return Text('Expiration: $finalDate365Days', style: TextStyle(fontSize: 20.0));
+      return Text(
+        'Expiration: $finalDate365Days', 
+        style: TextStyle(
+          fontSize: 15.0,
+          fontFamily: 'Poppins-Medium'
+        )
+      );
     }
     else{
       return Container();
@@ -236,51 +274,84 @@ class _UserPlanState extends State<UserPlan>
                 ),
                 Center(
                   child: Text('Please review before buy', 
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+                  style: TextStyle(
+                    fontFamily: 'Medium',
+                    fontWeight: FontWeight.bold, 
+                    fontSize: 25),
                   ),
                 ),
                 SizedBox(height: 25.0),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    SizedBox(height: 10.0),
-                    Container(
-                      child: Text('Username: ${usernameController.text}',style: TextStyle(fontSize: 20.0)),
-                    ),
-                    SizedBox(height: 10.0),
-                    Container(
-                      child: Text('Date: $_selectPlanDate',style: TextStyle(fontSize: 20.0)),
-                    ),
-                    SizedBox(height: 10.0),
-                    _expirationDate(),
-                  ],
+                Container(
+                  padding: EdgeInsets.all(5),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      SizedBox(height: 10.0),
+                      Container(
+                        child: Text('Username: ${usernameController.text}',
+                        style: TextStyle(
+                          fontSize: 15.0,
+                          fontFamily: 'Poppins-Medium',
+                          )
+                        ),
+                      ),
+                      SizedBox(height: 10.0),
+                      Container(
+                        child: Text('Date: $_selectPlanDate',
+                        style: TextStyle(
+                          fontSize: 15.0,
+                          fontFamily: 'Poppins-Medium',
+                          )
+                        ),
+                      ),
+                      SizedBox(height: 10.0),
+                      _expirationDate(),
+                    ],
+                  ),
                 ),
-                
                 SizedBox(height: 50.0),
                 Center(
-                  child: RaisedButton(
-                    child: Text(
-                      'BUY',
-                      style: TextStyle(
-                        fontFamily: 'Poppins-Bold',
-                        fontSize: 20,
-                        letterSpacing: 1,
+                  child: InkWell(
+                    child: Container(
+                      width: 100,
+                      height: 50,
+                      decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                              colors: [Color(0xFF17ead9), Color(0xFF6078ea)]),
+                          borderRadius: BorderRadius.circular(30),
+                          boxShadow: [
+                            BoxShadow(
+                                color: Color(0xFF6078ea).withOpacity(.3),
+                                offset: Offset(0.0, 8.0),
+                                blurRadius: 8.0)
+                          ]),
+                    child: Material(
+                      color: Colors.transparent,
+                      child: InkWell(
+                        highlightColor: Colors.transparent,
+                        splashColor: Colors.transparent,
+                        onTap: () async {
+                          dialogLoading(context);
+                          Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(builder: (context) => Navbar()),
+                            ModalRoute.withName('/')
+                          );
+                        },
+                        child: Center(
+                          child: Text("BUY",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontFamily: "Poppins-Bold",
+                                  fontSize: 18,
+                                  letterSpacing: 1.0)),
+                          ),
+                        ),
                       ),
                     ),
-                    color: Colors.white,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(18.0),
-                        side: BorderSide(color: Colors.blueAccent)),
-                    onPressed: () async {
-                      Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(builder: (context) => Navbar()),
-                        ModalRoute.withName('/navbar')
-                      );
-                    },
                   ),
-                )
+                ),
               ],
             ),
           ],

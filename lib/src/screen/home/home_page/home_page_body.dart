@@ -5,41 +5,37 @@ import 'package:koompi_hotspot/src/screen/option_page/topup.dart';
 
 Widget bodyPage(BuildContext context) {
   
-  return Scaffold(
-    body: SafeArea(
-      child: Container(
+  return Container(
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        SizedBox(height: 15),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20),
+          child: _nameBar(context),
+        ),
+        SizedBox(height: 40),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              SizedBox(height: 15),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20),
-                child: _nameBar(context),
-              ),
-              SizedBox(height: 40),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('My Wallet', style: TextStyle(fontWeight: FontWeight.bold),),
-                    SizedBox(height: 20),
-                    _balanceTokens(context),
-                  ],
-                ),
-              ),
-              SizedBox(height: 40),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20),
-                child: Text('Your Plans', style: TextStyle(fontWeight: FontWeight.bold),),
-              ),
+            children: [
+              Text('My Wallet', style: TextStyle(fontWeight: FontWeight.bold),),
               SizedBox(height: 20),
-              Expanded(child: PlanView()),
+              _balanceTokens(context),
             ],
+          ),
         ),
-      ),
-    ),
-  );
+        SizedBox(height: 40),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20),
+          child: Text('Your Plans', style: TextStyle(fontWeight: FontWeight.bold),),
+        ),
+        SizedBox(height: 20),
+        Expanded(child: PlanView()),
+      ],
+  ),
+);
 }
 
 
@@ -53,12 +49,6 @@ Widget bodyPage(BuildContext context) {
           backgroundImage: AssetImage('assets/images/avatar.png'),
         ),
         SizedBox(width: 15),
-        Text("Hello, ", 
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 18,
-          ),
-        ),
         Text( 
           name ?? 'KOOMPI',
             style: TextStyle(
@@ -88,7 +78,7 @@ Widget _balanceTokens(context) {
                     'Total Balance,',
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 14,
+                      fontSize: 20,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
@@ -127,6 +117,8 @@ Widget _balanceTokens(context) {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: <Widget>[
                           FlatButton(
+                            highlightColor: Colors.transparent,
+                            splashColor: Colors.transparent,
                             onPressed: () {
                               showModalBottomSheet<void>(
                                 context: context,
@@ -157,7 +149,7 @@ Widget _balanceTokens(context) {
                 top: -170,
                 child: CircleAvatar(
                   radius: 130,
-                  backgroundColor: Colors.lightBlueAccent,
+                  backgroundColor: Colors.lightBlueAccent[50],
                 ),
               ),
               Positioned(

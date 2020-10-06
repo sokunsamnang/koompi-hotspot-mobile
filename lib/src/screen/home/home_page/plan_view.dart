@@ -19,35 +19,76 @@ class PlanView extends StatelessWidget {
           items: [
             Container(
               width: MediaQuery.of(context).copyWith().size.height / 2,
-              margin: EdgeInsets.all(5.0),
+              // margin: EdgeInsets.all(5.0),
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10.0),
+                borderRadius: BorderRadius.circular(20.0),
                 color: Colors.grey[900],
               ),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text(
-                    'Username: koompi',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18.0,
+                  Container(
+                    width: MediaQuery.of(context).copyWith().size.height / 2,
+                    padding: EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                        topLeft: const Radius.circular(20.0),
+                        topRight: const Radius.circular(20.0),
+                      ),
+                      color: Colors.blueGrey[900],
                     ),
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Username: koompi',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'Poppins-Medium'
+                              ),
+                            ),
+                            Text(
+                              '5000រ',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'Poppins-Medium'
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    )
                   ),
-                  SizedBox(height: 10),
-                  Text(
-                    'Device: 2 Devices',
-                    style: TextStyle(
-                      color: Colors.white,
-                    ),
-                  ),
-                  SizedBox(height: 10),
-                  Text(
-                    'Expiration: 365 Days',
-                    style: TextStyle(
-                      color: Colors.white,
+                  Container(
+                    // width: MediaQuery.of(context).copyWith().size.height / 2,
+                    padding: EdgeInsets.all(20),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Text(
+                          'Device: 2 Devices',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontFamily: 'Medium'
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                        Text(
+                          'Expiration: 30 Days',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontFamily: 'Medium'
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ],
