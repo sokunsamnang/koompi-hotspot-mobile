@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 @override
-Widget formCardForgotPasswordEmail(
+Widget formCardNewPassword(
   BuildContext context, 
-  TextEditingController _emailController, 
-  String _email,
+  TextEditingController _passwordController, 
+  String _password,
+  bool _obscureText,
+  Function _toggle,
   Function _submit,
   GlobalKey<FormState> formKey, 
   bool _autoValidate) {
@@ -26,18 +28,27 @@ Widget formCardForgotPasswordEmail(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text("Email",
+            Text("New Password",
                   style: TextStyle(
                       fontFamily: "Poppins-Medium",
                       fontSize: ScreenUtil().setSp(26))),
               TextFormField(
-                controller: _emailController,
-                // autovalidate: _autoValidate,
-                validator: (val) => !val.contains('@') ? 'Invalid Email' : null,
-                onSaved: (val) => _email = val,
-                keyboardType: TextInputType.emailAddress,
+                validator: (val) => val.length < 8 ? 'Password too short' : null,
+                onSaved: (val) => _password = val,
+                autovalidate: _autoValidate,
+                controller: _passwordController,
+                obscureText: _obscureText,
+                keyboardType: TextInputType.visiblePassword,
                 decoration: InputDecoration(
-                    hintText: "Email",
+                    suffixIcon: GestureDetector(
+                      onTap: () {
+                        _toggle();
+                      },
+                      child: Icon(
+                        _obscureText ? Icons.visibility_off : Icons.visibility,
+                      ),
+                    ),
+                    hintText: "Password",
                     hintStyle: TextStyle(color: Colors.grey, fontSize: 12.0)),
               ),
             SizedBox(

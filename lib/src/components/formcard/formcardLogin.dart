@@ -53,8 +53,8 @@ Widget formLogin( BuildContext context,
                     fontSize: ScreenUtil().setSp(26))),
             TextFormField(
               controller: usernameController,
-              autovalidate: _autoValidate,
-              validator: (val) => !val.contains('@') ? 'Invalid Email' : null,
+              // autovalidate: _autoValidate,
+              // validator: (val) => !val.contains('@') ? 'Invalid Email' : null,
               onSaved: (val) => _email = val,
               keyboardType: TextInputType.emailAddress,
               decoration: InputDecoration(
@@ -70,7 +70,7 @@ Widget formLogin( BuildContext context,
                     fontSize: ScreenUtil().setSp(26))),
             TextFormField(
               controller: passwordController,
-              validator: (val) => val.length < 6 ? 'Password too short' : null,
+              // validator: (val) => val.length < 6 ? 'Password too short' : null,
               onSaved: (val) => _password = val,
               keyboardType: TextInputType.visiblePassword,
               decoration: InputDecoration(

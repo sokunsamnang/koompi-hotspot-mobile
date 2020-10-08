@@ -165,7 +165,7 @@ Widget _balanceTokens(context) {
                 bottom: -170,
                 child: CircleAvatar(
                   radius: 130,
-                  backgroundColor: Colors.orange,
+                  backgroundColor: Colors.deepOrangeAccent,
                 ),
               ),
               Positioned(

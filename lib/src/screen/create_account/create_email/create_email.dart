@@ -39,6 +39,7 @@ class _CreateEmailState extends State<CreateEmail> {
 
     if(form.validate()){
       form.save();
+      onSignUpByEmail();
     }
     else{
       setState(() {
@@ -53,7 +54,6 @@ class _CreateEmailState extends State<CreateEmail> {
   }
 
   Future <void> onSignUpByEmail() async {
-    _submit();
     dialogLoading(context);
     try {
       final result = await InternetAddress.lookup('google.com');
@@ -63,7 +63,7 @@ class _CreateEmailState extends State<CreateEmail> {
           emailController.text,
           passwordController.text);
         if (response.statusCode == 200) {
-           Navigator.pushReplacement(
+            Navigator.pushReplacement(
               context,
               MaterialPageRoute(builder: (context) => PinCodeVerificationScreen(emailController.text, passwordController.text)));
           // print(response.statusCode);

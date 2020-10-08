@@ -86,4 +86,45 @@ class PostRequest with ChangeNotifier{
     return _backend.response;
   }
 
+  /*Forgot Password Verification */
+  Future<http.Response> forgotPasswordByEmail(String email) async {
+    _backend.bodyEncode = json.encode({ /* Convert to Json String */
+      "email": email,
+    });
+
+    _backend.response = await http.post('${ApiService.url}/forgot-password', 
+    headers: _backend.conceteHeader(null, null), 
+    body: _backend.bodyEncode);
+
+    print(_backend.response.body);
+    return _backend.response;
+  }
+
+  Future<http.Response> confirmCodeResetPassword(String email, String vCode) async {
+    _backend.bodyEncode = json.encode({ /* Convert to Json String */
+      "email": email,
+      "vCode": vCode
+    });
+
+    _backend.response = await http.post('${ApiService.url}/confirm-forgot-code', 
+    headers: _backend.conceteHeader(null, null), 
+    body: _backend.bodyEncode);
+
+    print(_backend.response.body);
+    return _backend.response;
+  }
+
+  Future<http.Response> resetPassword(String email, String password) async {
+    _backend.bodyEncode = json.encode({ /* Convert to Json String */
+      "email": email,
+      "new_password": password
+    });
+
+    _backend.response = await http.post('${ApiService.url}/reset-password', 
+    headers: _backend.conceteHeader(null, null), 
+    body: _backend.bodyEncode);
+
+    print(_backend.response.body);
+    return _backend.response;
+  }
 }

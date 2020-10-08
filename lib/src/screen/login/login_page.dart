@@ -12,6 +12,7 @@ import 'package:koompi_hotspot/src/components/reuse_widget.dart';
 import 'package:koompi_hotspot/src/screen/create_account/create_email/create_email.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:koompi_hotspot/src/services/network_status.dart';
+import 'package:koompi_hotspot/src/services/services.dart';
 import 'dart:io';
 
 import 'package:shared_preferences/shared_preferences.dart';
@@ -95,7 +96,7 @@ class _LoginPageState extends State<LoginPage> {
             Navigator.pop(context);
           });
           if(token != null){
-            await isToken.setString('token', token);
+            await StorageServices().saveString('token', token);
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(builder: (context) => Navbar()));

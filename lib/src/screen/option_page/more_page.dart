@@ -173,7 +173,7 @@ showLogoutDialog(context) async {
               child: Text('Yes'),
               onPressed: () async {
                 dialogLoading(context);
-                StorageServices().clearPref();
+                StorageServices().clear('token');
                 Future.delayed(Duration(seconds: 2), () {
                   Timer(Duration(milliseconds: 500), () => Navigator.pushAndRemoveUntil(
                     context,

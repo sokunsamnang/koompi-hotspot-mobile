@@ -3,30 +3,31 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:koompi_hotspot/src/backend/post_request.dart';
 import 'package:koompi_hotspot/src/components/reuse_widget.dart';
-import 'package:koompi_hotspot/src/screen/create_account/verfication/forgot_password_verification.dart';
-import 'package:koompi_hotspot/src/screen/login/forgot_password_body.dart';
+import 'package:koompi_hotspot/src/screen/login/login_page.dart';
+import 'package:koompi_hotspot/src/screen/reset_new_password/reset_password_body.dart';
 
-class ForgotPassword extends StatefulWidget {
-  _ForgotPasswordState createState() => _ForgotPasswordState();
+class ResetNewPassword extends StatefulWidget {
+  _ResetNewPasswordState createState() => _ResetNewPasswordState();
 }
 
-class _ForgotPasswordState extends State<ForgotPassword> {
-  // Widget build(BuildContext context) {
-  //   return Scaffold(
-  //     backgroundColor: Colors.white,
-  //     body: DefaultTabController(
-  //       initialIndex: 0,
-  //       length: 2,
-  //       child: forgetPasswordBody(context),
-  //     ),
-  //   );
-  // }
+class _ResetNewPasswordState extends State<ResetNewPassword> {
+
+  // Initially password is obscure
+  bool _obscureText = true;
+
+  // Toggles the password show status
+  void _toggle() {
+    setState(() {
+      _obscureText = !_obscureText;
+    });
+  }
 
   final formKey = GlobalKey<FormState>();
   bool _autoValidate = false;
 
   TextEditingController _emailController = TextEditingController();
-  String _email = "";
+  TextEditingController _passwordController = TextEditingController();
+  String _password = "";
   
   Future <void> _submit() async {
     dialogLoading(context);
@@ -34,12 +35,13 @@ class _ForgotPasswordState extends State<ForgotPassword> {
       final result = await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
         print('Internet connected');
-        var response = await PostRequest().forgotPasswordByEmail(
-          _emailController.text);
+        var response = await PostRequest().resetPassword(
+          _emailController.text,
+          _passwordController.text);
         if (response.statusCode == 200) {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => ForgotPasswordVerification(_emailController.text)));
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => LoginPage()));
         } 
         else if (response.statusCode == 401){
           Navigator.pop(context);
@@ -115,7 +117,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Container(
-        child: forgetPasswordBody(context, _email, _emailController, _submit, formKey, _autoValidate),
+        child: resetNewPasswordBody(context, _password, _passwordController, _obscureText, _toggle, _submit, formKey, _autoValidate)
       ),
     );
   }

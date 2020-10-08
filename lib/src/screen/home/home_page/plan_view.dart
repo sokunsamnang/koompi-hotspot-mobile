@@ -53,7 +53,7 @@ class PlanView extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              '5000រ',
+                              '5000៛',
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 16,

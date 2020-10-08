@@ -64,7 +64,7 @@ class _CompleteInfoState extends State<CompleteInfo>{
 
   final dateFormart = new DateFormat('dd-MMM-yyyy');
   
-  Future<Null> _selectDate(BuildContext context) async {
+  Future <void> _selectDate(BuildContext context) async {
     final DateTime picked = await showDatePicker(
         context: context,
         initialDate: selectedDate,
@@ -254,7 +254,8 @@ class _CompleteInfoState extends State<CompleteInfo>{
                   SizedBox(height: 16.0),
                   Text('Date Of Birth'),
                   SizedBox(height: 10.0),
-                  dateOfbirth(selectedDate, _selectDate, dateFormart, context),
+                  
+                  // dateOfbirth(selectedDate, _selectDate, dateFormart, context),
                   SizedBox(height: 16.0),
                   Text('Gender'),
                   SizedBox(height: 10.0),
@@ -322,7 +323,6 @@ class _CompleteInfoState extends State<CompleteInfo>{
       valueText: _birthdate ?? 'Select Date of Birth',
       onPressed: (){
         _selectDate(context);
-        
       },
     );
   }

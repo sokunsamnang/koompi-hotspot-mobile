@@ -20,19 +20,36 @@ class StorageServices{
     pref.remove('token');
   }
 
-  void checkUser(BuildContext context) async {
-    SharedPreferences isToken = await SharedPreferences.getInstance();
+  // checkUser(BuildContext context) async {
+  //   SharedPreferences isToken = await SharedPreferences.getInstance();
 
-    String _token = isToken.getString('token');
-    if (_token != null) {
-      await GetRequest().getUserProfile(_token);
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => Navbar()));
-    }
-    else{
-      Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => LoginPage()));
-    }
+  //   String _token = isToken.getString('token');
+  //   if (_token != null) {
+  //     await GetRequest().getUserProfile(_token);
+  //     Navigator.pushReplacement(
+  //         context, MaterialPageRoute(builder: (context) => Navbar()));
+  //   }
+  //   else{
+  //     Navigator.pushReplacement(
+  //       context, MaterialPageRoute(builder: (context) => LoginPage()));
+  //   }
+  // }
+
+  void checkUser(BuildContext context) {
+    read('token').then(
+      (value) async {
+        String _token = value;
+        if (_token != null) {
+          await GetRequest().getUserProfile(_token);
+          Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (context) => Navbar()));
+        }
+        else{
+          Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => LoginPage()));
+        }
+      },
+    );
   }
 
 

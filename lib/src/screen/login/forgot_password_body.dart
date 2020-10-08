@@ -1,7 +1,13 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:koompi_hotspot/src/backend/post_request.dart';
 import 'package:koompi_hotspot/src/components/formcard/formcardForgotPassword.dart';
+import 'package:koompi_hotspot/src/components/reuse_widget.dart';
+import 'package:koompi_hotspot/src/screen/create_account/verfication/forgot_password_verification.dart';
 import 'package:koompi_hotspot/src/screen/login/login_page.dart';
+
 
 // Widget forgetPasswordBody(BuildContext context) {
 //   ScreenUtil.instance = ScreenUtil.getInstance()..init(context);
@@ -170,8 +176,17 @@ import 'package:koompi_hotspot/src/screen/login/login_page.dart';
 //   );
 // }
 
+
+
   @override
-  Widget forgetPasswordBody(BuildContext context) {
+  Widget forgetPasswordBody(
+    BuildContext context, 
+    String _email, 
+    TextEditingController _emailController, 
+    Function _submit,
+    GlobalKey<FormState> formKey, 
+    bool _autoValidate) {
+    
     ScreenUtil.instance = ScreenUtil.getInstance()..init(context);
     ScreenUtil.instance = ScreenUtil(width: 750, height: 1334, allowFontScaling: true);
     return new Scaffold(
@@ -225,7 +240,7 @@ import 'package:koompi_hotspot/src/screen/login/login_page.dart';
                   SizedBox(
                     height: ScreenUtil.getInstance().setHeight(50),
                   ),
-                  formCardForgotPasswordEmail(context),
+                  formCardForgotPasswordEmail(context, _emailController, _email, _submit, formKey, _autoValidate),
                   SizedBox(height: ScreenUtil.getInstance().setHeight(60)),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -251,7 +266,12 @@ import 'package:koompi_hotspot/src/screen/login/login_page.dart';
                             child: InkWell(
                               highlightColor: Colors.transparent,
                               splashColor: Colors.transparent,
-                              onTap: () {},
+                              onTap: () {
+                                // _submit();
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => ForgotPasswordVerification(_emailController.text)));
+                              },
                               child: Center(
                                 child: Text("Reset Password",
                                     style: TextStyle(

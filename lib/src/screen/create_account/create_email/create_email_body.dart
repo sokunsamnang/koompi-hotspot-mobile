@@ -91,7 +91,7 @@ import 'package:koompi_hotspot/src/screen/login/login_page.dart';
                               highlightColor: Colors.transparent,
                               splashColor: Colors.transparent,
                               onTap: () {
-                                onSignUpByEmail();
+                                _submit();
                               },  
                               child: Center(
                                 child: Text("SIGN UP",

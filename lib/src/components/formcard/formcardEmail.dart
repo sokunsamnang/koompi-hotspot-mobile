@@ -69,7 +69,7 @@ Widget formCardEmail(
                       fontFamily: "Poppins-Medium",
                       fontSize: ScreenUtil().setSp(26))),
               TextFormField(
-                validator: (val) => val.length < 6 ? 'Password too short' : null,
+                validator: (val) => val.length < 8 ? 'Password too short' : null,
                 onSaved: (val) => _password = val,
                 autovalidate: _autoValidate,
                 controller: passwordController,

@@ -54,32 +54,45 @@ class _SplashState extends State<Splash> {
 
   void isLoggedIn() async{
     StorageServices().checkUser(context);
-    
+    // StreamBuilder(
+    //   stream: StorageServices().checkUser(context),
+    //   builder: (context, snapshot){
+    //     if(snapshot.connectionState == ConnectionState.waiting){
+    //       return Center(
+    //         child: CircularProgressIndicator(),
+    //       );
+    //     }
+    //     else{
+    //       if(snapshot.connectionState == ConnectionState.done){
+    //         return StorageServices().checkUser(context);
+            
+    //       }
+    //       else{
+    //         return _networkStatus.noNetwork(context);
+    //       }
+    //     }
+    //   },
+    // );
   }
 
   @override
   void initState() {
     super.initState();
-    try {
+    setState(() {
       startTime();
-    } catch (e) {
-      print(e);
-      _networkStatus.noNetwork(context);
-    }
-    
-    //StorageServices().checkUser(context);
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-      return new Scaffold(
+      return Scaffold(
         backgroundColor: Colors.black,
         body: Center(
           child: FlareActor( 
             'assets/animations/splash_screen.flr', 
             animation: 'Splash_Loop',
+          ),
         ),
-      ),
     );
   }
 }

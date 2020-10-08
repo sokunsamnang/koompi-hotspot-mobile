@@ -7,20 +7,20 @@ import 'package:koompi_hotspot/index.dart';
 import 'package:koompi_hotspot/src/backend/post_request.dart';
 import 'package:koompi_hotspot/src/components/reuse_widget.dart';
 import 'package:koompi_hotspot/src/screen/create_account/complete_info/complete_info.dart';
+import 'package:koompi_hotspot/src/screen/reset_new_password/reset_password.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 
-class PinCodeVerificationScreen extends StatefulWidget {
-  final String email, password;
+class ForgotPasswordVerification extends StatefulWidget {
+  final String email;
 
-  PinCodeVerificationScreen(this.email, this.password);
+  ForgotPasswordVerification(this.email);
 
   @override
-  _PinCodeVerificationScreenState createState() =>
-      _PinCodeVerificationScreenState();
+  _ForgotPasswordVerificationState createState() => _ForgotPasswordVerificationState();
 }
 
-class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
+class _ForgotPasswordVerificationState extends State<ForgotPasswordVerification> {
   var onTapRecognizer;
 
   TextEditingController textEditingController = TextEditingController();
@@ -173,7 +173,9 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
                       errorAnimationController: errorController,
                       controller: textEditingController,
                       onCompleted: (v) {
-                        _submitOtp(currentText);
+                        Navigator.pushReplacement(
+                          context, MaterialPageRoute(builder: (context) => ResetNewPassword()));
+                        // _submitOtp(currentText);
                         print("Completed");              
                       },
                       onChanged: (value) {
@@ -237,7 +239,7 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
                           hasError = true;
                         });
                       } else {
-                        await _submitOtp(currentText);
+                        // await _submitOtp(currentText);
                         // setState(() {
                         //   hasError = false;
                         //   scaffoldKey.currentState.showSnackBar(SnackBar(
