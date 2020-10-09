@@ -69,19 +69,48 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
           "email": widget.email,
           "vCode": vCode,
         }));
-        if (response.statusCode == 200) {
+        if (response.statusCode == 200 && response.body != "Incorrect Code!") {
           print(response.body);
-          Navigator.pushReplacement(
+          await Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => CompleteInfo(widget.email)));
         } else {
           Navigator.pop(context);
+          showErrorDialog(context);
           print(response.body);
       }
     } catch (e) {
+      Navigator.pop(context);
       alertText = responseBody['message'];
     }
     
   }
+
+  showErrorDialog(BuildContext context) async {
+    return showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Error'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('You may enter incorrect verification code!'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

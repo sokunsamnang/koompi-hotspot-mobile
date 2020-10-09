@@ -144,16 +144,7 @@ class _CompleteInfoState extends State<CompleteInfo>{
       appBar: AppBar(
         backgroundColor: Colors.white,
         title: Text('Complete Profile', style: TextStyle(color: Colors.black)),
-        leading: Builder(builder: (BuildContext context) {
-          return IconButton(
-              icon: Icon(
-                Icons.arrow_back,
-                color: Colors.black,
-              ),
-              onPressed: () {
-                Navigator.pop(context);
-              });
-        }),
+        automaticallyImplyLeading: false,
         actions: <Widget>[
           Padding(
             padding: EdgeInsets.only(right: 5.0),
