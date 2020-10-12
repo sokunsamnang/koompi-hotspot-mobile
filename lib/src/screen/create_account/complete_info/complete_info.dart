@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_material_pickers/helpers/show_scroll_picker.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
@@ -245,8 +246,23 @@ class _CompleteInfoState extends State<CompleteInfo>{
                   SizedBox(height: 16.0),
                   Text('Date Of Birth'),
                   SizedBox(height: 10.0),
-                  
-                  // dateOfbirth(selectedDate, _selectDate, dateFormart, context),
+                  // FormBuilderDateTimePicker(
+                  //   onFieldSubmitted: (value) {
+                  //     if(value != null && value != selectedDate){
+                  //       selectedDate = value;
+                  //       _birthdate = dateFormart.format(selectedDate);
+                  //     }
+                  //   },
+                  //   validators: [
+                  //     FormBuilderValidators.required(),
+                  //   ],
+                  //   attribute: "date",
+                  //   inputType: InputType.date,
+                  //   format: DateFormat("dd-MMM-yyyy"),
+                  //   decoration:
+                  //     InputDecoration(labelText: "Date Of Birth"),
+                  // ),
+                  dateOfbirth(selectedDate, _selectDate, dateFormart, context),
                   SizedBox(height: 16.0),
                   Text('Gender'),
                   SizedBox(height: 10.0),

@@ -69,10 +69,10 @@ class _ForgotPasswordVerificationState extends State<ForgotPasswordVerification>
           "email": widget.email,
           "vCode": vCode,
         }));
-        if (response.statusCode == 200) {
+        if (response.statusCode == 200 && response.body != "Incorrect Code!") {
           print(response.body);
           Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => CompleteInfo(widget.email)));
+            context, MaterialPageRoute(builder: (context) => ResetNewPassword()));
         } else {
           Navigator.pop(context);
           print(response.body);
@@ -173,9 +173,9 @@ class _ForgotPasswordVerificationState extends State<ForgotPasswordVerification>
                       errorAnimationController: errorController,
                       controller: textEditingController,
                       onCompleted: (v) {
-                        Navigator.pushReplacement(
-                          context, MaterialPageRoute(builder: (context) => ResetNewPassword()));
-                        // _submitOtp(currentText);
+                        // Navigator.pushReplacement(
+                        //   context, MaterialPageRoute(builder: (context) => ResetNewPassword()));
+                        _submitOtp(currentText);
                         print("Completed");              
                       },
                       onChanged: (value) {

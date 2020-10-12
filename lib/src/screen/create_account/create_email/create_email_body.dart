@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:koompi_hotspot/src/components/formcard/formcardEmail.dart';
+import 'package:koompi_hotspot/src/screen/create_account/complete_info/complete_info.dart';
 import 'package:koompi_hotspot/src/screen/login/login_page.dart';
 
   @override
@@ -92,6 +93,11 @@ import 'package:koompi_hotspot/src/screen/login/login_page.dart';
                               splashColor: Colors.transparent,
                               onTap: () {
                                 _submit();
+                                // Navigator.pushReplacement(
+                                // context,
+                                // MaterialPageRoute(
+                                //     builder: (context) => CompleteInfo(_email)),
+                                // );
                               },  
                               child: Center(
                                 child: Text("SIGN UP",

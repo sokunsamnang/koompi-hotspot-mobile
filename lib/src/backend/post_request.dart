@@ -120,7 +120,7 @@ class PostRequest with ChangeNotifier{
       "new_password": password
     });
 
-    _backend.response = await http.post('${ApiService.url}/reset-password', 
+    _backend.response = await http.put('${ApiService.url}/reset-password', 
     headers: _backend.conceteHeader(null, null), 
     body: _backend.bodyEncode);
 

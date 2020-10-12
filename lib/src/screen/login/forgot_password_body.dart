@@ -267,10 +267,10 @@ import 'package:koompi_hotspot/src/screen/login/login_page.dart';
                               highlightColor: Colors.transparent,
                               splashColor: Colors.transparent,
                               onTap: () {
-                                // _submit();
-                                Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(builder: (context) => ForgotPasswordVerification(_emailController.text)));
+                                _submit();
+                                // Navigator.pushReplacement(
+                                //   context,
+                                //   MaterialPageRoute(builder: (context) => ForgotPasswordVerification(_emailController.text)));
                               },
                               child: Center(
                                 child: Text("Reset Password",

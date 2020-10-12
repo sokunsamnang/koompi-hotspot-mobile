@@ -42,10 +42,12 @@ Widget bodyPage(BuildContext context) {
   Widget _nameBar(context) {
 
     String name = mData.name;
+    dynamic image = mData.image;
 
     return Row(
       children: <Widget>[
         CircleAvatar(
+          // backgroundImage: image == null ? AssetImage('assets/images/avatar.png') : NetworkImage(image),
           backgroundImage: AssetImage('assets/images/avatar.png'),
         ),
         SizedBox(width: 15),

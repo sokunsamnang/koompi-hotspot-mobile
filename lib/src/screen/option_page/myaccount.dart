@@ -63,14 +63,15 @@ class _MyAccountState extends State<MyAccount>
           address);
           
         if (response.statusCode == 200) {
-          
           setState(() {
-            Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (context) => Navbar()),
-              ModalRoute.withName('/'),
-            );
+            StorageServices().checkUser(context);
+            // Navigator.pushAndRemoveUntil(
+            //   context,
+            //   MaterialPageRoute(builder: (context) => Navbar()),
+            //   ModalRoute.withName('/'),
+            // );
           });
+          
         } 
         else {
           print('update info not Successful');
@@ -81,6 +82,7 @@ class _MyAccountState extends State<MyAccount>
       print('not connected');
     }
   }
+  
   showErrorServerDialog(BuildContext context) async {
     var response = await PostRequest().completeInfoUser(
           emailController.value.text,

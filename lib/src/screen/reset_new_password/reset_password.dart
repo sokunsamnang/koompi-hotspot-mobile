@@ -39,9 +39,11 @@ class _ResetNewPasswordState extends State<ResetNewPassword> {
           _emailController.text,
           _passwordController.text);
         if (response.statusCode == 200) {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => LoginPage()));
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => LoginPage()),
+            ModalRoute.withName('/'),
+          );
         } 
         else if (response.statusCode == 401){
           Navigator.pop(context);
