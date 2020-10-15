@@ -2,10 +2,8 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
-import 'package:koompi_hotspot/src/app.dart';
 import 'package:koompi_hotspot/src/backend/get_request.dart';
 import 'package:koompi_hotspot/src/components/navbar.dart';
-import 'package:koompi_hotspot/src/models/model_userdata.dart';
 import 'package:koompi_hotspot/src/screen/login/login_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -48,6 +46,24 @@ class StorageServices{
           Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => LoginPage()));
         }
+      },
+    );
+  }
+
+  void updateUserData(BuildContext context) {
+    read('token').then(
+      (value) async {
+        String _token = value;
+        if (_token != null) {
+          await GetRequest().getUserProfile(_token);
+            Navigator.pushAndRemoveUntil(
+              context, MaterialPageRoute(builder: (context) => Navbar()),
+              ModalRoute.withName('/'));
+        }
+        // else{
+        //   Navigator.pushReplacement(
+        //     context, MaterialPageRoute(builder: (context) => LoginPage()));
+        // }
       },
     );
   }

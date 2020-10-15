@@ -4,16 +4,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_material_pickers/helpers/show_scroll_picker.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
-import 'package:koompi_hotspot/src/backend/component.dart';
-import 'package:koompi_hotspot/src/backend/get_request.dart';
 import 'package:koompi_hotspot/src/backend/post_request.dart';
-import 'package:koompi_hotspot/src/components/navbar.dart';
 import 'package:koompi_hotspot/src/components/reuse_widget.dart';
 import 'package:koompi_hotspot/src/models/model_location.dart';
 import 'package:koompi_hotspot/src/models/model_userdata.dart';
-import 'package:koompi_hotspot/src/screen/login/login_page.dart';
 import 'package:koompi_hotspot/src/services/services.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class MyAccount extends StatefulWidget {
   @override
@@ -26,19 +21,13 @@ class _MyAccountState extends State<MyAccount>
 
   final formKey = GlobalKey<FormState>();
   bool _autoValidate = false;
-  ModelUserData _modelUserData = ModelUserData();
-  Backend _backend = Backend();
 
-  void _submit(){
+  void _submitValidate(){
     final form = formKey.currentState;
 
     if(form.validate()){
       form.save();
-      print('Validated');
-      print(fullnameController.text);
-      print(birthdate);
-      print(gender);
-      print(address);
+      _onSubmit();
     }
     else{
       setState(() {
@@ -47,8 +36,7 @@ class _MyAccountState extends State<MyAccount>
     }
   }
   
-  Future <void> _onSubmitBtn() async {
-    _submit();
+  Future <void> _onSubmit() async {
     dialogLoading(context);
     try {
       
@@ -64,7 +52,7 @@ class _MyAccountState extends State<MyAccount>
           
         if (response.statusCode == 200) {
           setState(() {
-            StorageServices().checkUser(context);
+            StorageServices().updateUserData(context);
             // Navigator.pushAndRemoveUntil(
             //   context,
             //   MaterialPageRoute(builder: (context) => Navbar()),
@@ -210,7 +198,7 @@ class _MyAccountState extends State<MyAccount>
                 ),
                 onPressed: () async {
                   setState(() {
-                    _onSubmitBtn();
+                    _submitValidate();
                   });
                 },
               ),
@@ -276,23 +264,27 @@ class _MyAccountState extends State<MyAccount>
                     controller: fullnameController ?? '',
                     decoration: InputDecoration(
                       hintText: 'Full Name',
+                      // focusedBorder: OutlineInputBorder(
+                      //   borderSide: BorderSide(color: Colors.black, width: 2),
+                      // ),
                       border: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.black),
-                        borderRadius: BorderRadius.all(Radius.circular(30.0))
+                        borderRadius: BorderRadius.all(Radius.circular(30.0)
+                        ),
                       )
                     ),
                   ),
                   SizedBox(height: 16.0),
                   Text('Email'),
                   SizedBox(height: 10.0),
-                  TextFormField(
-                    controller: emailController ?? '',
-                    decoration: InputDecoration(
-                      hintText: 'Email',
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.black),
-                        borderRadius: BorderRadius.all(Radius.circular(30.0))
-                      )
+                  Card(
+                    shape: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(30.0))
+                    ),
+                    child: ListTile(
+                      title: Text(
+                        mData.email
+                      ),
                     ),
                   ),
                   SizedBox(height: 16.0),

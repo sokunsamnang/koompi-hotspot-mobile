@@ -39,7 +39,7 @@ Widget formLogin( BuildContext context,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text("Login",
+            Text("Sign In",
                 style: TextStyle(
                     fontSize: ScreenUtil().setSp(45),
                     fontFamily: "Poppins-Bold",

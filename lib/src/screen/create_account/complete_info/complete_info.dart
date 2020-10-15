@@ -29,7 +29,8 @@ class _CompleteInfoState extends State<CompleteInfo>{
   
   @override
   void initState() {
-    
+    _address = 'Phnom Penh';
+    _birthdate = DateFormat('dd-MMM-yyyy').format(DateTime.now());
     _emailController = TextEditingController(text: widget.email);
     super.initState();
   }
@@ -38,10 +39,9 @@ class _CompleteInfoState extends State<CompleteInfo>{
   void dispose() {
     super.dispose();
   }
-  
-  String _address;
-  
+
   //Location
+  String _address;
   var locationModel = LocationList();
 
   //Image Profile
@@ -78,17 +78,12 @@ class _CompleteInfoState extends State<CompleteInfo>{
       });
   }
   
-  void _submit(){
+  void _submitValidate(BuildContext context){
     final form = formKey.currentState;
 
     if(form.validate()){
       form.save();
-      print('Validated');
-      print(_usernameController.text);
-      print(_emailController.text);
-      print(_birthdate);
-      print(_gender);
-      print(_address);
+      _submit();
     }
     else{
       setState(() {
@@ -97,8 +92,8 @@ class _CompleteInfoState extends State<CompleteInfo>{
     }
   }
   
-  Future <void> _onSubmitBtn() async {
-    _submit();
+  Future <void> _submit() async {
+    // _submit(context);
     dialogLoading(context);
     try {
       final result = await InternetAddress.lookup('google.com');
@@ -156,7 +151,8 @@ class _CompleteInfoState extends State<CompleteInfo>{
                   color: Colors.blueAccent,
                 ),
                 onPressed: () async {              
-                  _onSubmitBtn();
+                  // _onSubmitBtn();
+                  _submitValidate(context);
                 },
               ),
             ),
@@ -230,17 +226,26 @@ class _CompleteInfoState extends State<CompleteInfo>{
                   SizedBox(height: 16.0),
                   Text('Email'),
                   SizedBox(height: 10.0),
-                  TextFormField(
-                    controller: _emailController ?? widget.email,
-                    autovalidate: true,
-                    validator: (val) => !val.contains('@') ? 'Invalid Email' : null,
-                    onSaved: (val) => _emailController.text = val,
-                    decoration: InputDecoration(
-                      hintText: 'Email',
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.black),
-                        borderRadius: BorderRadius.all(Radius.circular(30.0))
-                      )
+                  // TextFormField(
+                  //   controller: _emailController ?? widget.email,
+                  //   autovalidate: true,
+                  //   validator: (val) => !val.contains('@') ? 'Invalid Email' : null,
+                  //   onSaved: (val) => _emailController.text = val,
+                  //   decoration: InputDecoration(
+                  //     hintText: 'Email',
+                  //     border: OutlineInputBorder(
+                  //       borderRadius: BorderRadius.all(Radius.circular(30.0))
+                  //     )
+                  //   ),
+                  // ),
+                  Card(
+                    shape: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(30.0))
+                    ),
+                    child: ListTile(
+                      title: Text(
+                        widget.email,
+                      ),
                     ),
                   ),
                   SizedBox(height: 16.0),
@@ -264,20 +269,47 @@ class _CompleteInfoState extends State<CompleteInfo>{
                   // ),
                   dateOfbirth(selectedDate, _selectDate, dateFormart, context),
                   SizedBox(height: 16.0),
-                  Text('Gender'),
-                  SizedBox(height: 10.0),
-                  Row(
-                    children: <Widget>[
-                      Expanded(
-                        child: genderCustomRadio(lst[0], 'Male'),
+                  // Text('Gender'),
+                  // SizedBox(height: 10.0),
+                  // Row(
+                  //   children: <Widget>[
+                  //     Expanded(
+                  //       child: genderCustomRadio(lst[0], 'Male'),
+                  //     ),
+                  //     SizedBox(width: 20.0),
+                  //     Expanded(
+                  //       child: genderCustomRadio(lst[1], 'Female'),
+                  //     ),
+                  //   ],
+                  // ),
+                  FormBuilderChoiceChip(
+                    onSaved: (newValue) => _gender = newValue,
+                    validators: [FormBuilderValidators.required()],
+                    decoration: InputDecoration(
+                      labelText: 'Gender',
+                      labelStyle: TextStyle(color: Colors.black, fontSize: 20)
+                    ),
+                    labelStyle: TextStyle(
+                      color: Colors.black,
+                      fontSize: 18,
+                      fontFamily: "Medium"
+                    ),
+                    selectedColor: Colors.cyan,
+                    elevation: 2,
+                    alignment: WrapAlignment.spaceEvenly,
+                    labelPadding: EdgeInsets.only(left: 30, right: 30),
+                    attribute: "gender",
+                    options: [
+                      FormBuilderFieldOption(
+                        child: Text("Male"),
+                        value: "Male"
                       ),
-                      SizedBox(width: 20.0),
-                      Expanded(
-                        child: genderCustomRadio(lst[1], 'Female'),
+                      FormBuilderFieldOption(
+                        child: Text("Female"),
+                        value: "Female"
                       ),
                     ],
                   ),
-
                   SizedBox(height: 16.0),
                   Text('Location'),
                   SizedBox(height: 10.0),
@@ -314,7 +346,7 @@ class _CompleteInfoState extends State<CompleteInfo>{
       valueText: _address ?? locationModel.selectedKhLocation.toString(),
       onPressed: () => showMaterialScrollPicker(
         context: context,
-        title: "Pick Your Location",
+        title: "Phnom Penh",
         items: locationModel.khLocation,
         selectedItem: locationModel.selectedKhLocation,
         onChanged: (value) =>
@@ -327,7 +359,7 @@ class _CompleteInfoState extends State<CompleteInfo>{
 
   Widget dateOfbirth(DateTime selectedDate, _selectDate, dateFormart, context){
     return _DateDropdown(
-      valueText: _birthdate ?? 'Select Date of Birth',
+      valueText: _birthdate ?? "Pick your DOB",
       onPressed: (){
         _selectDate(context);
       },

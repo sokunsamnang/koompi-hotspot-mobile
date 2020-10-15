@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:koompi_hotspot/src/screen/onboarding/onboarding_screen.dart';
-import 'package:koompi_hotspot/src/services/network_status.dart';
 import 'package:koompi_hotspot/src/services/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -23,7 +22,7 @@ class Splash extends StatefulWidget {
 
 class _SplashState extends State<Splash> {
 
-  NetworkStatus _networkStatus = NetworkStatus();
+  // NetworkStatus _networkStatus = NetworkStatus();
 
   startTime() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -40,12 +39,6 @@ class _SplashState extends State<Splash> {
     }
   }
 
-  // void navigationLoginPage() {
-  //   Navigator.pushReplacement(context,
-  //     MaterialPageRoute(builder: (context) => LoginPage())
-  //   ); 
-  // }
-
   void navigationOnboardingScreen() {
     Navigator.pushReplacement(context,
       MaterialPageRoute(builder: (context) => OnboardingScreen())
@@ -54,25 +47,6 @@ class _SplashState extends State<Splash> {
 
   void isLoggedIn() async{
     StorageServices().checkUser(context);
-    // StreamBuilder(
-    //   stream: StorageServices().checkUser(context),
-    //   builder: (context, snapshot){
-    //     if(snapshot.connectionState == ConnectionState.waiting){
-    //       return Center(
-    //         child: CircularProgressIndicator(),
-    //       );
-    //     }
-    //     else{
-    //       if(snapshot.connectionState == ConnectionState.done){
-    //         return StorageServices().checkUser(context);
-            
-    //       }
-    //       else{
-    //         return _networkStatus.noNetwork(context);
-    //       }
-    //     }
-    //   },
-    // );
   }
 
   @override

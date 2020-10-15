@@ -1,7 +1,5 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:koompi_hotspot/src/backend/post_request.dart';
 import 'package:koompi_hotspot/src/components/reuse_widget.dart';
@@ -18,7 +16,6 @@ class ChangePassword extends StatefulWidget {
 
 class _ChangePasswordState extends State<ChangePassword>
     with SingleTickerProviderStateMixin {
-  AnimationController _controller;
 
   String messageAlert;
   bool enable = false;
@@ -28,7 +25,6 @@ class _ChangePasswordState extends State<ChangePassword>
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(vsync: this);
   }
 
   @override

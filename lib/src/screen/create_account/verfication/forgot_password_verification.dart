@@ -4,9 +4,7 @@ import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:koompi_hotspot/index.dart';
-import 'package:koompi_hotspot/src/backend/post_request.dart';
 import 'package:koompi_hotspot/src/components/reuse_widget.dart';
-import 'package:koompi_hotspot/src/screen/create_account/complete_info/complete_info.dart';
 import 'package:koompi_hotspot/src/screen/reset_new_password/reset_password.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 

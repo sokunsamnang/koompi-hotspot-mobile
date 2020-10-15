@@ -3,7 +3,6 @@ import 'package:connectivity/connectivity.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:koompi_hotspot/index.dart';
-import 'package:koompi_hotspot/src/backend/api_service.dart';
 import 'package:koompi_hotspot/src/backend/get_request.dart';
 import 'package:koompi_hotspot/src/backend/post_request.dart';
 import 'package:koompi_hotspot/src/components/formcard/formcardLogin.dart';
@@ -14,8 +13,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:koompi_hotspot/src/services/network_status.dart';
 import 'package:koompi_hotspot/src/services/services.dart';
 import 'dart:io';
-
-import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
   _LoginPageState createState() => _LoginPageState();
@@ -85,7 +82,6 @@ class _LoginPageState extends State<LoginPage> {
           usernameController.text,
           passwordController.text);
         if (response.statusCode == 200) {
-          SharedPreferences isToken = await SharedPreferences.getInstance();
           var responseJson = json.decode(response.body);
           token = responseJson['token'];
             await GetRequest().getUserProfile(token)

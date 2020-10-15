@@ -26,6 +26,7 @@ dependencies:
   custom_radio_grouped_button: any
   expandable_bottom_sheet: ^0.2.1+1
   fancy_bottom_navigation: ^0.3.2
+  find_dropdown: ^0.2.2
   flare_flutter: any
   flutter_facebook_login: ^3.0.0
   flutter_form_builder: ^3.14.0
@@ -36,10 +37,8 @@ dependencies:
   flutter_screenutil: ^0.4.2
   flutter_typeahead: ^1.8.8
   font_awesome_flutter: ^8.8.1
-  geolocation: ^1.1.2
   geolocator: ^5.1.5
   google_fonts: ^1.1.0
-  google_maps_flutter: ^0.5.24+1
   google_nav_bar: ^2.0.0
   http: ^0.12.1
   image_picker: ^0.6.7+2
@@ -47,11 +46,8 @@ dependencies:
   intl: ^0.16.1
   line_icons: ^0.2.0
   location: ^2.5.4
-  path_provider: ^1.6.10
-  permission_handler: ^5.0.1+1
   pin_code_fields: ^5.0.1
   shared_preferences: ^0.5.7+3
-  simple_animations: ^2.2.1
 
 flutter_icons:
   image_path: "assets/images/koompi_logo_signal.png"

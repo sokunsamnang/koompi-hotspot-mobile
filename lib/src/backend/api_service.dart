@@ -1,6 +1,3 @@
-import 'package:connectivity/connectivity.dart';
-import 'package:koompi_hotspot/src/components/noInternet.dart';
-
 class ApiService{
 
   static final url = 'https://api-hotspot.koompi.org/api';
