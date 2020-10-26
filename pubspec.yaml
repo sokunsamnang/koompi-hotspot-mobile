@@ -95,6 +95,8 @@ flutter:
     - assets/animations/Loading.flr
     - assets/animations/splash_screen.flr
     - assets/animations/lost_network.flr
+    - assets/animations/success_check.flr
+    - assets/animations/success.flr
     - assets/images/destination_map_marker.png
     - assets/images/topup_Payment.jpg
     - assets/images/driving_pin.png

@@ -53,11 +53,6 @@ class _MyAccountState extends State<MyAccount>
         if (response.statusCode == 200) {
           setState(() {
             StorageServices().updateUserData(context);
-            // Navigator.pushAndRemoveUntil(
-            //   context,
-            //   MaterialPageRoute(builder: (context) => Navbar()),
-            //   ModalRoute.withName('/'),
-            // );
           });
           
         } 

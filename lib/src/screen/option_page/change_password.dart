@@ -17,9 +17,11 @@ class ChangePassword extends StatefulWidget {
 class _ChangePasswordState extends State<ChangePassword>
     with SingleTickerProviderStateMixin {
 
+  String _token;
   String messageAlert;
   bool enable = false;
   ModelChangePassword _modelChangePassword = ModelChangePassword();
+  
   
   
   @override
@@ -87,9 +89,9 @@ class _ChangePasswordState extends State<ChangePassword>
 
   void validateAllFieldNotEmpty(){ /* Enable And Disable Button */
     if (
-      _modelChangePassword.controlOldPassword.text.length >= 5 &&
-      _modelChangePassword.controlNewPassword.text.length >= 5 &&
-      _modelChangePassword.controlConfirmPassword.text.length >= 5 
+      _modelChangePassword.controlOldPassword.text.length >= 8 &&
+      _modelChangePassword.controlNewPassword.text.length >= 8 &&
+      _modelChangePassword.controlConfirmPassword.text.length >= 8 
     ) validateAllFieldNoError();
     else if (_modelChangePassword.enable == true) enableButton(false);
   }
@@ -104,7 +106,7 @@ class _ChangePasswordState extends State<ChangePassword>
   }
 
   String newPasswordIsmatch(){
-    if (_modelChangePassword.controlConfirmPassword.text.length >= 5){
+    if (_modelChangePassword.controlConfirmPassword.text.length >= 8){
       if (_modelChangePassword.controlNewPassword.text == _modelChangePassword.controlConfirmPassword.text){
         enableButton(true);
         _modelChangePassword.responseConfirm = null;
@@ -117,7 +119,7 @@ class _ChangePasswordState extends State<ChangePassword>
   }
 
   String confirmPasswordIsMatch(){
-    if (_modelChangePassword.controlNewPassword.text.length >= 5){
+    if (_modelChangePassword.controlNewPassword.text.length >= 8){
       if (_modelChangePassword.controlNewPassword.text == _modelChangePassword.controlConfirmPassword.text){
         enableButton(true);
         _modelChangePassword.responseConfirm = null;
@@ -175,6 +177,9 @@ class _ChangePasswordState extends State<ChangePassword>
     });
   }
 
+  void changePasswordRequest(BuildContext context) {
+
+  }
 
   Future <void> changePassword() async {
     dialogLoading(context);
@@ -182,32 +187,40 @@ class _ChangePasswordState extends State<ChangePassword>
       final result = await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
         print('Internet connected');
-        var response = await PostRequest().changePassword(
-          mData.email,
-          _modelChangePassword.controlOldPassword.text,
-          _modelChangePassword.controlConfirmPassword.text);
-        if (response.statusCode == 200) {
-          showChangePasswordDialog(context);
-          // Future.delayed(Duration(seconds: 2), () {
-          //   Timer(Duration(milliseconds: 500), () => Navigator.pushAndRemoveUntil(
-          //     context,
-          //     MaterialPageRoute(builder: (context) => LoginPage()),
-          //     ModalRoute.withName('/'),
-          //   ));
-          // });
-        } 
-        else if (response.statusCode == 401){
-          Navigator.pop(context);
-          return showErrorDialog(context);
-        }
-        else if (response.statusCode >= 500 && response.statusCode <600){
-          Navigator.pop(context);
-          return showErrorServerDialog(context);
-        }
-        // else {
-        //   print('Login not Successful');
-        //   return _submit();
-        // }
+
+        StorageServices().read('token').then(
+          (value) async {
+            String _token = value;
+            if (_token != null) {
+              var response = await PostRequest().changePassword(
+              _modelChangePassword.controlOldPassword.text,
+              _modelChangePassword.controlConfirmPassword.text);
+              if (response.statusCode == 200) {
+                print('success');
+                showChangePasswordDialog(context);
+                
+                // Future.delayed(Duration(seconds: 2), () {
+                //   Timer(Duration(milliseconds: 500), () => Navigator.pushAndRemoveUntil(
+                //     context,
+                //     MaterialPageRoute(builder: (context) => LoginPage()),
+                //     ModalRoute.withName('/'),
+                //   ));
+                // });
+              } 
+              else if (response.statusCode == 401){
+                print('fail');
+                Navigator.pop(context);
+                return showErrorDialog(context);
+              }
+              else if (response.statusCode >= 500 && response.statusCode <600){
+                print('fail');
+                Navigator.pop(context);
+                return showErrorServerDialog(context);
+              }
+            }
+          },
+        );
+        
       }
     } on SocketException catch (_) {
       Navigator.pop(context);

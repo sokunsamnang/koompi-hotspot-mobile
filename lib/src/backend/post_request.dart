@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:koompi_hotspot/src/backend/component.dart';
+import 'package:koompi_hotspot/src/services/services.dart';
 import 'api_service.dart';
 
 class PostRequest with ChangeNotifier{
@@ -42,20 +43,35 @@ class PostRequest with ChangeNotifier{
   }
 
   /* Change password user account */
-  Future<http.Response> changePassword(String email, String oldPassword, String newPassword) async {
+  // Future<http.Response> changePassword(String email, String oldPassword, String newPassword) async {
+  //   _backend.bodyEncode = json.encode(/* Convert to Json Data ( String ) */
+  //     {
+  //       "email": email,
+  //       "old_password": oldPassword,
+  //       "new_password": newPassword,
+  //       }
+  //   );
+  //   _backend.response = await http.put('${ApiService.url}/reset-password/account', 
+  //   headers: _backend.conceteHeader(null, null), 
+  //   body: _backend.bodyEncode);
+  //   return _backend.response;
+  // }
+
+  Future<http.Response> changePassword(String oldPassword, String newPassword) async {
     _backend.bodyEncode = json.encode(/* Convert to Json Data ( String ) */
       {
-        "email": email,
         "old_password": oldPassword,
         "new_password": newPassword,
         }
     );
-    _backend.response = await http.put('${ApiService.url}/reset-password/account', 
-    headers: _backend.conceteHeader(null, null), 
+    _backend.response = await http.put('${ApiService.url}/change-password/account', 
+    headers: <String, String>{
+      "accept": "application/json",
+      "authorization": "Bearer " + "${StorageServices().read('token')}",
+    },
     body: _backend.bodyEncode);
     return _backend.response;
   }
-
 
   /*register account by email */
   Future<http.Response> signUpWithEmail(String email, String password) async {
@@ -121,6 +137,39 @@ class PostRequest with ChangeNotifier{
     });
 
     _backend.response = await http.put('${ApiService.url}/reset-password', 
+    headers: _backend.conceteHeader(null, null), 
+    body: _backend.bodyEncode);
+
+    print(_backend.response.body);
+    return _backend.response;
+  }
+
+  //Hotspot Plan
+
+  Future<http.Response> buyHotspotPlan(String username, String password, String value) async {
+    _backend.bodyEncode = json.encode({ /* Convert to Json String */
+        "username": username,
+        "password": password,
+        "simultaneous": "2",
+        "value": value,
+    });
+
+    _backend.response = await http.post('${ApiService.url}/hotspot/set-plan', 
+    headers: _backend.conceteHeader(null, null), 
+    body: _backend.bodyEncode);
+
+    print(_backend.response.body);
+    return _backend.response;
+  }
+
+  Future<http.Response> resetHotspotPlan(String username, String value) async {
+    _backend.bodyEncode = json.encode({ /* Convert to Json String */
+        "username": username,
+        "simultaneous": "2",
+        "value": value,
+    });
+
+    _backend.response = await http.put('${ApiService.url}/hotspot/reset-plan', 
     headers: _backend.conceteHeader(null, null), 
     body: _backend.bodyEncode);
 

@@ -10,7 +10,7 @@ import 'package:koompi_hotspot/src/services/services.dart';
 import 'package:line_icons/line_icons.dart';
 import 'change_password.dart';
 import 'speedtest.dart';
-import 'topup.dart';
+import '../home/topup/topup.dart';
 
 class MorePage extends StatefulWidget {
   @override
@@ -99,21 +99,21 @@ class _MorePageState extends State<MorePage>
                         );
                       },
                     ),
-                    _buildDivider(),
-                    ListTile(
-                      leading: Icon(
-                        FontAwesomeIcons.wifi,
-                        size: 20.0,
-                      ),
-                      title: Text("Speed Test"),
-                      trailing: Icon(LineIcons.angle_right),
-                      onTap: () async {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => Speedtest()),
-                        );
-                      },
-                    ),
+                    // _buildDivider(),
+                    // ListTile(
+                    //   leading: Icon(
+                    //     FontAwesomeIcons.wifi,
+                    //     size: 20.0,
+                    //   ),
+                    //   title: Text("Speed Test"),
+                    //   trailing: Icon(LineIcons.angle_right),
+                    //   onTap: () async {
+                    //     Navigator.push(
+                    //       context,
+                    //       MaterialPageRoute(builder: (context) => Speedtest()),
+                    //     );
+                    //   },
+                    // ),
                     _buildDivider(),
                     ListTile(
                       leading: Icon(LineIcons.sign_out),

@@ -2,7 +2,7 @@ import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:koompi_hotspot/src/screen/home/home_page/home_page.dart';
-import 'package:koompi_hotspot/src/screen/home/user_plan.dart';
+import 'package:koompi_hotspot/src/screen/home/hotspot/user_plan.dart';
 import 'package:koompi_hotspot/src/screen/option_page/more_page.dart';
 import 'package:koompi_hotspot/src/screen/osm/map.dart';
 import 'package:koompi_hotspot/src/services/network_status.dart';

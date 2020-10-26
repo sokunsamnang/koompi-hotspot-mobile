@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:koompi_hotspot/src/models/model_userdata.dart';
 import 'package:koompi_hotspot/src/screen/home/home_page/plan_view.dart';
-import 'package:koompi_hotspot/src/screen/option_page/topup.dart';
+import 'package:koompi_hotspot/src/screen/home/topup/topup.dart';
+import 'package:koompi_hotspot/src/screen/home/topup/transfer_credit.dart';
 
 Widget bodyPage(BuildContext context) {
   
@@ -34,8 +35,8 @@ Widget bodyPage(BuildContext context) {
         SizedBox(height: 20),
         Expanded(child: PlanView()),
       ],
-  ),
-);
+    ),
+  );
 }
 
 
@@ -188,7 +189,7 @@ Widget _balanceTokens(context) {
     return Scaffold(
       appBar: AppBar(
         titleSpacing: 25,
-        title: Text('Top Up', style: TextStyle(color: Colors.black),),
+        title: Text('Top Up/Transfer', style: TextStyle(color: Colors.black),),
         elevation: 0.0,
         automaticallyImplyLeading: false,
         backgroundColor: Colors.white,
@@ -268,9 +269,9 @@ Widget _balanceTokens(context) {
               child: ListTile(
                 onTap: () async {
                   Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (context) => null));
+                      MaterialPageRoute(builder: (context) => TransferCredit()));
                 },
-                title: Text('Top up for others',
+                title: Text('Transfer to a friend',
                   style: TextStyle(
                       color: Colors.black, fontWeight: FontWeight.w500),
                 ),

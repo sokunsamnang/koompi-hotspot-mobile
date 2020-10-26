@@ -50,6 +50,7 @@ class _ForgotPasswordVerificationState extends State<ForgotPasswordVerification>
     super.dispose();
   }
 
+
   Future<void> _submitOtp(String vCode) async {
     dialogLoading(context);
     var responseBody;
@@ -70,10 +71,33 @@ class _ForgotPasswordVerificationState extends State<ForgotPasswordVerification>
         if (response.statusCode == 200 && response.body != "Incorrect Code!") {
           print(response.body);
           Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => ResetNewPassword()));
+            context, MaterialPageRoute(builder: (context) => ResetNewPassword(widget.email)));
         } else {
           Navigator.pop(context);
           print(response.body);
+          return showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: Text('Error'),
+                content: SingleChildScrollView(
+                  child: ListBody(
+                    children: <Widget>[
+                      Text('${response.body}'),
+                    ],
+                  ),
+                ),
+                actions: <Widget>[
+                  FlatButton(
+                    child: Text('OK'),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              );
+            });
       }
     } catch (e) {
       alertText = responseBody['message'];
@@ -237,6 +261,7 @@ class _ForgotPasswordVerificationState extends State<ForgotPasswordVerification>
                           hasError = true;
                         });
                       } else {
+                        await _submitOtp(currentText);
                         // await _submitOtp(currentText);
                         // setState(() {
                         //   hasError = false;

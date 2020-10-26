@@ -30,6 +30,7 @@ class TopUp extends StatelessWidget {
                     style: TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.w500,
+                        fontFamily: 'Medium',
                         fontSize: 30.0),
                   )
                 ],
@@ -70,24 +71,44 @@ class TopUp extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: 40),
-                  Container(
+                  InkWell(
+                    child: Container(
+                      width: 150,
                       height: 50,
-                      margin: EdgeInsets.symmetric(horizontal: 50),
                       decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(50),
-                          color: Colors.blue),
-                      child: Center(
-                        child: Text(
-                          "Top-Up",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold),
+                        gradient: LinearGradient(
+                          colors: [Color(0xFF17ead9), Color(0xFF6078ea)]),
+                        borderRadius: BorderRadius.circular(30),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Color(0xFF6078ea).withOpacity(.3),
+                            offset: Offset(0.0, 8.0),
+                            blurRadius: 8.0)
+                        ]),
+                      child: Material(
+                        color: Colors.transparent,
+                        child: InkWell(
+                          highlightColor: Colors.transparent,
+                          splashColor: Colors.transparent,
+                          onTap: () async {
+
+                          },
+                          child: Center(
+                            child: Text("Top Up",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: "Poppins-Bold",
+                                    fontSize: 18,
+                                    letterSpacing: 3.0)),
+                            ),
+                          ),
                         ),
-                      ))
-                ],
-              ),
-            ))
+                      ),
+                    ),
+                  ],
+                ),
+              )
+            )
           ],
         ),
       ),

@@ -59,14 +59,14 @@ class _SplashState extends State<Splash> {
 
   @override
   Widget build(BuildContext context) {
-      return Scaffold(
-        backgroundColor: Colors.black,
-        body: Center(
-          child: FlareActor( 
-            'assets/animations/splash_screen.flr', 
-            animation: 'Splash_Loop',
-          ),
+    return Scaffold(
+      backgroundColor: Colors.black,
+      body: Center(
+        child: FlareActor( 
+          'assets/animations/splash_screen.flr', 
+          animation: 'Splash_Loop',
         ),
+      ),
     );
   }
 }

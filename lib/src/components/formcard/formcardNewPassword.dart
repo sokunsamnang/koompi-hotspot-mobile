@@ -5,9 +5,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 Widget formCardNewPassword(
   BuildContext context, 
   TextEditingController _passwordController, 
-  String _password,
+  TextEditingController _confirmPasswordController,
   bool _obscureText,
   Function _toggle,
+  bool _obscureText2,
+  Function _toggle2,
   Function _submit,
   GlobalKey<FormState> formKey, 
   bool _autoValidate) {
@@ -25,6 +27,7 @@ Widget formCardNewPassword(
     child: Padding(
       padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 16.0),
       child: Form(
+        key: formKey,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -33,8 +36,12 @@ Widget formCardNewPassword(
                       fontFamily: "Poppins-Medium",
                       fontSize: ScreenUtil().setSp(26))),
               TextFormField(
-                validator: (val) => val.length < 8 ? 'Password too short' : null,
-                onSaved: (val) => _password = val,
+                validator: (val) {
+                  if(val.length < 8) return 'Password too short';
+                  if(val != _confirmPasswordController.text) return 'Password not match';
+                  return null;
+                },
+                onSaved: (val) => _passwordController.text = val,
                 autovalidate: _autoValidate,
                 controller: _passwordController,
                 obscureText: _obscureText,
@@ -46,6 +53,34 @@ Widget formCardNewPassword(
                       },
                       child: Icon(
                         _obscureText ? Icons.visibility_off : Icons.visibility,
+                      ),
+                    ),
+                    hintText: "Password",
+                    hintStyle: TextStyle(color: Colors.grey, fontSize: 12.0)),
+              ),
+              SizedBox(height: 20),
+              Text("New Confirm Password",
+                  style: TextStyle(
+                      fontFamily: "Poppins-Medium",
+                      fontSize: ScreenUtil().setSp(26))),
+              TextFormField(
+                validator: (val) {
+                  if(val.length < 8) return 'Password too short';
+                  if(val != _passwordController.text) return 'Password not match';
+                  return null;
+                },
+                onSaved: (val) => _passwordController.text = val,
+                autovalidate: _autoValidate,
+                controller: _confirmPasswordController,
+                obscureText: _obscureText2,
+                keyboardType: TextInputType.visiblePassword,
+                decoration: InputDecoration(
+                    suffixIcon: GestureDetector(
+                      onTap: () {
+                        _toggle2();
+                      },
+                      child: Icon(
+                        _obscureText2 ? Icons.visibility_off : Icons.visibility,
                       ),
                     ),
                     hintText: "Password",

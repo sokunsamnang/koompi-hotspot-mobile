@@ -20,8 +20,9 @@ class CompleteInfo extends StatefulWidget {
 }
 
 class _CompleteInfoState extends State<CompleteInfo>{
-  final formKey = GlobalKey<FormState>();
+  final GlobalKey<FormBuilderState> formKey = GlobalKey<FormBuilderState>();
   bool _autoValidate = false;
+  String lastChoiceChipSelection = '';
 
   TextEditingController _usernameController = TextEditingController();
   TextEditingController _emailController;
@@ -161,9 +162,9 @@ class _CompleteInfoState extends State<CompleteInfo>{
       ),
       body: Container(
         height: MediaQuery.of(context).size.height * 2,
-        child: Form(
+        child: FormBuilder(
           key: formKey,
-          autovalidate: _autoValidate,
+          autovalidateMode: AutovalidateMode.always,
           child: SingleChildScrollView(
             physics: BouncingScrollPhysics(),
             child: Padding(
@@ -286,6 +287,7 @@ class _CompleteInfoState extends State<CompleteInfo>{
                     onSaved: (newValue) => _gender = newValue,
                     validators: [FormBuilderValidators.required()],
                     decoration: InputDecoration(
+                      border: InputBorder.none,
                       labelText: 'Gender',
                       labelStyle: TextStyle(color: Colors.black, fontSize: 20)
                     ),
@@ -299,16 +301,22 @@ class _CompleteInfoState extends State<CompleteInfo>{
                     alignment: WrapAlignment.spaceEvenly,
                     labelPadding: EdgeInsets.only(left: 30, right: 30),
                     attribute: "gender",
-                    options: [
-                      FormBuilderFieldOption(
-                        child: Text("Male"),
-                        value: "Male"
-                      ),
-                      FormBuilderFieldOption(
-                        child: Text("Female"),
-                        value: "Female"
-                      ),
+                   options: [
+                      FormBuilderFieldOption(value: 'Male'),
+                      FormBuilderFieldOption(value: 'Female'),
                     ],
+                    onChanged: (value) {
+                      if (value == null) {
+                        //* If chip unselected, set value to last selection
+                        formKey.currentState.fields['gender'].currentState
+                            .didChange(lastChoiceChipSelection);
+                      } else {
+                        //* If chip selected, save the value and rebuild
+                        setState(() {
+                          lastChoiceChipSelection = value;
+                        });
+                      }
+                    },
                   ),
                   SizedBox(height: 16.0),
                   Text('Location'),

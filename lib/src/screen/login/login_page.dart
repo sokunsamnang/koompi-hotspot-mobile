@@ -57,11 +57,12 @@ class _LoginPageState extends State<LoginPage> {
     passwordController.dispose();
   }
 
-  void _submit(){
+  void _submitLogin(){
     final form = formKey.currentState;
 
     if(form.validate()){
       form.save();
+      login();
     }
     else{
       setState(() {
@@ -72,7 +73,6 @@ class _LoginPageState extends State<LoginPage> {
 
   //check connection and login
   Future <void> login() async {
-    _submit();
     dialogLoading(context);
     try {
       final result = await InternetAddress.lookup('google.com');
@@ -142,7 +142,7 @@ class _LoginPageState extends State<LoginPage> {
             content: SingleChildScrollView(
               child: ListBody(
                 children: <Widget>[
-                  Text('Error Services'),
+                  Text('Error Services or Lost internet connection'),
                 ],
               ),
             ),
@@ -159,6 +159,9 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   showErrorDialog(BuildContext context) async {
+    var response = await PostRequest().userLogIn(
+          usernameController.text,
+          passwordController.text);
     return showDialog(
       context: context,
       barrierDismissible: false,
@@ -168,7 +171,7 @@ class _LoginPageState extends State<LoginPage> {
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Text('Login failed, Please enter the correct email or password'),
+                Text(response.body),
               ],
             ),
           ),
@@ -185,9 +188,6 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   showErrorServerDialog(BuildContext context) async {
-    var response = await PostRequest().userLogIn(
-          usernameController.text,
-          passwordController.text);
     return showDialog(
       context: context,
       barrierDismissible: false,
@@ -197,7 +197,7 @@ class _LoginPageState extends State<LoginPage> {
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Text('${response.body}'),
+                Text('Error server or Server in maintenance'),
               ],
             ),
           ),
@@ -223,21 +223,6 @@ class _LoginPageState extends State<LoginPage> {
       );
 
   
-  Widget networkCheck(){
-    return Container(
-          color: Colors.white,
-          child: Stack(
-            fit: StackFit.expand,
-            children: [
-              FlareActor(
-                'assets/lost_network.flr',
-                animation: 'no_network',
-                fit: BoxFit.contain,
-              ),
-            ],
-          )
-        );
-  }
   @override
   Widget build(BuildContext context) {
     ScreenUtil.instance = ScreenUtil.getInstance()..init(context);
@@ -314,7 +299,7 @@ class _LoginPageState extends State<LoginPage> {
                           splashColor: Colors.transparent,
                           onTap: () async {
                             
-                            login();
+                            _submitLogin();
                             // Navigator.pushReplacement(
                             //   context,
                             //   MaterialPageRoute(builder: (context) => Navbar()));

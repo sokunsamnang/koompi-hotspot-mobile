@@ -1,5 +1,6 @@
+import 'dart:convert';
 import 'dart:io';
-
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:koompi_hotspot/src/backend/post_request.dart';
 import 'package:koompi_hotspot/src/components/reuse_widget.dart';
@@ -7,13 +8,19 @@ import 'package:koompi_hotspot/src/screen/login/login_page.dart';
 import 'package:koompi_hotspot/src/screen/reset_new_password/reset_password_body.dart';
 
 class ResetNewPassword extends StatefulWidget {
+  final String email;
+
+  ResetNewPassword(this.email);
   _ResetNewPasswordState createState() => _ResetNewPasswordState();
 }
 
 class _ResetNewPasswordState extends State<ResetNewPassword> {
 
+  bool _isLoading = false;
+  String alertText;
   // Initially password is obscure
   bool _obscureText = true;
+  bool _obscureText2 = true;
 
   // Toggles the password show status
   void _toggle() {
@@ -22,46 +29,95 @@ class _ResetNewPasswordState extends State<ResetNewPassword> {
     });
   }
 
+  void _toggle2() {
+    setState(() {
+      _obscureText2 = !_obscureText2;
+    });
+  }
+
   final formKey = GlobalKey<FormState>();
   bool _autoValidate = false;
 
-  TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
-  String _password = "";
+  TextEditingController _confirmPasswordController = TextEditingController();
   
-  Future <void> _submit() async {
-    dialogLoading(context);
-    try {
-      final result = await InternetAddress.lookup('google.com');
-      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-        print('Internet connected');
-        var response = await PostRequest().resetPassword(
-          _emailController.text,
-          _passwordController.text);
-        if (response.statusCode == 200) {
-          Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(builder: (context) => LoginPage()),
-            ModalRoute.withName('/'),
-          );
-        } 
-        else if (response.statusCode == 401){
-          Navigator.pop(context);
-          return showErrorDialog(context);
-        }
-        else if (response.statusCode >= 500 && response.statusCode <600){
-          Navigator.pop(context);
-          return showErrorServerDialog(context);
-        }
-      }
-    } on SocketException catch (_) {
-      Navigator.pop(context);
-      print('not connected');
+
+  void _submit(){
+    final form = formKey.currentState;
+
+    if(form.validate()){
+      form.save();
+      _resetPassword();
     }
+    else{
+      setState(() {
+        _autoValidate = true;
+      });
+    }
+  }
+  
+  Future <void> _resetPassword() async {
+    dialogLoading(context);
+
+    var responseBody;
+    try {
+      String apiUrl = 'https://api-hotspot.koompi.org/api/reset-password';
+      setState(() {
+        _isLoading = true;
+      });
+      var response = await http.put(apiUrl,
+        headers: <String, String>{
+          "accept": "application/json",
+          "Content-Type": "application/json"
+        },
+        body: jsonEncode(<String, String>{
+          "email": widget.email,
+          "new_password": _confirmPasswordController.text,
+        }));
+      if (response.statusCode == 200) {
+        print(response.body);
+        await Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => LoginPage()));
+      } else {
+        Navigator.pop(context);
+        showErrorDialog(context);
+        print(response.body);
+      }
+    } catch (e) {
+      Navigator.pop(context);
+      alertText = responseBody['message'];
+    }
+    // try {
+    //   final result = await InternetAddress.lookup('google.com');
+    //   if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+    //     print('Internet connected');
+    //     var response = await PostRequest().resetPassword(
+    //       widget.email,
+    //       _passwordController.text);
+      //   if (response.statusCode == 200) {
+      //     Navigator.pushAndRemoveUntil(
+      //       context,
+      //       MaterialPageRoute(builder: (context) => LoginPage()),
+      //       ModalRoute.withName('/'),
+      //     );
+      //   } 
+      //   else if (response.statusCode == 401){
+      //     Navigator.pop(context);
+      //     return showErrorDialog(context);
+      //   }
+      //   else if (response.statusCode >= 500 && response.statusCode <600){
+      //     Navigator.pop(context);
+      //     return showErrorServerDialog(context);
+      //   }
+      // }
+    // } on SocketException catch (_) {
+    //   Navigator.pop(context);
+    //   print('not connected');
+    // }
   }
 
   showErrorServerDialog(BuildContext context) async {
-    var response = await PostRequest().forgotPasswordByEmail(_emailController.text);
+    var response = await PostRequest().forgotPasswordByEmail(widget.email);
     return showDialog(
       context: context,
       barrierDismissible: false,
@@ -88,7 +144,7 @@ class _ResetNewPasswordState extends State<ResetNewPassword> {
   }
 
   showErrorDialog(BuildContext context) async {
-    var response = await PostRequest().forgotPasswordByEmail(_emailController.text);
+    var response = await PostRequest().forgotPasswordByEmail(widget.email);
 
     return showDialog(
       context: context,
@@ -115,11 +171,23 @@ class _ResetNewPasswordState extends State<ResetNewPassword> {
       });
   }
 
+
+
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Container(
-        child: resetNewPasswordBody(context, _password, _passwordController, _obscureText, _toggle, _submit, formKey, _autoValidate)
+        child: resetNewPasswordBody(
+          context, 
+          _passwordController, 
+          _confirmPasswordController, 
+          _obscureText, 
+          _toggle, 
+          _obscureText2, 
+          _toggle2, 
+          _submit, 
+          formKey, 
+          _autoValidate)
       ),
     );
   }

@@ -22,7 +22,7 @@ class ValidateMixin {
   /* ----------User Sign Up Next Step---------- */
   String validatePassword(String value) {
     if (value.isEmpty) return 'Please fill password';
-    else if (value.length < 5) return 'Password less than 5 digit';
+    else if (value.length < 8) return 'Password less than 8 digit';
     return null;
   }
 

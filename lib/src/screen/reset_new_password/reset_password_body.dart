@@ -6,10 +6,12 @@ import 'package:koompi_hotspot/src/components/formcard/formcardNewPassword.dart'
   @override
   Widget resetNewPasswordBody(
     BuildContext context, 
-    String _password, 
     TextEditingController _passwordController, 
+    TextEditingController _confirmPasswordController,
     bool _obscureText,
     Function _toggle,
+    bool _obscureText2,
+    Function _toggle2,
     Function _submit,
     GlobalKey<FormState> formKey, 
     bool _autoValidate) {
@@ -52,22 +54,23 @@ import 'package:koompi_hotspot/src/components/formcard/formcardNewPassword.dart'
                           style: TextStyle(color: Colors.deepOrangeAccent[400], fontFamily: 'Medium', fontSize: 23),
                         ),
                       ),
-                      // Center(
-                      //   child: Text('we just need your registered email to send you password reset',
-                      //           textAlign: TextAlign.center,
-                      //           style: TextStyle(
-                      //             color: Colors.black,
-                      //             fontFamily: 'Medium',
-                      //             fontSize: 15,
-                      //     ),
-                      //   ),
-                      // ),
                     ],
                   ),
                   SizedBox(
                     height: ScreenUtil.getInstance().setHeight(50),
                   ),
-                  formCardNewPassword(context, _passwordController, _password, _obscureText, _toggle, _submit, formKey, _autoValidate),
+                  formCardNewPassword(
+                    context, 
+                    _passwordController, 
+                    _confirmPasswordController, 
+                    _obscureText, 
+                    _toggle, 
+                    _obscureText2, 
+                    _toggle2, 
+                    _submit, 
+                    formKey, 
+                    _autoValidate
+                  ),
                   SizedBox(height: ScreenUtil.getInstance().setHeight(60)),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,

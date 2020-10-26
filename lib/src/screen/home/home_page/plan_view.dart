@@ -1,17 +1,19 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_launcher_icons/xml_templates.dart';
 import 'package:koompi_hotspot/src/components/behavior.dart';
+import 'package:koompi_hotspot/src/screen/home/hotspot/edit_plan.dart';
 
 class PlanView extends StatelessWidget {
   
-  @override
-  Widget build(BuildContext context) {
-    return ScrollConfiguration(
-      behavior: MyBehavior(),
-      child: ListView(
+@override
+Widget build(BuildContext context) {
+  return ScrollConfiguration(
+    behavior: MyBehavior(),
+    child: ListView(
       children: <Widget>[
         CarouselSlider(
-          height: 180.0,
+          height: MediaQuery.of(context).copyWith().size.width / 2,
           enlargeCenterPage: true,
           aspectRatio: 16 / 9,
           enableInfiniteScroll: false,
@@ -19,7 +21,6 @@ class PlanView extends StatelessWidget {
           items: [
             Container(
               width: MediaQuery.of(context).copyWith().size.height / 2,
-              // margin: EdgeInsets.all(5.0),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20.0),
                 color: Colors.grey[900],
@@ -71,7 +72,7 @@ class PlanView extends StatelessWidget {
                     padding: EdgeInsets.all(20),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text(
                           'Device: 2 Devices',
@@ -81,13 +82,35 @@ class PlanView extends StatelessWidget {
                           ),
                         ),
                         SizedBox(height: 10),
-                        Text(
-                          'Expiration: 30 Days',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontFamily: 'Medium'
-                            ),
-                          ),
+                        
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Expiration: 30 Days',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontFamily: 'Medium'
+                                ),
+                              ),
+                              FlatButton(
+                                color: Colors.transparent,
+                                highlightColor: Colors.transparent,
+                                splashColor: Colors.transparent,
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => EditUserPlan(),
+                                    )
+                                  );
+                                },
+                                child: Text("Detail",
+                                  style: TextStyle(color: Colors.lightBlue)
+                                ),
+                              )
+                            ],
+                          )
                         ],
                       ),
                     ),
