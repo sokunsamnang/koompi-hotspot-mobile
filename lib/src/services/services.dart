@@ -41,7 +41,7 @@ class StorageServices{
         if (_token != null) {
           await GetRequest().getUserProfile(_token);
           Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => Navbar()));
+            context, MaterialPageRoute(builder: (context) => Navbar()));
         }
         else{
           StorageServices().clear('token');
@@ -93,6 +93,12 @@ class StorageServices{
     SharedPreferences pref = await SharedPreferences.getInstance();
     String value = pref.getString(key);
     return value;
+  }
+
+  static readToken() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String value = pref.getString('token');
+    print(value);
   }
 
 

@@ -220,7 +220,7 @@ class _CompleteInfoState extends State<CompleteInfo>{
                       hintText: 'Full Name',
                       border: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.black),
-                        borderRadius: BorderRadius.all(Radius.circular(30.0))
+                        borderRadius: BorderRadius.all(Radius.circular(12.0))
                       )
                     ),
                   ),
@@ -241,7 +241,7 @@ class _CompleteInfoState extends State<CompleteInfo>{
                   // ),
                   Card(
                     shape: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(30.0))
+                      borderRadius: BorderRadius.all(Radius.circular(12.0))
                     ),
                     child: ListTile(
                       title: Text(
@@ -297,9 +297,10 @@ class _CompleteInfoState extends State<CompleteInfo>{
                       fontFamily: "Medium"
                     ),
                     selectedColor: Colors.cyan,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
                     elevation: 2,
                     alignment: WrapAlignment.spaceEvenly,
-                    labelPadding: EdgeInsets.only(left: 30, right: 30),
+                    labelPadding: EdgeInsets.only(left: 35, right: 35),
                     attribute: "gender",
                    options: [
                       FormBuilderFieldOption(value: 'Male'),
@@ -336,8 +337,7 @@ class _CompleteInfoState extends State<CompleteInfo>{
       height: 50.0,
       child: OutlineButton(
         onPressed: () => changeIndex(index),
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
         splashColor: Colors.transparent,
         borderSide: BorderSide(
             color: _gender == index ? Colors.cyan : Colors.grey),
@@ -402,7 +402,7 @@ class _DateDropdown extends StatelessWidget {
         decoration: new InputDecoration(
           border: OutlineInputBorder(
             borderSide: BorderSide(color: Colors.black),
-            borderRadius: BorderRadius.all(Radius.circular(30.0))
+            borderRadius: BorderRadius.all(Radius.circular(12.0))
           ),
           hoverColor: Colors.black,
           labelText: labelText,
@@ -451,7 +451,7 @@ class _LocationDropdown extends StatelessWidget {
         decoration: new InputDecoration(
           border: OutlineInputBorder(
             borderSide: BorderSide(color: Colors.black),
-            borderRadius: BorderRadius.all(Radius.circular(30.0))
+            borderRadius: BorderRadius.all(Radius.circular(12.0))
           ),
           hoverColor: Colors.black,
           labelText: labelText,

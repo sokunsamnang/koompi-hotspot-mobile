@@ -206,7 +206,7 @@ class _UserPlanState extends State<UserPlan>
                       hintText: 'Username',
                       border: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.black),
-                        borderRadius: BorderRadius.all(Radius.circular(30.0))
+                        borderRadius: BorderRadius.all(Radius.circular(12.0))
                       )
                     ),
                   ),
@@ -221,7 +221,7 @@ class _UserPlanState extends State<UserPlan>
                       hintText: 'Password',
                       border: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.black),
-                        borderRadius: BorderRadius.all(Radius.circular(30.0))
+                        borderRadius: BorderRadius.all(Radius.circular(12.0))
                       ),
                     suffixIcon: GestureDetector(
                         onTap: () {
@@ -250,6 +250,7 @@ class _UserPlanState extends State<UserPlan>
                     ),
                     selectedColor: Colors.cyan,
                     elevation: 2,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
                     alignment: WrapAlignment.spaceEvenly,
                     labelPadding: EdgeInsets.only(left: 30, right: 30),
                     attribute: "planDate",

@@ -57,21 +57,22 @@ class PostRequest with ChangeNotifier{
   //   return _backend.response;
   // }
 
-  Future<http.Response> changePassword(String oldPassword, String newPassword) async {
-    _backend.bodyEncode = json.encode(/* Convert to Json Data ( String ) */
-      {
-        "old_password": oldPassword,
-        "new_password": newPassword,
-        }
-    );
-    _backend.response = await http.put('${ApiService.url}/change-password/account', 
-    headers: <String, String>{
-      "accept": "application/json",
-      "authorization": "Bearer " + "${StorageServices().read('token')}",
-    },
-    body: _backend.bodyEncode);
-    return _backend.response;
-  }
+  // Future<http.Response> changePassword(String oldPassword, String newPassword) async {
+  //   _backend.bodyEncode = json.encode(/* Convert to Json Data ( String ) */
+  //     {
+  //       "old_password": oldPassword,
+  //       "new_password": newPassword,
+  //       }
+  //   );
+  //   _backend.response = await http.put('${ApiService.url}/change-password/account', 
+  //   headers: <String, String>{
+  //     "accept": "application/json",
+  //     "content-type": "application/json",
+  //     "authorization": "Bearer " + "${StorageServices.readToken()}",
+  //   },
+  //   body: _backend.bodyEncode);
+  //   return _backend.response;
+  // }
 
   /*register account by email */
   Future<http.Response> signUpWithEmail(String email, String password) async {

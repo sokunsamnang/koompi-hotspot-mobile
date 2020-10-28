@@ -111,7 +111,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             ),
                             SizedBox(height: 15.0),
                             Text(
-                              'Write on me SOMETHING',
+                              'Koompi Wi-Fi hotspot is for accessable and affordable',
                               style: kSubtitleStyle,
                             ),
                           ],
@@ -138,7 +138,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             ),
                             SizedBox(height: 15.0),
                             Text(
-                              'Write on me SOMETHING',
+                              'For everyone for koompi school partner',
                               style: kSubtitleStyle,
                             ),
                           ],
@@ -165,7 +165,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             ),
                             SizedBox(height: 15.0),
                             Text(
-                              'Write on me SOMETHING',
+                              'We all are connected by the internet, like neurons in a giant brain',
                               style: kSubtitleStyle,
                             ),
                           ],

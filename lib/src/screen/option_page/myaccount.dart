@@ -264,7 +264,7 @@ class _MyAccountState extends State<MyAccount>
                       // ),
                       border: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.black),
-                        borderRadius: BorderRadius.all(Radius.circular(30.0)
+                        borderRadius: BorderRadius.all(Radius.circular(12.0)
                         ),
                       )
                     ),
@@ -274,7 +274,7 @@ class _MyAccountState extends State<MyAccount>
                   SizedBox(height: 10.0),
                   Card(
                     shape: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(30.0))
+                      borderRadius: BorderRadius.all(Radius.circular(12.0))
                     ),
                     child: ListTile(
                       title: Text(
@@ -319,7 +319,7 @@ class _MyAccountState extends State<MyAccount>
       child: OutlineButton(
         onPressed: () => changeIndex(index),
         shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
         splashColor: Colors.transparent,
         borderSide: BorderSide(
             color: gender == index ? Colors.cyan : Colors.grey),
@@ -385,7 +385,7 @@ class _DateDropdown extends StatelessWidget {
         decoration: new InputDecoration(
           border: OutlineInputBorder(
             borderSide: BorderSide(color: Colors.black),
-            borderRadius: BorderRadius.all(Radius.circular(30.0))
+            borderRadius: BorderRadius.all(Radius.circular(12.0))
           ),
           hoverColor: Colors.black,
           labelText: labelText,
@@ -434,7 +434,7 @@ class _LocationDropdown extends StatelessWidget {
         decoration: new InputDecoration(
           border: OutlineInputBorder(
             borderSide: BorderSide(color: Colors.black),
-            borderRadius: BorderRadius.all(Radius.circular(30.0))
+            borderRadius: BorderRadius.all(Radius.circular(12.0))
           ),
           hoverColor: Colors.black,
           labelText: labelText,

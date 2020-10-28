@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:koompi_hotspot/src/backend/post_request.dart';
@@ -8,6 +9,8 @@ import 'package:koompi_hotspot/src/models/model_change_password.dart';
 import 'package:koompi_hotspot/src/models/model_userdata.dart';
 import 'package:koompi_hotspot/src/screen/login/login_page.dart';
 import 'package:koompi_hotspot/src/services/services.dart';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ChangePassword extends StatefulWidget {
   @override
@@ -17,7 +20,6 @@ class ChangePassword extends StatefulWidget {
 class _ChangePasswordState extends State<ChangePassword>
     with SingleTickerProviderStateMixin {
 
-  String _token;
   String messageAlert;
   bool enable = false;
   ModelChangePassword _modelChangePassword = ModelChangePassword();
@@ -52,7 +54,7 @@ class _ChangePasswordState extends State<ChangePassword>
     } else if (_modelChangePassword.nodeNewPassword.hasFocus){
       FocusScope.of(context).requestFocus(_modelChangePassword.nodeConfirmPassword);
     } else {
-      if (_modelChangePassword.enable == true) changePassword();
+      if (_modelChangePassword.enable == true) _resetPassword();
     }
   }
 
@@ -177,57 +179,68 @@ class _ChangePasswordState extends State<ChangePassword>
     });
   }
 
-  void changePasswordRequest(BuildContext context) {
+  String alertText;
+  bool _isLoading = false;
 
-  }
-
-  Future <void> changePassword() async {
+  Future <void> _resetPassword() async {
     dialogLoading(context);
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String _token = pref.getString('token');
+    print(_token);
+    var responseBody;
     try {
-      final result = await InternetAddress.lookup('google.com');
-      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-        print('Internet connected');
-
-        StorageServices().read('token').then(
-          (value) async {
-            String _token = value;
-            if (_token != null) {
-              var response = await PostRequest().changePassword(
-              _modelChangePassword.controlOldPassword.text,
-              _modelChangePassword.controlConfirmPassword.text);
-              if (response.statusCode == 200) {
-                print('success');
-                showChangePasswordDialog(context);
-                
-                // Future.delayed(Duration(seconds: 2), () {
-                //   Timer(Duration(milliseconds: 500), () => Navigator.pushAndRemoveUntil(
-                //     context,
-                //     MaterialPageRoute(builder: (context) => LoginPage()),
-                //     ModalRoute.withName('/'),
-                //   ));
-                // });
-              } 
-              else if (response.statusCode == 401){
-                print('fail');
-                Navigator.pop(context);
-                return showErrorDialog(context);
-              }
-              else if (response.statusCode >= 500 && response.statusCode <600){
-                print('fail');
-                Navigator.pop(context);
-                return showErrorServerDialog(context);
-              }
-            }
-          },
-        );
-        
+      String apiUrl = 'https://api-hotspot.koompi.org/api/change-password/account';
+      setState(() {
+        _isLoading = true;
+      });
+      var response = await http.put(apiUrl,
+        headers: <String, String>{
+          "accept": "application/json",
+          "content-type": "application/json",
+          "authorization": "Bearer " + _token,
+        },
+        body: jsonEncode(<String, String>{
+          "old_password": _modelChangePassword.controlOldPassword.text,
+          "new_password": _modelChangePassword.controlConfirmPassword.text,
+        }));
+      if (response.statusCode == 200) {
+        print(response.body);
+        Navigator.pop(context);
+        showChangePasswordDialog(context);
+        StorageServices().clear('token');
+      } else {
+        Navigator.pop(context);
+        print(response.body);
+        return showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text('Error'),
+              content: SingleChildScrollView(
+                child: ListBody(
+                  children: <Widget>[
+                    Text(response.body),
+                  ],
+                ),
+              ),
+              actions: <Widget>[
+                FlatButton(
+                  child: Text('OK'),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            );
+          });
       }
-    } on SocketException catch (_) {
+    } catch (e) {
       Navigator.pop(context);
-      print('not connected');
-      errorDialog(context);
+      alertText = responseBody['message'];
     }
   }
+
 
 showChangePasswordDialog(context) async {
   return showDialog(
@@ -253,7 +266,6 @@ showChangePasswordDialog(context) async {
                 child: Text('OK'),
                 onPressed: () async {
                   dialogLoading(context);
-                  StorageServices().clearPref();
                   Future.delayed(Duration(seconds: 2), () {
                     Timer(Duration(milliseconds: 500), () => Navigator.pushAndRemoveUntil(
                       context,
@@ -269,83 +281,83 @@ showChangePasswordDialog(context) async {
       });
 }
 
-  errorDialog(BuildContext context) async {
-    return showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text('Error'),
-            content: SingleChildScrollView(
-              child: ListBody(
-                children: <Widget>[
-                  Text('Error Services'),
-                ],
-              ),
-            ),
-            actions: <Widget>[
-              FlatButton(
-                child: Text('OK'),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
-          );
-        });
-  }
+  // errorDialog(BuildContext context) async {
+  //   return showDialog(
+  //       context: context,
+  //       barrierDismissible: false,
+  //       builder: (BuildContext context) {
+  //         return AlertDialog(
+  //           title: Text('Error'),
+  //           content: SingleChildScrollView(
+  //             child: ListBody(
+  //               children: <Widget>[
+  //                 Text('Error Services'),
+  //               ],
+  //             ),
+  //           ),
+  //           actions: <Widget>[
+  //             FlatButton(
+  //               child: Text('OK'),
+  //               onPressed: () {
+  //                 Navigator.of(context).pop();
+  //               },
+  //             ),
+  //           ],
+  //         );
+  //       });
+  // }
 
-  showErrorDialog(BuildContext context) async {
-    return showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Error'),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: <Widget>[
-                Text('Your old password was entered incorrectly, Please enter it again'),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            FlatButton(
-              child: Text('OK'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      });
-  }
+  // showErrorDialog(BuildContext context) async {
+  //   return showDialog(
+  //     context: context,
+  //     barrierDismissible: false,
+  //     builder: (BuildContext context) {
+  //       return AlertDialog(
+  //         title: Text('Error'),
+  //         content: SingleChildScrollView(
+  //           child: ListBody(
+  //             children: <Widget>[
+  //               Text('Your old password was entered incorrectly, Please enter it again'),
+  //             ],
+  //           ),
+  //         ),
+  //         actions: <Widget>[
+  //           FlatButton(
+  //             child: Text('OK'),
+  //             onPressed: () {
+  //               Navigator.of(context).pop();
+  //             },
+  //           ),
+  //         ],
+  //       );
+  //     });
+  // }
 
-  showErrorServerDialog(BuildContext context) async {
-    return showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Error'),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: <Widget>[
-                Text('Server May Maintenance'),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            FlatButton(
-              child: Text('OK'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      });
-  }
+  // showErrorServerDialog(BuildContext context) async {
+  //   return showDialog(
+  //     context: context,
+  //     barrierDismissible: false,
+  //     builder: (BuildContext context) {
+  //       return AlertDialog(
+  //         title: Text('Error'),
+  //         content: SingleChildScrollView(
+  //           child: ListBody(
+  //             children: <Widget>[
+  //               Text('Server May Maintenance'),
+  //             ],
+  //           ),
+  //         ),
+  //         actions: <Widget>[
+  //           FlatButton(
+  //             child: Text('OK'),
+  //             onPressed: () {
+  //               Navigator.of(context).pop();
+  //             },
+  //           ),
+  //         ],
+  //       );
+  //     });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -376,7 +388,7 @@ showChangePasswordDialog(context) async {
                   color: _modelChangePassword.enable == true ? Colors.blueAccent : Colors.grey
                 ),
                 onPressed: () async {
-                  _modelChangePassword.enable == false ? null : changePassword();
+                  _modelChangePassword.enable == false ? null : _resetPassword();
                 },
               ),
             ),
@@ -414,7 +426,7 @@ showChangePasswordDialog(context) async {
                           hintText: 'Current Password',
                           border: OutlineInputBorder(
                             borderSide: BorderSide(color: Colors.black),
-                            borderRadius: BorderRadius.all(Radius.circular(30.0))
+                            borderRadius: BorderRadius.all(Radius.circular(12.0))
                           )
                         ),
                         
@@ -439,7 +451,7 @@ showChangePasswordDialog(context) async {
                           hintText: 'New Password',
                           border: OutlineInputBorder(
                             borderSide: BorderSide(color: Colors.black),
-                            borderRadius: BorderRadius.all(Radius.circular(30.0))
+                            borderRadius: BorderRadius.all(Radius.circular(12.0))
                           )
                         ),
                       ),
@@ -463,7 +475,7 @@ showChangePasswordDialog(context) async {
                           hintText: 'Confirm New Password',
                           border: OutlineInputBorder(
                             borderSide: BorderSide(color: Colors.black),
-                            borderRadius: BorderRadius.all(Radius.circular(30.0))
+                            borderRadius: BorderRadius.all(Radius.circular(12.0))
                       )
                     ),
                   ),
