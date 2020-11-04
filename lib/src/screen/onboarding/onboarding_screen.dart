@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:koompi_hotspot/src/screen/login/login_page.dart';
 import 'package:koompi_hotspot/src/screen/onboarding/styles.dart';
 
@@ -14,6 +13,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   final int _numPages = 3;
   final PageController _pageController = PageController(initialPage: 0);
   int _currentPage = 0;
+
   List<Widget> _buildPageIndicator() {
     List<Widget> list = [];
     for (int i = 0; i < _numPages; i++) {
@@ -37,9 +37,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    ScreenUtil.instance = ScreenUtil.getInstance()..init(context);
-    ScreenUtil.instance =
-        ScreenUtil(width: 750, height: 1334, allowFontScaling: true);
     return Scaffold(
       body: AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle.light,
@@ -58,17 +55,16 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             ),
           ),
           child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 10.0),
+            padding: EdgeInsets.symmetric(vertical: 40.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
                 Container(
                   alignment: Alignment.centerRight,
-                  padding: EdgeInsets.only(top: 10.0),
                   child: FlatButton(
                     onPressed: () => {
                       Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(builder: (context) => LoginPage()))
+                          MaterialPageRoute(builder: (context) => LoginPage()))
                     },
                     child: Text(
                       'Skip',
@@ -80,7 +76,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   ),
                 ),
                 Container(
-                  height: 570.0,
+                  height: 600.0,
                   child: PageView(
                     physics: ClampingScrollPhysics(),
                     controller: _pageController,
@@ -143,7 +139,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             ),
                           ],
                         ),
-                        
                       ),
                       Padding(
                         padding: EdgeInsets.all(40.0),
@@ -175,47 +170,43 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     ],
                   ),
                 ),
-                Expanded(child: Container()),
-                // SizedBox(height: ScreenUtil.getInstance().setHeight(40)),
-                Expanded(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: _buildPageIndicator(),
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: _buildPageIndicator(),
                 ),
                 _currentPage != _numPages - 1
                     ? Expanded(
-                        child: Align(
-                          alignment: FractionalOffset.bottomRight,
-                          child: FlatButton(
-                            onPressed: () {
-                              _pageController.nextPage(
-                                duration: Duration(milliseconds: 500),
-                                curve: Curves.ease,
-                              );
-                            },
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              mainAxisSize: MainAxisSize.min,
-                              children: <Widget>[
-                                Text(
-                                  'Next',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 22.0,
-                                  ),
-                                ),
-                                SizedBox(width: 10.0),
-                                Icon(
-                                  Icons.arrow_forward,
-                                  color: Colors.white,
-                                  size: 30.0,
-                                ),
-                              ],
+                  child: Align(
+                    alignment: FractionalOffset.bottomRight,
+                    child: FlatButton(
+                      onPressed: () {
+                        _pageController.nextPage(
+                          duration: Duration(milliseconds: 500),
+                          curve: Curves.ease,
+                        );
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          Text(
+                            'Next',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 22.0,
                             ),
                           ),
-                        ),
-                      )
+                          SizedBox(width: 10.0),
+                          Icon(
+                            Icons.arrow_forward,
+                            color: Colors.white,
+                            size: 30.0,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                )
                     : Text(''),
               ],
             ),
@@ -224,29 +215,29 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       ),
       bottomSheet: _currentPage == _numPages - 1
           ? Container(
-              height: 65.0,
-              width: double.infinity,
-              color: Colors.white,
-              child: GestureDetector(
-                onTap: () => {
-                  Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (context) => LoginPage()))
-                  },
-                child: Center(
-                  child: Padding(
-                    padding: EdgeInsets.only(bottom: 5.0),
-                    child: Text(
-                      'Get started',
-                      style: TextStyle(
-                        color: Color(0xFF5B16D0),
-                        fontSize: 23.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
+        height: 100.0,
+        width: double.infinity,
+        color: Colors.white,
+        child: GestureDetector(
+          onTap: () => {
+            Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (context) => LoginPage()))
+          },
+          child: Center(
+            child: Padding(
+              padding: EdgeInsets.only(bottom: 30.0),
+              child: Text(
+                'Get started',
+                style: TextStyle(
+                  color: Color(0xFF5B16D0),
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
-            )
+            ),
+          ),
+        ),
+      )
           : Text(''),
     );
   }
