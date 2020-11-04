@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:koompi_hotspot/src/backend/component.dart';
-import 'package:koompi_hotspot/src/services/services.dart';
 import 'api_service.dart';
 
 class PostRequest with ChangeNotifier{

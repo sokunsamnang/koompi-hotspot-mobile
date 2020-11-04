@@ -1,14 +1,13 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:io';
-
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:koompi_hotspot/index.dart';
 import 'package:koompi_hotspot/src/backend/post_request.dart';
-import 'package:koompi_hotspot/src/components/navbar.dart';
 import 'package:koompi_hotspot/src/components/reuse_widget.dart';
 import 'package:koompi_hotspot/src/screen/home/hotspot/buy_plan_complete.dart';
+import 'package:line_icons/line_icons.dart';
 
 class UserPlan extends StatefulWidget {
   @override
@@ -182,138 +181,146 @@ class _UserPlanState extends State<UserPlan>
         backgroundColor: Colors.white,
         title: Text('Buy Hotspot Plan', style: TextStyle(color: Colors.black)),
       ),
-      body: FormBuilder(
-        key: formKey,
-        autovalidateMode: AutovalidateMode.always,
-        // autovalidate: _autoValidate,
-        child: Container(
-        height: MediaQuery.of(context).size.height * 2,
-        child: SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
-            child: Padding(
-              padding: EdgeInsets.only(left: 28.0, right: 28.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  SizedBox(height: 16.0),
-                  Text('Wifi Hotspot Username'),
-                  SizedBox(height: 10.0),
-                  TextFormField(
-                    controller: usernameController,
-                    validator: (val) => val.length < 3 ? 'Username is required' : null,
-                    onSaved: (val) => usernameController.text = val,
-                    decoration: InputDecoration(
-                      hintText: 'Username',
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.black),
-                        borderRadius: BorderRadius.all(Radius.circular(12.0))
-                      )
-                    ),
-                  ),
-                  SizedBox(height: 16.0),
-                  Text('Wifi Hotspot Password'),
-                  SizedBox(height: 10.0),
-                  TextFormField(
-                    controller: passwordController,
-                    validator: (val) => val.length < 8 ? 'Password is required more than 8 digits' : null,
-                    onSaved: (val) => passwordController.text = val,
-                    decoration: InputDecoration(
-                      hintText: 'Password',
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.black),
-                        borderRadius: BorderRadius.all(Radius.circular(12.0))
+      body: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: () {
+          FocusScope.of(context).requestFocus(FocusNode());
+        },
+        child: FormBuilder(
+          key: formKey,
+          autovalidateMode: AutovalidateMode.always,
+          // autovalidate: _autoValidate,
+          child: Container(
+          height: MediaQuery.of(context).size.height * 2,
+          child: SingleChildScrollView(
+            physics: BouncingScrollPhysics(),
+              child: Padding(
+                padding: EdgeInsets.only(left: 28.0, right: 28.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    SizedBox(height: 16.0),
+                    Text('Wifi Hotspot Username'),
+                    SizedBox(height: 10.0),
+                    TextFormField(
+                      controller: usernameController,
+                      validator: (val) => val.length < 3 ? 'Username is required' : null,
+                      onSaved: (val) => usernameController.text = val,
+                      decoration: InputDecoration(
+                        hintText: 'Username',
+                        prefixIcon: Icon(Icons.people_outline),
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.black),
+                          borderRadius: BorderRadius.all(Radius.circular(12.0))
+                        )
                       ),
-                    suffixIcon: GestureDetector(
-                        onTap: () {
-                          _toggle();
-                        },
-                        child: Icon(
-                          _obscureText ? Icons.visibility_off : Icons.visibility,
+                    ),
+                    SizedBox(height: 16.0),
+                    Text('Wifi Hotspot Password'),
+                    SizedBox(height: 10.0),
+                    TextFormField(
+                      controller: passwordController,
+                      validator: (val) => val.length < 8 ? 'Password is required more than 8 digits' : null,
+                      onSaved: (val) => passwordController.text = val,
+                      decoration: InputDecoration(
+                        hintText: 'Password',
+                        prefixIcon: Icon(LineIcons.lock),
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.black),
+                          borderRadius: BorderRadius.all(Radius.circular(12.0))
+                        ),
+                      suffixIcon: GestureDetector(
+                          onTap: () {
+                            _toggle();
+                          },
+                          child: Icon(
+                            _obscureText ? Icons.visibility_off : Icons.visibility,
+                          ),
                         ),
                       ),
+                      obscureText: _obscureText,
                     ),
-                    obscureText: _obscureText,
-                  ),
-                  SizedBox(height: 16.0),
-                  FormBuilderChoiceChip(
-                    onSaved: (newValue) => selectedPlanIndex = newValue,
-                    validators: [FormBuilderValidators.required()],
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      labelText: 'Plan Date:',
-                      labelStyle: TextStyle(color: Colors.black, fontSize: 20)
+                    SizedBox(height: 16.0),
+                    FormBuilderChoiceChip(
+                      onSaved: (newValue) => selectedPlanIndex = newValue,
+                      validators: [FormBuilderValidators.required()],
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        labelText: 'Plan Date:',
+                        labelStyle: TextStyle(color: Colors.black, fontSize: 20)
+                      ),
+                      labelStyle: TextStyle(
+                        color: Colors.black,
+                        fontSize: 18,
+                        fontFamily: "Medium"
+                      ),
+                      selectedColor: Colors.cyan,
+                      elevation: 2,
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+                      alignment: WrapAlignment.spaceEvenly,
+                      labelPadding: EdgeInsets.only(left: 30, right: 30),
+                      attribute: "planDate",
+                      options: [
+                        FormBuilderFieldOption(value: '30 Days'),
+                        FormBuilderFieldOption(value: '365 Days'),
+                      ],
+                      onChanged: (value) {
+                        if (value == null) {
+                          //* If chip unselected, set value to last selection
+                          formKey.currentState.fields['planDate'].currentState
+                              .didChange(lastChoiceChipSelection);
+                        } else {
+                          //* If chip selected, save the value and rebuild
+                          setState(() {
+                            lastChoiceChipSelection = value;
+                          });
+                        }
+                      },
                     ),
-                    labelStyle: TextStyle(
-                      color: Colors.black,
-                      fontSize: 18,
-                      fontFamily: "Medium"
-                    ),
-                    selectedColor: Colors.cyan,
-                    elevation: 2,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
-                    alignment: WrapAlignment.spaceEvenly,
-                    labelPadding: EdgeInsets.only(left: 30, right: 30),
-                    attribute: "planDate",
-                    options: [
-                      FormBuilderFieldOption(value: '30 Days'),
-                      FormBuilderFieldOption(value: '365 Days'),
-                    ],
-                    onChanged: (value) {
-                      if (value == null) {
-                        //* If chip unselected, set value to last selection
-                        formKey.currentState.fields['planDate'].currentState
-                            .didChange(lastChoiceChipSelection);
-                      } else {
-                        //* If chip selected, save the value and rebuild
-                        setState(() {
-                          lastChoiceChipSelection = value;
-                        });
-                      }
-                    },
-                  ),
-                  SizedBox(height: 50.0),
-                  Center(
-                    child: InkWell(
-                      child: Container(
-                        width: 150,
-                        height: 50,
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [Color(0xFF17ead9), Color(0xFF6078ea)]),
-                          borderRadius: BorderRadius.circular(30),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Color(0xFF6078ea).withOpacity(.3),
-                              offset: Offset(0.0, 8.0),
-                              blurRadius: 8.0)
-                          ]),
-                        child: Material(
-                          color: Colors.transparent,
-                          child: InkWell(
-                            highlightColor: Colors.transparent,
-                            splashColor: Colors.transparent,
-                            onTap: () async {
-                              _submitValidate(context);
-                            },
-                            child: Center(
-                              child: Text("SUBMIT",
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontFamily: "Poppins-Bold",
-                                      fontSize: 18,
-                                      letterSpacing: 1.0)),
+                    SizedBox(height: 50.0),
+                    Center(
+                      child: InkWell(
+                        child: Container(
+                          width: 150,
+                          height: 50,
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              colors: [Color(0xFF17ead9), Color(0xFF6078ea)]),
+                            borderRadius: BorderRadius.circular(30),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Color(0xFF6078ea).withOpacity(.3),
+                                offset: Offset(0.0, 8.0),
+                                blurRadius: 8.0)
+                            ]),
+                          child: Material(
+                            color: Colors.transparent,
+                            child: InkWell(
+                              highlightColor: Colors.transparent,
+                              splashColor: Colors.transparent,
+                              onTap: () async {
+                                _submitValidate(context);
+                              },
+                              child: Center(
+                                child: Text("SUBMIT",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontFamily: "Poppins-Bold",
+                                        fontSize: 18,
+                                        letterSpacing: 1.0)),
+                              ),
                             ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
         ),
-      ),
+      )
     );
   }
 

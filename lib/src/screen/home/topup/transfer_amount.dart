@@ -127,7 +127,7 @@ class _ConfrimTransferAmountState extends State<ConfrimTransferAmount> {
           decoration: InputDecoration(
             hintText: 'Enter Amount',
             border: OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(30.0))
+              borderRadius: BorderRadius.all(Radius.circular(12.0))
             )
           ),
         ),

@@ -36,7 +36,7 @@ dependencies:
   flutter_polyline_points: ^0.1.0
   flutter_screenutil: ^0.4.2
   flutter_typeahead: ^1.8.8
-  font_awesome_flutter: ^8.8.1
+  font_awesome_flutter: ^8.10.0
   geolocator: ^5.1.5
   google_fonts: ^1.1.0
   google_nav_bar: ^2.0.0

@@ -143,6 +143,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             ),
                           ],
                         ),
+                        
                       ),
                       Padding(
                         padding: EdgeInsets.all(40.0),
@@ -174,10 +175,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     ],
                   ),
                 ),
-                //SizedBox(height: ScreenUtil.getInstance().setHeight(5)),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: _buildPageIndicator(),
+                Expanded(child: Container()),
+                // SizedBox(height: ScreenUtil.getInstance().setHeight(40)),
+                Expanded(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: _buildPageIndicator(),
+                  ),
                 ),
                 _currentPage != _numPages - 1
                     ? Expanded(

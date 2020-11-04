@@ -95,13 +95,6 @@ class StorageServices{
     return value;
   }
 
-  static readToken() async {
-    SharedPreferences pref = await SharedPreferences.getInstance();
-    String value = pref.getString('token');
-    print(value);
-  }
-
-
   saveString(String key, String value) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     pref.setString(key, value);

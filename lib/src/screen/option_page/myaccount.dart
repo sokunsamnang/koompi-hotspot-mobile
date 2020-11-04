@@ -9,6 +9,7 @@ import 'package:koompi_hotspot/src/components/reuse_widget.dart';
 import 'package:koompi_hotspot/src/models/model_location.dart';
 import 'package:koompi_hotspot/src/models/model_userdata.dart';
 import 'package:koompi_hotspot/src/services/services.dart';
+import 'package:line_icons/line_icons.dart';
 
 class MyAccount extends StatefulWidget {
   @override
@@ -201,110 +202,120 @@ class _MyAccountState extends State<MyAccount>
           ),
         ],
       ),
-      body: Container(
-        height: MediaQuery.of(context).size.height * 2,
-        child: Form(
-          key: formKey,
-          autovalidate: _autoValidate,
-          child: SingleChildScrollView(
-            physics: BouncingScrollPhysics(),
-            child: Padding(
-              padding: EdgeInsets.only(left: 28.0, right: 28.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  SizedBox(
-                    height: 10.0,
-                  ),
-                  Align(
-                    alignment: Alignment.center,
-                    child: CircleAvatar(
-                      radius: 50.0,
-                      backgroundColor: const Color(0xff476cfb),
-                      child: ClipOval(
-                        child: SizedBox(
-                          width: 100.0,
-                          height: 100.0,
-                          child: (_image != null)
-                              ? Image.file(
-                                  _image,
-                                  fit: BoxFit.cover,
-                                )
-                              : CircleAvatar(
-                                  backgroundImage: AssetImage('assets/images/avatar.png'),
+      body: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: () {
+          FocusScope.of(context).requestFocus(FocusNode());
+        },
+        child: Container(
+          height: MediaQuery.of(context).size.height * 2,
+          child: Form(
+            key: formKey,
+            autovalidate: _autoValidate,
+            child: SingleChildScrollView(
+              physics: BouncingScrollPhysics(),
+              child: Padding(
+                padding: EdgeInsets.only(left: 28.0, right: 28.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    SizedBox(
+                      height: 10.0,
+                    ),
+                    Align(
+                      alignment: Alignment.center,
+                      child: CircleAvatar(
+                        radius: 50.0,
+                        backgroundColor: const Color(0xff476cfb),
+                        child: ClipOval(
+                          child: SizedBox(
+                            width: 100.0,
+                            height: 100.0,
+                            child: (_image != null)
+                                ? Image.file(
+                                    _image,
+                                    fit: BoxFit.cover,
+                                  )
+                                : CircleAvatar(
+                                    backgroundImage: AssetImage('assets/images/avatar.png'),
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                  Center(
-                    child: FlatButton(
-                      colorBrightness: Brightness.dark,
-                      child: Text('Edit Profile Photo',
-                          style: TextStyle(
-                              color: Colors.blue,
-                              fontSize: 20.0,
-                              fontFamily: 'Medium')
-                            ),
-                      onPressed: () => getImage(),
+                    Center(
+                      child: FlatButton(
+                        colorBrightness: Brightness.dark,
+                        child: Text('Edit Profile Photo',
+                            style: TextStyle(
+                                color: Colors.blue,
+                                fontSize: 20.0,
+                                fontFamily: 'Medium')
+                              ),
+                        onPressed: () => getImage(),
+                      ),
                     ),
-                  ),
-                  SizedBox(height: 16.0),
-                  Text('Full Name'),
-                  SizedBox(height: 10.0),
-                  TextFormField(
-                    validator: (val) => val.length < 3 ? 'Full Name is required' : null,
-                    onSaved: (val) => fullnameController.text = val,
-                    autovalidate: true,
-                    controller: fullnameController ?? '',
-                    decoration: InputDecoration(
-                      hintText: 'Full Name',
-                      // focusedBorder: OutlineInputBorder(
-                      //   borderSide: BorderSide(color: Colors.black, width: 2),
-                      // ),
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.black),
-                        borderRadius: BorderRadius.all(Radius.circular(12.0)
+                    SizedBox(height: 16.0),
+                    Text('Full Name'),
+                    SizedBox(height: 10.0),
+                    TextFormField(
+                      validator: (val) => val.length < 3 ? 'Full Name is required' : null,
+                      onSaved: (val) => fullnameController.text = val,
+                      autovalidate: true,
+                      controller: fullnameController ?? '',
+                      decoration: InputDecoration(
+                        prefixIcon: Icon(LineIcons.user),
+                        hintText: 'Full Name',
+                        // focusedBorder: OutlineInputBorder(
+                        //   borderSide: BorderSide(color: Colors.black, width: 2),
+                        // ),
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.black),
+                          borderRadius: BorderRadius.all(Radius.circular(12.0)
+                          ),
+                        )
+                      ),
+                    ),
+                    SizedBox(height: 16.0),
+                    Text('Email'),
+                    SizedBox(height: 10.0),
+                    TextFormField(
+                      readOnly: true,
+                      controller: emailController ?? '',
+                      decoration: InputDecoration(
+                        prefixIcon: Icon(Icons.alternate_email_outlined),
+                        hintText: 'Email',
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.black),
+                          borderRadius: BorderRadius.all(Radius.circular(12.0)
+                          ),
+                        )
+                      ),
+                    ),
+                    SizedBox(height: 16.0),
+                    Text('Date Of Birth'),
+                    SizedBox(height: 10.0),
+                    dateOfbirth(selectedDate, _selectDate, dateFormart, context),
+                    SizedBox(height: 16.0),
+                    Text('Gender'),
+                    SizedBox(height: 10.0),
+                    Row(
+                      children: <Widget>[
+                        Expanded(
+                          child: genderCustomRadio(lst[0], 'Male'),
                         ),
-                      )
+                        SizedBox(width: 20.0),
+                        Expanded(
+                          child: genderCustomRadio(lst[1], 'Female'),
+                        ),
+                      ],
                     ),
-                  ),
-                  SizedBox(height: 16.0),
-                  Text('Email'),
-                  SizedBox(height: 10.0),
-                  Card(
-                    shape: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(12.0))
-                    ),
-                    child: ListTile(
-                      title: Text(
-                        mData.email
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 16.0),
-                  Text('Date Of Birth'),
-                  SizedBox(height: 10.0),
-                  dateOfbirth(selectedDate, _selectDate, dateFormart, context),
-                  SizedBox(height: 16.0),
-                  Text('Gender'),
-                  SizedBox(height: 10.0),
-                  Row(
-                    children: <Widget>[
-                      Expanded(
-                        child: genderCustomRadio(lst[0], 'Male'),
-                      ),
-                      SizedBox(width: 20.0),
-                      Expanded(
-                        child: genderCustomRadio(lst[1], 'Female'),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 16.0),
-                  Text('Location'),
-                  SizedBox(height: 10.0),
-                  locationPicker(context),
-                ],
+                    SizedBox(height: 16.0),
+                    Text('Location'),
+                    SizedBox(height: 10.0),
+                    locationPicker(context),
+                  ],
+                ),
               ),
             ),
           ),
@@ -392,14 +403,16 @@ class _DateDropdown extends StatelessWidget {
         ),
         baseStyle: valueStyle,
         child: new Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            new Text(valueText, style: valueStyle),
-            new Icon(Icons.date_range,
+            new Icon(Icons.date_range_outlined,
                 color: Theme.of(context).brightness == Brightness.light
                     ? Colors.grey.shade700
                     : Colors.white70),
+            SizedBox(width: 10),
+            new Text(valueText, style: valueStyle),
+            
           ],
         ),
       ),
@@ -441,14 +454,16 @@ class _LocationDropdown extends StatelessWidget {
         ),
         baseStyle: valueStyle,
         child: new Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            new Text(valueText, style: valueStyle),
-            new Icon(Icons.location_city,
+            new Icon(Icons.location_city_outlined,
                 color: Theme.of(context).brightness == Brightness.light
                     ? Colors.grey.shade700
                     : Colors.white70),
+            SizedBox(width: 10),
+            new Text(valueText, style: valueStyle),
+            
           ],
         ),
       ),

@@ -231,150 +231,156 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       resizeToAvoidBottomPadding: true,
-      body: _networkStatus.connectivityResult != ConnectivityResult.none ? Stack(
-        fit: StackFit.expand,
-        children: <Widget>[
-          Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: <Widget>[
-              Image.asset("assets/images/image_02.png"),
-            ],
-          ),
-          SingleChildScrollView(
-            child: Padding(
-              padding: EdgeInsets.only(left: 28.0, right: 28.0, top: 35.0),
-              child: Column(
-                children: <Widget>[
-                  Row(
-                    children: <Widget>[
-                      Image.asset(
-                        "assets/images/koompi_logo.png",
-                        width: ScreenUtil.getInstance().setWidth(110),
-                        height: ScreenUtil.getInstance().setHeight(110),
-                      ),
-                      Text("KOOMPI HOTSPOT",
-                          style: TextStyle(
-                              fontFamily: "Poppins-Bold",
-                              fontSize: ScreenUtil.getInstance().setSp(46),
-                              letterSpacing: .6,
-                              fontWeight: FontWeight.bold)
-                      ),
-                    ],
-                  ),
-                  Stack(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(left: 150.0),
-                        child: Image.asset("assets/images/digital_nomad.png",
-                          width: 200.0,),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(top: 140.0),
-                        child: formLogin(context, usernameController, passwordController,
-                        _obscureText, _toggle, _email, _password, formKey, _autoValidate),
-                      ),
-                      
-                    ],
-                  ),
-                  SizedBox(height: ScreenUtil.getInstance().setHeight(80)),
-                  Center(
-                    child: InkWell(
-                      child: Container(
-                        width: ScreenUtil.getInstance().setWidth(330),
-                        height: ScreenUtil.getInstance().setHeight(100),
-                        decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                                colors: [Color(0xFF17ead9), Color(0xFF6078ea)]),
-                            borderRadius: BorderRadius.circular(30),
-                            boxShadow: [
-                              BoxShadow(
-                                  color: Color(0xFF6078ea).withOpacity(.3),
-                                  offset: Offset(0.0, 8.0),
-                                  blurRadius: 8.0)
-                            ]),
-                      child: Material(
-                        color: Colors.transparent,
-                        child: InkWell(
-                          highlightColor: Colors.transparent,
-                          splashColor: Colors.transparent,
-                          onTap: () async {
-                            
-                            _submitLogin();
-                            // Navigator.pushReplacement(
-                            //   context,
-                            //   MaterialPageRoute(builder: (context) => Navbar()));
-                          },
-                          child: Center(
-                            child: Text("SIGN IN",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontFamily: "Poppins-Bold",
-                                    fontSize: 18,
-                                    letterSpacing: 1.0)),
+      body: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: () {
+          FocusScope.of(context).requestFocus(FocusNode());
+        },
+        child: _networkStatus.connectivityResult != ConnectivityResult.none ? Stack(
+          fit: StackFit.expand,
+          children: <Widget>[
+            Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                Image.asset("assets/images/image_02.png"),
+              ],
+            ),
+            SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.only(left: 28.0, right: 28.0, top: 35.0),
+                child: Column(
+                  children: <Widget>[
+                    Row(
+                      children: <Widget>[
+                        Image.asset(
+                          "assets/images/koompi_logo.png",
+                          width: ScreenUtil.getInstance().setWidth(110),
+                          height: ScreenUtil.getInstance().setHeight(110),
+                        ),
+                        Text("KOOMPI HOTSPOT",
+                            style: TextStyle(
+                                fontFamily: "Poppins-Bold",
+                                fontSize: ScreenUtil.getInstance().setSp(46),
+                                letterSpacing: .6,
+                                fontWeight: FontWeight.bold)
+                        ),
+                      ],
+                    ),
+                    Stack(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(left: 150.0),
+                          child: Image.asset("assets/images/digital_nomad.png",
+                            width: 200.0,),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(top: 140.0),
+                          child: formLogin(context, usernameController, passwordController,
+                          _obscureText, _toggle, _email, _password, formKey, _autoValidate),
+                        ),
+                        
+                      ],
+                    ),
+                    SizedBox(height: ScreenUtil.getInstance().setHeight(80)),
+                    Center(
+                      child: InkWell(
+                        child: Container(
+                          width: ScreenUtil.getInstance().setWidth(330),
+                          height: ScreenUtil.getInstance().setHeight(100),
+                          decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                  colors: [Color(0xFF17ead9), Color(0xFF6078ea)]),
+                              borderRadius: BorderRadius.circular(30),
+                              boxShadow: [
+                                BoxShadow(
+                                    color: Color(0xFF6078ea).withOpacity(.3),
+                                    offset: Offset(0.0, 8.0),
+                                    blurRadius: 8.0)
+                              ]),
+                        child: Material(
+                          color: Colors.transparent,
+                          child: InkWell(
+                            highlightColor: Colors.transparent,
+                            splashColor: Colors.transparent,
+                            onTap: () async {
+                              
+                              _submitLogin();
+                              // Navigator.pushReplacement(
+                              //   context,
+                              //   MaterialPageRoute(builder: (context) => Navbar()));
+                            },
+                            child: Center(
+                              child: Text("SIGN IN",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontFamily: "Poppins-Bold",
+                                      fontSize: 18,
+                                      letterSpacing: 1.0)),
+                            ),
                           ),
                         ),
                       ),
+                    )),
+                    // SizedBox(
+                    //   height: ScreenUtil.getInstance().setHeight(40),
+                    // ),
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.center,
+                    //   children: <Widget>[
+                    //     horizontalLine(),
+                    //     Text("Sign In With",
+                    //         style: TextStyle(
+                    //             fontSize: 16.0, fontFamily: "Poppins-Medium")),
+                    //     horizontalLine()
+                    //   ],
+                    // ),
+                    // SizedBox(
+                    //   height: ScreenUtil.getInstance().setHeight(30),
+                    // ),
+                    // Center(
+                    //   child: Row(
+                    //     children: <Widget>[
+                    //       onPressFB(context),
+                    //       onPressGoogle(context),
+                    //     ],
+                    //   ),
+                    // ),
+                    SizedBox(
+                      height: ScreenUtil.getInstance().setHeight(60),
                     ),
-                  )),
-                  // SizedBox(
-                  //   height: ScreenUtil.getInstance().setHeight(40),
-                  // ),
-                  // Row(
-                  //   mainAxisAlignment: MainAxisAlignment.center,
-                  //   children: <Widget>[
-                  //     horizontalLine(),
-                  //     Text("Sign In With",
-                  //         style: TextStyle(
-                  //             fontSize: 16.0, fontFamily: "Poppins-Medium")),
-                  //     horizontalLine()
-                  //   ],
-                  // ),
-                  // SizedBox(
-                  //   height: ScreenUtil.getInstance().setHeight(30),
-                  // ),
-                  // Center(
-                  //   child: Row(
-                  //     children: <Widget>[
-                  //       onPressFB(context),
-                  //       onPressGoogle(context),
-                  //     ],
-                  //   ),
-                  // ),
-                  SizedBox(
-                    height: ScreenUtil.getInstance().setHeight(60),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text(
-                        "DON'T HAVE AN ACCOUNT? ",
-                        style: TextStyle(fontFamily: "Poppins-Medium"),
-                      ),
-                      InkWell(
-                        splashColor: Colors.transparent,
-                        highlightColor: Colors.transparent,
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => CreateEmail())).then((value) {
-                                    usernameController.clear();
-                                    passwordController.clear();
-                                  });
-                        },
-                        child: Text("SIGN UP",
-                            style: TextStyle(
-                                color: Color(0xFF5d74e3),
-                                fontFamily: "Poppins-Bold")),
-                      )
-                    ],
-                  )
-                ],
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text(
+                          "DON'T HAVE AN ACCOUNT? ",
+                          style: TextStyle(fontFamily: "Poppins-Medium"),
+                        ),
+                        InkWell(
+                          splashColor: Colors.transparent,
+                          highlightColor: Colors.transparent,
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => CreateEmail())).then((value) {
+                                      usernameController.clear();
+                                      passwordController.clear();
+                                    });
+                          },
+                          child: Text("SIGN UP",
+                              style: TextStyle(
+                                  color: Color(0xFF5d74e3),
+                                  fontFamily: "Poppins-Bold")),
+                        )
+                      ],
+                    )
+                  ],
+                ),
               ),
-            ),
-          )
-        ],
-      ) : _networkStatus.noNetwork(context),
+            )
+          ],
+        ) : _networkStatus.noNetwork(context),
+      ),
     );
   }
 }

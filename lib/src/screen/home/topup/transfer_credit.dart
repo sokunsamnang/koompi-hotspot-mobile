@@ -81,7 +81,7 @@ class _TransferCreditState extends State<TransferCredit> {
                           decoration: InputDecoration(
                             hintText: 'Email',
                             border: OutlineInputBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(30.0))
+                              borderRadius: BorderRadius.all(Radius.circular(12.0))
                             )
                           ),
                         ),

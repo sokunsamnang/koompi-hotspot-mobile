@@ -5,6 +5,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:koompi_hotspot/src/screen/osm/components/constants.dart';
 import 'package:koompi_hotspot/src/screen/osm/components/expandable_content.dart';
 import 'package:koompi_hotspot/src/screen/osm/components/persistent_header.dart';
+import 'package:koompi_hotspot/src/screen/osm/components/type_head.dart';
 import 'package:koompi_hotspot/src/screen/osm/components/zoom_buttons.dart';
 import 'package:latlong/latlong.dart';
 import 'package:expandable_bottom_sheet/expandable_bottom_sheet.dart';
@@ -30,7 +31,7 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin {
     final _zoomTween = Tween<double>(begin: _mapController.zoom, end: desZoom);
 
     var controller = AnimationController(
-        duration: const Duration(milliseconds: 500), vsync: this);
+        duration: const Duration(milliseconds: 300), vsync: this);
 
     Animation<double> animation =
         CurvedAnimation(parent: controller, curve: Curves.fastOutSlowIn);
@@ -152,28 +153,21 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        floatingActionButton: FloatingActionButton(
-          onPressed: () => _getCurrentLocation(),
-          child: _isLive
-              ? Icon(
-                  Icons.gps_fixed,
-                  color: kDefaultColor,
-                )
-              : Icon(
-                  Icons.gps_not_fixed,
-                  color: kDefaultColor,
-                ),
-          backgroundColor: Colors.white,
-        ),
-        body: SafeArea(child: _bottom()));
-  }
-
-  Widget _bottom() {
-    return ExpandableBottomSheet(
-      key: _key,
-      animationCurveExpand: Curves.bounceOut,
-      animationCurveContract: Curves.ease,
-      background: Stack(
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: kDefaultColor,
+        onPressed: () => _getCurrentLocation(),
+        child: _isLive
+            ? Icon(
+                Icons.gps_fixed,
+                color: Colors.white,
+              )
+            : Icon(
+                Icons.gps_not_fixed,
+                color: Colors.white,
+              ),
+        //  backgroundColor: Colors.white,
+      ),
+      body: Stack(
         children: [
           FlutterMap(
             mapController: _mapController,
@@ -200,15 +194,16 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin {
               ),
             ],
           ),
-          SizedBox(
-            height: 20,
+          Container(
+            margin: const EdgeInsets.only(top: 20),
+            child: TypeHead(searchPlace),
           ),
-          //TypeHead(searchPlace),
-          ZoomButtons(_mapController),
+          Container(
+            margin: const EdgeInsets.only(top: 20),
+            child: ZoomButtons(_mapController),
+          ),
         ],
       ),
-      persistentHeader: PersistentHeader(),
-      expandableContent: ExpandableContent(locate),
-    );
+    ); //SafeArea(child: _bottom()));
   }
 }

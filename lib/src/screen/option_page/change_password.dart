@@ -10,6 +10,7 @@ import 'package:koompi_hotspot/src/models/model_userdata.dart';
 import 'package:koompi_hotspot/src/screen/login/login_page.dart';
 import 'package:koompi_hotspot/src/services/services.dart';
 import 'package:http/http.dart' as http;
+import 'package:line_icons/line_icons.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ChangePassword extends StatefulWidget {
@@ -395,91 +396,107 @@ showChangePasswordDialog(context) async {
           ),
         ],
       ),
-      body: Container(
-        child: Form(
-          key: _modelChangePassword.formStateChangePassword,
-          child: SingleChildScrollView(
-            physics: BouncingScrollPhysics(),
-              child: Padding(
-                padding: EdgeInsets.only(left: 28.0, right: 28.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      SizedBox(height: 16.0),
-                      TextFormField(
-                        obscureText: _obscureText,
-                        onFieldSubmitted: onSubmit,
-                        controller: _modelChangePassword.controlOldPassword,
-                        focusNode: _modelChangePassword.nodeOldPassword,
-                        validator: validateOldPass, 
-                        onChanged: onChanged, 
-                        keyboardType: TextInputType.visiblePassword,
-                        decoration: InputDecoration(
-                          suffixIcon: GestureDetector(
-                            onTap: () {
-                              _toggle();
-                            },
-                            child: Icon(
-                              _obscureText ? Icons.visibility_off : Icons.visibility,
+      body: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: () {
+          FocusScope.of(context).requestFocus(FocusNode());
+        },
+        child: Container(
+          height: MediaQuery.of(context).size.height * 2,
+          child: Form(
+            key: _modelChangePassword.formStateChangePassword,
+            child: SingleChildScrollView(
+              physics: BouncingScrollPhysics(),
+                child: Padding(
+                  padding: EdgeInsets.only(left: 28.0, right: 28.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        SizedBox(height: 16.0),
+                        Text('Current Password'),
+                        SizedBox(height: 10.0),
+                        TextFormField(
+                          obscureText: _obscureText,
+                          onFieldSubmitted: onSubmit,
+                          controller: _modelChangePassword.controlOldPassword,
+                          focusNode: _modelChangePassword.nodeOldPassword,
+                          validator: validateOldPass, 
+                          onChanged: onChanged, 
+                          keyboardType: TextInputType.visiblePassword,
+                          decoration: InputDecoration(
+                            prefixIcon: Icon(LineIcons.unlock),
+                            suffixIcon: GestureDetector(
+                              onTap: () {
+                                _toggle();
+                              },
+                              child: Icon(
+                                _obscureText ? Icons.visibility_off : Icons.visibility,
+                              ),
                             ),
+                            hintText: 'Current Password',
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.black),
+                              borderRadius: BorderRadius.all(Radius.circular(12.0))
+                            )
                           ),
-                          hintText: 'Current Password',
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.black),
-                            borderRadius: BorderRadius.all(Radius.circular(12.0))
-                          )
+                          
                         ),
-                        
-                      ),
-                      SizedBox(height: 16.0),
-                      TextFormField(
-                        obscureText: _obscureText2,
-                        onFieldSubmitted: onSubmit,
-                        controller: _modelChangePassword.controlNewPassword,
-                        focusNode: _modelChangePassword.nodeNewPassword,
-                        validator: validateNewPass, 
-                        onChanged: onChanged,
-                        decoration: InputDecoration(
-                          suffixIcon: GestureDetector(
-                            onTap: () {
-                              _toggle2();
-                            },
-                            child: Icon(
-                              _obscureText2 ? Icons.visibility_off : Icons.visibility,
+                        SizedBox(height: 16.0),
+                        Text('New Password'),
+                        SizedBox(height: 10.0),
+                        TextFormField(
+                          obscureText: _obscureText2,
+                          onFieldSubmitted: onSubmit,
+                          controller: _modelChangePassword.controlNewPassword,
+                          focusNode: _modelChangePassword.nodeNewPassword,
+                          validator: validateNewPass, 
+                          onChanged: onChanged,
+                          decoration: InputDecoration(
+                            prefixIcon: Icon(LineIcons.unlock_alt),
+                            suffixIcon: GestureDetector(
+                              onTap: () {
+                                _toggle2();
+                              },
+                              child: Icon(
+                                _obscureText2 ? Icons.visibility_off : Icons.visibility,
+                              ),
                             ),
+                            hintText: 'New Password',
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.black),
+                              borderRadius: BorderRadius.all(Radius.circular(12.0))
+                            )
                           ),
-                          hintText: 'New Password',
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.black),
-                            borderRadius: BorderRadius.all(Radius.circular(12.0))
-                          )
                         ),
-                      ),
-                      SizedBox(height: 16.0),
-                      TextFormField(
-                        obscureText: _obscureText3,
-                        onFieldSubmitted: onSubmit,
-                        controller: _modelChangePassword.controlConfirmPassword,
-                        focusNode: _modelChangePassword.nodeConfirmPassword,
-                        validator: validateConfirmPass, 
-                        onChanged: onChanged,
-                        decoration: InputDecoration(
-                          suffixIcon: GestureDetector(
-                            onTap: () {
-                              _toggle3();
-                            },
-                            child: Icon(
-                              _obscureText3 ? Icons.visibility_off : Icons.visibility,
+                        SizedBox(height: 16.0),
+                        Text('Confirm New Password'),
+                        SizedBox(height: 10.0),
+                        TextFormField(
+                          obscureText: _obscureText3,
+                          onFieldSubmitted: onSubmit,
+                          controller: _modelChangePassword.controlConfirmPassword,
+                          focusNode: _modelChangePassword.nodeConfirmPassword,
+                          validator: validateConfirmPass, 
+                          onChanged: onChanged,
+                          decoration: InputDecoration(
+                            prefixIcon: Icon(LineIcons.unlock_alt),
+                            suffixIcon: GestureDetector(
+                              onTap: () {
+                                _toggle3();
+                              },
+                              child: Icon(
+                                _obscureText3 ? Icons.visibility_off : Icons.visibility,
+                              ),
                             ),
-                          ),
-                          hintText: 'Confirm New Password',
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.black),
-                            borderRadius: BorderRadius.all(Radius.circular(12.0))
-                      )
+                            hintText: 'Confirm New Password',
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.black),
+                              borderRadius: BorderRadius.all(Radius.circular(12.0))
+                        )
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),

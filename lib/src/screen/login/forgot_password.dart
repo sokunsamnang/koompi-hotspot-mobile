@@ -114,8 +114,20 @@ class _ForgotPasswordState extends State<ForgotPassword> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Container(
-        child: forgetPasswordBody(context, _email, _emailController, _submit, formKey, _autoValidate),
+      body: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: () {
+          FocusScope.of(context).requestFocus(FocusNode());
+        },
+        child: Container(
+          child: forgetPasswordBody(
+            context, 
+            _email, 
+            _emailController, 
+            _submit, 
+            formKey, 
+            _autoValidate),
+        ),
       ),
     );
   }

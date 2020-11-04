@@ -218,8 +218,25 @@ class _CreateEmailState extends State<CreateEmail> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        child: createEmailBody(context, emailController, passwordController, _obscureText, _toggle, _email, _password, _submit, formKey, _autoValidate, onSignUpByEmail),
+      body: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: () {
+          FocusScope.of(context).requestFocus(FocusNode());
+        },
+        child: Container(
+          child: createEmailBody(
+            context, 
+            emailController, 
+            passwordController, 
+            _obscureText, 
+            _toggle, 
+            _email, 
+            _password, 
+            _submit, 
+            formKey, 
+            _autoValidate, 
+            onSignUpByEmail),
+        ),
       ),
     );
   }

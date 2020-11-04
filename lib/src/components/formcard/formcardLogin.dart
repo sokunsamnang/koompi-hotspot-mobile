@@ -14,7 +14,7 @@ Widget formLogin( BuildContext context,
                   bool _autoValidate) {
 
   
-  return new Container(
+  return Container(
     width: double.infinity,
     //  height: ScreenUtil.getInstance().setHeight(500),
     padding: EdgeInsets.only(bottom: 1),
@@ -58,16 +58,16 @@ Widget formLogin( BuildContext context,
               onSaved: (val) => _email = val,
               keyboardType: TextInputType.emailAddress,
               decoration: InputDecoration(
-                  hintText: "Email",
-                  hintStyle: TextStyle(color: Colors.grey, fontSize: 12.0)),
+                hintText: "Email",
+                hintStyle: TextStyle(color: Colors.grey, fontSize: 12.0)),
             ),
             SizedBox(
               height: ScreenUtil().setHeight(30),
             ),
             Text("Password",
                 style: TextStyle(
-                    fontFamily: "Poppins-Medium",
-                    fontSize: ScreenUtil().setSp(26))),
+                  fontFamily: "Poppins-Medium",
+                  fontSize: ScreenUtil().setSp(26))),
             TextFormField(
               controller: passwordController,
               validator: (val) => val.length < 8 ? 'Password too short' : null,

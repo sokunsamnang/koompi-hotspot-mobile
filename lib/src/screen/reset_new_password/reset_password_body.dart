@@ -50,8 +50,8 @@ import 'package:koompi_hotspot/src/components/formcard/formcardNewPassword.dart'
                         height: ScreenUtil.getInstance().setHeight(30),
                       ),
                       Center(
-                        child: Text('New Password',
-                          style: TextStyle(color: Colors.deepOrangeAccent[400], fontFamily: 'Medium', fontSize: 23),
+                        child: Text('Please Enter New Password',
+                          style: TextStyle(color: Colors.deepOrangeAccent[400], fontFamily: 'Medium', fontSize: 20),
                         ),
                       ),
                     ],

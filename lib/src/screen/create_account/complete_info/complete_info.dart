@@ -9,6 +9,7 @@ import 'package:koompi_hotspot/src/backend/post_request.dart';
 import 'package:koompi_hotspot/src/components/reuse_widget.dart';
 import 'package:koompi_hotspot/src/models/model_location.dart';
 import 'package:koompi_hotspot/src/screen/login/login_page.dart';
+import 'package:line_icons/line_icons.dart';
 
 class CompleteInfo extends StatefulWidget {
 
@@ -160,170 +161,166 @@ class _CompleteInfoState extends State<CompleteInfo>{
           ),
         ],
       ),
-      body: Container(
-        height: MediaQuery.of(context).size.height * 2,
-        child: FormBuilder(
-          key: formKey,
-          autovalidateMode: AutovalidateMode.always,
-          child: SingleChildScrollView(
-            physics: BouncingScrollPhysics(),
-            child: Padding(
-              padding: EdgeInsets.only(left: 28.0, right: 28.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  SizedBox(
-                    height: 10.0,
-                  ),
-                  Align(
-                    alignment: Alignment.center,
-                    child: CircleAvatar(
-                      radius: 50.0,
-                      backgroundColor: const Color(0xff476cfb),
-                      child: ClipOval(
-                        child: SizedBox(
-                          width: 100.0,
-                          height: 100.0,
-                          child: (_image != null)
-                              ? Image.file(
-                                  _image,
-                                  fit: BoxFit.cover,
-                                )
-                              : CircleAvatar(
-                                  backgroundImage: AssetImage('assets/images/avatar.png'),
+      body: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: () {
+          FocusScope.of(context).requestFocus(FocusNode());
+        },
+        child: Container(
+          height: MediaQuery.of(context).size.height * 2,
+          child: FormBuilder(
+            key: formKey,
+            autovalidateMode: AutovalidateMode.always,
+            child: SingleChildScrollView(
+              physics: BouncingScrollPhysics(),
+              child: Padding(
+                padding: EdgeInsets.only(left: 28.0, right: 28.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    SizedBox(
+                      height: 10.0,
+                    ),
+                    Align(
+                      alignment: Alignment.center,
+                      child: CircleAvatar(
+                        radius: 50.0,
+                        backgroundColor: const Color(0xff476cfb),
+                        child: ClipOval(
+                          child: SizedBox(
+                            width: 100.0,
+                            height: 100.0,
+                            child: (_image != null)
+                                ? Image.file(
+                                    _image,
+                                    fit: BoxFit.cover,
+                                  )
+                                : CircleAvatar(
+                                    backgroundImage: AssetImage('assets/images/avatar.png'),
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                  Center(
-                    child: FlatButton(
-                      colorBrightness: Brightness.dark,
-                      child: Text('Add Profile Photo',
-                          style: TextStyle(
-                              color: Colors.blue,
-                              fontSize: 20.0,
-                              fontFamily: 'Medium')
-                            ),
-                      onPressed: () => getImage(),
-                    ),
-                  ),
-                  SizedBox(height: 16.0),
-                  Text('Full Name'),
-                  SizedBox(height: 10.0),
-                  TextFormField(
-                    controller: _usernameController,
-                    validator: (val) => val.length < 3 ? 'Full Name is required' : null,
-                    onSaved: (val) => _usernameController.text = val,
-                    autovalidate: true,
-                    decoration: InputDecoration(
-                      hintText: 'Full Name',
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.black),
-                        borderRadius: BorderRadius.all(Radius.circular(12.0))
-                      )
-                    ),
-                  ),
-                  SizedBox(height: 16.0),
-                  Text('Email'),
-                  SizedBox(height: 10.0),
-                  // TextFormField(
-                  //   controller: _emailController ?? widget.email,
-                  //   autovalidate: true,
-                  //   validator: (val) => !val.contains('@') ? 'Invalid Email' : null,
-                  //   onSaved: (val) => _emailController.text = val,
-                  //   decoration: InputDecoration(
-                  //     hintText: 'Email',
-                  //     border: OutlineInputBorder(
-                  //       borderRadius: BorderRadius.all(Radius.circular(30.0))
-                  //     )
-                  //   ),
-                  // ),
-                  Card(
-                    shape: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(12.0))
-                    ),
-                    child: ListTile(
-                      title: Text(
-                        widget.email,
+                    Center(
+                      child: FlatButton(
+                        colorBrightness: Brightness.dark,
+                        child: Text('Add Profile Photo',
+                            style: TextStyle(
+                                color: Colors.blue,
+                                fontSize: 20.0,
+                                fontFamily: 'Medium')
+                              ),
+                        onPressed: () => getImage(),
                       ),
                     ),
-                  ),
-                  SizedBox(height: 16.0),
-                  Text('Date Of Birth'),
-                  SizedBox(height: 10.0),
-                  // FormBuilderDateTimePicker(
-                  //   onFieldSubmitted: (value) {
-                  //     if(value != null && value != selectedDate){
-                  //       selectedDate = value;
-                  //       _birthdate = dateFormart.format(selectedDate);
-                  //     }
-                  //   },
-                  //   validators: [
-                  //     FormBuilderValidators.required(),
-                  //   ],
-                  //   attribute: "date",
-                  //   inputType: InputType.date,
-                  //   format: DateFormat("dd-MMM-yyyy"),
-                  //   decoration:
-                  //     InputDecoration(labelText: "Date Of Birth"),
-                  // ),
-                  dateOfbirth(selectedDate, _selectDate, dateFormart, context),
-                  SizedBox(height: 16.0),
-                  // Text('Gender'),
-                  // SizedBox(height: 10.0),
-                  // Row(
-                  //   children: <Widget>[
-                  //     Expanded(
-                  //       child: genderCustomRadio(lst[0], 'Male'),
-                  //     ),
-                  //     SizedBox(width: 20.0),
-                  //     Expanded(
-                  //       child: genderCustomRadio(lst[1], 'Female'),
-                  //     ),
-                  //   ],
-                  // ),
-                  FormBuilderChoiceChip(
-                    onSaved: (newValue) => _gender = newValue,
-                    validators: [FormBuilderValidators.required()],
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      labelText: 'Gender',
-                      labelStyle: TextStyle(color: Colors.black, fontSize: 20)
+                    SizedBox(height: 16.0),
+                    Text('Full Name'),
+                    SizedBox(height: 10.0),
+                    TextFormField(
+                      controller: _usernameController,
+                      validator: (val) => val.length < 3 ? 'Full Name is required' : null,
+                      onSaved: (val) => _usernameController.text = val,
+                      autovalidate: true,
+                      decoration: InputDecoration(
+                        prefixIcon: Icon(LineIcons.user),
+                        hintText: 'Full Name',
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.black),
+                          borderRadius: BorderRadius.all(Radius.circular(12.0))
+                        )
+                      ),
                     ),
-                    labelStyle: TextStyle(
-                      color: Colors.black,
-                      fontSize: 18,
-                      fontFamily: "Medium"
+                    SizedBox(height: 16.0),
+                    Text('Email'),
+                    SizedBox(height: 10.0),
+                    TextFormField(
+                      controller: _emailController ?? widget.email,
+                      readOnly: true,
+                      decoration: InputDecoration(
+                        hintText: 'Email',
+                        prefixIcon: Icon(Icons.alternate_email_outlined),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(12.0))
+                        )
+                      ),
                     ),
-                    selectedColor: Colors.cyan,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
-                    elevation: 2,
-                    alignment: WrapAlignment.spaceEvenly,
-                    labelPadding: EdgeInsets.only(left: 35, right: 35),
-                    attribute: "gender",
-                   options: [
-                      FormBuilderFieldOption(value: 'Male'),
-                      FormBuilderFieldOption(value: 'Female'),
-                    ],
-                    onChanged: (value) {
-                      if (value == null) {
-                        //* If chip unselected, set value to last selection
-                        formKey.currentState.fields['gender'].currentState
-                            .didChange(lastChoiceChipSelection);
-                      } else {
-                        //* If chip selected, save the value and rebuild
-                        setState(() {
-                          lastChoiceChipSelection = value;
-                        });
-                      }
-                    },
-                  ),
-                  SizedBox(height: 16.0),
-                  Text('Location'),
-                  SizedBox(height: 10.0),
-                  locationPicker(context),
-                ],
+                    SizedBox(height: 16.0),
+                    Text('Date Of Birth'),
+                    SizedBox(height: 10.0),
+                    // FormBuilderDateTimePicker(
+                    //   onFieldSubmitted: (value) {
+                    //     if(value != null && value != selectedDate){
+                    //       selectedDate = value;
+                    //       _birthdate = dateFormart.format(selectedDate);
+                    //     }
+                    //   },
+                    //   validators: [
+                    //     FormBuilderValidators.required(),
+                    //   ],
+                    //   attribute: "date",
+                    //   inputType: InputType.date,
+                    //   format: DateFormat("dd-MMM-yyyy"),
+                    //   decoration:
+                    //     InputDecoration(labelText: "Date Of Birth"),
+                    // ),
+                    dateOfbirth(selectedDate, _selectDate, dateFormart, context),
+                    SizedBox(height: 16.0),
+                    // Text('Gender'),
+                    // SizedBox(height: 10.0),
+                    // Row(
+                    //   children: <Widget>[
+                    //     Expanded(
+                    //       child: genderCustomRadio(lst[0], 'Male'),
+                    //     ),
+                    //     SizedBox(width: 20.0),
+                    //     Expanded(
+                    //       child: genderCustomRadio(lst[1], 'Female'),
+                    //     ),
+                    //   ],
+                    // ),
+                    FormBuilderChoiceChip(
+                      onSaved: (newValue) => _gender = newValue,
+                      validators: [FormBuilderValidators.required()],
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        labelText: 'Gender',
+                        labelStyle: TextStyle(color: Colors.black, fontSize: 20)
+                      ),
+                      labelStyle: TextStyle(
+                        color: Colors.black,
+                        fontSize: 18,
+                        fontFamily: "Medium"
+                      ),
+                      selectedColor: Colors.cyan,
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+                      elevation: 2,
+                      alignment: WrapAlignment.spaceEvenly,
+                      labelPadding: EdgeInsets.only(left: 35, right: 35),
+                      attribute: "gender",
+                    options: [
+                        FormBuilderFieldOption(value: 'Male'),
+                        FormBuilderFieldOption(value: 'Female'),
+                      ],
+                      onChanged: (value) {
+                        if (value == null) {
+                          //* If chip unselected, set value to last selection
+                          formKey.currentState.fields['gender'].currentState
+                              .didChange(lastChoiceChipSelection);
+                        } else {
+                          //* If chip selected, save the value and rebuild
+                          setState(() {
+                            lastChoiceChipSelection = value;
+                          });
+                        }
+                      },
+                    ),
+                    SizedBox(height: 16.0),
+                    Text('Location'),
+                    SizedBox(height: 10.0),
+                    locationPicker(context),
+                  ],
+                ),
               ),
             ),
           ),
@@ -409,14 +406,16 @@ class _DateDropdown extends StatelessWidget {
         ),
         baseStyle: valueStyle,
         child: new Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            new Text(valueText, style: valueStyle),
-            new Icon(Icons.date_range,
+            new Icon(Icons.date_range_outlined,
                 color: Theme.of(context).brightness == Brightness.light
                     ? Colors.grey.shade700
                     : Colors.white70),
+            SizedBox(width: 10),
+            new Text(valueText, style: valueStyle),
+            
           ],
         ),
       ),
@@ -458,14 +457,15 @@ class _LocationDropdown extends StatelessWidget {
         ),
         baseStyle: valueStyle,
         child: new Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            new Text(valueText, style: valueStyle),
-            new Icon(Icons.location_city,
+            new Icon(Icons.location_city_outlined,
                 color: Theme.of(context).brightness == Brightness.light
                     ? Colors.grey.shade700
                     : Colors.white70),
+            SizedBox(width: 10),
+            new Text(valueText, style: valueStyle),
           ],
         ),
       ),

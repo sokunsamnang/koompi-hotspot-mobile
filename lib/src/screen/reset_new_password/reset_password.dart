@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
@@ -76,8 +77,13 @@ class _ResetNewPasswordState extends State<ResetNewPassword> {
         }));
       if (response.statusCode == 200) {
         print(response.body);
-        await Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => LoginPage()));
+        Future.delayed(Duration(seconds: 2), () {
+          Timer(Duration(milliseconds: 500), () => Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => LoginPage()),
+            ModalRoute.withName('/'),
+          ));
+        });
       } else {
         Navigator.pop(context);
         showErrorDialog(context);
@@ -176,19 +182,25 @@ class _ResetNewPasswordState extends State<ResetNewPassword> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Container(
-        child: resetNewPasswordBody(
-          context, 
-          _passwordController, 
-          _confirmPasswordController, 
-          _obscureText, 
-          _toggle, 
-          _obscureText2, 
-          _toggle2, 
-          _submit, 
-          formKey, 
-          _autoValidate)
-      ),
+      body: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: () {
+          FocusScope.of(context).requestFocus(FocusNode());
+        },
+        child: Container(
+          child: resetNewPasswordBody(
+            context, 
+            _passwordController, 
+            _confirmPasswordController, 
+            _obscureText, 
+            _toggle, 
+            _obscureText2, 
+            _toggle2, 
+            _submit, 
+            formKey, 
+            _autoValidate)
+        ),
+      )
     );
   }
 }

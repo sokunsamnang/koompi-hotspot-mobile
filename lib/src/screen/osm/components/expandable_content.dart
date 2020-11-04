@@ -9,7 +9,7 @@ class ExpandableContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: 300,
+        height: 200,
         color: Colors.white,
         child: Container(
           margin: EdgeInsets.symmetric(horizontal: 20.0),
@@ -27,10 +27,6 @@ class ExpandableContent extends StatelessWidget {
               ),
               SizedBox(
                 height: 10,
-              ),
-              Text(
-                'Nearby',
-                style: TextStyle(fontSize: 16),
               ),
             ],
           ),
