@@ -38,13 +38,20 @@ class StorageServices{
     read('token').then(
       (value) async {
         String _token = value;
-        if (_token != null) {
-          await GetRequest().getUserProfile(_token);
+        var resposne = await GetRequest().getUserProfile(_token);
+        print('Status Code Response: ${resposne.statusCode}');
+        if (resposne.statusCode == 200) {
+          print('Success: ${resposne.statusCode}');
           Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => Navbar()));
         }
-        else{
+        else if(resposne.statusCode == 403){
+          print('Failed: ${resposne.statusCode}');
           StorageServices().clear('token');
+          Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => LoginPage()));
+        }
+        else{
           Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => LoginPage()));
         }

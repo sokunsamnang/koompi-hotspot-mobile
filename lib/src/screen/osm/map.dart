@@ -3,8 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:koompi_hotspot/src/screen/osm/components/constants.dart';
-import 'package:koompi_hotspot/src/screen/osm/components/expandable_content.dart';
-import 'package:koompi_hotspot/src/screen/osm/components/persistent_header.dart';
 import 'package:koompi_hotspot/src/screen/osm/components/type_head.dart';
 import 'package:koompi_hotspot/src/screen/osm/components/zoom_buttons.dart';
 import 'package:latlong/latlong.dart';
@@ -193,10 +191,6 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin {
                 markers: markers,
               ),
             ],
-          ),
-          Container(
-            margin: const EdgeInsets.only(top: 20),
-            child: TypeHead(searchPlace),
           ),
           Container(
             margin: const EdgeInsets.only(top: 20),

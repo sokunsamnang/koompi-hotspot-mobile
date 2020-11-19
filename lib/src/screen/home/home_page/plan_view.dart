@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_launcher_icons/xml_templates.dart';
 import 'package:koompi_hotspot/src/components/behavior.dart';
 import 'package:koompi_hotspot/src/screen/home/hotspot/edit_plan.dart';
+import 'package:koompi_hotspot/src/screen/home/hotspot/plan.dart';
 
 class PlanView extends StatelessWidget {
   
@@ -101,7 +102,7 @@ Widget build(BuildContext context) {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => EditUserPlan(),
+                                        builder: (context) => Plan(),
                                     )
                                   );
                                 },

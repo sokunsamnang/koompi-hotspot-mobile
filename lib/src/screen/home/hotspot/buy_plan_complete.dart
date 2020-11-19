@@ -34,7 +34,7 @@ class _CompletePlanState extends State<CompletePlan> {
                   ),
                 ),
                 Center(
-                  child: Text('You bought plan is successfully.', 
+                  child: Text('Your plan bought successfully.', 
                   style: TextStyle(
                     fontFamily: 'Medium',
                     fontWeight: FontWeight.bold, 

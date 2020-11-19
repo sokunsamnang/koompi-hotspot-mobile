@@ -13,7 +13,7 @@ class GetRequest with ChangeNotifier{
   StorageServices _prefService = StorageServices();
 
 
-  Future<void> getUserProfile(String _token) async {
+  Future<http.Response> getUserProfile(String _token) async {
     var response = await http.get("${ApiService.url}/dashboard", 
         headers: <String, String>{
         "accept": "application/json",
@@ -26,7 +26,7 @@ class GetRequest with ChangeNotifier{
     _mData = ModelUserData.fromJson(responseBody);
     _prefService.saveString('user', jsonEncode(responseBody));
 
-    notifyListeners();
+    return response;
   }
 
 
