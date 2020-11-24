@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -109,11 +110,13 @@ class _CompleteInfoState extends State<CompleteInfo>{
           _address);
         
         if (response.statusCode == 200) {
-          Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(builder: (context) => LoginPage()),
-            ModalRoute.withName('/'),
-          );
+          Future.delayed(Duration(seconds: 2), () {
+            Timer(Duration(milliseconds: 500), () => Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => LoginPage()),
+              ModalRoute.withName('/'),
+            ));
+          });
         } 
         else {
           Navigator.pop(context);
@@ -295,7 +298,7 @@ class _CompleteInfoState extends State<CompleteInfo>{
                       selectedColor: Colors.cyan,
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
                       elevation: 2,
-                      alignment: WrapAlignment.spaceEvenly,
+                      alignment: WrapAlignment.spaceBetween,
                       labelPadding: EdgeInsets.only(left: 35, right: 35),
                       attribute: "gender",
                     options: [

@@ -70,15 +70,15 @@ class TopUp extends StatelessWidget {
                       ],
                     ),
                   ),
-                  SizedBox(height: 40),
+                  SizedBox(height: 70),
                   InkWell(
                     child: Container(
-                      width: 150,
+                      // width: 150,
                       height: 50,
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
                           colors: [Color(0xFF17ead9), Color(0xFF6078ea)]),
-                        borderRadius: BorderRadius.circular(30),
+                        borderRadius: BorderRadius.circular(12),
                         boxShadow: [
                           BoxShadow(
                             color: Color(0xFF6078ea).withOpacity(.3),

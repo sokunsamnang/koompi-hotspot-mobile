@@ -246,7 +246,7 @@ class _UserPlanState extends State<UserPlan>
                       validators: [FormBuilderValidators.required()],
                       decoration: InputDecoration(
                         border: InputBorder.none,
-                        labelText: 'Plan Date:',
+                        labelText: 'Plan Date',
                         labelStyle: TextStyle(color: Colors.black, fontSize: 20)
                       ),
                       labelStyle: TextStyle(
@@ -257,8 +257,8 @@ class _UserPlanState extends State<UserPlan>
                       selectedColor: Colors.cyan,
                       elevation: 2,
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
-                      alignment: WrapAlignment.spaceEvenly,
-                      labelPadding: EdgeInsets.only(left: 30, right: 30),
+                      alignment: WrapAlignment.spaceBetween,
+                      labelPadding: EdgeInsets.only(left: 35, right: 35),
                       attribute: "planDate",
                       options: [
                         FormBuilderFieldOption(value: '30 Days'),
@@ -281,12 +281,12 @@ class _UserPlanState extends State<UserPlan>
                     Center(
                       child: InkWell(
                         child: Container(
-                          width: 150,
+                          // width: MediaQuery.of(context).copyWith().size.height/2,
                           height: 50,
                           decoration: BoxDecoration(
                             gradient: LinearGradient(
                               colors: [Color(0xFF17ead9), Color(0xFF6078ea)]),
-                            borderRadius: BorderRadius.circular(30),
+                            borderRadius: BorderRadius.circular(12),
                             boxShadow: [
                               BoxShadow(
                                 color: Color(0xFF6078ea).withOpacity(.3),

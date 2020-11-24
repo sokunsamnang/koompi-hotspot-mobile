@@ -5,7 +5,6 @@ import 'package:koompi_hotspot/src/screen/home/home_page/home_page.dart';
 import 'package:koompi_hotspot/src/screen/home/hotspot/buy_plan.dart';
 import 'package:koompi_hotspot/src/screen/map/MyLocationView.dart';
 import 'package:koompi_hotspot/src/screen/option_page/more_page.dart';
-import 'package:koompi_hotspot/src/screen/osm/map.dart';
 import 'package:koompi_hotspot/src/services/network_status.dart';
 import 'package:line_icons/line_icons.dart';
 

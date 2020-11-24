@@ -193,12 +193,6 @@ showLogoutDialog(context) async {
                     ModalRoute.withName('/'),
                   ));
                 });
-                // StorageServices().clearPref();
-                // Navigator.pushAndRemoveUntil(
-                //   context,
-                //   MaterialPageRoute(builder: (context) => LoginPage()),
-                //   ModalRoute.withName('/'),
-                // );
               },
             ),
           ],

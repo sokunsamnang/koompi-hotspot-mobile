@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_material_pickers/helpers/show_scroll_picker.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:koompi_hotspot/src/backend/post_request.dart';
@@ -302,12 +303,65 @@ class _MyAccountState extends State<MyAccount>
                     Row(
                       children: <Widget>[
                         Expanded(
-                          child: genderCustomRadio(lst[0], 'Male'),
+                          child: GestureDetector(
+                            onTap: () => setState(() => changeIndex('Male')),
+                            child: Container(
+                              height: 50,
+                              width: 50,
+                              decoration: BoxDecoration(
+                                boxShadow: [
+                                  BoxShadow(color: Colors.black, blurRadius: 1),
+                                ],
+                                color: gender == 'Male' ? Colors.cyan : Colors.white,
+                                borderRadius: BorderRadius.all(Radius.circular(12)),
+                              ),
+                              child: Row(
+                                children: [
+                                  Icon(FontAwesomeIcons.male),
+                                  Text('Male',
+                                  style: TextStyle(
+                                    fontFamily: "Medium",
+                                    color: gender == 'Male' ? Colors.black : Colors.grey)
+                                  )
+                                ],
+                              )
+                            ),
+                          ),
                         ),
-                        SizedBox(width: 20.0),
+                        SizedBox(width: 20),
                         Expanded(
-                          child: genderCustomRadio(lst[1], 'Female'),
+                          child: GestureDetector(
+                            onTap: () => setState(() => changeIndex('Female')),
+                            child: Container(
+                              height: 50,
+                              width: 50,
+                              decoration: BoxDecoration(
+                                boxShadow: [
+                                  BoxShadow(color: Colors.black, blurRadius: 1),
+                                ],
+                                color: gender == 'Female' ? Colors.cyan : Colors.white,
+                                borderRadius: BorderRadius.all(Radius.circular(12)),
+                              ),
+                              child: Row(
+                                children: [
+                                  Icon(FontAwesomeIcons.female),
+                                  Text('Female', 
+                                    style: TextStyle(
+                                      fontFamily: "Medium",
+                                      color: gender == 'Female' ? Colors.black : Colors.grey)
+                                  )
+                                ],
+                              )
+                            ),
+                          ),
                         ),
+                        // Expanded(
+                        //   child: genderCustomRadio(lst[0], 'Male'),
+                        // ),
+                        // SizedBox(width: 20.0),
+                        // Expanded(
+                        //   child: genderCustomRadio(lst[1], 'Female'),
+                        // ),
                       ],
                     ),
                     SizedBox(height: 16.0),
@@ -324,23 +378,23 @@ class _MyAccountState extends State<MyAccount>
     );
   }
 
-  Widget genderCustomRadio(String txt, String index) {
-    return ButtonTheme(
-      height: 50.0,
-      child: OutlineButton(
-        onPressed: () => changeIndex(index),
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
-        splashColor: Colors.transparent,
-        borderSide: BorderSide(
-            color: gender == index ? Colors.cyan : Colors.grey),
-        child: Text(txt,
-          style: TextStyle(
-              color: gender == index ? Colors.black : Colors.grey),
-        ),
-      ),
-    );
-  }
+  // Widget genderCustomRadio(String txt, String index) {
+  //   return ButtonTheme(
+  //     height: 50.0,
+  //     child: OutlineButton(
+  //       onPressed: () => changeIndex(index),
+  //       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+  //       splashColor: Colors.transparent,
+  //       borderSide: BorderSide(
+  //           color: gender == index ? Colors.cyan : Colors.grey),
+  //       child: Text(txt,
+  //         style: TextStyle(
+  //             color: gender == index ? Colors.black : Colors.grey),
+  //       ),
+  //     ),
+  //   );
+  // }
+
 
   Widget locationPicker(BuildContext context) {
     return _LocationDropdown(

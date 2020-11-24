@@ -28,19 +28,19 @@ class _ConfrimTransferAmountState extends State<ConfrimTransferAmount> with Sing
   bool showSpinner = false;
   bool showChecked = false;
   AnimationController animationController;
-  bool _isButtonDisabled = true;
+  // bool _isButtonDisabled = true;
   
-  _checkInputForConfirm(double amount) {
-    if (amount > 0.0) {
-      setState(() {
-        _isButtonDisabled = false;
-      });
-    } else {
-      setState(() {
-        _isButtonDisabled = true;
-      });
-    }
-  }
+  // _checkInputForConfirm(double amount) {
+  //   if (amount > 0.0) {
+  //     setState(() {
+  //       _isButtonDisabled = false;
+  //     });
+  //   } else {
+  //     setState(() {
+  //       _isButtonDisabled = true;
+  //     });
+  //   }
+  // }
   
   @override
   void initState() {
@@ -55,10 +55,14 @@ class _ConfrimTransferAmountState extends State<ConfrimTransferAmount> with Sing
           showChecked = true;
         });
         Timer(
-          Duration(seconds: 1),
+          Duration(seconds: 2),
           () => setState(() {
                 showPageLoader = false;
-                Navigator.of(context).pop();
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (context) => Navbar()),
+                  ModalRoute.withName('/'),
+                );
               }),
         );
       }
@@ -77,6 +81,7 @@ class _ConfrimTransferAmountState extends State<ConfrimTransferAmount> with Sing
       showPageLoader = true;
       showSpinner = true;
       animationController.forward();
+      _submitValidate(context);
     });
   }
 
@@ -195,7 +200,8 @@ class _ConfrimTransferAmountState extends State<ConfrimTransferAmount> with Sing
                     child: _creditAmount(context),
                   ),
                   SizedBox(height: 50),
-                  Center(
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 40),
                     child: _btnTransfter(context),
                   ),
                 ],
@@ -269,12 +275,12 @@ class _ConfrimTransferAmountState extends State<ConfrimTransferAmount> with Sing
   Widget _btnTransfter(BuildContext context){
     return InkWell(
       child: Container(
-        width: 200,
+        // width: 200,
         height: 50,
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [Color(0xFF17ead9), Color(0xFF6078ea)]),
-          borderRadius: BorderRadius.circular(30),
+          borderRadius: BorderRadius.circular(12),
           boxShadow: [
             BoxShadow(
               color: Color(0xFF6078ea).withOpacity(.3),

@@ -200,7 +200,7 @@ class _EditUserPlanState extends State<EditUserPlan>
                       validators: [FormBuilderValidators.required()],
                       decoration: InputDecoration(
                         border: InputBorder.none,
-                        labelText: 'Plan Date:',
+                        labelText: 'Plan Date',
                         labelStyle: TextStyle(color: Colors.black, fontSize: 20)
                       ),
                       labelStyle: TextStyle(
@@ -210,8 +210,9 @@ class _EditUserPlanState extends State<EditUserPlan>
                       ),
                       selectedColor: Colors.cyan,
                       elevation: 2,
-                      alignment: WrapAlignment.spaceEvenly,
-                      labelPadding: EdgeInsets.only(left: 30, right: 30),
+                      alignment: WrapAlignment.spaceBetween,
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+                      labelPadding: EdgeInsets.only(left: 35, right: 35),
                       attribute: "planDate",
                       options: [
                         FormBuilderFieldOption(value: '30 Days'),
@@ -234,12 +235,12 @@ class _EditUserPlanState extends State<EditUserPlan>
                     Center(
                       child: InkWell(
                         child: Container(
-                          width: 150,
+                          // width: 150,
                           height: 50,
                           decoration: BoxDecoration(
                             gradient: LinearGradient(
                               colors: [Color(0xFF17ead9), Color(0xFF6078ea)]),
-                            borderRadius: BorderRadius.circular(30),
+                            borderRadius: BorderRadius.circular(12),
                             boxShadow: [
                               BoxShadow(
                                 color: Color(0xFF6078ea).withOpacity(.3),
@@ -255,7 +256,7 @@ class _EditUserPlanState extends State<EditUserPlan>
                                 _submitValidate(context);
                               },
                               child: Center(
-                                child: Text("SUBMIT",
+                                child: Text("UPDATE",
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontFamily: "Poppins-Bold",

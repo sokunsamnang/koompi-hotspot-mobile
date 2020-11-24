@@ -19,7 +19,7 @@ import 'package:koompi_hotspot/src/screen/login/login_page.dart';
     ) {
 
     ScreenUtil.instance = ScreenUtil.getInstance()..init(context);
-    ScreenUtil.instance = ScreenUtil(width: 750, height: 1410, allowFontScaling: true);
+    ScreenUtil.instance = ScreenUtil(width: 750, height: 1334, allowFontScaling: true);
     return new Scaffold(
       backgroundColor: Colors.white,
       resizeToAvoidBottomPadding: true,
@@ -66,52 +66,50 @@ import 'package:koompi_hotspot/src/screen/login/login_page.dart';
                     ],
                   ),
                   SizedBox(height: ScreenUtil.getInstance().setHeight(80)),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      InkWell(
-                        child: Container(
-                          width: ScreenUtil.getInstance().setWidth(330),
-                          height: ScreenUtil.getInstance().setHeight(100),
-                          decoration: BoxDecoration(
-                              gradient: LinearGradient(colors: [
-                                Color(0xFF17ead9),
-                                Color(0xFF6078ea)
-                              ]),
-                              borderRadius: BorderRadius.circular(30),
-                              boxShadow: [
-                                BoxShadow(
-                                    color: Color(0xFF6078ea).withOpacity(.3),
-                                    offset: Offset(0.0, 8.0),
-                                    blurRadius: 8.0)
-                              ]),
-                          child: Material(
-                            color: Colors.transparent,
-                            child: InkWell(
-                              highlightColor: Colors.transparent,
-                              splashColor: Colors.transparent,
-                              onTap: () {
-                                _submit();
-                                // Navigator.pushReplacement(
-                                // context,
-                                // MaterialPageRoute(
-                                //     builder: (context) => CompleteInfo(_email)),
-                                // );
-                              },  
-                              child: Center(
-                                child: Text("SIGN UP",
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontFamily: "Poppins-Bold",
-                                        fontSize: 18,
-                                        letterSpacing: 1.0)),
-                              ),
+                  Center(
+                    child: InkWell(
+                      child: Container(
+                        // width: ScreenUtil.getInstance().setWidth(500),
+                        height: ScreenUtil.getInstance().setHeight(100),
+                        decoration: BoxDecoration(
+                            gradient: LinearGradient(colors: [
+                              Color(0xFF17ead9),
+                              Color(0xFF6078ea)
+                            ]),
+                            borderRadius: BorderRadius.circular(12),
+                            boxShadow: [
+                              BoxShadow(
+                                  color: Color(0xFF6078ea).withOpacity(.3),
+                                  offset: Offset(0.0, 8.0),
+                                  blurRadius: 8.0)
+                            ]),
+                        child: Material(
+                          color: Colors.transparent,
+                          child: InkWell(
+                            highlightColor: Colors.transparent,
+                            splashColor: Colors.transparent,
+                            onTap: () {
+                              _submit();
+                              // Navigator.pushReplacement(
+                              // context,
+                              // MaterialPageRoute(
+                              //     builder: (context) => CompleteInfo(_email)),
+                              // );
+                            },  
+                            child: Center(
+                              child: Text("SIGN UP",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontFamily: "Poppins-Bold",
+                                      fontSize: 18,
+                                      letterSpacing: 1.0)),
                             ),
                           ),
                         ),
-                      )
-                    ],
+                      ),
+                    )
                   ),
+                  SizedBox(height: 20),
                   Container(
                     margin: EdgeInsets.symmetric(vertical: 20),
                     alignment: Alignment.bottomCenter,

@@ -48,6 +48,7 @@ class _SplashState extends State<Splash> {
   void isLoggedIn() async{
     StorageServices().checkUser(context);
   }
+  
 
   @override
   void initState() {

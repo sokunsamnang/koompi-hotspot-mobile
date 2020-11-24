@@ -109,7 +109,7 @@ Widget _balanceTokens(context) {
                   ),
                   SizedBox(height: 20),
                   Container(
-                      width: 175,
+                      width: 185,
                       padding:
                         EdgeInsets.symmetric(horizontal: 5, vertical: 1),
                       decoration: BoxDecoration(
@@ -136,7 +136,9 @@ Widget _balanceTokens(context) {
                                 ),
                                  SizedBox(width: 5),
                                 Text("Top up/Transfer",
-                                  style: TextStyle(color: Colors.white),
+                                  style: TextStyle(
+                                    fontFamily: "Medium",
+                                    color: Colors.white),
                               ),
                             ],
                           ),

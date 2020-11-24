@@ -285,12 +285,12 @@ class _LoginPageState extends State<LoginPage> {
                     Center(
                       child: InkWell(
                         child: Container(
-                          width: ScreenUtil.getInstance().setWidth(330),
+                          // width: ScreenUtil.getInstance().setWidth(330),
                           height: ScreenUtil.getInstance().setHeight(100),
                           decoration: BoxDecoration(
                               gradient: LinearGradient(
                                   colors: [Color(0xFF17ead9), Color(0xFF6078ea)]),
-                              borderRadius: BorderRadius.circular(30),
+                              borderRadius: BorderRadius.circular(12),
                               boxShadow: [
                                 BoxShadow(
                                     color: Color(0xFF6078ea).withOpacity(.3),

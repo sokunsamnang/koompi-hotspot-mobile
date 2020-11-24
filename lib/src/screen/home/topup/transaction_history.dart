@@ -72,12 +72,12 @@ class _TransactionState extends State<Transaction> {
       margin: EdgeInsets.all(15.0),
       child: Column(
         children: <Widget>[
-          accountItems("Top Up", r"+ 200000 ៛", "28-10-20", "Balance",
+          accountItems("Top Up", r"+ 600000 ៛", "28-10-20", "Balance",
             oddColour: const Color(0xFFF7F7F9)),
           accountItems("Hotspot Plan 30 Days", r"- 5000 ៛", "26-04-20", "Balance"),
           accountItems("Top Up", r"+ 5000 ៛", "28-04-20", "Balance",
             oddColour: const Color(0xFFF7F7F9)),
-          accountItems("Hotspot Plan 365 Days", r"- 200000 ៛", "26-04-20", "Balance"),
+          accountItems("Hotspot Plan 365 Days", r"- 600000 ៛", "26-04-20", "Balance"),
           accountItems("Top Up", r"+ 10000 ៛", "14-04-20", "Balance",
             oddColour: const Color(0xFFF7F7F9)),
         ],

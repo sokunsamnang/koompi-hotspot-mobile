@@ -1,11 +1,10 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:koompi_hotspot/src/backend/get_request.dart';
-import 'package:koompi_hotspot/src/backend/post_request.dart';
 import 'package:koompi_hotspot/src/components/navbar.dart';
 import 'package:koompi_hotspot/src/screen/login/login_page.dart';
+import 'package:koompi_hotspot/src/services/jtw_decoder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
@@ -13,52 +12,76 @@ class StorageServices{
 
   static String _decode;
   static SharedPreferences _preferences;
+  bool status;
+  JwtDecoder _jwtDecoder = JwtDecoder();
+
 
   void clearPref() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     pref.remove('token');
   }
 
-  // checkUser(BuildContext context) async {
-  //   SharedPreferences isToken = await SharedPreferences.getInstance();
+  checkUser(BuildContext context) async {
+    SharedPreferences isToken = await SharedPreferences.getInstance();
+    String token = isToken.getString('token');
 
-  //   String _token = isToken.getString('token');
-  //   if (_token != null) {
-  //     await GetRequest().getUserProfile(_token);
-  //     Navigator.pushReplacement(
-  //         context, MaterialPageRoute(builder: (context) => Navbar()));
-  //   }
-  //   else{
-  //     Navigator.pushReplacement(
-  //       context, MaterialPageRoute(builder: (context) => LoginPage()));
+    if(JwtDecoder.isExpired(token) == true){
+      print('token expired');
+      clear('token'); 
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => LoginPage()),
+        ModalRoute.withName('/'),
+      );
+    }
+    else if (JwtDecoder.isExpired(token) == false) {
+      print('token not expire');
+      await GetRequest().getUserProfile(token);
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => Navbar()));
+    }
+    else{
+      Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: (context) => LoginPage()));
+    }
+  }
+
+  // void checkUser(BuildContext context) {
+  //   try {
+  //     read('token').then(
+  //       (value) async {
+  //         String token = value;
+  //         var resposne = await GetRequest().getUserProfile(token);
+  //         print('Status Code Response: ${resposne.statusCode}');
+  //         if(JwtDecoder.isExpired(token) == true || token == null){
+  //           print('Failed: ${resposne.statusCode}');
+  //           StorageServices().clear('token');
+  //           Navigator.pushReplacement(
+  //             context, MaterialPageRoute(builder: (context) => LoginPage()));
+  //         }
+  //         else if (resposne.statusCode == 200) {
+            
+  //           print('Success: ${resposne.statusCode}');
+  //           Navigator.pushReplacement(
+  //             context, MaterialPageRoute(builder: (context) => Navbar()));
+  //         }
+  //       },
+  //     );
+  //   } catch (e) {
   //   }
   // }
 
-  void checkUser(BuildContext context) {
-    read('token').then(
-      (value) async {
-        String _token = value;
-        var resposne = await GetRequest().getUserProfile(_token);
-        print('Status Code Response: ${resposne.statusCode}');
-        if (resposne.statusCode == 200) {
-          print('Success: ${resposne.statusCode}');
-          Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => Navbar()));
-        }
-        else if(resposne.statusCode == 403){
-          print('Failed: ${resposne.statusCode}');
+  void tokenExpireChecker(BuildContext context) async {
+    if (status != null){
+      await Future.delayed(Duration(seconds: 1), () async {
+        Navigator.pop(context);
+        if (status == false){
           StorageServices().clear('token');
-          Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => LoginPage()));
         }
-        else{
-          Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => LoginPage()));
-        }
-      },
-    );
+      });
+    }
   }
-
+  
   void updateUserData(BuildContext context) {
     read('token').then(
       (value) async {
@@ -74,7 +97,6 @@ class StorageServices{
       },
     );
   }
-  
 
 
 
