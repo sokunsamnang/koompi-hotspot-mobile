@@ -14,6 +14,8 @@ import 'package:koompi_hotspot/src/services/network_status.dart';
 import 'package:koompi_hotspot/src/services/services.dart';
 import 'dart:io';
 
+import 'package:koompi_hotspot/src/services/updater.dart';
+
 class LoginPage extends StatefulWidget {
   _LoginPageState createState() => _LoginPageState();
 }
@@ -37,6 +39,12 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     internet();
+    try {
+      print('run version check');
+      versionCheck(context);
+    } catch (e) {
+      print(e);
+    }
     super.initState();
   }
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:koompi_hotspot/src/screen/home/home_page/home_page_body.dart';
+import 'package:koompi_hotspot/src/services/updater.dart';
 
 class HomePage extends StatefulWidget{
 
@@ -9,7 +10,13 @@ class HomePage extends StatefulWidget{
 
 class _HomePageState extends State<HomePage>{
 
-  void iniState() {
+  void initState() {
+    try {
+      print('run version check');
+      versionCheck(context);
+    } catch (e) {
+      print(e);
+    }
     super.initState();
   }
   

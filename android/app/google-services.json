@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "508907035539",
+    "firebase_url": "https://koompi-hotspot-flutter.firebaseio.com",
+    "project_id": "koompi-hotspot-flutter",
+    "storage_bucket": "koompi-hotspot-flutter.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:508907035539:android:928207e4ebae8d327a2666",
+        "android_client_info": {
+          "package_name": "com.example.koompi_hotspot"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "508907035539-75q3pgber30ivfd9auh6b22l28308f6r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBLsMhQNmzSzgWm-g_dx7nsOsU9HP_Gm8c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "508907035539-75q3pgber30ivfd9auh6b22l28308f6r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "16"
+}

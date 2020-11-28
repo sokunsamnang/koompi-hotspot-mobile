@@ -6,14 +6,12 @@ import 'package:koompi_hotspot/src/components/navbar.dart';
 import 'package:koompi_hotspot/src/screen/login/login_page.dart';
 import 'package:koompi_hotspot/src/services/jtw_decoder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:http/http.dart' as http;
 
 class StorageServices{
 
   static String _decode;
   static SharedPreferences _preferences;
   bool status;
-  JwtDecoder _jwtDecoder = JwtDecoder();
 
 
   void clearPref() async {
@@ -25,7 +23,7 @@ class StorageServices{
     SharedPreferences isToken = await SharedPreferences.getInstance();
     String token = isToken.getString('token');
 
-    if(JwtDecoder.isExpired(token) == true){
+    if(JwtDecoder.isExpired(token) == true || token == null){
       print('token expired');
       clear('token'); 
       Navigator.pushAndRemoveUntil(
@@ -34,7 +32,7 @@ class StorageServices{
         ModalRoute.withName('/'),
       );
     }
-    else if (JwtDecoder.isExpired(token) == false) {
+    else if (JwtDecoder.isExpired(token) == false ) {
       print('token not expire');
       await GetRequest().getUserProfile(token);
       Navigator.pushReplacement(
@@ -70,17 +68,6 @@ class StorageServices{
   //   } catch (e) {
   //   }
   // }
-
-  void tokenExpireChecker(BuildContext context) async {
-    if (status != null){
-      await Future.delayed(Duration(seconds: 1), () async {
-        Navigator.pop(context);
-        if (status == false){
-          StorageServices().clear('token');
-        }
-      });
-    }
-  }
   
   void updateUserData(BuildContext context) {
     read('token').then(
