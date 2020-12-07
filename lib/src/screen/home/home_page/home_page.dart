@@ -22,12 +22,12 @@ class _HomePageState extends State<HomePage>{
   
   Widget build(BuildContext context){
     return Scaffold(
-      body: Container(
-        alignment: Alignment.topCenter,
-        child: SafeArea(
-          child: bodyPage(context),
+      body: SafeArea(
+          child: SingleChildScrollView(
+            physics: AlwaysScrollableScrollPhysics(),
+            child: bodyPage(context),
+          ),
         ),
-      ),  
     );   
   }
 }

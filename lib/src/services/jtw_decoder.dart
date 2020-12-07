@@ -41,30 +41,4 @@ class JwtDecoder {
       return true;
     }
   }
-
-  static DateTime getExpirationDate(String token) {
-    final Map<String, dynamic> decodedToken = decode(token);
-
-    if (decodedToken != null) {
-      final DateTime expirationDate = new DateTime.fromMillisecondsSinceEpoch(0)
-          .add(new Duration(seconds: decodedToken['exp']));
-      print(expirationDate);
-      return expirationDate;
-    } else {
-      return null;
-    }
-  }
-
-  static Duration getTokenTime(String token) {
-    final Map<String, dynamic> decodedToken = decode(token);
-
-    if (decodedToken != null) {
-      final DateTime expirationDate = new DateTime.fromMillisecondsSinceEpoch(0)
-          .add(new Duration(seconds: decodedToken["iat"]));
-      print(expirationDate);
-      return new DateTime.now().difference(expirationDate);
-    } else {
-      return null;
-    }
-  }
 }

@@ -107,7 +107,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             ),
                             SizedBox(height: 15.0),
                             Text(
-                              'Koompi Wi-Fi hotspot is for accessable and affordable',
+                              'Koompi Wi-Fi hotspot is accessable and affordable',
                               style: kSubtitleStyle,
                             ),
                           ],
@@ -134,7 +134,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             ),
                             SizedBox(height: 15.0),
                             Text(
-                              'For everyone for koompi school partner',
+                              'For everyone and koompi\'s school partner',
                               style: kSubtitleStyle,
                             ),
                           ],
@@ -207,7 +207,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     ),
                   ),
                 )
-                    : Text(''),
+                : Text(''),
               ],
             ),
           ),
@@ -215,7 +215,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       ),
       bottomSheet: _currentPage == _numPages - 1
           ? Container(
-        height: 100.0,
+        height: 75 ,
         width: double.infinity,
         color: Colors.white,
         child: GestureDetector(
@@ -224,15 +224,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 MaterialPageRoute(builder: (context) => LoginPage()))
           },
           child: Center(
-            child: Padding(
-              padding: EdgeInsets.only(bottom: 30.0),
-              child: Text(
-                'Get started',
-                style: TextStyle(
-                  color: Color(0xFF5B16D0),
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.bold,
-                ),
+            child: Text(
+              'Get started',
+              style: TextStyle(
+                color: Color(0xFF5B16D0),
+                fontSize: 20.0,
+                fontWeight: FontWeight.bold,
               ),
             ),
           ),

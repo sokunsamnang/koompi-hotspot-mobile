@@ -21,7 +21,7 @@ dependencies:
     sdk: flutter
   app_settings: ^4.0.4
   cached_network_image: ^2.2.0+1
-  carousel_slider: ^1.4.1
+  carousel_slider: ^2.3.1
   connectivity: ^0.4.9
   cupertino_icons: ^0.1.2
   custom_radio_grouped_button: any
@@ -41,6 +41,7 @@ dependencies:
   flutter_typeahead: ^1.8.8
   font_awesome_flutter: ^8.10.0
   geolocator: ^5.1.5
+  getwidget: ^1.2.4
   google_fonts: ^1.1.0
   google_nav_bar: ^2.0.0
   http: ^0.12.1

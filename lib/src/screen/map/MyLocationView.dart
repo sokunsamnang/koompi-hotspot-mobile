@@ -1,17 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
-import 'package:koompi_hotspot/src/screen/map/globals.dart';
 import 'package:latlong/latlong.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:flutter/services.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import '../map/globals.dart' as globals;
-import "dart:math" as math;
-import 'dart:convert';
 import 'package:app_settings/app_settings.dart';
-import 'package:permission_handler/permission_handler.dart';
-
-import 'FavoriteLocationDropDownView.dart';
 
 class MyLocationView extends StatefulWidget {
   @override
@@ -111,16 +102,6 @@ class MyLocationViewState extends State<MyLocationView>
     }
   }
 
-  // String positionName() {
-  //   if (globals.weatherResponse != null) {
-  //     var weatherData =
-  //         new WeatherData.fromJson(jsonDecode(weatherResponse.body));
-  //     return weatherData.name.toString();
-  //   } else {
-  //     return null;
-  //   }
-  // }
-
   _checkGPS() async {
     /// when back to this tab should get previous position from libraries
     if (lat != null && long != null) {
@@ -176,74 +157,6 @@ class MyLocationViewState extends State<MyLocationView>
     });
   }
 
-  // _favoritePlaces() async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-
-  //   /// get the favorite position then added to prefs
-  //   var placeName = favoritePlaceController.text;
-
-  //   ///convert position to string and concat it
-  //   var placePosition = lat.toString() +
-  //       ',' +
-  //       long.toString() +
-  //       ',' +
-  //       FavoriteLocationDropDown.currentImage.toString();
-  //   print('Place Name $placeName => $placePosition Captured.');
-  //   await prefs.setString(
-  //     '$placeName',
-  //     '$placePosition',
-  //   );
-  //   favoritePlaceController.clear();
-  // }
-
-  //declaring Bottom sheet widget
-  // Widget buildSheetLogin(BuildContext context) {
-  //   return new Container(
-  //     child: Wrap(children: <Widget>[
-  //       Container(
-  //         padding: new EdgeInsets.only(left: 10.0, top: 10.0),
-  //         width: MediaQuery.of(context).size.width / 1.7,
-  //         child: TextFormField(
-  //           controller: favoritePlaceController,
-  //           decoration: InputDecoration(
-  //             border: OutlineInputBorder(
-  //               borderSide: BorderSide(color: Colors.black),
-  //             ),
-
-  //             /// focused border color (erasing theme default color [teal])
-  //             focusedBorder: OutlineInputBorder(
-  //                 borderRadius: BorderRadius.all(Radius.circular(5.0)),
-  //                 borderSide: BorderSide(color: Colors.black)),
-  //             labelText: "Place name",
-  //             hintText: "Enter Place Name",
-  //             prefixIcon: Icon(
-  //               Icons.save_alt,
-  //               color: Colors.teal,
-  //             ),
-  //           ),
-  //         ),
-  //       ),
-  //       Container(child: FavoriteLocationDropDown()),
-  //       Row(
-  //         mainAxisAlignment: MainAxisAlignment.end,
-  //         children: <Widget>[
-  //           Padding(
-  //             padding: const EdgeInsets.only(right: 8.0),
-  //             child: RaisedButton(
-  //               color: Colors.teal,
-  //               textColor: Colors.white,
-  //               child: Text("Save"),
-  //               onPressed: () {
-  //                 _favoritePlaces();
-  //                 Navigator.pop(context);
-  //               },
-  //             ),
-  //           ),
-  //         ],
-  //       ),
-  //     ]),
-  //   );
-  // }
 
   ///to show a snackBar after copy
   final GlobalKey<ScaffoldState> mykey = new GlobalKey<ScaffoldState>();

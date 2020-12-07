@@ -54,6 +54,7 @@ class NetworkStatus {
           Text('No Internet Connection', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
           SizedBox(height: 10),
           Text('Please check your internet connection and try again.'),
+          SizedBox(height: 10),
           RaisedButton(
             onPressed: () {
               Navigator.pushAndRemoveUntil(

@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'package:connectivity/connectivity.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:koompi_hotspot/src/screen/onboarding/onboarding_screen.dart';
+import 'package:koompi_hotspot/src/services/network_status.dart';
 import 'package:koompi_hotspot/src/services/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -22,7 +24,7 @@ class Splash extends StatefulWidget {
 
 class _SplashState extends State<Splash> {
 
-  // NetworkStatus _networkStatus = NetworkStatus();
+  NetworkStatus _networkStatus = NetworkStatus();
 
   startTime() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -49,25 +51,34 @@ class _SplashState extends State<Splash> {
     StorageServices().checkUser(context);
   }
   
-
+  void internet() async {
+    _networkStatus.connectivityResult = await Connectivity().checkConnectivity();
+    _networkStatus.connectivitySubscription = _networkStatus.connectivity.onConnectivityChanged.listen((event) {
+      setState(() {
+        _networkStatus.connectivityResult = event;
+      });
+    });
+  }
+  
   @override
   void initState() {
-    super.initState();
     setState(() {
+      internet();
       startTime();
     });
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      body: Center(
+      body: _networkStatus.connectivityResult != ConnectivityResult.none ? Center(
         child: FlareActor( 
           'assets/animations/splash_screen.flr', 
           animation: 'Splash_Loop',
         ),
-      ),
+      ) : _networkStatus.restartApp(context),
     );
   }
 }
