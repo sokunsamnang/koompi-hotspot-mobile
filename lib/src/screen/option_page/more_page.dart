@@ -1,17 +1,14 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:koompi_hotspot/src/components/reuse_widget.dart';
 import 'package:koompi_hotspot/src/models/model_userdata.dart';
-import 'package:koompi_hotspot/src/screen/home/topup/transaction_history.dart';
+import 'package:koompi_hotspot/src/screen/home/wallet/mywallet.dart';
+import 'package:koompi_hotspot/src/screen/home/wallet/transaction_history.dart';
 import 'package:koompi_hotspot/src/screen/option_page/myaccount.dart';
 import 'package:koompi_hotspot/src/screen/login/login_page.dart';
 import 'package:koompi_hotspot/src/services/services.dart';
 import 'package:line_icons/line_icons.dart';
 import 'change_password.dart';
-import 'speedtest.dart';
-import '../home/topup/topup.dart';
 
 class MorePage extends StatefulWidget {
   @override
@@ -96,7 +93,7 @@ class _MorePageState extends State<MorePage>
                       onTap: () async {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => TopUp()),
+                          MaterialPageRoute(builder: (context) => MyWallet()),
                         );
                       },
                     ),

@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:koompi_hotspot/src/models/model_userdata.dart';
 import 'package:koompi_hotspot/src/screen/home/home_page/promotion.dart';
 import 'package:koompi_hotspot/src/screen/home/hotspot/plan.dart';
-import 'package:koompi_hotspot/src/screen/home/topup/topup.dart';
-import 'package:koompi_hotspot/src/screen/home/topup/transfer_credit.dart';
+import 'package:koompi_hotspot/src/screen/home/wallet/mywallet.dart';
 
 Widget bodyPage(BuildContext context) {
   return Container(
@@ -83,7 +82,7 @@ Widget bodyPage(BuildContext context) {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         Text(
-                          '0.00',
+                          '2,564.95',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 35,
@@ -103,9 +102,9 @@ Widget bodyPage(BuildContext context) {
                     ),
                     SizedBox(height: 20),
                     Container(
-                        width: 185,
+                        width: 110,
                         padding:
-                          EdgeInsets.symmetric(horizontal: 3, vertical: 1),
+                          EdgeInsets.symmetric(horizontal: 1, vertical: 1),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(12)),
                           border: Border.all(color: Colors.white, width: 1)),
@@ -116,20 +115,20 @@ Widget bodyPage(BuildContext context) {
                               highlightColor: Colors.transparent,
                               splashColor: Colors.transparent,
                               onPressed: () {
-                                showModalBottomSheet<void>(
-                                  context: context,
-                                  builder: (BuildContext context) => depositAndTransferPopUp(context),
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => MyWallet()),
                                 );
                               },
                               child: Row(
                                 children: <Widget>[
                                   Icon(
-                                    Icons.add,
+                                    Icons.read_more,
                                     color: Colors.white,
                                     size: 20,
                                   ),
                                   SizedBox(width: 5),
-                                  Text("Deposit/Transfer",
+                                  Text("Detail",
                                     style: TextStyle(
                                       fontFamily: "Medium",
                                       color: Colors.white),
@@ -278,105 +277,6 @@ Widget planView(BuildContext context) {
           ),
         ),
       ],
-    ),
-  );
-}
-
-Widget depositAndTransferPopUp(BuildContext context) {
-  return Scaffold(
-    appBar: AppBar(
-      titleSpacing: 25,
-      title: Text('Deposit/Transfer', style: TextStyle(color: Colors.black),),
-      elevation: 0.0,
-      automaticallyImplyLeading: false,
-      backgroundColor: Colors.white,
-      actions: <Widget>[
-        Padding(
-          padding: EdgeInsets.only(right: 5.0),
-          child: GestureDetector(
-            child: IconButton(
-              iconSize: 35.0,
-              icon: Icon(
-                Icons.cancel,
-                color: Colors.black,
-              ),
-              onPressed: () async {
-                Navigator.pop(context);
-              },
-            ),
-          ),
-        ),
-      ],
-    ),
-    body: SingleChildScrollView(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          SizedBox(
-            height: 16,
-          ),
-          Container(
-            height: 180,
-            padding: EdgeInsets.only(top: 4),
-            color: Colors.white,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Image.asset(
-                  'assets/images/topup_Payment.jpg',
-                  height: 500,
-                  width: 260,
-                  fit: BoxFit.fitWidth
-                ),
-              ]
-            ),
-          ),
-          SizedBox(
-            height: 16,
-          ),
-          Card(
-            elevation: 8.0,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10.0),
-            ),
-            margin: const EdgeInsets.all(8.0),
-            color: Colors.white,
-            child: ListTile(
-              onTap: () async {
-                Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (context) => TopUp()));
-              },
-              title: Text('Deposit for my account',
-                style: TextStyle(
-                    color: Colors.black, fontWeight: FontWeight.w500),
-              ),
-              trailing: Icon(Icons.chevron_right),
-            ),
-          ),
-          Card(
-            elevation: 8.0,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10.0),
-            ),
-            margin: const EdgeInsets.all(8.0),
-            color: Colors.white,
-            child: ListTile(
-              onTap: () async {
-                Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (context) => TransferCredit()));
-              },
-              title: Text('Transfer to a friend',
-                style: TextStyle(
-                    color: Colors.black, fontWeight: FontWeight.w500),
-              ),
-              trailing: Icon(Icons.chevron_right),
-            ),
-          ),
-        ],
-      ),
     ),
   );
 }
