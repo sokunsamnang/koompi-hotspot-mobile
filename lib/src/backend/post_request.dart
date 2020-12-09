@@ -3,11 +3,17 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:koompi_hotspot/src/backend/component.dart';
+import 'package:koompi_hotspot/src/models/model_userdata.dart';
+import 'package:koompi_hotspot/src/services/services.dart';
 import 'api_service.dart';
 
 class PostRequest with ChangeNotifier{
 
   Backend _backend = Backend();
+  var _mUser = new ModelUserData();
+  ModelUserData get mUser => _mUser;
+  String alertText;
+  StorageServices _storageServices = StorageServices();
 
   /*Login Account */
   Future<http.Response> userLogIn(String email, String password) async {
@@ -176,4 +182,43 @@ class PostRequest with ChangeNotifier{
     print(_backend.response.body);
     return _backend.response;
   }
+
+  Future<http.Response> getWallet(String email) async {
+    _backend.bodyEncode = json.encode({
+      "email": email,
+    });
+
+    _backend.response = await http.post('${ApiService.url}/selendra/get-wallet', 
+    headers: _backend.conceteHeader(null, null), 
+    body: _backend.bodyEncode);
+
+    print(_backend.response.body);
+    return _backend.response;
+  }
+
+  // Future<String> getWallet(String email) async {
+  //   await _storageServices.read('token').then((value) async {
+  //     var response = await http.post('${ApiService.url}/selendra/get-wallet',
+  //       headers: <String, String>{
+  //         "accept": "application/json",
+  //         "authorization": "Bearer " + value,
+  //         "Content-Type": "application/json"
+  //       },
+  //       body: _backend.bodyEncode);
+  //     var responseBody = json.decode(response.body);
+  //     if (response.statusCode == 200) {
+  //       try {
+  //         alertText = responseBody['message'];
+  //       } catch (e) {
+  //         //var wallet = WalletResponse.fromJson(responseBody);
+  //         print(e);
+  //       }
+  //     } else {
+  //       alertText = responseBody['error']['message'];
+  //     }
+  //   });
+  //   return alertText;
+  // }
+
 }
+

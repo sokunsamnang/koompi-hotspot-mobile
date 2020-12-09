@@ -6,6 +6,7 @@ class ModelUserData{
   String birthdate;
   String address;
   dynamic image;
+  String wallet;
 
   Map<String, dynamic> userData;
   
@@ -15,7 +16,8 @@ class ModelUserData{
     this.email,
     this.birthdate,
     this.address,
-    this.image
+    this.image,
+    this.wallet
   });
 
   ModelUserData.fromJson(Map<String,dynamic> parseJson){
@@ -25,6 +27,7 @@ class ModelUserData{
     birthdate = parseJson['birthdate'];
     address = parseJson['address'];
     image = parseJson['image'];
+    wallet = parseJson['wallet'];
   }
 
   Map<String, dynamic> fetchEmail = {};

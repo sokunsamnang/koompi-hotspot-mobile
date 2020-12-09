@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:koompi_hotspot/src/models/model_userdata.dart';
 import 'package:koompi_hotspot/src/screen/home/home_page/home_page_body.dart';
 import 'package:koompi_hotspot/src/services/updater.dart';
 

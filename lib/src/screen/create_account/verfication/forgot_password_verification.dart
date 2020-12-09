@@ -168,7 +168,7 @@ class _ForgotPasswordVerificationState extends State<ForgotPasswordVerification>
                         fontWeight: FontWeight.bold,
                       ),
                       length: 6,
-                      obsecureText: false,
+                      obscureText: false,
                       animationType: AnimationType.fade,
                       validator: (v) {
                         if (v.length < 3) {
@@ -185,7 +185,7 @@ class _ForgotPasswordVerificationState extends State<ForgotPasswordVerification>
                         activeFillColor:
                             hasError ? Colors.orange : Colors.white,
                       ),
-                      textInputType: TextInputType.number,
+                      keyboardType: TextInputType.number,
                       inputFormatters: <TextInputFormatter> [
                         FilteringTextInputFormatter.digitsOnly
                       ],
