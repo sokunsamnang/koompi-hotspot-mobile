@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:koompi_hotspot/src/backend/component.dart';
 import 'package:koompi_hotspot/src/backend/get_request.dart';
 import 'package:koompi_hotspot/src/models/model_balance.dart';
 import 'package:koompi_hotspot/src/screen/home/mywallet/my_wallet.dart';
 import 'package:koompi_hotspot/src/screen/home/mywallet/wallet_choice.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Body extends StatefulWidget {
@@ -12,8 +12,6 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-  Backend _backend = Backend();
-
   GetRequest _getRequest = GetRequest();
 
   showAlertDialog(BuildContext context, String alertText) {
@@ -57,23 +55,23 @@ class _BodyState extends State<Body> {
     setState(() {});
   }
 
-  // void fetchHistory() async {
-  //   await _getRequest.getTrxHistory();
-  // }
+  void fetchHistory() async {
+    await _getRequest.getTrxHistory();
+  }
 
   @override
   void initState() {
-    // fetchHistory();
+    fetchHistory();
     super.initState();
-    // Provider.of<UserProvider>(context, listen: false).fetchPortforlio();
+    Provider.of<BalanceProvider>(context, listen: false).fetchPortforlio();
   }
 
   @override
   Widget build(BuildContext context) {
-    return mBalance.data == null
-      ? Center(
-          child: WalletChoice(onGetWallet, showAlertDialog),
-        )
-      : MyWallet();
+    return mBalance == null
+        ? Center(
+            child: WalletChoice(onGetWallet, showAlertDialog),
+          )
+        : MyWallet(resetState: resetState);
   }
 }

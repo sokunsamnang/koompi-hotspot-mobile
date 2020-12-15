@@ -107,7 +107,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             ),
                             SizedBox(height: 15.0),
                             Text(
-                              'Koompi Wi-Fi hotspot is accessable and affordable',
+                              'KOOMPI Wi-Fi hotspot is accessable and affordable',
                               style: kSubtitleStyle,
                             ),
                           ],

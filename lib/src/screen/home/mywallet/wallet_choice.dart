@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:koompi_hotspot/src/backend/get_request.dart';
 import 'package:koompi_hotspot/src/backend/post_request.dart';
 import 'package:koompi_hotspot/src/components/reuse_widget.dart';
 import 'package:koompi_hotspot/src/models/model_balance.dart';
@@ -21,20 +22,10 @@ class WalletChoice extends StatefulWidget {
 
 class _WalletChoiceState extends State<WalletChoice> {
   String alertText;
-
-  Future checkFirstSeen() async {
-    SharedPreferences isSeen = await SharedPreferences.getInstance();
-    bool _seen = (isSeen.getBool('seen') ?? false);
-    if (_seen != true && mBalance.data == null) {
-      isSeen.setBool('seen', true);
-      alertText = 'Look like you don\'t have a wallet yet!';
-      widget.showAlertDialog(context, alertText);
-    }
-  }
+  String _token;
 
   @override
   void initState() {
-    checkFirstSeen();
     super.initState();
   }
 
@@ -64,7 +55,7 @@ class _WalletChoiceState extends State<WalletChoice> {
                   decoration: BoxDecoration(
                       gradient: LinearGradient(
                           colors: [Color(0xFF17ead9), Color(0xFF6078ea)]),
-                      borderRadius: BorderRadius.circular(30),
+                      borderRadius: BorderRadius.circular(12),
                       boxShadow: [
                         BoxShadow(
                             color: Color(0xFF6078ea).withOpacity(.3),
@@ -77,9 +68,10 @@ class _WalletChoiceState extends State<WalletChoice> {
                     highlightColor: Colors.transparent,
                     splashColor: Colors.transparent,
                     onTap: () async {
-                      var response = await PostRequest().getWallet(mData.email);
+                      dialogLoading(context);
+                      var response = await GetRequest().getWallet();
                       if(response.statusCode == 200){
-                        dialogLoading(context);
+                        print(response.body);
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(builder: (context) => MyWallet()),

@@ -1,6 +1,7 @@
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:koompi_hotspot/src/models/model_balance.dart';
 import 'package:koompi_hotspot/src/screen/home/home_page/home_page.dart';
 import 'package:koompi_hotspot/src/screen/home/hotspot/buy_plan.dart';
 import 'package:koompi_hotspot/src/screen/map/MyLocationView.dart';

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:koompi_hotspot/src/models/model_balance.dart';
 import 'package:koompi_hotspot/src/models/model_userdata.dart';
 import 'package:koompi_hotspot/src/screen/home/home_page/promotion.dart';
 import 'package:koompi_hotspot/src/screen/home/hotspot/plan.dart';
@@ -83,7 +84,7 @@ Widget bodyPage(BuildContext context) {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         Text(
-                          '2,564.95',
+                          '${mBalance.balance}',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 35,
@@ -92,7 +93,7 @@ Widget bodyPage(BuildContext context) {
                           
                         ),
                         Text(
-                          ' RSEL',
+                          ' SEL',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 35,

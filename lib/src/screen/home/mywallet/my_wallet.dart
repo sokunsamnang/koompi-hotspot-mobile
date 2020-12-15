@@ -5,11 +5,20 @@ import 'package:koompi_hotspot/src/constance/constance.dart';
 import 'package:koompi_hotspot/src/constance/global.dart';
 import 'package:koompi_hotspot/src/constance/global.dart' as globals;
 import 'package:koompi_hotspot/src/constance/themes.dart';
+import 'package:koompi_hotspot/src/models/model_balance.dart';
+import 'package:koompi_hotspot/src/models/model_trx_history.dart';
+import 'package:koompi_hotspot/src/models/model_userdata.dart';
+import 'package:koompi_hotspot/src/screen/home/mywallet/history_transaction.dart';
 import 'package:koompi_hotspot/src/screen/home/mywallet/receive_request.dart';
 import 'package:koompi_hotspot/src/screen/home/mywallet/send_request.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:provider/provider.dart';
 
 class MyWallet extends StatefulWidget {
+  final Function resetState;
+
+  MyWallet({this.resetState});
+  
   @override
   _MyWalletState createState() => _MyWalletState();
 }
@@ -64,26 +73,26 @@ class _MyWalletState extends State<MyWallet> {
             ),
           ),
           Scaffold(
-            appBar: AppBar(
-              title: Text('My Wallet', style: TextStyle(color: Colors.black)),
-              backgroundColor: Colors.white,  
-              iconTheme: IconThemeData(
-                color: Colors.black, //change your color here
-              ),
-              automaticallyImplyLeading: true,
-              leading: IconButton(
-                icon: Icon(Icons.arrow_back), 
-                onPressed: (){
-                  Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(builder: (context) => Navbar()),
-                    ModalRoute.withName('/'),
-                  );
-                }
-              ),
-            ),
+            // appBar: AppBar(
+            //   title: Text('My Wallet', style: TextStyle(color: Colors.black)),
+            //   backgroundColor: Colors.white,  
+            //   iconTheme: IconThemeData(
+            //     color: Colors.black, //change your color here
+            //   ),
+            //   automaticallyImplyLeading: true,
+            //   leading: IconButton(
+            //     icon: Icon(Icons.arrow_back), 
+            //     onPressed: (){
+            //       Navigator.pushAndRemoveUntil(
+            //         context,
+            //         MaterialPageRoute(builder: (context) => Navbar()),
+            //         ModalRoute.withName('/'),
+            //       );
+            //     }
+            //   ),
+            // ),
             key: _scaffoldKey,
-            backgroundColor: Colors.white,
+            // backgroundColor: Colors.white,
             // backgroundColor: AllCoustomTheme.getThemeData().primaryColor,
             body: ModalProgressHUD(
               inAsyncCall: _isInProgress,
@@ -124,7 +133,7 @@ class _MyWalletState extends State<MyWallet> {
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: <Widget>[
                               Text(
-                                '\RSEL',
+                                'SEL',
                                 style: TextStyle(
                                   color: Colors.black,
                                   // color: AllCoustomTheme.getTextThemeColors(),
@@ -133,21 +142,12 @@ class _MyWalletState extends State<MyWallet> {
                                 ),
                               ),
                               Text(
-                                '2,564',
+                                '${mBalance.balance}',
                                 style: TextStyle(
                                   color: Colors.black,
                                   // color: AllCoustomTheme.getTextThemeColors(),
                                   fontWeight: FontWeight.bold,
                                   fontSize: 35,
-                                ),
-                              ),
-                              Text(
-                                '.95',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  // color: AllCoustomTheme.getTextThemeColors(),
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: ConstanceData.SIZE_TITLE20,
                                 ),
                               ),
                               Expanded(
@@ -258,154 +258,7 @@ class _MyWalletState extends State<MyWallet> {
                         SizedBox(
                           height: 20,
                         ),
-                        Expanded(
-                          child: ListView(
-                            physics: BouncingScrollPhysics(),
-                            padding: EdgeInsets.all(0),
-                            children: <Widget>[
-                              Padding(
-                                padding: const EdgeInsets.only(left: 16, right: 16),
-                                child: Column(
-                                  children: <Widget>[
-                                    Container(
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
-                                        color: AllCoustomTheme.boxColor(),
-                                      ),
-                                      height: 80,
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(left: 16, top: 10),
-                                        child: Column(
-                                          children: <Widget>[
-                                            Row(
-                                              children: <Widget>[
-                                                CircleAvatar(
-                                                  backgroundColor: AllCoustomTheme.getsecoundTextThemeColor(),
-                                                  radius: 20,
-                                                  child: Icon(
-                                                    Icons.music_note,
-                                                    color: AllCoustomTheme.boxColor(),
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  width: 10,
-                                                ),
-                                                Column(
-                                                  mainAxisAlignment: MainAxisAlignment.center,
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                  children: <Widget>[
-                                                    Text(
-                                                      'Apple Music',
-                                                      style: TextStyle(
-                                                        color: AllCoustomTheme.getTextThemeColors(),
-                                                      ),
-                                                    ),
-                                                    SizedBox(
-                                                      height: 4,
-                                                    ),
-                                                    Text(
-                                                      'SUBSCRIPTION',
-                                                      style: TextStyle(
-                                                        color: AllCoustomTheme.getsecoundTextThemeColor(),
-                                                        fontSize: ConstanceData.SIZE_TITLE12,
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                                Expanded(
-                                                  child: SizedBox(),
-                                                ),
-                                                Padding(
-                                                  padding: const EdgeInsets.only(right: 16),
-                                                  child: Text(
-                                                    "-\$10",
-                                                    style: TextStyle(
-                                                      color: AllCoustomTheme.getsecoundTextThemeColor(),
-                                                      fontWeight: FontWeight.bold,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            Padding(
-                                              padding: const EdgeInsets.only(left: 50),
-                                              child: AnimatedDivider(),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                    Container(
-                                      color: AllCoustomTheme.boxColor(),
-                                      height: 80,
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(left: 16),
-                                        child: Column(
-                                          children: <Widget>[
-                                            Row(
-                                              children: <Widget>[
-                                                CircleAvatar(
-                                                  backgroundColor: AllCoustomTheme.getsecoundTextThemeColor(),
-                                                  radius: 20,
-                                                  child: Icon(
-                                                    Icons.book,
-                                                    color: AllCoustomTheme.boxColor(),
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  width: 10,
-                                                ),
-                                                Column(
-                                                  mainAxisAlignment: MainAxisAlignment.center,
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                  children: <Widget>[
-                                                    Text(
-                                                      'Books',
-                                                      style: TextStyle(
-                                                        color: AllCoustomTheme.getTextThemeColors(),
-                                                      ),
-                                                    ),
-                                                    SizedBox(
-                                                      height: 4,
-                                                    ),
-                                                    Text(
-                                                      'TEAM ACCOUNTS',
-                                                      style: TextStyle(
-                                                        color: AllCoustomTheme.getsecoundTextThemeColor(),
-                                                        fontSize: ConstanceData.SIZE_TITLE12,
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                                Expanded(
-                                                  child: SizedBox(),
-                                                ),
-                                                Padding(
-                                                  padding: const EdgeInsets.only(right: 16),
-                                                  child: Text(
-                                                    "-\$85",
-                                                    style: TextStyle(
-                                                      color: AllCoustomTheme.getsecoundTextThemeColor(),
-                                                      fontWeight: FontWeight.bold,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            Padding(
-                                              padding: const EdgeInsets.only(left: 50),
-                                              child: AnimatedDivider(),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              )
-                            ],
-                          ),
-                        )
+                        Expanded(child: trxHistory(context),)
                       ],
                     )
                   : SizedBox(),

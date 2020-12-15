@@ -26,6 +26,7 @@ dependencies:
   connectivity: ^2.0.2
   cupertino_icons: ^0.1.2
   custom_radio_grouped_button: any
+  date_format: ^1.0.9
   expandable_bottom_sheet: ^0.2.1+1
   fancy_bottom_navigation: ^0.3.2
   file_picker: ^2.1.0

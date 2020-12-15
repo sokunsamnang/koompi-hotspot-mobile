@@ -33,4 +33,4 @@ class ModelUserData{
   Map<String, dynamic> fetchEmail = {};
 }
   
-var mData = ModelUserData();
+ModelUserData mData = ModelUserData();

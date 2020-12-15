@@ -1,9 +1,12 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:koompi_hotspot/src/backend/component.dart';
+import 'package:koompi_hotspot/src/components/reuse_widget.dart';
 import 'package:koompi_hotspot/src/models/model_userdata.dart';
+import 'package:koompi_hotspot/src/screen/home/mywallet/my_wallet.dart';
 import 'package:koompi_hotspot/src/services/services.dart';
 import 'api_service.dart';
 
@@ -183,41 +186,34 @@ class PostRequest with ChangeNotifier{
     return _backend.response;
   }
 
-  Future<http.Response> getWallet(String email) async {
-    _backend.bodyEncode = json.encode({
-      "email": email,
-    });
+  // Future<http.Response> getWallet(String email) async {
+  //   _backend.bodyEncode = json.encode({
+  //     "email": email,
+  //   });
 
-    _backend.response = await http.post('${ApiService.url}/selendra/get-wallet', 
-    headers: _backend.conceteHeader(null, null), 
-    body: _backend.bodyEncode);
+  //   _backend.response = await http.post('${ApiService.url}/selendra/get-wallet', 
+  //   headers: _backend.conceteHeader(null, null), 
+  //   body: _backend.bodyEncode);
 
-    print(_backend.response.body);
-    return _backend.response;
-  }
+  //   print(_backend.response.body);
+  //   return _backend.response;
+  // }
 
-  // Future<String> getWallet(String email) async {
+  // Future<Null> getWallet() async {
   //   await _storageServices.read('token').then((value) async {
-  //     var response = await http.post('${ApiService.url}/selendra/get-wallet',
+  //     _backend.response = await  http.get('${ApiService.url}/selendra/get-wallet',
   //       headers: <String, String>{
   //         "accept": "application/json",
   //         "authorization": "Bearer " + value,
   //         "Content-Type": "application/json"
-  //       },
-  //       body: _backend.bodyEncode);
-  //     var responseBody = json.decode(response.body);
-  //     if (response.statusCode == 200) {
-  //       try {
-  //         alertText = responseBody['message'];
-  //       } catch (e) {
-  //         //var wallet = WalletResponse.fromJson(responseBody);
-  //         print(e);
-  //       }
-  //     } else {
-  //       alertText = responseBody['error']['message'];
+  //       });
+        
+  //       var responseBody = json.decode(_backend.response.body);
+        
+  //       return responseBody;
+
   //     }
-  //   });
-  //   return alertText;
+  //   );
   // }
 
 }

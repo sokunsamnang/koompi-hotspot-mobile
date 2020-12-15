@@ -67,49 +67,46 @@ import 'package:koompi_hotspot/src/screen/login/login_page.dart';
                   ),
                   formCardForgotPasswordEmail(context, _emailController, _email, _submit, formKey, _autoValidate),
                   SizedBox(height: ScreenUtil.getInstance().setHeight(60)),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      InkWell(
-                        child: Container(
-                          width: ScreenUtil.getInstance().setWidth(350),
-                          height: ScreenUtil.getInstance().setHeight(100),
-                          decoration: BoxDecoration(
-                              gradient: LinearGradient(colors: [
-                                Color(0xFF17ead9),
-                                Color(0xFF6078ea)
-                              ]),
-                              borderRadius: BorderRadius.circular(30),
-                              boxShadow: [
-                                BoxShadow(
-                                    color: Color(0xFF6078ea).withOpacity(.3),
-                                    offset: Offset(0.0, 8.0),
-                                    blurRadius: 8.0)
-                              ]),
-                          child: Material(
-                            color: Colors.transparent,
-                            child: InkWell(
-                              highlightColor: Colors.transparent,
-                              splashColor: Colors.transparent,
-                              onTap: () {
-                                _submit();
-                                // Navigator.pushReplacement(
-                                //   context,
-                                //   MaterialPageRoute(builder: (context) => ForgotPasswordVerification(_emailController.text)));
-                              },
-                              child: Center(
-                                child: Text("Reset Password",
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontFamily: "Poppins-Bold",
-                                        fontSize: 18,
-                                        letterSpacing: 1.0)),
+                  Center(
+                    child: InkWell(
+                      child: Container(
+                        // width: ScreenUtil.getInstance().setWidth(330),
+                        height: ScreenUtil.getInstance().setHeight(100),
+                        decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                                colors: [Color(0xFF17ead9), Color(0xFF6078ea)]),
+                            borderRadius: BorderRadius.circular(12),
+                            boxShadow: [
+                              BoxShadow(
+                                  color: Color(0xFF6078ea).withOpacity(.3),
+                                  offset: Offset(0.0, 8.0),
+                                  blurRadius: 8.0)
+                            ]),
+                      child: Material(
+                        color: Colors.transparent,
+                        child: InkWell(
+                          highlightColor: Colors.transparent,
+                          splashColor: Colors.transparent,
+                          onTap: () async {
+                            
+                            _submit();
+                            // Navigator.pushReplacement(
+                            //   context,
+                            //   MaterialPageRoute(builder: (context) => Navbar()));
+                          },
+                          child: Center(
+                            child: Text("RESET PASSWORD",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: "Poppins-Bold",
+                                    fontSize: 18,
+                                    letterSpacing: 1.0)
                               ),
                             ),
                           ),
                         ),
-                      )
-                    ],
+                      ),
+                    )
                   ),
                   Container(
                     margin: EdgeInsets.symmetric(vertical: 20),

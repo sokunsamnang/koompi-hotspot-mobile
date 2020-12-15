@@ -1,11 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:koompi_hotspot/src/models/model_userdata.dart';
-import 'package:koompi_hotspot/src/models/model_wallet.dart';
-import 'package:koompi_hotspot/src/reuse_widget/reuse_btn_social.dart';
-import 'package:koompi_hotspot/src/reuse_widget/reuse_myButton.dart';
 import 'package:line_icons/line_icons.dart';
-import 'package:qr_flutter/qr_flutter.dart';
 
 class SendRequest extends StatefulWidget {
   @override
@@ -123,7 +117,7 @@ class _SendRequestState extends State<SendRequest> {
                           decoration: BoxDecoration(
                               gradient: LinearGradient(
                                   colors: [Color(0xFF17ead9), Color(0xFF6078ea)]),
-                              borderRadius: BorderRadius.circular(30),
+                              borderRadius: BorderRadius.circular(12),
                               boxShadow: [
                                 BoxShadow(
                                     color: Color(0xFF6078ea).withOpacity(.3),

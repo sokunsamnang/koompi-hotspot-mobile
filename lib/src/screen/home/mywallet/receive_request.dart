@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:koompi_hotspot/src/models/model_balance.dart';
 import 'package:koompi_hotspot/src/models/model_userdata.dart';
 import 'package:koompi_hotspot/src/models/model_wallet.dart';
 import 'package:koompi_hotspot/src/reuse_widget/reuse_btn_social.dart';
@@ -107,7 +108,7 @@ class _ReceiveRequestState extends State<ReceiveRequest> {
                                     height: 20,
                                   ),
                                   Text(
-                                    'Selendra (RSEL)',
+                                    'Selendra (SEL)',
                                     style: TextStyle(
                                       fontSize: 22,
                                       fontWeight: FontWeight.bold,
@@ -119,7 +120,7 @@ class _ReceiveRequestState extends State<ReceiveRequest> {
                                   ),
                                   QrImage(
                                     embeddedImage: AssetImage('assets/images/icon_launcher.png'),
-                                    data: mData.wallet.toString(),
+                                    data: mData.wallet,
                                     version: QrVersions.auto,
                                     size: 200.0,
                                   ),
@@ -127,7 +128,7 @@ class _ReceiveRequestState extends State<ReceiveRequest> {
                                     height: 20.0,
                                   ),
                                   Text(
-                                    mData.wallet.toString(),
+                                    mData.wallet,
                                     overflow: TextOverflow.ellipsis,
                                   ),
                                   SizedBox(
@@ -141,7 +142,7 @@ class _ReceiveRequestState extends State<ReceiveRequest> {
                                         decoration: BoxDecoration(
                                             gradient: LinearGradient(
                                                 colors: [Color(0xFF17ead9), Color(0xFF6078ea)]),
-                                            borderRadius: BorderRadius.circular(30),
+                                            borderRadius: BorderRadius.circular(12),
                                             boxShadow: [
                                               BoxShadow(
                                                   color: Color(0xFF6078ea).withOpacity(.3),
