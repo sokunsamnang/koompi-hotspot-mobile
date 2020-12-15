@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:connectivity/connectivity.dart';
-import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:koompi_hotspot/index.dart';
 import 'package:koompi_hotspot/src/backend/get_request.dart';
@@ -8,13 +7,14 @@ import 'package:koompi_hotspot/src/backend/post_request.dart';
 import 'package:koompi_hotspot/src/components/formcard/formcardLogin.dart';
 import 'package:koompi_hotspot/src/components/navbar.dart';
 import 'package:koompi_hotspot/src/components/reuse_widget.dart';
+import 'package:koompi_hotspot/src/models/model_balance.dart';
 import 'package:koompi_hotspot/src/screen/create_account/create_email/create_email.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:koompi_hotspot/src/services/network_status.dart';
 import 'package:koompi_hotspot/src/services/services.dart';
 import 'dart:io';
-
 import 'package:koompi_hotspot/src/services/updater.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
   _LoginPageState createState() => _LoginPageState();
@@ -100,7 +100,9 @@ class _LoginPageState extends State<LoginPage> {
             Navigator.pop(context);
           });
           if(token != null){
+            Provider.of<BalanceProvider>(context, listen: false).fetchPortforlio();
             await StorageServices().saveString('token', token);
+            // await Provider.of<UserProvider>(context, listen: false).fetchPortforlio();
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(builder: (context) => Navbar()));
@@ -265,7 +267,7 @@ class _LoginPageState extends State<LoginPage> {
                           width: ScreenUtil.getInstance().setWidth(110),
                           height: ScreenUtil.getInstance().setHeight(110),
                         ),
-                        Text("KOOMPI HOTSPOT",
+                        Text("Hotspot",
                             style: TextStyle(
                                 fontFamily: "Poppins-Bold",
                                 fontSize: ScreenUtil.getInstance().setSp(46),
@@ -324,11 +326,12 @@ class _LoginPageState extends State<LoginPage> {
                                       fontFamily: "Poppins-Bold",
                                       fontSize: 18,
                                       letterSpacing: 1.0)),
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    )),
+                      )
+                    ),
                     // SizedBox(
                     //   height: ScreenUtil.getInstance().setHeight(40),
                     // ),

@@ -174,7 +174,7 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
                         fontWeight: FontWeight.bold,
                       ),
                       length: 6,
-                      obsecureText: false,
+                      obscureText: false,
                       animationType: AnimationType.fade,
                       validator: (v) {
                         if (v.length < 3) {
@@ -191,7 +191,7 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
                         activeFillColor:
                             hasError ? Colors.orange : Colors.white,
                       ),
-                      textInputType: TextInputType.number,
+                      keyboardType: TextInputType.number,
                       inputFormatters: <TextInputFormatter> [
                         FilteringTextInputFormatter.digitsOnly
                       ],

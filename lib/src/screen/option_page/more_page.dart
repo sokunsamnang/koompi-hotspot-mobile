@@ -1,9 +1,11 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:koompi_hotspot/src/components/reuse_widget.dart';
 import 'package:koompi_hotspot/src/models/model_userdata.dart';
-import 'package:koompi_hotspot/src/screen/home/wallet/mywallet.dart';
-import 'package:koompi_hotspot/src/screen/home/wallet/transaction_history.dart';
+import 'package:koompi_hotspot/src/screen/home/mywallet/my_wallet.dart';
+import 'package:koompi_hotspot/src/screen/home/mywallet/wallet_screen.dart';
+import 'package:koompi_hotspot/src/screen/home/mywallet/wallet_choice.dart';
 import 'package:koompi_hotspot/src/screen/option_page/myaccount.dart';
 import 'package:koompi_hotspot/src/screen/login/login_page.dart';
 import 'package:koompi_hotspot/src/services/services.dart';
@@ -93,19 +95,7 @@ class _MorePageState extends State<MorePage>
                       onTap: () async {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => MyWallet()),
-                        );
-                      },
-                    ),
-                    _buildDivider(),
-                    ListTile(
-                      leading: Icon(Icons.attach_money),
-                      title: Text("Transaction History"),
-                      trailing: Icon(LineIcons.angle_right),
-                      onTap: () async {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => Transaction()),
+                          MaterialPageRoute(builder: (context) => WalletScreen()),
                         );
                       },
                     ),

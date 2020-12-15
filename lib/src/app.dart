@@ -2,17 +2,35 @@ import 'dart:async';
 import 'package:connectivity/connectivity.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:koompi_hotspot/src/backend/get_request.dart';
+import 'package:koompi_hotspot/src/models/model_balance.dart';
+import 'package:koompi_hotspot/src/models/model_trx_history.dart';
 import 'package:koompi_hotspot/src/screen/onboarding/onboarding_screen.dart';
 import 'package:koompi_hotspot/src/services/network_status.dart';
 import 'package:koompi_hotspot/src/services/services.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class App extends StatelessWidget{
   Widget build (context){
-    return MaterialApp(
-      initialRoute: '/',
-      title: 'Koompi Hotspot',
-      home: Splash(),
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<BalanceProvider>(
+          create: (context) => BalanceProvider(),
+        ),
+        ChangeNotifierProvider<TrxHistoryProvider>(
+          create: (context) => TrxHistoryProvider()),
+      ],
+      child: MaterialApp(
+        initialRoute: '/',
+        title: 'Koompi Hotspot',
+        home: Splash(),
+      ),
     );
   }
 }
@@ -65,6 +83,7 @@ class _SplashState extends State<Splash> {
     setState(() {
       internet();
       startTime();
+      Provider.of<BalanceProvider>(context, listen: false).fetchPortforlio();
     });
     super.initState();
   }

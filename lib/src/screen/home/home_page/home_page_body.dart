@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:koompi_hotspot/src/models/model_balance.dart';
 import 'package:koompi_hotspot/src/models/model_userdata.dart';
 import 'package:koompi_hotspot/src/screen/home/home_page/promotion.dart';
 import 'package:koompi_hotspot/src/screen/home/hotspot/plan.dart';
-import 'package:koompi_hotspot/src/screen/home/wallet/mywallet.dart';
+import 'package:koompi_hotspot/src/screen/home/mywallet/my_wallet.dart';
+import 'package:koompi_hotspot/src/screen/home/mywallet/wallet_screen.dart';
 
 Widget bodyPage(BuildContext context) {
   return Container(
@@ -82,7 +84,7 @@ Widget bodyPage(BuildContext context) {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         Text(
-                          '2,564.95',
+                          '${mBalance.balance}',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 35,
@@ -91,7 +93,7 @@ Widget bodyPage(BuildContext context) {
                           
                         ),
                         Text(
-                          ' RSEL',
+                          ' SEL',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 35,
@@ -117,7 +119,7 @@ Widget bodyPage(BuildContext context) {
                               onPressed: () {
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => MyWallet()),
+                                  MaterialPageRoute(builder: (context) => WalletScreen()),
                                 );
                               },
                               child: Row(

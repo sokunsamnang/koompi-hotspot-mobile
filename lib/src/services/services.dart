@@ -3,8 +3,10 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:koompi_hotspot/src/backend/get_request.dart';
 import 'package:koompi_hotspot/src/components/navbar.dart';
+import 'package:koompi_hotspot/src/models/model_balance.dart';
 import 'package:koompi_hotspot/src/screen/login/login_page.dart';
 import 'package:koompi_hotspot/src/services/jtw_decoder.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class StorageServices{
@@ -35,6 +37,8 @@ class StorageServices{
     else if (JwtDecoder.isExpired(token) == false ) {
       print('token not expire');
       await GetRequest().getUserProfile(token);
+      await Provider.of<BalanceProvider>(context, listen: false).fetchPortforlio();
+      // await Provider.of<UserProvider>(context, listen: false).fetchPortforlio();
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => Navbar()));
     }
@@ -44,30 +48,6 @@ class StorageServices{
     }
   }
 
-  // void checkUser(BuildContext context) {
-  //   try {
-  //     read('token').then(
-  //       (value) async {
-  //         String token = value;
-  //         var resposne = await GetRequest().getUserProfile(token);
-  //         print('Status Code Response: ${resposne.statusCode}');
-  //         if(JwtDecoder.isExpired(token) == true || token == null){
-  //           print('Failed: ${resposne.statusCode}');
-  //           StorageServices().clear('token');
-  //           Navigator.pushReplacement(
-  //             context, MaterialPageRoute(builder: (context) => LoginPage()));
-  //         }
-  //         else if (resposne.statusCode == 200) {
-            
-  //           print('Success: ${resposne.statusCode}');
-  //           Navigator.pushReplacement(
-  //             context, MaterialPageRoute(builder: (context) => Navbar()));
-  //         }
-  //       },
-  //     );
-  //   } catch (e) {
-  //   }
-  // }
   
   void updateUserData(BuildContext context) {
     read('token').then(
@@ -96,10 +76,10 @@ class StorageServices{
 
   static Future<dynamic>fetchData(String _path) async {
     _preferences = await SharedPreferences.getInstance();
-    var _data = _preferences.getString(_path);
+    dynamic _data = _preferences.getString(_path);
     if ( _data == null ) return null;
     else {
-      return json.decode(_data);
+      return await jsonDecode(_data);
     }
   }
 
