@@ -59,6 +59,7 @@ dependencies:
   provider: ^4.3.2+2
   qr_flutter: ^3.2.0
   shared_preferences: ^0.5.7+3
+  transaction: ^0.1.0
   url_launcher: ^5.7.10
 
 flutter_icons:
@@ -121,6 +122,7 @@ flutter:
     # - assets/images/loading.png
     # - assets/images/ico_receive_money.png
     # - assets/images/ico_send_money.png
+
   #  - images/a_dot_ham.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
