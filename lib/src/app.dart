@@ -3,7 +3,6 @@ import 'package:connectivity/connectivity.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:koompi_hotspot/src/backend/get_request.dart';
 import 'package:koompi_hotspot/src/models/model_balance.dart';
 import 'package:koompi_hotspot/src/models/model_trx_history.dart';
 import 'package:koompi_hotspot/src/screen/onboarding/onboarding_screen.dart';
@@ -66,7 +65,9 @@ class _SplashState extends State<Splash> {
   }
 
   void isLoggedIn() async{
-    StorageServices().checkUser(context);
+    setState(() {
+      StorageServices().checkUser(context);
+    });
   }
   
   void internet() async {
@@ -83,7 +84,7 @@ class _SplashState extends State<Splash> {
     setState(() {
       internet();
       startTime();
-      Provider.of<BalanceProvider>(context, listen: false).fetchPortforlio();
+      // Provider.of<BalanceProvider>(context, listen: false).fetchPortforlio();
     });
     super.initState();
   }

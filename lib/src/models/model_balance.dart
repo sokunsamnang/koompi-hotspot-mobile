@@ -7,28 +7,40 @@ import 'package:koompi_hotspot/src/backend/api_service.dart';
 import 'package:koompi_hotspot/src/models/model_wallet.dart';
 import 'package:koompi_hotspot/src/services/services.dart';
 
-class Balance{
+class Balance {
+  Balance({this.data});
 
-  String timestamp;
-  String balance = '';
-  String otherassets;
+  Data data;
 
-  Map<String, dynamic> userBalance;
-  
-  Balance({
+  factory Balance.fromMap(Map<String, dynamic> json) => Balance(
+        data: Data.fromMap(json["data"]),
+      );
+}
+
+class Data {
+  Data({
     this.timestamp,
     this.balance,
     this.otherassets,
   });
 
-  Balance.fromJson(Map<String,dynamic> parseJson){
-    timestamp= parseJson['timestamp'];
-    balance = parseJson['balance'];
-    otherassets = parseJson['otherassets'];
-  }
+  String timestamp;
+  String balance = '';
+  String otherassets;
 
+  factory Data.fromMap(Map<String, dynamic> json) => Data(
+        timestamp: json["timestamp"],
+        balance: json["balance"],
+        otherassets: json["otherassets"],
+      );
+
+  Map<String, dynamic> toMap() => {
+        "timestamp": timestamp,
+        "balance": balance,
+        "otherassets": otherassets,
+      };
 }
-  
+
 Balance mBalance = Balance();
 
 class BalanceProvider with ChangeNotifier{
@@ -51,12 +63,12 @@ class BalanceProvider with ChangeNotifier{
           if (responseBody.containsKey('error')) {
             alertText = responseBody['error']['message'];
           } else {
-            if (mBalance.userBalance != null) mBalance.balance = '';
-            mBalance = Balance.fromJson(responseBody);
+            if (mBalance.data != null) mBalance.data.balance = '';
+            mBalance = Balance.fromMap(responseBody);
 
             // Check Balance Retrieve NULL
-            if (mBalance.userBalance != null)
-              wallets[0].amount = mBalance.balance;
+            if (mBalance.data != null)
+              wallets[0].amount = mBalance.data.balance;
             // notifyListeners();
           }
 

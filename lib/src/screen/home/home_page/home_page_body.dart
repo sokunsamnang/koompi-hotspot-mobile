@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:koompi_hotspot/src/models/model_balance.dart';
 import 'package:koompi_hotspot/src/models/model_userdata.dart';
-import 'package:koompi_hotspot/src/screen/home/home_page/promotion.dart';
 import 'package:koompi_hotspot/src/screen/home/hotspot/plan.dart';
-import 'package:koompi_hotspot/src/screen/home/mywallet/my_wallet.dart';
 import 'package:koompi_hotspot/src/screen/home/mywallet/wallet_screen.dart';
 
 Widget bodyPage(BuildContext context) {
@@ -83,15 +81,16 @@ Widget bodyPage(BuildContext context) {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
+                        mBalance.data != null ?
                         Text(
-                          '${mBalance.balance}',
+                          '${mBalance.data.balance}',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 35,
                             fontWeight: FontWeight.w800,
                           ),
                           
-                        ),
+                        ) : CircularProgressIndicator(),
                         Text(
                           ' SEL',
                           style: TextStyle(

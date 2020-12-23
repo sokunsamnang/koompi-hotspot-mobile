@@ -6,13 +6,10 @@ import 'package:koompi_hotspot/src/constance/global.dart';
 import 'package:koompi_hotspot/src/constance/global.dart' as globals;
 import 'package:koompi_hotspot/src/constance/themes.dart';
 import 'package:koompi_hotspot/src/models/model_balance.dart';
-import 'package:koompi_hotspot/src/models/model_trx_history.dart';
-import 'package:koompi_hotspot/src/models/model_userdata.dart';
 import 'package:koompi_hotspot/src/screen/home/mywallet/history_transaction.dart';
 import 'package:koompi_hotspot/src/screen/home/mywallet/receive_request.dart';
 import 'package:koompi_hotspot/src/screen/home/mywallet/send_request.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
-import 'package:provider/provider.dart';
 
 class MyWallet extends StatefulWidget {
   final Function resetState;
@@ -73,24 +70,24 @@ class _MyWalletState extends State<MyWallet> {
             ),
           ),
           Scaffold(
-            // appBar: AppBar(
-            //   title: Text('My Wallet', style: TextStyle(color: Colors.black)),
-            //   backgroundColor: Colors.white,  
-            //   iconTheme: IconThemeData(
-            //     color: Colors.black, //change your color here
-            //   ),
-            //   automaticallyImplyLeading: true,
-            //   leading: IconButton(
-            //     icon: Icon(Icons.arrow_back), 
-            //     onPressed: (){
-            //       Navigator.pushAndRemoveUntil(
-            //         context,
-            //         MaterialPageRoute(builder: (context) => Navbar()),
-            //         ModalRoute.withName('/'),
-            //       );
-            //     }
-            //   ),
-            // ),
+            appBar: AppBar(
+              title: Text('My Wallet', style: TextStyle(color: Colors.black)),
+              backgroundColor: Colors.white,  
+              iconTheme: IconThemeData(
+                color: Colors.black, //change your color here
+              ),
+              automaticallyImplyLeading: true,
+              leading: IconButton(
+                icon: Icon(Icons.arrow_back), 
+                onPressed: (){
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (context) => Navbar()),
+                    ModalRoute.withName('/'),
+                  );
+                }
+              ),
+            ),
             key: _scaffoldKey,
             // backgroundColor: Colors.white,
             // backgroundColor: AllCoustomTheme.getThemeData().primaryColor,
@@ -141,15 +138,16 @@ class _MyWalletState extends State<MyWallet> {
                                   fontSize: ConstanceData.SIZE_TITLE20,
                                 ),
                               ),
+                              mBalance.data != null ?
                               Text(
-                                '${mBalance.balance}',
+                                '${mBalance.data.balance}',
                                 style: TextStyle(
                                   color: Colors.black,
                                   // color: AllCoustomTheme.getTextThemeColors(),
                                   fontWeight: FontWeight.bold,
                                   fontSize: 35,
                                 ),
-                              ),
+                              ) : CircularProgressIndicator(),
                               Expanded(
                                 child: SizedBox(),
                               ),
