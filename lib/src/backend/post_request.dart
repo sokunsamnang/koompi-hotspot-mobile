@@ -4,10 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:koompi_hotspot/src/backend/component.dart';
-import 'package:koompi_hotspot/src/components/reuse_widget.dart';
 import 'package:koompi_hotspot/src/models/model_userdata.dart';
-import 'package:koompi_hotspot/src/screen/home/mywallet/my_wallet.dart';
-import 'package:koompi_hotspot/src/services/services.dart';
 import 'api_service.dart';
 
 class PostRequest with ChangeNotifier{
@@ -16,7 +13,6 @@ class PostRequest with ChangeNotifier{
   var _mUser = new ModelUserData();
   ModelUserData get mUser => _mUser;
   String alertText;
-  StorageServices _storageServices = StorageServices();
 
   /*Login Account */
   Future<http.Response> userLogIn(String email, String password) async {
@@ -216,5 +212,19 @@ class PostRequest with ChangeNotifier{
   //   );
   // }
 
+  Future<http.Response> sendPayment(String asset, String amount, String memo,) async {
+    _backend.bodyEncode = json.encode(/* Convert to Json Data ( String ) */
+      {
+        "asset": asset,
+        "amount": amount,
+        "memo": memo,
+        }
+    );
+    _backend.response = await http.put('${ApiService.url}/auth/complete-info', 
+    headers: _backend.conceteHeader(null, null), 
+    body: _backend.bodyEncode);
+    return _backend.response;
+  }
+  
 }
 

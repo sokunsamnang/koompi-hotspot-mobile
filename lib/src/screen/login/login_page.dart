@@ -97,12 +97,13 @@ class _LoginPageState extends State<LoginPage> {
                 setState(() {
                   _isLoading = true;
                 });
-            Navigator.pop(context);
+
           });
           if(token != null){
-            Provider.of<BalanceProvider>(context, listen: false).fetchPortforlio();
+            
             await StorageServices().saveString('token', token);
-            // await Provider.of<UserProvider>(context, listen: false).fetchPortforlio();
+            await StorageServices.setData(responseJson, 'user_token');
+            Provider.of<BalanceProvider>(context, listen: false).fetchPortforlio();
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(builder: (context) => Navbar()));

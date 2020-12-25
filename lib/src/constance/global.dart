@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:animator/animator.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:koompi_hotspot/src/constance/global.dart' as globals;

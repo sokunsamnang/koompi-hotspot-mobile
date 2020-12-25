@@ -37,8 +37,7 @@ class StorageServices{
     else if (JwtDecoder.isExpired(token) == false ) {
       print('token not expire');
       await GetRequest().getUserProfile(token);
-      await Provider.of<BalanceProvider>(context, listen: false).fetchPortforlio();
-      // await Provider.of<UserProvider>(context, listen: false).fetchPortforlio();
+      Provider.of<BalanceProvider>(context, listen: false).fetchPortforlio();
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => Navbar()));
     }

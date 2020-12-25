@@ -1,4 +1,12 @@
+import 'dart:convert';
+import 'dart:io';
+
+import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
+import 'package:koompi_hotspot/src/backend/component.dart';
+import 'package:koompi_hotspot/src/backend/post_request.dart';
+import 'package:koompi_hotspot/src/components/reuse_widget.dart';
+import 'package:koompi_hotspot/src/reuse_widget/reuse_widget.dart';
 import 'package:line_icons/line_icons.dart';
 
 class SendRequest extends StatefulWidget {
@@ -8,12 +16,79 @@ class SendRequest extends StatefulWidget {
 
 class _SendRequestState extends State<SendRequest> {
 
+  TextEditingController recieveWallet = TextEditingController();
+  TextEditingController asset = TextEditingController(text: 'RSEL');
+  TextEditingController amount = TextEditingController();
+  TextEditingController memo = TextEditingController();
+
+  Backend _backend = Backend();
+
   final formKey = GlobalKey<FormState>();
   bool _autoValidate = false;
 
+  void _submitValidate(){
+    final form = formKey.currentState;
+
+    if(form.validate()){
+      form.save();
+      _onSubmit();
+    }
+    else{
+      setState(() {
+        _autoValidate = true;
+      });
+    }
+  }
+  
+  
+  Future <void> _onSubmit() async {
+    dialogLoading(context);
+    try {
+      
+      final result = await InternetAddress.lookup('google.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        print('Internet connected');
+        _backend.response = await PostRequest().sendPayment(
+          asset.text,
+          amount.text,
+          memo.text);
+          
+        if (_backend.response.statusCode == 200) {
+
+          _backend.mapData = json.decode(_backend.response.body);
+
+          if (!_backend.mapData.containsKey('error')) {
+            return FlareActor( 
+              'assets/animations/check.flr', 
+              animation: 'Checkmark',
+            );
+            // await Components.dialog(context, textAlignCenter(text: _response["message"]), Icon(Icons.done_outline, color: getHexaColor(AppColors.blueColor)));
+          } else {
+            await Components.dialog(context, textAlignCenter(text: _backend.mapData["error"]['message']), warningTitleDialog());
+            Navigator.pop(context);
+          }
+        } else {
+          await Components.dialog(context, textAlignCenter(text: 'Something goes wrong'), warningTitleDialog());
+          Navigator.pop(context);
+          recieveWallet.clear();
+          amount.clear();
+          memo.clear();
+        }
+      }
+    } on SocketException catch (_) {
+      print('not connected');
+    }
+  }
+  
+  
   @override
   void initState() {
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override
@@ -54,6 +129,7 @@ class _SendRequestState extends State<SendRequest> {
                     Text('Receive Address'),
                     SizedBox(height: 10.0),
                     TextFormField(
+                      controller: recieveWallet,
                       decoration: InputDecoration(
                         prefixIcon: Icon(LineIcons.qrcode),
                         hintText: 'Receive Address',
@@ -68,8 +144,8 @@ class _SendRequestState extends State<SendRequest> {
                     Text('Wallet'),
                     SizedBox(height: 10.0),
                     TextFormField(
+                      controller: asset,
                       readOnly: true,
-                      initialValue: 'RSEL',
                       decoration: InputDecoration(
                         prefixIcon: Icon(Icons.account_balance_wallet),
                         hintText: 'Wallet',
@@ -84,6 +160,7 @@ class _SendRequestState extends State<SendRequest> {
                     Text('Amont'),
                     SizedBox(height: 10.0),
                     TextFormField(
+                      controller: amount,
                       decoration: InputDecoration(
                         prefixIcon: Icon(Icons.attach_money),
                         hintText: 'Amount',
@@ -95,12 +172,13 @@ class _SendRequestState extends State<SendRequest> {
                       ),
                     ),
                     SizedBox(height: 16.0),
-                    Text('Remark'),
+                    Text('Memo'),
                     SizedBox(height: 10.0),
                     TextFormField(
+                      controller: memo,
                       decoration: InputDecoration(
                         prefixIcon: Icon(Icons.my_library_books),
-                        hintText: 'Remark',
+                        hintText: 'Memo',
                         border: OutlineInputBorder(
                           borderSide: BorderSide(color: Colors.black),
                           borderRadius: BorderRadius.all(Radius.circular(12.0)
@@ -130,7 +208,7 @@ class _SendRequestState extends State<SendRequest> {
                             highlightColor: Colors.transparent,
                             splashColor: Colors.transparent,
                             onTap: () async {
-                              
+                              _submitValidate();
                             },
                             child: Center(
                               child: Text("SEND",

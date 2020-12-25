@@ -109,15 +109,7 @@ import 'package:provider/provider.dart';
           ? SafeArea(
               child: Column(
                 children: [
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: IconButton(
-                      icon: Icon(Icons.arrow_back),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                    ),
-                  ),
+                 
                   Expanded(
                     child: Align(
                       alignment: Alignment.center,
@@ -135,7 +127,7 @@ import 'package:provider/provider.dart';
 
           // Display Loading
           : history.trxHistoryList.length == 0
-              ? Center(child: Text('No Transaction'))
+              ? Center(child: CircularProgressIndicator(),)
               // Display History List
               : SafeArea(
                   child: CustomScrollView(

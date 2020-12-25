@@ -11,7 +11,7 @@ class Wallet{
 final List<Wallet> wallets = [
   Wallet(
     'Selendra (SEL)',
-    '${mBalance.balance}',
+    '${mBalance.data.balance}',
     'assets/images/icon_launcher.png',
   ),
 ];

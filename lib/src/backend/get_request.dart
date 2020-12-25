@@ -1,12 +1,10 @@
 import 'dart:convert';
-import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:koompi_hotspot/src/backend/api_service.dart';
 import 'package:koompi_hotspot/src/backend/component.dart';
 import 'package:koompi_hotspot/src/models/model_balance.dart';
 import 'package:koompi_hotspot/src/models/model_userdata.dart';
-import 'package:koompi_hotspot/src/models/model_wallet.dart';
 import 'package:koompi_hotspot/src/services/services.dart';
 
 class GetRequest with ChangeNotifier{
@@ -50,21 +48,21 @@ class GetRequest with ChangeNotifier{
     return null;
   }
 
-  Future<http.Response> getPortfolio(String _token) async {
-     var response = await http.get("${ApiService.url}/selendra/portfolio", 
-        headers: <String, String>{
-        "accept": "application/json",
-        "authorization": "Bearer " + _token,
-    });
-    var responseBody = json.decode(response.body);
-    mBalance = Balance.fromJson(responseBody);
+  // Future<http.Response> getPortfolio(String _token) async {
+  //    var response = await http.get("${ApiService.url}/selendra/portfolio", 
+  //       headers: <String, String>{
+  //       "accept": "application/json",
+  //       "authorization": "Bearer " + _token,
+  //   });
+  //   var responseBody = json.decode(response.body);
+  //   mBalance = Balance.fromJson(responseBody);
 
-    _mBalance = Balance.fromJson(responseBody);
-    return response;
-  }
+  //   _mBalance = Balance.fromJson(responseBody);
+  //   return response;
+  // }
   
   Future<http.Response> getTrxHistory() async {
-    _backend.token = await StorageServices.fetchData('token');
+    _backend.token = await StorageServices.fetchData('user_token');
     if (_backend.token != null) {
       _backend.response = await http.get("${ApiService.url}/selendra/history",
           headers: _backend.conceteHeader(

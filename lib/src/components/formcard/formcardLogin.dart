@@ -70,8 +70,8 @@ Widget formLogin( BuildContext context,
                   fontSize: ScreenUtil().setSp(26))),
             TextFormField(
               controller: passwordController,
-              validator: (val) => val.length < 8 ? 'Password too short' : null,
-              onSaved: (val) => _password = val,
+              // validator: (val) => val.length < 8 ? 'Password too short' : null,
+              // onSaved: (val) => _password = val,
               keyboardType: TextInputType.visiblePassword,
               decoration: InputDecoration(
                 hintText: "Password",
