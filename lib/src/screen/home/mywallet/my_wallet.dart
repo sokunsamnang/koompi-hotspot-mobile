@@ -13,8 +13,9 @@ import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 class MyWallet extends StatefulWidget {
   final Function resetState;
+  final String walletKey;
 
-  MyWallet({this.resetState});
+  MyWallet({this.resetState, this.walletKey});
   
   @override
   _MyWalletState createState() => _MyWalletState();
@@ -133,19 +134,23 @@ class _MyWalletState extends State<MyWallet> {
                                 'SEL',
                                 style: TextStyle(
                                   color: Colors.black,
-                                  // color: AllCoustomTheme.getTextThemeColors(),
                                   fontWeight: FontWeight.bold,
                                   fontSize: ConstanceData.SIZE_TITLE20,
                                 ),
                               ),
                               mBalance.data != null ?
-                              Text(
-                                '${mBalance.data.balance}',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  // color: AllCoustomTheme.getTextThemeColors(),
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 35,
+                              Flexible(
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                                  child: Text(
+                                    '${mBalance.data.balance}',
+                                    overflow: TextOverflow.ellipsis,
+                                    softWrap: true,
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 35.0,
+                                      fontWeight: FontWeight.bold),
+                                  ),
                                 ),
                               ) : CircularProgressIndicator(),
                               Expanded(
@@ -185,7 +190,7 @@ class _MyWalletState extends State<MyWallet> {
                                   onPressed: () {
                                     Navigator.push(
                                       context,
-                                      MaterialPageRoute(builder: (context) => SendRequest()),
+                                      MaterialPageRoute(builder: (context) => SendRequest(widget.walletKey)),
                                     );
                                   },
                                   elevation: 5,

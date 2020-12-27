@@ -1,12 +1,15 @@
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:koompi_hotspot/src/models/model_balance.dart';
+import 'package:koompi_hotspot/src/models/model_trx_history.dart';
 import 'package:koompi_hotspot/src/screen/home/home_page/home_page.dart';
 import 'package:koompi_hotspot/src/screen/home/hotspot/buy_plan.dart';
 import 'package:koompi_hotspot/src/screen/map/MyLocationView.dart';
 import 'package:koompi_hotspot/src/screen/option_page/more_page.dart';
 import 'package:koompi_hotspot/src/services/network_status.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:provider/provider.dart';
 
 class Navbar extends StatefulWidget {
   @override
@@ -27,6 +30,10 @@ class _NavbarState extends State<Navbar> {
   
   @override
   void initState(){
+    setState(() {
+      Provider.of<BalanceProvider>(context, listen: false).fetchPortforlio();
+      Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
+    });
     internet();
     super.initState();
   }

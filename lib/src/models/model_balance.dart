@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:koompi_hotspot/index.dart';
 import 'package:koompi_hotspot/src/backend/api_service.dart';
+import 'package:koompi_hotspot/src/models/model_userdata.dart';
 import 'package:koompi_hotspot/src/models/model_wallet.dart';
 import 'package:koompi_hotspot/src/services/services.dart';
 
@@ -47,6 +48,8 @@ class BalanceProvider with ChangeNotifier{
   StorageServices _prefService = StorageServices();
   String alertText;
 
+  var _mData = new ModelUserData();
+  ModelUserData get mData => _mData;
   
   Future<String> fetchPortforlio() async {
     // mBalance = Balance();

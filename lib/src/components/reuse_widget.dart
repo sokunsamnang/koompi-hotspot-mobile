@@ -89,7 +89,7 @@ class ItemList extends StatelessWidget {
         children: [
           SizedBox(
             width: 80,
-            child: Text("$title: ", textAlign: TextAlign.left, style: TextStyle(fontSize: 13),),
+            child: Text("$title: ", textAlign: TextAlign.left, style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),),
           ),
           Expanded(
             child: Padding(

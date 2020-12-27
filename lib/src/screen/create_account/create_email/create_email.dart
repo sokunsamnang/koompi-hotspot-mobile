@@ -19,9 +19,11 @@ class _CreateEmailState extends State<CreateEmail> {
 
   String _email;
   String _password;
+  String _confirmPassword;
 
   final TextEditingController emailController = new TextEditingController();
   final TextEditingController passwordController = new TextEditingController();
+  final TextEditingController confirmPasswordController = new TextEditingController();
 
   // Initially password is obscure
   bool _obscureText = true;
@@ -33,7 +35,17 @@ class _CreateEmailState extends State<CreateEmail> {
     });
   }
 
-  _submit(){
+  // Initially password is obscure2
+  bool _obscureText2 = true;
+
+  // Toggles2 the password show status
+  void _toggle2() {
+    setState(() {
+      _obscureText2 = !_obscureText2;
+    });
+  }
+
+  void _submit(){
     final form = formKey.currentState;
 
     if(form.validate()){
@@ -228,14 +240,19 @@ class _CreateEmailState extends State<CreateEmail> {
             context, 
             emailController, 
             passwordController, 
+            confirmPasswordController,
             _obscureText, 
             _toggle, 
+            _obscureText2, 
+            _toggle2, 
             _email, 
-            _password, 
-            _submit, 
+            _password,
+            _confirmPassword, 
             formKey, 
             _autoValidate, 
-            onSignUpByEmail),
+            onSignUpByEmail,
+            _submit, 
+            ),
         ),
       ),
     );

@@ -23,22 +23,34 @@ import 'package:provider/provider.dart';
                     Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        ItemList(title: "Id", trailing: history[i].id),
+                        ItemList(
+                          title: "ID", 
+                          trailing: history[i].id,
+                        ),
                         ItemList(
                           title: "Created At",
-                          trailing:
-                              AppUtils.timeStampToDateTime(history[i].createdAt),
+                          trailing: AppUtils.timeStampToDateTime(history[i].createdAt),
                         ),
-                        ItemList(title: "Sender", trailing: history[i].sender),
                         ItemList(
-                            title: "Destination",
-                            trailing: history[i].destination),
+                          title: "Sender", 
+                          trailing: history[i].sender,
+                        ),
                         ItemList(
-                            title: "Amount",
-                            trailing: history[i].amount.toString()),
+                          title: "Destination",
+                          trailing: history[i].destination,
+                        ),
                         ItemList(
-                            title: "Fee", trailing: history[i].fee.toString()),
-                        ItemList(title: "Memo", trailing: history[i].memo),
+                          title: "Amount",
+                          trailing: history[i].amount.toString() + " SEL",
+                        ),
+                        ItemList(
+                          title: "Fee", 
+                          trailing: history[i].fee.toString() + " SEL",
+                        ),
+                        ItemList(
+                          title: "Memo", 
+                          trailing: history[i].memo,
+                        ),
                       ],
                     ),
                     Text(

@@ -8,6 +8,7 @@ import 'package:koompi_hotspot/src/components/formcard/formcardLogin.dart';
 import 'package:koompi_hotspot/src/components/navbar.dart';
 import 'package:koompi_hotspot/src/components/reuse_widget.dart';
 import 'package:koompi_hotspot/src/models/model_balance.dart';
+import 'package:koompi_hotspot/src/models/model_trx_history.dart';
 import 'package:koompi_hotspot/src/screen/create_account/create_email/create_email.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:koompi_hotspot/src/services/network_status.dart';
@@ -103,7 +104,10 @@ class _LoginPageState extends State<LoginPage> {
             
             await StorageServices().saveString('token', token);
             await StorageServices.setData(responseJson, 'user_token');
-            Provider.of<BalanceProvider>(context, listen: false).fetchPortforlio();
+            setState(() {
+              Provider.of<BalanceProvider>(context, listen: false).fetchPortforlio();
+              Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
+            });
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(builder: (context) => Navbar()));
@@ -153,7 +157,7 @@ class _LoginPageState extends State<LoginPage> {
             content: SingleChildScrollView(
               child: ListBody(
                 children: <Widget>[
-                  Text('Error Services or Lost internet connection'),
+                  Text('Error Services or Lost internet connection, Please try again!'),
                 ],
               ),
             ),
@@ -261,131 +265,47 @@ class _LoginPageState extends State<LoginPage> {
                 padding: EdgeInsets.only(left: 28.0, right: 28.0, top: 35.0),
                 child: Column(
                   children: <Widget>[
-                    Row(
-                      children: <Widget>[
-                        Image.asset(
-                          "assets/images/koompi_logo.png",
-                          width: ScreenUtil.getInstance().setWidth(110),
-                          height: ScreenUtil.getInstance().setHeight(110),
-                        ),
-                        Text("Hotspot",
-                            style: TextStyle(
-                                fontFamily: "Poppins-Bold",
-                                fontSize: ScreenUtil.getInstance().setSp(46),
-                                letterSpacing: .6,
-                                fontWeight: FontWeight.bold)
-                        ),
-                      ],
+                    SizedBox(height: ScreenUtil().setHeight(40)),
+                    Image.asset(
+                      "assets/images/logo_koompi.jpg",
+                      width: ScreenUtil.getInstance().setWidth(500),
+                      // height: ScreenUtil.getInstance().setHeight(300),
                     ),
-                    Stack(
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(left: 150.0),
-                          child: Image.asset("assets/images/digital_nomad.png",
-                            width: 200.0,),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(top: 140.0),
-                          child: formLogin(context, usernameController, passwordController,
-                          _obscureText, _toggle, _email, _password, formKey, _autoValidate),
-                        ),
-                        
-                      ],
-                    ),
-                    SizedBox(height: ScreenUtil.getInstance().setHeight(80)),
-                    Center(
-                      child: InkWell(
-                        child: Container(
-                          // width: ScreenUtil.getInstance().setWidth(330),
-                          height: ScreenUtil.getInstance().setHeight(100),
-                          decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                  colors: [Color(0xFF17ead9), Color(0xFF6078ea)]),
-                              borderRadius: BorderRadius.circular(12),
-                              boxShadow: [
-                                BoxShadow(
-                                    color: Color(0xFF6078ea).withOpacity(.3),
-                                    offset: Offset(0.0, 8.0),
-                                    blurRadius: 8.0)
-                              ]),
-                        child: Material(
-                          color: Colors.transparent,
-                          child: InkWell(
-                            highlightColor: Colors.transparent,
-                            splashColor: Colors.transparent,
-                            onTap: () async {
-                              
-                              _submitLogin();
-                              // Navigator.pushReplacement(
-                              //   context,
-                              //   MaterialPageRoute(builder: (context) => Navbar()));
-                            },
-                            child: Center(
-                              child: Text("SIGN IN",
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontFamily: "Poppins-Bold",
-                                      fontSize: 18,
-                                      letterSpacing: 1.0)),
-                              ),
-                            ),
-                          ),
-                        ),
-                      )
-                    ),
-                    // SizedBox(
-                    //   height: ScreenUtil.getInstance().setHeight(40),
-                    // ),
+                    SizedBox(height: ScreenUtil().setHeight(100)),
+                    formLogin(context, usernameController, passwordController,
+                          _obscureText, _toggle, _email, _password, formKey, _autoValidate, _submitLogin)
                     // Row(
-                    //   mainAxisAlignment: MainAxisAlignment.center,
                     //   children: <Widget>[
-                    //     horizontalLine(),
-                    //     Text("Sign In With",
-                    //         style: TextStyle(
-                    //             fontSize: 16.0, fontFamily: "Poppins-Medium")),
-                    //     horizontalLine()
+                    //     Image.asset(
+                    //       "assets/images/logo_koompi.jpg",
+                    //       width: ScreenUtil.getInstance().setWidth(110),
+                    //       height: ScreenUtil.getInstance().setHeight(110),
+                    //     ),
+                    //     // Text("Hotspot",
+                    //     //     style: TextStyle(
+                    //     //         fontFamily: "Poppins-Bold",
+                    //     //         fontSize: ScreenUtil.getInstance().setSp(46),
+                    //     //         letterSpacing: .6,
+                    //     //         fontWeight: FontWeight.bold)
+                    //     // ),
                     //   ],
                     // ),
-                    // SizedBox(
-                    //   height: ScreenUtil.getInstance().setHeight(30),
+                    // Stack(
+                    //   children: [
+                    //     Padding(
+                    //       padding: EdgeInsets.only(left: 150.0),
+                    //       child: Image.asset("assets/images/digital_nomad.png",
+                    //         width: 200.0,),
+                    //     ),
+                    //     Padding(
+                    //       padding: EdgeInsets.only(top: 140.0),
+                    //       child: formLogin(context, usernameController, passwordController,
+                    //       _obscureText, _toggle, _email, _password, formKey, _autoValidate, _submitLogin),
+                    //     ),
+                        
+                    //   ],
                     // ),
-                    // Center(
-                    //   child: Row(
-                    //     children: <Widget>[
-                    //       onPressFB(context),
-                    //       onPressGoogle(context),
-                    //     ],
-                    //   ),
-                    // ),
-                    SizedBox(
-                      height: ScreenUtil.getInstance().setHeight(60),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Text(
-                          "DON'T HAVE AN ACCOUNT? ",
-                          style: TextStyle(fontFamily: "Poppins-Medium"),
-                        ),
-                        InkWell(
-                          splashColor: Colors.transparent,
-                          highlightColor: Colors.transparent,
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => CreateEmail())).then((value) {
-                                      usernameController.clear();
-                                      passwordController.clear();
-                                    });
-                          },
-                          child: Text("SIGN UP",
-                              style: TextStyle(
-                                  color: Color(0xFF5d74e3),
-                                  fontFamily: "Poppins-Bold")),
-                        )
-                      ],
-                    )
+                    
                   ],
                 ),
               ),

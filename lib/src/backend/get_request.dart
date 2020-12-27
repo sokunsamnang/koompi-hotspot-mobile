@@ -42,7 +42,7 @@ class GetRequest with ChangeNotifier{
     });
     if (_backend.token != null) {
       _backend.response = await http.get("${ApiService.url}/selendra/get-wallet",
-          headers: _backend.conceteHeader("authorization", "Bearer ${_backend.token['token']}"));
+      headers: _backend.conceteHeader("authorization", "Bearer ${_backend.token['token']}"));
       return _backend.response;
     }
     return null;

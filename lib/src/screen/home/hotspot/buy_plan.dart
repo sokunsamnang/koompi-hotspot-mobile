@@ -23,6 +23,7 @@ class _UserPlanState extends State<UserPlan>
 
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  final TextEditingController confirmPasswordController = TextEditingController();
   final TextEditingController planUserController = TextEditingController();
 
 
@@ -37,24 +38,57 @@ class _UserPlanState extends State<UserPlan>
           usernameController.text,
           passwordController.text,
           selectedPlanIndex);
-        if (response.statusCode == 200) {
-          print('Buy plan successfully');
-          print(usernameController.text);
-          print(passwordController.text);
-          print(selectedPlanIndex);
-          // dialogLoading(context);
-          Future.delayed(Duration(seconds: 2), () {
-            Timer(Duration(milliseconds: 500), () => Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (context) => CompletePlan()),
-              ModalRoute.withName('/'),
-            ));
-          });
+
+        var paymentResponse = await PostRequest().hotspotPayment(selectedPlanIndex.toString());
+        if (paymentResponse.statusCode == 200) {
+          if(response.statusCode == 200){
+            print('Buy plan successfully');
+            print(usernameController.text);
+            print(passwordController.text);
+            print(confirmPasswordController.text);
+            print(selectedPlanIndex);
+            Future.delayed(Duration(seconds: 2), () {
+              Timer(Duration(milliseconds: 500), () => Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => CompletePlan()),
+                ModalRoute.withName('/'),
+              ));
+            });
+          }
+          else{
+            Navigator.of(context).pop();
+            return showDialog(
+              context: context,
+              barrierDismissible: false,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: Text('Error'),
+                  content: SingleChildScrollView(
+                    child: ListBody(
+                      children: <Widget>[
+                        Text(response.body),
+                      ],
+                    ),
+                  ),
+                  actions: <Widget>[
+                    FlatButton(
+                      child: Text('OK'),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ],
+                );
+              }
+            );
+          }
+          
         } 
-        else if (response.statusCode == 401) {
-          print('Buy plan successfully');
+        else if (paymentResponse.statusCode == 401) {
+          Navigator.of(context).pop();
           print(usernameController.text);
           print(passwordController.text);
+          print(confirmPasswordController.text);
           print(selectedPlanIndex);
           return showDialog(
             context: context,
@@ -65,7 +99,7 @@ class _UserPlanState extends State<UserPlan>
                 content: SingleChildScrollView(
                   child: ListBody(
                     children: <Widget>[
-                      Text(response.body),
+                      Text(paymentResponse.body),
                     ],
                   ),
                 ),
@@ -95,15 +129,13 @@ class _UserPlanState extends State<UserPlan>
   String lastChoiceChipSelection = '';
   // Expiration DATE
 
-  String finalDate = '';
-
   String finalDate30Days = '';
   String finalDate365Days = '';
 
 
   //Plan Select 
 
-  List<String> planList = ['30 Days', '365 Days'];
+  List<String> planList = ['30', '365'];
   var selectedPlanIndex;
   
   void changeIndex(String index) {
@@ -122,12 +154,24 @@ class _UserPlanState extends State<UserPlan>
     });
   }
 
+  // Initially password is obscure2
+  bool _obscureText2 = true;
+
+  // Toggles2 the password show status
+  void _toggle2() {
+    setState(() {
+      _obscureText2 = !_obscureText2;
+    });
+  }
+
   @override
   void initState() {
     super.initState();
     _controller = AnimationController(vsync: this);
 
-    dateFormatter();
+    setState(() {
+      dateFormatter();
+    });
   }
 
   @override
@@ -160,9 +204,9 @@ class _UserPlanState extends State<UserPlan>
       Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => _reviewPlan(
-              usernameController,
-              selectedPlanIndex
+          builder: (context) => _reviewPlan(
+            usernameController,
+            selectedPlanIndex
           )
         )
       );
@@ -178,8 +222,9 @@ class _UserPlanState extends State<UserPlan>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: Colors.white,
-        title: Text('Buy Hotspot Plan', style: TextStyle(color: Colors.black)),
+        title: Text('BUY HOTSPOT PLAN', style: TextStyle(color: Colors.black)),
       ),
       body: GestureDetector(
         behavior: HitTestBehavior.opaque,
@@ -200,11 +245,11 @@ class _UserPlanState extends State<UserPlan>
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     SizedBox(height: 16.0),
-                    Text('Wifi Hotspot Username'),
+                    Text('Hotspot Username'),
                     SizedBox(height: 10.0),
                     TextFormField(
                       controller: usernameController,
-                      validator: (val) => val.length < 3 ? 'Username is required' : null,
+                      validator: (val) => val.length < 3 ? 'Username is required.' : null,
                       onSaved: (val) => usernameController.text = val,
                       decoration: InputDecoration(
                         hintText: 'Username',
@@ -216,11 +261,19 @@ class _UserPlanState extends State<UserPlan>
                       ),
                     ),
                     SizedBox(height: 16.0),
-                    Text('Wifi Hotspot Password'),
+                    Text('Hotspot Password'),
                     SizedBox(height: 10.0),
                     TextFormField(
                       controller: passwordController,
-                      validator: (val) => val.length < 8 ? 'Password is required more than 8 digits' : null,
+                      validator: (val) {
+                        if(val.isEmpty){
+                          return 'Password is required.';
+                        }
+                        if(val.length < 8){
+                          return 'Password too short';
+                        }
+                        return null;
+                      },
                       onSaved: (val) => passwordController.text = val,
                       decoration: InputDecoration(
                         hintText: 'Password',
@@ -239,6 +292,39 @@ class _UserPlanState extends State<UserPlan>
                         ),
                       ),
                       obscureText: _obscureText,
+                    ),
+                    SizedBox(height: 16.0),
+                    Text('Hotspot Confirm Password'),
+                    SizedBox(height: 10.0),
+                    TextFormField(
+                      controller: confirmPasswordController,
+                      validator: (val) {
+                        if(val.isEmpty){
+                          return 'Confirm password is required.';
+                        }
+                        if(val != passwordController.text){
+                          return 'Password not match';
+                        }
+                        return null;
+                      },
+                      onSaved: (val) => confirmPasswordController.text = val,
+                      decoration: InputDecoration(
+                        hintText: 'Confirm Password',
+                        prefixIcon: Icon(LineIcons.lock),
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.black),
+                          borderRadius: BorderRadius.all(Radius.circular(12.0))
+                        ),
+                      suffixIcon: GestureDetector(
+                          onTap: () {
+                            _toggle2();
+                          },
+                          child: Icon(
+                            _obscureText2 ? Icons.visibility_off : Icons.visibility,
+                          ),
+                        ),
+                      ),
+                      obscureText: _obscureText2,
                     ),
                     SizedBox(height: 16.0),
                     FormBuilderChoiceChip(
@@ -261,8 +347,8 @@ class _UserPlanState extends State<UserPlan>
                       labelPadding: EdgeInsets.only(left: 35, right: 35),
                       attribute: "planDate",
                       options: [
-                        FormBuilderFieldOption(value: '30 Days'),
-                        FormBuilderFieldOption(value: '365 Days'),
+                        FormBuilderFieldOption(value: '30', label: '30 Days',),
+                        FormBuilderFieldOption(value: '365', label: '365 Days',),
                       ],
                       onChanged: (value) {
                         if (value == null) {
@@ -326,28 +412,28 @@ class _UserPlanState extends State<UserPlan>
 
 
 
-  Widget planCustomRadio(String txt, String index) {
-    return ButtonTheme(
-      height: 50.0,
-      padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
-      child: OutlineButton(
-        onPressed: () => changeIndex(index),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
-        splashColor: Colors.transparent,
-        borderSide: BorderSide(
-            color: selectedPlanIndex == index ? Colors.cyan : Colors.grey),
-        child: Text(txt,
-          style: TextStyle(
-              color: selectedPlanIndex == index ? Colors.black : Colors.grey),
-        ),
-      ),
-    );
-  }
+  // Widget planCustomRadio(String txt, String index) {
+  //   return ButtonTheme(
+  //     height: 50.0,
+  //     padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+  //     child: OutlineButton(
+  //       onPressed: () => changeIndex(index),
+  //       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
+  //       splashColor: Colors.transparent,
+  //       borderSide: BorderSide(
+  //           color: selectedPlanIndex == index ? Colors.cyan : Colors.grey),
+  //       child: Text(txt,
+  //         style: TextStyle(
+  //             color: selectedPlanIndex == index ? Colors.black : Colors.grey),
+  //       ),
+  //     ),
+  //   );
+  // }
 
   Widget _planBalance(){
     if(selectedPlanIndex == planList[0]){
       return Text(
-        'Balance: 5000៛', 
+        'Balance: 50 RSEL', 
         style: TextStyle(
           fontSize: 15.0,
           fontFamily: 'Poppins-Medium'
@@ -356,7 +442,7 @@ class _UserPlanState extends State<UserPlan>
     }
     else if(selectedPlanIndex == planList[1]){
       return Text(
-        'Balance: 20000៛', 
+        'Balance: 600 RSEL', 
         style: TextStyle(
           fontSize: 15.0,
           fontFamily: 'Poppins-Medium'
@@ -371,7 +457,7 @@ class _UserPlanState extends State<UserPlan>
   Widget _expirationDate(){
     if(selectedPlanIndex == planList[0]){
       return Text(
-        'Expiration: $finalDate30Days ', 
+        'Expiration: $finalDate30Days', 
         style: TextStyle(
           fontSize: 15.0,
           fontFamily: 'Poppins-Medium'
@@ -446,7 +532,7 @@ class _UserPlanState extends State<UserPlan>
                       ),
                       SizedBox(height: 10.0),
                       Container(
-                        child: Text('Date: $_selectPlanDate',
+                        child: Text('Date: $_selectPlanDate Days',
                         style: TextStyle(
                           fontSize: 15.0,
                           fontFamily: 'Poppins-Medium',
@@ -460,16 +546,16 @@ class _UserPlanState extends State<UserPlan>
                     ],
                   ),
                 ),
-                SizedBox(height: 50.0),
+                // SizedBox(height: 50.0),
                 Center(
                   child: InkWell(
                     child: Container(
-                      width: 100,
+                     margin: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 25.0),
                       height: 50,
                       decoration: BoxDecoration(
                           gradient: LinearGradient(
                               colors: [Color(0xFF17ead9), Color(0xFF6078ea)]),
-                          borderRadius: BorderRadius.circular(30),
+                          borderRadius: BorderRadius.circular(12),
                           boxShadow: [
                             BoxShadow(
                                 color: Color(0xFF6078ea).withOpacity(.3),
