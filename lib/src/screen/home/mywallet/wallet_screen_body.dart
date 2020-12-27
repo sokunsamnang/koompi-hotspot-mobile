@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:koompi_hotspot/src/backend/get_request.dart';
 import 'package:koompi_hotspot/src/models/model_balance.dart';
+import 'package:koompi_hotspot/src/models/model_trx_history.dart';
 import 'package:koompi_hotspot/src/screen/home/mywallet/my_wallet.dart';
 import 'package:koompi_hotspot/src/screen/home/mywallet/wallet_choice.dart';
 import 'package:provider/provider.dart';
@@ -61,15 +62,17 @@ class _BodyState extends State<Body> {
 
   @override
   void initState() {
-    fetchHistory();
+    setState(() async {
+      await Provider.of<BalanceProvider>(context, listen: false).fetchPortforlio();
+      await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
+    });
     super.initState();
-    Provider.of<BalanceProvider>(context, listen: false).fetchPortforlio();
   }
 
   @override
   Widget build(BuildContext context) {
     return mBalance.data == null
-        ? WalletChoice(onGetWallet, showAlertDialog)
-        : MyWallet(resetState: resetState);
+      ? WalletChoice(onGetWallet, showAlertDialog)
+      : MyWallet(resetState: resetState);
   }
 }

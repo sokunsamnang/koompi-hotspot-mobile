@@ -84,7 +84,6 @@ class _SplashState extends State<Splash> {
     setState(() {
       internet();
       startTime();
-      // Provider.of<BalanceProvider>(context, listen: false).fetchPortforlio();
     });
     super.initState();
   }

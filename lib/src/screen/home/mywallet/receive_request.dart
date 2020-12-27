@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:koompi_hotspot/src/models/model_balance.dart';
-import 'package:koompi_hotspot/src/models/model_userdata.dart';
 import 'package:koompi_hotspot/src/reuse_widget/reuse_btn_social.dart';
+import 'package:provider/provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class ReceiveRequest extends StatefulWidget {
@@ -11,6 +11,7 @@ class ReceiveRequest extends StatefulWidget {
 }
 
 class _ReceiveRequestState extends State<ReceiveRequest> {
+
   PageController _pageController;
 
   int currentIndex = 0;
@@ -60,8 +61,7 @@ class _ReceiveRequestState extends State<ReceiveRequest> {
           children: [
             Container(
               height: MediaQuery.of(context).size.height * 0.6,
-              margin: const EdgeInsets.symmetric(
-                  horizontal: 25.0, vertical: 80),
+              margin: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 80),
               child: Card(
                 elevation: 2,
                 shape: RoundedRectangleBorder(
@@ -74,7 +74,8 @@ class _ReceiveRequestState extends State<ReceiveRequest> {
                     height: MediaQuery.of(context).size.height,
                     width: MediaQuery.of(context).size.width,
                     padding: const EdgeInsets.all(20.0),
-                    child: Column(
+                      child: Consumer<BalanceProvider>(
+                        builder: (context, value , child) => Column(
                         children: [
                           SizedBox(
                             height: 20,
@@ -91,16 +92,16 @@ class _ReceiveRequestState extends State<ReceiveRequest> {
                             height: 20,
                           ),
                           QrImage(
-                            embeddedImage: AssetImage('assets/images/icon_launcher.png'),
-                            data: mData.wallet,
+                            data: value.mData.wallet,
                             version: QrVersions.auto,
+                            embeddedImage: AssetImage('assets/images/sld_qr.png'),
                             size: 200.0,
                           ),
                           SizedBox(
                             height: 20.0,
                           ),
                           Text(
-                            mData.wallet,
+                            value.mData.wallet,
                             overflow: TextOverflow.ellipsis,
                           ),
                           SizedBox(
@@ -127,7 +128,7 @@ class _ReceiveRequestState extends State<ReceiveRequest> {
                                   highlightColor: Colors.transparent,
                                   splashColor: Colors.transparent,
                                   onTap: () async {
-                                    copyWallet(mData.wallet);
+                                    copyWallet(value.mData.wallet);
                                     showSnackBar();
                                   },
                                   child: Center(
@@ -149,6 +150,7 @@ class _ReceiveRequestState extends State<ReceiveRequest> {
                 ),
               ),
             ),
+          ),
             Align(
               alignment: Alignment.topCenter,
               child: Container(

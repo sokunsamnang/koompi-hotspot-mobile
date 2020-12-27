@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:koompi_hotspot/src/backend/component.dart';
 import 'package:koompi_hotspot/src/models/model_userdata.dart';
+import 'package:koompi_hotspot/src/services/services.dart';
 import 'api_service.dart';
 
 class PostRequest with ChangeNotifier{
@@ -13,6 +14,7 @@ class PostRequest with ChangeNotifier{
   var _mUser = new ModelUserData();
   ModelUserData get mUser => _mUser;
   String alertText;
+  StorageServices _prefService = StorageServices();
 
   /*Login Account */
   Future<http.Response> userLogIn(String email, String password) async {
@@ -152,19 +154,26 @@ class PostRequest with ChangeNotifier{
   //Hotspot Plan
 
   Future<http.Response> buyHotspotPlan(String username, String password, String value) async {
-    _backend.bodyEncode = json.encode({ /* Convert to Json String */
-        "username": username,
-        "password": password,
-        "simultaneous": "2",
-        "value": value,
+    await _prefService.read('token').then((value){
+      _backend.token = Map<String, dynamic>.from({'token':value});
     });
 
-    _backend.response = await http.post('${ApiService.url}/hotspot/set-plan', 
-    headers: _backend.conceteHeader(null, null), 
-    body: _backend.bodyEncode);
+    if(_backend.token != null){
+      _backend.bodyEncode = json.encode({ /* Convert to Json String */
+          "username": username,
+          "password": password,
+          "simultaneous": "2",
+          "value": value,
+      });
 
-    print(_backend.response.body);
-    return _backend.response;
+      _backend.response = await http.post('${ApiService.url}/hotspot/set-plan', 
+      headers: _backend.conceteHeader("authorization", "Bearer ${_backend.token['token']}"),
+      body: _backend.bodyEncode);
+
+      print(_backend.response.body);
+      return _backend.response;
+    }
+    return null;
   }
 
   Future<http.Response> resetHotspotPlan(String username, String value) async {
@@ -212,19 +221,50 @@ class PostRequest with ChangeNotifier{
   //   );
   // }
 
-  Future<http.Response> sendPayment(String asset, String amount, String memo,) async {
-    _backend.bodyEncode = json.encode(/* Convert to Json Data ( String ) */
-      {
-        "asset": asset,
+  Future<http.Response> sendPayment(String dest, String assets, String amount, String memo) async {
+    await _prefService.read('token').then((value){
+      _backend.token = Map<String, dynamic>.from({'token':value});
+    });
+
+    if(_backend.token != null){
+      _backend.bodyEncode = json.encode({ /* Convert to Json String */
+        "dest_wallet": dest,
+        "asset": assets,
         "amount": amount,
-        "memo": memo,
-        }
-    );
-    _backend.response = await http.put('${ApiService.url}/auth/complete-info', 
-    headers: _backend.conceteHeader(null, null), 
-    body: _backend.bodyEncode);
-    return _backend.response;
+        "memo": memo
+      });
+
+      _backend.response = await http.post('${ApiService.url}/selendra/transfer', 
+      headers: _backend.conceteHeader("authorization", "Bearer ${_backend.token['token']}"),
+      body: _backend.bodyEncode);
+
+      print(_backend.response.body);
+      return _backend.response;
+    }
+    return null;
   }
-  
+
+  Future<http.Response> hotspotPayment(String amount) async {
+    await _prefService.read('token').then((value){
+      _backend.token = Map<String, dynamic>.from({'token':value});
+    });
+
+    if(_backend.token != null){
+      _backend.bodyEncode = json.encode({ /* Convert to Json String */
+        "asset": 'SEL',
+        "amount": amount,
+        "memo": 'Buy Hotspot'
+      });
+
+      _backend.response = await http.post('${ApiService.url}/selendra/payment', 
+      headers: _backend.conceteHeader("authorization", "Bearer ${_backend.token['token']}"),
+      body: _backend.bodyEncode);
+
+      print(_backend.response.body);
+      return _backend.response;
+    }
+    return null;
+  }
+
 }
 

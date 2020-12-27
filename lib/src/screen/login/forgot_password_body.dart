@@ -115,24 +115,22 @@ import 'package:koompi_hotspot/src/screen/login/login_page.dart';
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         Text(
-                          'Back to Login !',
-                          style: TextStyle(color: Colors.black, fontSize: 13, fontWeight: FontWeight.w600),
+                          "BACK TO LOGIN ",
+                          style: TextStyle(fontFamily: "Poppins-Medium"),
                         ),
                         SizedBox(width: 10,),
                         InkWell(
                           onTap: () {
-                              Navigator.pop(context,
-                              MaterialPageRoute(builder: (context) => LoginPage()));
+                            Navigator.pop(context,
+                            MaterialPageRoute(builder: (context) => LoginPage()));
                           },
                           splashColor: Colors.transparent,
                           highlightColor: Colors.transparent,
 
-                          child: Text('Login',
+                          child: Text("LOGIN",
                             style: TextStyle(
                               color: Color(0xfff79c4f),
-                              fontSize: 13,
-                              fontWeight: FontWeight.w600),
-                          ),
+                              fontFamily: "Poppins-Bold")),
                         )
                       ],
                     ),

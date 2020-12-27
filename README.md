@@ -1,20 +1,29 @@
-<<<<<<< HEAD
-# koompi_hotspot
+# KOOMPI Hotspot
 
-A new Flutter project.
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
+### Welcome To KOOMPI Hotspot 
 
-A few resources to get you started if this is your first Flutter project:
+KOOMPI Wi-Fi Hotspot is for accessable and affordable for everyone and  KOOMPI school partner.
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-=======
-# mobile_koompi_hotspot
->>>>>>> 818217f79ed6038aeb1d0d0bc2e99dc02a58e553
+### Features:
+
+- [ ] Register vai SMS. 
+- [x] Register vai email Account.
+- [ ] Register vai Others social media account.
+- [x] Send to token by QR Code.
+- [ ] Send payment.
+- [x] View transaction histroy.
+- [x] Buy hotspot plan.
+- [x] Speed Test.
+
+
+## Prerequisite: 
+
+* Installed Flutter and Android Studio on your machine.
+
+
+## Usage:
+
+Use this command `flutter run` on your terminal.

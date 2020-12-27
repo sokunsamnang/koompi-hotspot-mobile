@@ -1,14 +1,16 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:koompi_hotspot/src/components/reuse_widget.dart';
 import 'package:koompi_hotspot/src/models/model_userdata.dart';
-import 'package:koompi_hotspot/src/screen/home/mywallet/wallet_screen.dart';
+import 'package:koompi_hotspot/src/screen/home/mywallet/receive_request.dart';
 import 'package:koompi_hotspot/src/screen/option_page/myaccount.dart';
 import 'package:koompi_hotspot/src/screen/login/login_page.dart';
 import 'package:koompi_hotspot/src/services/services.dart';
 import 'package:line_icons/line_icons.dart';
 import 'change_password.dart';
+import 'package:koompi_hotspot/src/screen/speedtest/speedtest.dart';
 
 class MorePage extends StatefulWidget {
   @override
@@ -88,30 +90,30 @@ class _MorePageState extends State<MorePage>
                     _buildDivider(),
                     ListTile(
                       leading: Icon(LineIcons.money),
-                      title: Text("Top Up"),
+                      title: Text("Quick Top Up"),
                       trailing: Icon(LineIcons.angle_right),
                       onTap: () async {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => WalletScreen()),
+                          MaterialPageRoute(builder: (context) => ReceiveRequest()),
                         );
                       },
                     ),
-                    // _buildDivider(),
-                    // ListTile(
-                    //   leading: Icon(
-                    //     FontAwesomeIcons.wifi,
-                    //     size: 20.0,
-                    //   ),
-                    //   title: Text("Speed Test"),
-                    //   trailing: Icon(LineIcons.angle_right),
-                    //   onTap: () async {
-                    //     Navigator.push(
-                    //       context,
-                    //       MaterialPageRoute(builder: (context) => Speedtest()),
-                    //     );
-                    //   },
-                    // ),
+                    _buildDivider(),
+                    ListTile(
+                      leading: Icon(
+                        FontAwesomeIcons.wifi,
+                        size: 20.0,
+                      ),
+                      title: Text("Speed Test"),
+                      trailing: Icon(LineIcons.angle_right),
+                      onTap: () async {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => SpeedTestNet()),
+                        );
+                      },
+                    ),
                     _buildDivider(),
                     ListTile(
                       leading: Icon(LineIcons.sign_out),
