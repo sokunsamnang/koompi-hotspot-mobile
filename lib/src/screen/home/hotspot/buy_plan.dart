@@ -34,13 +34,15 @@ class _UserPlanState extends State<UserPlan>
       final result = await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
         print('Internet connected');
-        var response = await PostRequest().buyHotspotPlan(
-          usernameController.text,
-          passwordController.text,
-          selectedPlanIndex);
 
         var paymentResponse = await PostRequest().hotspotPayment(selectedPlanIndex.toString());
+        
         if (paymentResponse.statusCode == 200) {
+          var response = await PostRequest().buyHotspotPlan(
+          usernameController.text,
+          passwordController.text,
+          selectedPlanIndex.toString());
+
           if(response.statusCode == 200){
             print('Buy plan successfully');
             print(usernameController.text);
@@ -82,14 +84,9 @@ class _UserPlanState extends State<UserPlan>
               }
             );
           }
-          
         } 
-        else if (paymentResponse.statusCode == 401) {
+        else {
           Navigator.of(context).pop();
-          print(usernameController.text);
-          print(passwordController.text);
-          print(confirmPasswordController.text);
-          print(selectedPlanIndex);
           return showDialog(
             context: context,
             barrierDismissible: false,
@@ -115,9 +112,6 @@ class _UserPlanState extends State<UserPlan>
             }
           );
         } 
-        else{
-          Navigator.of(context).pop();
-        }
       }
     } on SocketException catch (_) {
       Navigator.pop(context);
@@ -224,7 +218,7 @@ class _UserPlanState extends State<UserPlan>
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: Colors.white,
-        title: Text('BUY HOTSPOT PLAN', style: TextStyle(color: Colors.black)),
+        title: Text('Buy Hotspot Plan', style: TextStyle(color: Colors.black)),
       ),
       body: GestureDetector(
         behavior: HitTestBehavior.opaque,

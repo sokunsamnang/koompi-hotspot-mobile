@@ -55,7 +55,6 @@ class _SendRequestState extends State<SendRequest> {
         print('Internet connected');
         _backend.response = await PostRequest().sendPayment(
           recieveWallet.text,
-          asset.text,
           amount.text,
           memo.text);
           
@@ -63,18 +62,10 @@ class _SendRequestState extends State<SendRequest> {
 
           _backend.mapData = json.decode(_backend.response.body);
 
-          if (!_backend.mapData.containsKey('error')) {
-            print('${_backend.response.statusCode.toString()}');
-            return FlareActor( 
+          return FlareActor( 
               'assets/animations/check.flr', 
               animation: 'Checkmark',
             );
-            // await Components.dialog(context, textAlignCenter(text: _response["message"]), Icon(Icons.done_outline, color: getHexaColor(AppColors.blueColor)));
-          } else {
-            print('${_backend.response.statusCode.toString()}');
-            await Components.dialog(context, textAlignCenter(text: _backend.mapData["error"]['message']), warningTitleDialog());
-            Navigator.pop(context);
-          }
         } else {
           print('${_backend.response.statusCode.toString()}');
           await Components.dialog(context, textAlignCenter(text: 'Something goes wrong'), warningTitleDialog());

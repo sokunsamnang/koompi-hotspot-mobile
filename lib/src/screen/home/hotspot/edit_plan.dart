@@ -1,9 +1,5 @@
-import 'dart:async';
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:koompi_hotspot/src/backend/post_request.dart';
-import 'package:koompi_hotspot/src/components/navbar.dart';
 
 class EditUserPlan extends StatefulWidget {
   @override
@@ -22,37 +18,37 @@ class _EditUserPlanState extends State<EditUserPlan>
   final TextEditingController planUserController = TextEditingController();
 
 
-  //check connection and login
-  Future <void> buyHotspot(BuildContext context) async {
-    // dialogLoading(context);
-    try {
-      final result = await InternetAddress.lookup('google.com');
-      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-        print('Internet connected');
-        var response = await PostRequest().buyHotspotPlan(
-          usernameController.text,
-          passwordController.text,
-          selectedPlanIndex);
-        if (response.statusCode == 200) {
-          print('Buy plan successfully');
-          print(usernameController.text);
-          print(passwordController.text);
-          print(selectedPlanIndex);
-          // var responseJson = json.decode(response.body);
-          Future.delayed(Duration(seconds: 2), () {
-            Timer(Duration(milliseconds: 500), () => Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (context) => Navbar()),
-              ModalRoute.withName('/'),
-            ));
-          });
-        } 
-      }
-    } on SocketException catch (_) {
-      Navigator.pop(context);
-      print('not connected');
-    }
-  }
+  // //check connection and login
+  // Future <void> buyHotspot(BuildContext context) async {
+  //   // dialogLoading(context);
+  //   try {
+  //     final result = await InternetAddress.lookup('google.com');
+  //     if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+  //       print('Internet connected');
+  //       var response = await PostRequest().buyHotspotPlan(
+  //         usernameController.text,
+  //         passwordController.text,
+  //         selectedPlanIndex);
+  //       if (response.statusCode == 200) {
+  //         print('Buy plan successfully');
+  //         print(usernameController.text);
+  //         print(passwordController.text);
+  //         print(selectedPlanIndex);
+  //         // var responseJson = json.decode(response.body);
+  //         Future.delayed(Duration(seconds: 2), () {
+  //           Timer(Duration(milliseconds: 500), () => Navigator.pushAndRemoveUntil(
+  //             context,
+  //             MaterialPageRoute(builder: (context) => Navbar()),
+  //             ModalRoute.withName('/'),
+  //           ));
+  //         });
+  //       } 
+  //     }
+  //   } on SocketException catch (_) {
+  //     Navigator.pop(context);
+  //     print('not connected');
+  //   }
+  // }
 
 
   String lastChoiceChipSelection = '';
@@ -66,7 +62,7 @@ class _EditUserPlanState extends State<EditUserPlan>
 
   //Plan Select 
 
-  List<String> planList = ['30 Days', '365 Days'];
+  List<String> planList = ['30', '365'];
   var selectedPlanIndex;
   
   void changeIndex(String index) {
@@ -215,8 +211,8 @@ class _EditUserPlanState extends State<EditUserPlan>
                       labelPadding: EdgeInsets.only(left: 35, right: 35),
                       attribute: "planDate",
                       options: [
-                        FormBuilderFieldOption(value: '30 Days'),
-                        FormBuilderFieldOption(value: '365 Days'),
+                        FormBuilderFieldOption(value: '30', label: '30 Days',),
+                        FormBuilderFieldOption(value: '365', label: '365 Days',),
                       ],
                       onChanged: (value) {
                         if (value == null) {

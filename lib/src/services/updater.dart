@@ -28,10 +28,12 @@ versionCheck(context) async {
         .trim()
         .replaceAll(".", ""));
     if (newVersion > currentVersion) {
+      print('New version available');
       _showVersionDialog(context);
     }
   } on FetchThrottledException catch (exception) {
     // Fetch throttled.
+    print('new version not found');
     print(exception);
   } catch (exception) {
     print('Unable to fetch remote config. Cached or default values will be '

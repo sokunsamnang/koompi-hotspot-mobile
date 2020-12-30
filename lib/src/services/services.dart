@@ -3,8 +3,11 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:koompi_hotspot/src/backend/get_request.dart';
 import 'package:koompi_hotspot/src/components/navbar.dart';
+import 'package:koompi_hotspot/src/models/model_balance.dart';
+import 'package:koompi_hotspot/src/models/model_trx_history.dart';
 import 'package:koompi_hotspot/src/screen/login/login_page.dart';
 import 'package:koompi_hotspot/src/services/jtw_decoder.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class StorageServices{
@@ -35,8 +38,8 @@ class StorageServices{
     else if (JwtDecoder.isExpired(token) == false ) {
       print('token not expire');
       await GetRequest().getUserProfile(token).then((value) async{
-        // await Provider.of<BalanceProvider>(context, listen: false).fetchPortforlio();
-        // Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
+        await Provider.of<BalanceProvider>(context, listen: false).fetchPortforlio();
+        await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
       });
        
       Navigator.pushReplacement(

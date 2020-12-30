@@ -94,7 +94,7 @@ import 'package:provider/provider.dart';
                               ),
                       ],
                     ),
-                    leading: Image.asset('assets/images/icon_launcher.png', width: 30, height: 30),
+                    leading: SvgPicture.asset('assets/images/sld_stroke.svg', width: 30, height: 30),
                     title: Text(
                       userWallet == history[i].destination ? 'Recieved' : 'Sent',
                       style: TextStyle(
@@ -121,7 +121,6 @@ import 'package:provider/provider.dart';
           ? SafeArea(
               child: Column(
                 children: [
-                 
                   Expanded(
                     child: Align(
                       alignment: Alignment.center,

@@ -9,7 +9,6 @@ import 'package:koompi_hotspot/src/components/navbar.dart';
 import 'package:koompi_hotspot/src/components/reuse_widget.dart';
 import 'package:koompi_hotspot/src/models/model_balance.dart';
 import 'package:koompi_hotspot/src/models/model_trx_history.dart';
-import 'package:koompi_hotspot/src/screen/create_account/create_email/create_email.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:koompi_hotspot/src/services/network_status.dart';
 import 'package:koompi_hotspot/src/services/services.dart';
@@ -108,9 +107,11 @@ class _LoginPageState extends State<LoginPage> {
               Provider.of<BalanceProvider>(context, listen: false).fetchPortforlio();
               Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
             });
-            Navigator.pushReplacement(
+            Navigator.pushAndRemoveUntil(
               context,
-              MaterialPageRoute(builder: (context) => Navbar()));
+              MaterialPageRoute(builder: (context) => Navbar()),
+              ModalRoute.withName('/navbar'),
+            );
           }
           else {
             Navigator.pop(context);
