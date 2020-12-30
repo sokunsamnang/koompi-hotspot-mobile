@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:koompi_hotspot/src/models/model_balance.dart';
+import 'package:koompi_hotspot/src/models/model_userdata.dart';
 import 'package:koompi_hotspot/src/reuse_widget/reuse_btn_social.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
@@ -11,12 +12,6 @@ class ReceiveRequest extends StatefulWidget {
 }
 
 class _ReceiveRequestState extends State<ReceiveRequest> {
-
-  PageController _pageController;
-
-  int currentIndex = 0;
-
-  double viewportFraction = 0.8;
 
   final GlobalKey<ScaffoldState> _scaffoldkey = new GlobalKey<ScaffoldState>();
 
@@ -38,7 +33,6 @@ class _ReceiveRequestState extends State<ReceiveRequest> {
   @override
   void initState() {
     super.initState();
-    _pageController = PageController(viewportFraction: viewportFraction);
   }
 
   @override
@@ -56,7 +50,7 @@ class _ReceiveRequestState extends State<ReceiveRequest> {
               color: Colors.black, fontWeight: FontWeight.bold, fontSize: 22.0),
         ),
       ),
-      body: mBalance.data != null ?
+      body: mBalance.token != null ?
         Stack(
           children: [
             Container(
@@ -74,8 +68,7 @@ class _ReceiveRequestState extends State<ReceiveRequest> {
                     height: MediaQuery.of(context).size.height,
                     width: MediaQuery.of(context).size.width,
                     padding: const EdgeInsets.all(20.0),
-                      child: Consumer<BalanceProvider>(
-                        builder: (context, value , child) => Column(
+                      child: Column(
                         children: [
                           SizedBox(
                             height: 20,
@@ -92,16 +85,19 @@ class _ReceiveRequestState extends State<ReceiveRequest> {
                             height: 20,
                           ),
                           QrImage(
-                            data: value.mData.wallet,
+                            data: mData.wallet,
                             version: QrVersions.auto,
-                            embeddedImage: AssetImage('assets/images/sld_qr.png'),
+                            embeddedImage: AssetImage('assets/images/sld_stroke.png'),
                             size: 200.0,
+                            embeddedImageStyle: QrEmbeddedImageStyle(
+                              size: Size(40, 40),
+                            ),
                           ),
                           SizedBox(
                             height: 20.0,
                           ),
                           Text(
-                            value.mData.wallet,
+                            mData.wallet,
                             overflow: TextOverflow.ellipsis,
                           ),
                           SizedBox(
@@ -113,22 +109,22 @@ class _ReceiveRequestState extends State<ReceiveRequest> {
                                 width: MediaQuery.of(context).size.width,
                                 height: 50,
                                 decoration: BoxDecoration(
-                                    gradient: LinearGradient(
-                                        colors: [Color(0xFF17ead9), Color(0xFF6078ea)]),
-                                    borderRadius: BorderRadius.circular(12),
-                                    boxShadow: [
-                                      BoxShadow(
-                                          color: Color(0xFF6078ea).withOpacity(.3),
-                                          offset: Offset(0.0, 8.0),
-                                          blurRadius: 8.0)
-                                    ]),
+                                  gradient: LinearGradient(
+                                      colors: [Color(0xFF17ead9), Color(0xFF6078ea)]),
+                                  borderRadius: BorderRadius.circular(12),
+                                  boxShadow: [
+                                    BoxShadow(
+                                        color: Color(0xFF6078ea).withOpacity(.3),
+                                        offset: Offset(0.0, 8.0),
+                                        blurRadius: 8.0)
+                                  ]),
                               child: Material(
                                 color: Colors.transparent,
                                 child: InkWell(
                                   highlightColor: Colors.transparent,
                                   splashColor: Colors.transparent,
                                   onTap: () async {
-                                    copyWallet(value.mData.wallet);
+                                    copyWallet(mData.wallet);
                                     showSnackBar();
                                   },
                                   child: Center(
@@ -146,7 +142,6 @@ class _ReceiveRequestState extends State<ReceiveRequest> {
                           ),
                       ],
                     ),
-                  ),
                 ),
               ),
             ),

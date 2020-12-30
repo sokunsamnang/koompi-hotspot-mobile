@@ -3,6 +3,7 @@ import 'package:connectivity/connectivity.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:koompi_hotspot/src/components/navbar.dart';
 import 'package:koompi_hotspot/src/models/model_balance.dart';
 import 'package:koompi_hotspot/src/models/model_trx_history.dart';
 import 'package:koompi_hotspot/src/screen/onboarding/onboarding_screen.dart';
@@ -27,6 +28,9 @@ class App extends StatelessWidget{
       ],
       child: MaterialApp(
         initialRoute: '/',
+        routes: {
+          '/navbar': (context) => Navbar(),
+        },
         title: 'Koompi Hotspot',
         home: Splash(),
       ),
@@ -72,11 +76,11 @@ class _SplashState extends State<Splash> {
   
   void internet() async {
     _networkStatus.connectivityResult = await Connectivity().checkConnectivity();
-    _networkStatus.connectivitySubscription = _networkStatus.connectivity.onConnectivityChanged.listen((event) {
-      setState(() {
-        _networkStatus.connectivityResult = event;
-      });
-    });
+    // _networkStatus.connectivitySubscription = _networkStatus.connectivity.onConnectivityChanged.listen((event) {
+    //   setState(() {
+    //     _networkStatus.connectivityResult = event;
+    //   });
+    // });
   }
   
   @override

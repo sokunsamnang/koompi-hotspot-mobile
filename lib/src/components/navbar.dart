@@ -30,10 +30,10 @@ class _NavbarState extends State<Navbar> {
   
   @override
   void initState(){
-    setState(() {
-      Provider.of<BalanceProvider>(context, listen: false).fetchPortforlio();
-      Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
-    });
+    // setState(() {
+    //   Provider.of<BalanceProvider>(context, listen: false).fetchPortforlio();
+    //   Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
+    // });
     internet();
     super.initState();
   }

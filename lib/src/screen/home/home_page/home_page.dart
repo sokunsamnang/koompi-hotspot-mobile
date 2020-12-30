@@ -63,12 +63,17 @@ class _HomePageState extends State<HomePage>{
         ),
         backgroundColor: Colors.white,
       ),
-      body: SafeArea(
+      body: RefreshIndicator(
+        onRefresh: () async{
+          await Provider.of<BalanceProvider>(context, listen: false).fetchPortforlio();
+        },
+        child: SafeArea(
           child: SingleChildScrollView(
             physics: AlwaysScrollableScrollPhysics(),
             child: bodyPage(context),
           ),
         ),
+      ),
     );   
   }
 }

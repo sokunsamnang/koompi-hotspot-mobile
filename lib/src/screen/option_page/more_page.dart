@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:koompi_hotspot/src/components/reuse_widget.dart';
 import 'package:koompi_hotspot/src/models/model_userdata.dart';
-import 'package:koompi_hotspot/src/screen/home/mywallet/receive_request.dart';
 import 'package:koompi_hotspot/src/screen/option_page/myaccount.dart';
 import 'package:koompi_hotspot/src/screen/login/login_page.dart';
 import 'package:koompi_hotspot/src/services/services.dart';
@@ -87,18 +86,18 @@ class _MorePageState extends State<MorePage>
                               MaterialPageRoute(
                                   builder: (context) => ChangePassword()));
                         }),
-                    _buildDivider(),
-                    ListTile(
-                      leading: Icon(LineIcons.money),
-                      title: Text("Quick Top Up"),
-                      trailing: Icon(LineIcons.angle_right),
-                      onTap: () async {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => ReceiveRequest()),
-                        );
-                      },
-                    ),
+                    // _buildDivider(),
+                    // ListTile(
+                    //   leading: Icon(LineIcons.money),
+                    //   title: Text("Quick Top Up"),
+                    //   trailing: Icon(LineIcons.angle_right),
+                    //   onTap: () async {
+                    //     Navigator.push(
+                    //       context,
+                    //       MaterialPageRoute(builder: (context) => ReceiveRequest()),
+                    //     );
+                    //   },
+                    // ),
                     _buildDivider(),
                     ListTile(
                       leading: Icon(
@@ -123,7 +122,7 @@ class _MorePageState extends State<MorePage>
                       },
                     ),
                     _buildDivider(),
-                    Text('Demo Version: 0.0.1'),
+                    Text('Demo Version'),
                   ],
                 ),
               ),

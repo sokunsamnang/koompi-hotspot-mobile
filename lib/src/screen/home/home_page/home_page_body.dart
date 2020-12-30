@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:koompi_hotspot/src/models/model_balance.dart';
 import 'package:koompi_hotspot/src/screen/home/hotspot/plan.dart';
 import 'package:koompi_hotspot/src/screen/home/mywallet/my_wallet.dart';
@@ -17,7 +18,7 @@ Widget bodyPage(BuildContext context) {
           SizedBox(height: 15),
           Text('My Wallet', style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold, fontSize: 18)),
           SizedBox(height: 20),
-          mBalance.data != null ? _balanceTokens(context) : startGetWallet(context),
+          mBalance != null ? _balanceTokens(context) : startGetWallet(context),
           SizedBox(height: 40),
           Text('My Hotspot Plan', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
           SizedBox(height: 20),
@@ -95,13 +96,13 @@ Widget bodyPage(BuildContext context) {
                     SizedBox(height: 10),
                     Container(
                       child: Padding(
-                        padding: EdgeInsets.only(left: 50, ),
+                        padding: EdgeInsets.only(left: 50,),
                         child: Row(
                           children: [
                             Container(
                               child: Row(
                                 children: [
-                                  Image.asset('assets/images/icon_launcher.png', width: 20, height: 20,),
+                                  SvgPicture.asset('assets/images/sld_logo.svg', width: 20, height: 20,),
                                   SizedBox(width: 10),
                                   Text(
                                     'SEL',
@@ -115,12 +116,12 @@ Widget bodyPage(BuildContext context) {
                               ),
                             ),
                             Expanded(child: Container()),
-                            mBalance.data != null ?
+                            mBalance != null ?
                             Flexible(
                               child: Container(
                                 padding: const EdgeInsets.symmetric(horizontal: 23.0),
                                 child: Text(
-                                  '${mBalance.data.balance}',
+                                  '${mBalance.token}',
                                     overflow: TextOverflow.ellipsis,
                                     softWrap: true,
                                     style: TextStyle(

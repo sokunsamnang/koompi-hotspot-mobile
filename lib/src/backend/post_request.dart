@@ -221,7 +221,7 @@ class PostRequest with ChangeNotifier{
   //   );
   // }
 
-  Future<http.Response> sendPayment(String dest, String assets, String amount, String memo) async {
+  Future<http.Response> sendPayment(String dest, String amount, String memo) async {
     await _prefService.read('token').then((value){
       _backend.token = Map<String, dynamic>.from({'token':value});
     });
@@ -229,7 +229,7 @@ class PostRequest with ChangeNotifier{
     if(_backend.token != null){
       _backend.bodyEncode = json.encode({ /* Convert to Json String */
         "dest_wallet": dest,
-        "asset": assets,
+        "asset": 'SEL',
         "amount": amount,
         "memo": memo
       });
@@ -252,7 +252,7 @@ class PostRequest with ChangeNotifier{
     if(_backend.token != null){
       _backend.bodyEncode = json.encode({ /* Convert to Json String */
         "asset": 'SEL',
-        "amount": amount,
+        "plan": amount,
         "memo": 'Buy Hotspot'
       });
 

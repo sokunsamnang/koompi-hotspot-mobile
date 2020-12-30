@@ -33,10 +33,9 @@ class MyLocationViewState extends State<MyLocationView>
   double long;
   double _outZoom = 3.0;
   double _inZoom = 15.0;
+  double _maxZoom = 18.0;
+  double _minZoom = 5.0;
   MapController mapController = new MapController();
-  final favoritePlaceController = TextEditingController();
-  String placeName;
-  bool _isLive = false;
   /// Is camera Position Lock is enabled default false
   bool isMoving = false;
 
@@ -175,6 +174,8 @@ class MyLocationViewState extends State<MyLocationView>
             options: new MapOptions(
               center: new LatLng(lat, long),
               zoom: _inZoom,
+              maxZoom: _maxZoom,
+              minZoom: _minZoom,
             ),
             layers: [
               new TileLayerOptions(
@@ -207,6 +208,7 @@ class MyLocationViewState extends State<MyLocationView>
                   ),
                   
                   ///=================[Marker Location]=====================
+                  //KOOMPI
                   Marker(
                     width: 50,
                     height: 50,
@@ -223,11 +225,29 @@ class MyLocationViewState extends State<MyLocationView>
                       ),
                     ),
                   ),
+                  //Sisowath School
                   Marker(
                     width: 50,
                     height: 50,
                     // anchorPos: AnchorPos.align(AnchorAlign.top),
                     point: LatLng(11.563913, 104.924599),
+                    builder: (ctx) => Container(
+                      child: InkWell(
+                        onTap: () {},
+                        child: Icon(
+                          Icons.location_on,
+                          color: Colors.red,
+                          size: 50,
+                        ),
+                      ),
+                    ),
+                  ),
+                  //S'ang School
+                  Marker(
+                    width: 50,
+                    height: 50,
+                    // anchorPos: AnchorPos.align(AnchorAlign.top),
+                    point: LatLng(11.357523855156012, 105.00719501166897),
                     builder: (ctx) => Container(
                       child: InkWell(
                         onTap: () {},
