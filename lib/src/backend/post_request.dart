@@ -191,36 +191,6 @@ class PostRequest with ChangeNotifier{
     return _backend.response;
   }
 
-  // Future<http.Response> getWallet(String email) async {
-  //   _backend.bodyEncode = json.encode({
-  //     "email": email,
-  //   });
-
-  //   _backend.response = await http.post('${ApiService.url}/selendra/get-wallet', 
-  //   headers: _backend.conceteHeader(null, null), 
-  //   body: _backend.bodyEncode);
-
-  //   print(_backend.response.body);
-  //   return _backend.response;
-  // }
-
-  // Future<Null> getWallet() async {
-  //   await _storageServices.read('token').then((value) async {
-  //     _backend.response = await  http.get('${ApiService.url}/selendra/get-wallet',
-  //       headers: <String, String>{
-  //         "accept": "application/json",
-  //         "authorization": "Bearer " + value,
-  //         "Content-Type": "application/json"
-  //       });
-        
-  //       var responseBody = json.decode(_backend.response.body);
-        
-  //       return responseBody;
-
-  //     }
-  //   );
-  // }
-
   Future<http.Response> sendPayment(String dest, String amount, String memo) async {
     await _prefService.read('token').then((value){
       _backend.token = Map<String, dynamic>.from({'token':value});

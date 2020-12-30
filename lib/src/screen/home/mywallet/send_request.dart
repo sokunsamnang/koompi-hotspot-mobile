@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
@@ -10,6 +11,7 @@ import 'package:koompi_hotspot/src/components/reuse_widget.dart';
 import 'package:koompi_hotspot/src/reuse_widget/reuse_widget.dart';
 import 'package:koompi_hotspot/src/screen/home/mywallet/my_wallet.dart';
 import 'package:koompi_hotspot/src/screen/home/mywallet/qr_scanner.dart';
+import 'package:koompi_hotspot/src/screen/home/mywallet/send_payment_complete.dart';
 
 class SendRequest extends StatefulWidget {
   final String walletKey;
@@ -49,7 +51,6 @@ class _SendRequestState extends State<SendRequest> {
   Future <void> _onSubmit() async {
     dialogLoading(context);
     try {
-      
       final result = await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
         print('Internet connected');
@@ -59,13 +60,13 @@ class _SendRequestState extends State<SendRequest> {
           memo.text);
           
         if (_backend.response.statusCode == 200) {
-
-          _backend.mapData = json.decode(_backend.response.body);
-
-          return FlareActor( 
-              'assets/animations/check.flr', 
-              animation: 'Checkmark',
-            );
+          Future.delayed(Duration(seconds: 2), () {
+            Timer(Duration(milliseconds: 500), () => Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => CompletePayment()),
+              ModalRoute.withName('/'),
+            ));
+          });
         } else {
           print('${_backend.response.statusCode.toString()}');
           await Components.dialog(context, textAlignCenter(text: 'Something goes wrong'), warningTitleDialog());

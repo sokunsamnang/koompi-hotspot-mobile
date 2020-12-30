@@ -153,7 +153,7 @@ class _MyWalletState extends State<MyWallet> {
                                     mBalance.token != null ?
                                       Flexible(
                                         child: Container(
-                                          // padding: const EdgeInsets.symmetric(horizontal: 23.0),
+//                                          padding: const EdgeInsets.symmetric(horizontal: 23.0),
                                           child: Text(
                                             '${mBalance.token}',
                                               overflow: TextOverflow.ellipsis,
