@@ -103,10 +103,8 @@ class _LoginPageState extends State<LoginPage> {
             
             await StorageServices().saveString('token', token);
             await StorageServices.setData(responseJson, 'user_token');
-            setState(() {
-              Provider.of<BalanceProvider>(context, listen: false).fetchPortforlio();
-              Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
-            });
+            await Provider.of<BalanceProvider>(context, listen: false).fetchPortforlio();
+            await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
             Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(builder: (context) => Navbar()),

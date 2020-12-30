@@ -53,7 +53,7 @@ Widget bodyPage(BuildContext context) {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                             Image.asset('assets/images/icon_launcher.png', width: 25, height: 25,),
+                            SvgPicture.asset('assets/images/sld_logo.svg', width: 25, height: 25,),
                              SizedBox(width: 10),
                              Text(
                               'SELENDRA',
