@@ -100,7 +100,6 @@ class _LoginPageState extends State<LoginPage> {
 
           });
           if(token != null){
-            
             await StorageServices().saveString('token', token);
             await StorageServices.setData(responseJson, 'user_token');
             await Provider.of<BalanceProvider>(context, listen: false).fetchPortforlio();

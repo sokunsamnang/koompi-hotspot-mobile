@@ -151,20 +151,13 @@ class _MyWalletState extends State<MyWallet> {
                                       ),
                                     ),
                                     mBalance.token != null ?
-                                      Flexible(
-                                        child: Container(
-//                                          padding: const EdgeInsets.symmetric(horizontal: 23.0),
-                                          child: Text(
-                                            '${mBalance.token}',
-                                              overflow: TextOverflow.ellipsis,
-                                              softWrap: true,
-                                              style: TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 30.0,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                        ),
-                                      ) : CircularProgressIndicator(),
+                                    Text(
+                                      '${mBalance.token.toStringAsFixed(2)}',
+                                      style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 30.0,
+                                      fontWeight: FontWeight.bold),
+                                    ) : CircularProgressIndicator(),
                                     Expanded(
                                       child: Container(),
                                     ),
