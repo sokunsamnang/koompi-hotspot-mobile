@@ -22,7 +22,8 @@ Widget bodyPage(BuildContext context) {
           SizedBox(height: 40),
           Text('My Hotspot Plan', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
           SizedBox(height: 20),
-          planView(context),
+          // planView(context),
+          noPlanView(context),
           // SizedBox(height: 40),
           // Text('Promotions', style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold, fontSize: 18)),
           // SizedBox(height: 20),
@@ -96,7 +97,7 @@ Widget bodyPage(BuildContext context) {
                     SizedBox(height: 10),
                     Container(
                       child: Padding(
-                        padding: EdgeInsets.only(left: 50,),
+                        padding: EdgeInsets.only(left: 50, right:50),
                         child: Row(
                           children: [
                             Container(
@@ -117,19 +118,12 @@ Widget bodyPage(BuildContext context) {
                             ),
                             Expanded(child: Container()),
                             mBalance != null ?
-                            Flexible(
-                              child: Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 23.0),
-                                child: Text(
-                                  '${mBalance.token}',
-                                    overflow: TextOverflow.ellipsis,
-                                    softWrap: true,
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 20.0,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ),
+                            Text(
+                              '${mBalance.token.toStringAsFixed(2)}',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 20.0,
+                                  fontWeight: FontWeight.bold),
                             ) : CircularProgressIndicator(),
                           ],
                         ),

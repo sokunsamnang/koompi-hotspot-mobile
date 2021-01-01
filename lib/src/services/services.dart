@@ -1,10 +1,13 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:koompi_hotspot/src/backend/get_request.dart';
 import 'package:koompi_hotspot/src/components/navbar.dart';
+import 'package:koompi_hotspot/src/components/reuse_widget.dart';
 import 'package:koompi_hotspot/src/models/model_balance.dart';
 import 'package:koompi_hotspot/src/models/model_trx_history.dart';
+import 'package:koompi_hotspot/src/reuse_widget/reuse_widget.dart';
 import 'package:koompi_hotspot/src/screen/login/login_page.dart';
 import 'package:koompi_hotspot/src/services/jtw_decoder.dart';
 import 'package:provider/provider.dart';
@@ -38,8 +41,13 @@ class StorageServices{
     else if (JwtDecoder.isExpired(token) == false ) {
       print('token not expire');
       await GetRequest().getUserProfile(token).then((value) async{
-        await Provider.of<BalanceProvider>(context, listen: false).fetchPortforlio();
-        await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
+        try{
+          await Provider.of<BalanceProvider>(context, listen: false).fetchPortforlio();
+          await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
+        }
+        on SocketException catch (_){
+          await Components.dialog(context, textAlignCenter(text: 'Something went wrong'), warningTitleDialog());
+        }
       });
        
       Navigator.pushReplacement(

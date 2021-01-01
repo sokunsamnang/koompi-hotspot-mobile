@@ -60,7 +60,7 @@ class NetworkStatus {
               Navigator.pushAndRemoveUntil(
                 context,
                 MaterialPageRoute(builder: (context) => App()),
-                ModalRoute.withName('/'),
+                ModalRoute.withName('/navbar'),
               );
             },
             child: const Text('Try Again', style: TextStyle(fontSize: 20)),
