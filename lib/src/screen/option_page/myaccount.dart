@@ -55,8 +55,7 @@ class _MyAccountState extends State<MyAccount>
         if (response.statusCode == 200) {
           setState(() {
             StorageServices().updateUserData(context);
-          });
-          
+          });        
         } 
         else {
           print('update info not Successful');
@@ -70,11 +69,11 @@ class _MyAccountState extends State<MyAccount>
   
   showErrorServerDialog(BuildContext context) async {
     var response = await PostRequest().completeInfoUser(
-          emailController.value.text,
-          fullnameController.value.text,
-          gender,
-          birthdate,
-          address);
+      emailController.value.text,
+      fullnameController.value.text,
+      gender,
+      birthdate,
+      address);
     return showDialog(
       context: context,
       barrierDismissible: false,
@@ -163,7 +162,6 @@ class _MyAccountState extends State<MyAccount>
 
     Future getImage() async {
       var image = await ImagePicker.pickImage(source: ImageSource.gallery);
-
       setState(() {
         _image = image;
         print('Image Path $_image');
@@ -238,7 +236,7 @@ class _MyAccountState extends State<MyAccount>
                                     fit: BoxFit.cover,
                                   )
                                 : CircleAvatar(
-                                    backgroundImage: AssetImage('assets/images/avatar.png'),
+                                    backgroundImage: mData.image == null ? AssetImage('assets/images/avatar.png') : NetworkImage("https://api-hotspot.koompi.org/uploads/${mData.image}"),
                             ),
                           ),
                         ),

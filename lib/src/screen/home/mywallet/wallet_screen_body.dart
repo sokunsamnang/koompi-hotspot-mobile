@@ -15,42 +15,42 @@ class Body extends StatefulWidget {
 class _BodyState extends State<Body> {
   GetRequest _getRequest = GetRequest();
 
-  showAlertDialog(BuildContext context, String alertText) {
-    Widget okButton = FlatButton(
-      child: Text("OK"),
-      onPressed: () {
-        Navigator.pop(context);
-      },
-    );
-    AlertDialog alert = AlertDialog(
-      title: Text('Oops!'),
-      content: Text(alertText),
-      actions: [
-        okButton,
-      ],
-    );
-    showDialog(
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return alert;
-      }, context: null,
-    );
-  }
+  // showAlertDialog(BuildContext context, String alertText) {
+  //   Widget okButton = FlatButton(
+  //     child: Text("OK"),
+  //     onPressed: () {
+  //       Navigator.pop(context);
+  //     },
+  //   );
+  //   AlertDialog alert = AlertDialog(
+  //     title: Text('Oops!'),
+  //     content: Text(alertText),
+  //     actions: [
+  //       okButton,
+  //     ],
+  //   );
+  //   showDialog(
+  //     barrierDismissible: false,
+  //     builder: (BuildContext context) {
+  //       return alert;
+  //     }, context: null,
+  //   );
+  // }
 
-  onGetWallet() async {
-    String _token;
-    SharedPreferences isToken = await SharedPreferences.getInstance();
-    _token = isToken.get('token');
-    if (_token == null) {
-      String alertText = 'Please Sign up with Email or Phone to get wallet';
-      showAlertDialog(context, alertText);
-    } else {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => MyWallet()),
-      );
-    }
-  }
+  // onGetWallet() async {
+  //   String _token;
+  //   SharedPreferences isToken = await SharedPreferences.getInstance();
+  //   _token = isToken.get('token');
+  //   if (_token == null) {
+  //     String alertText = 'Please Sign up with Email or Phone to get wallet';
+  //     showAlertDialog(context, alertText);
+  //   } else {
+  //     Navigator.push(
+  //       context,
+  //       MaterialPageRoute(builder: (context) => MyWallet()),
+  //     );
+  //   }
+  // }
 
   void resetState() {
     setState(() {});
@@ -62,20 +62,15 @@ class _BodyState extends State<Body> {
 
   @override
   void initState() {
-    try {
-      setState(() {
-        Provider.of<BalanceProvider>(context, listen: false).fetchPortforlio();
-        Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
-    });
-    } catch (e) {
-    }
     super.initState();
+    Provider.of<BalanceProvider>(context, listen: false).fetchPortforlio();
+    fetchHistory();
   }
 
   @override
   Widget build(BuildContext context) {
     return mBalance == null
-      ? WalletChoice(onGetWallet, showAlertDialog)
+      ? WalletChoice()
       : MyWallet(resetState: resetState);
   }
 }

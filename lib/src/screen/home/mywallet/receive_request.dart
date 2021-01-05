@@ -85,7 +85,7 @@ class _ReceiveRequestState extends State<ReceiveRequest> {
                             height: 20,
                           ),
                           QrImage(
-                            data: mData.wallet,
+                            data: mData.wallet ?? CircularProgressIndicator(),
                             version: QrVersions.auto,
                             embeddedImage: AssetImage('assets/images/sld_stroke.png'),
                             size: 200.0,
@@ -97,7 +97,7 @@ class _ReceiveRequestState extends State<ReceiveRequest> {
                             height: 20.0,
                           ),
                           Text(
-                            mData.wallet,
+                            mData.wallet ?? CircularProgressIndicator(),
                             overflow: TextOverflow.ellipsis,
                           ),
                           SizedBox(

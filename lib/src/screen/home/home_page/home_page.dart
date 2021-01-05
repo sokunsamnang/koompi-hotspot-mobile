@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:koompi_hotspot/src/models/model_balance.dart';
+import 'package:koompi_hotspot/src/models/model_trx_history.dart';
+import 'package:koompi_hotspot/src/models/model_userdata.dart';
 import 'package:koompi_hotspot/src/screen/home/home_page/home_page_body.dart';
 import 'package:koompi_hotspot/src/screen/option_page/myaccount.dart';
 import 'package:koompi_hotspot/src/services/updater.dart';
@@ -13,20 +15,24 @@ class HomePage extends StatefulWidget{
 
 class _HomePageState extends State<HomePage>{
 
+  @override
   void initState() {
-    try {
-      setState(() {
-        Provider.of<BalanceProvider>(context, listen: false).fetchPortforlio();
-      });
-      print('run version check');
-      versionCheck(context);
-    } catch (e) {
-      print(e);
-    }
     super.initState();
-    
+    setState(() {
+      fetchWallet();
+    });
+    print('run version check');
+    versionCheck(context);
+  }
+
+  void fetchWallet() async{
+    await Provider.of<BalanceProvider>(context, listen: false).fetchPortforlio();
+    await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
   }
   
+  void dispose(){
+    super.dispose();
+  }
   Widget build(BuildContext context){
     return Scaffold(
       appBar: AppBar(
@@ -41,8 +47,7 @@ class _HomePageState extends State<HomePage>{
                   MaterialPageRoute(builder: (context) => MyAccount()));
               },
               child: CircleAvatar(
-                // backgroundImage: image == null ? AssetImage('assets/images/avatar.png') : NetworkImage(image),
-                backgroundImage: AssetImage('assets/images/avatar.png'),
+                backgroundImage: mData.image == null ? AssetImage('assets/images/avatar.png') : NetworkImage("https://api-hotspot.koompi.org/uploads/${mData.image}"),
               ),
             ),
             RichText(

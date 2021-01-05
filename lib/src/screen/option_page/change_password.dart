@@ -205,7 +205,7 @@ class _ChangePasswordState extends State<ChangePassword>
         print(response.body);
         Navigator.pop(context);
         showChangePasswordDialog(context);
-        StorageServices().clear('token');
+        StorageServices().clearToken('token');
       } else {
         Navigator.pop(context);
         print(response.body);

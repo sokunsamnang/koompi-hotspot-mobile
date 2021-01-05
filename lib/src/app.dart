@@ -93,6 +93,15 @@ class _SplashState extends State<Splash> {
   }
 
   @override
+  void dispose(){
+    super.dispose();
+    // setState(() {
+    //   Provider.of<BalanceProvider>(context, listen: false).dispose();
+    //   Provider.of<TrxHistoryProvider>(context, listen: false).dispose();
+    // });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,

@@ -18,12 +18,12 @@ Widget bodyPage(BuildContext context) {
           SizedBox(height: 15),
           Text('My Wallet', style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold, fontSize: 18)),
           SizedBox(height: 20),
-          mBalance != null ? _balanceTokens(context) : startGetWallet(context),
+          mBalance.token == null ? startGetWallet(context) : _balanceTokens(context),
           SizedBox(height: 40),
           Text('My Hotspot Plan', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
           SizedBox(height: 20),
-          // planView(context),
-          noPlanView(context),
+          planView(context),
+          // noPlanView(context),
           // SizedBox(height: 40),
           // Text('Promotions', style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold, fontSize: 18)),
           // SizedBox(height: 20),
@@ -290,42 +290,42 @@ Widget bodyPage(BuildContext context) {
   }
 
   Widget startGetWallet(context) {
-      showAlertDialog(BuildContext context, String alertText) {
-        Widget okButton = FlatButton(
-          child: Text("OK"),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        );
-        AlertDialog alert = AlertDialog(
-          title: Text('Oops!'),
-          content: Text(alertText),
-          actions: [
-            okButton,
-          ],
-        );
-        showDialog(
-          barrierDismissible: false,
-          builder: (BuildContext context) {
-            return alert;
-          }, context: null,
-        );
-      }
+      // showAlertDialog(BuildContext context, String alertText) {
+      //   Widget okButton = FlatButton(
+      //     child: Text("OK"),
+      //     onPressed: () {
+      //       Navigator.pop(context);
+      //     },
+      //   );
+      //   AlertDialog alert = AlertDialog(
+      //     title: Text('Oops!'),
+      //     content: Text(alertText),
+      //     actions: [
+      //       okButton,
+      //     ],
+      //   );
+      //   showDialog(
+      //     barrierDismissible: false,
+      //     builder: (BuildContext context) {
+      //       return alert;
+      //     }, context: null,
+      //   );
+      // }
 
-      onGetWallet() async {
-        String _token;
-        SharedPreferences isToken = await SharedPreferences.getInstance();
-        _token = isToken.get('token');
-        if (_token == null) {
-          String alertText = 'Please Sign up with Email or Phone to get wallet';
-          showAlertDialog(context, alertText);
-        } else {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => MyWallet()),
-          );
-        }
-      }
+      // onGetWallet() async {
+      //   String _token;
+      //   SharedPreferences isToken = await SharedPreferences.getInstance();
+      //   _token = isToken.get('token');
+      //   if (_token == null) {
+      //     String alertText = 'Please Sign up with Email or Phone to get wallet';
+      //     showAlertDialog(context, alertText);
+      //   } else {
+      //     Navigator.push(
+      //       context,
+      //       MaterialPageRoute(builder: (context) => MyWallet()),
+      //     );
+      //   }
+      // }
     return Container(
       child: ClipRRect(
           borderRadius: BorderRadius.all(Radius.circular(12)),
@@ -356,7 +356,7 @@ Widget bodyPage(BuildContext context) {
                               onPressed: () {
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => WalletChoice(onGetWallet, showAlertDialog)),
+                                  MaterialPageRoute(builder: (context) => WalletChoice()),
                                 );
                               },
                               child: Row(

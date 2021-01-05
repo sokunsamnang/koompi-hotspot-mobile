@@ -5,10 +5,10 @@ import 'package:koompi_hotspot/src/components/reuse_widget.dart';
 import 'package:koompi_hotspot/src/screen/home/mywallet/my_wallet.dart';
 
 class WalletChoice extends StatefulWidget {
-  final Function onGetWallet;
-  final Function showAlertDialog;
+  // final Function onGetWallet;
+  // final Function showAlertDialog;
 
-  WalletChoice(this.onGetWallet, this.showAlertDialog);
+  // WalletChoice(this.onGetWallet, this.showAlertDialog);
 
   @override
   _WalletChoiceState createState() => _WalletChoiceState();

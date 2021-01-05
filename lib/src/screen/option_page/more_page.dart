@@ -3,11 +3,14 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:koompi_hotspot/src/components/reuse_widget.dart';
+import 'package:koompi_hotspot/src/models/model_balance.dart';
+import 'package:koompi_hotspot/src/models/model_trx_history.dart';
 import 'package:koompi_hotspot/src/models/model_userdata.dart';
 import 'package:koompi_hotspot/src/screen/option_page/myaccount.dart';
 import 'package:koompi_hotspot/src/screen/login/login_page.dart';
 import 'package:koompi_hotspot/src/services/services.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:provider/provider.dart';
 import 'change_password.dart';
 import 'package:koompi_hotspot/src/screen/speedtest/speedtest.dart';
 
@@ -54,7 +57,7 @@ class _MorePageState extends State<MorePage>
                 child: ListTile(
                   onTap: () async {
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => MyAccount()));
+                      MaterialPageRoute(builder: (context) => MyAccount()));
                   },
                   title: Text(
                     name ?? 'KOOMPI',
@@ -62,7 +65,7 @@ class _MorePageState extends State<MorePage>
                         color: Colors.black, fontWeight: FontWeight.w500),
                   ),
                   leading: CircleAvatar(
-                    backgroundImage: AssetImage('assets/images/avatar.png'),
+                    backgroundImage: mData.image == null ? AssetImage('assets/images/avatar.png') : NetworkImage("https://api-hotspot.koompi.org/uploads/${mData.image}"),
                   ),
                   trailing: Icon(LineIcons.edit),
                 ),
@@ -171,8 +174,7 @@ showLogoutDialog(context) async {
               child: Text('Yes'),
               onPressed: () async {
                 dialogLoading(context);
-                StorageServices().clear('token');
-                StorageServices().clear('user_token');
+                await StorageServices().clearToken('token');
                 Future.delayed(Duration(seconds: 2), () {
                   Timer(Duration(milliseconds: 500), () => Navigator.pushAndRemoveUntil(
                     context,

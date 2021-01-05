@@ -268,7 +268,7 @@ class _CompleteInfoState extends State<CompleteInfo>{
                     //     InputDecoration(labelText: "Date Of Birth"),
                     // ),
                     dateOfbirth(selectedDate, _selectDate, dateFormart, context),
-                    SizedBox(height: 16.0),
+                    SizedBox(height: 10.0),
                     // Text('Gender'),
                     // SizedBox(height: 10.0),
                     // Row(
