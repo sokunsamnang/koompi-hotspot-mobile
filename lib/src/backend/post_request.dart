@@ -238,41 +238,41 @@ class PostRequest with ChangeNotifier{
     return null;
   }
 
-  // Upload Fil Image To Get Url Image
-  Future<String> upLoadImage(File _image, String endpoint) async {
+  // // Upload Fil Image To Get Url Image
+  // Future<String> upLoadImage(File _image, String endpoint) async {
 
-    /* Compress image file */
-    List<int> compressImage = await FlutterImageCompress.compressWithFile(
-      _image.path,
-      minHeight: 900,
-      minWidth: 600,
-      quality: 100,
-    );
-    /* Make request */
+  //   /* Compress image file */
+  //   List<int> compressImage = await FlutterImageCompress.compressWithFile(
+  //     _image.path,
+  //     minHeight: 900,
+  //     minWidth: 600,
+  //     quality: 100,
+  //   );
+  //   /* Make request */
 
-    var request = new http.MultipartRequest('POST', Uri.parse('${ApiService.url}/upload-avatar'));
-    /* Make Form of Multipart */
-    var multipartFile = new http.MultipartFile.fromBytes(
-      'file',
-      compressImage,
-      filename: 'image_picker.jpg',
-      contentType: MediaType.parse('image/jpeg'),
-    );
-    request.files.add(multipartFile);
-    /* Start send to server */
-    String imageUrl;
-    try{
-      var r = await request.send();
-      if (r.statusCode != 522){
-        imageUrl = await r.stream.bytesToString();
-      } else if (r.statusCode == 522){
-        imageUrl = r.statusCode.toString();
-      }
-    } catch (e) {
-      // print(e);
-    }
-    return imageUrl;
-  }
+  //   var request = new http.MultipartRequest('POST', Uri.parse('${ApiService.url}/upload-avatar'));
+  //   /* Make Form of Multipart */
+  //   var multipartFile = new http.MultipartFile.fromBytes(
+  //     'file',
+  //     compressImage,
+  //     filename: 'image_picker.jpg',
+  //     contentType: MediaType.parse('image/jpeg'),
+  //   );
+  //   request.files.add(multipartFile);
+  //   /* Start send to server */
+  //   String imageUrl;
+  //   try{
+  //     var r = await request.send();
+  //     if (r.statusCode != 522){
+  //       imageUrl = await r.stream.bytesToString();
+  //     } else if (r.statusCode == 522){
+  //       imageUrl = r.statusCode.toString();
+  //     }
+  //   } catch (e) {
+  //     // print(e);
+  //   }
+  //   return imageUrl;
+  // }
 
 }
 
