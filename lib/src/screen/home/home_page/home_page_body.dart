@@ -22,8 +22,8 @@ Widget bodyPage(BuildContext context) {
           SizedBox(height: 40),
           Text('My Hotspot Plan', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
           SizedBox(height: 20),
-          planView(context),
-          // noPlanView(context),
+          // planView(context),
+          noPlanView(context),
           // SizedBox(height: 40),
           // Text('Promotions', style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold, fontSize: 18)),
           // SizedBox(height: 20),
@@ -498,22 +498,22 @@ Widget planView(BuildContext context) {
                           fontFamily: 'Medium'
                           ),
                         ),
-                        FlatButton(
-                          color: Colors.transparent,
-                          highlightColor: Colors.transparent,
-                          splashColor: Colors.transparent,
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => Plan(),
-                              )
-                            );
-                          },
-                          child: Text("Detail",
-                            style: TextStyle(color: Colors.lightBlue)
-                          ),
-                        )
+                        // FlatButton(
+                        //   color: Colors.transparent,
+                        //   highlightColor: Colors.transparent,
+                        //   splashColor: Colors.transparent,
+                        //   onPressed: () {
+                        //     Navigator.push(
+                        //       context,
+                        //       MaterialPageRoute(
+                        //           builder: (context) => Plan(),
+                        //       )
+                        //     );
+                        //   },
+                        //   child: Text("Detail",
+                        //     style: TextStyle(color: Colors.lightBlue)
+                        //   ),
+                        // )
                       ],
                     ),
                   ],

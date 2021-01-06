@@ -5,8 +5,7 @@ import 'package:koompi_hotspot/src/backend/component.dart';
 import 'package:koompi_hotspot/src/backend/get_request.dart';
 
 class TrxHistoryModel {
-
-  int amount;
+  double amount;
   double fee;
   String id;
   String sender;
@@ -17,17 +16,16 @@ class TrxHistoryModel {
     _fromJson(data);
   }
 
-  void _fromJson(Map<String, dynamic> data){
+  void _fromJson(Map<String, dynamic> data) {
     amount = data['amount'];
     fee = data['fee'];
-    id =  data['id'];
+    id = data['id'];
     sender = data['sender'];
-    destination =  data['destination'];
+    destination = data['destination'];
     memo = data['memo'];
     createdAt = data['created_at'];
   }
 }
-
 
 class TrxHistoryProvider with ChangeNotifier {
   Backend _backend;

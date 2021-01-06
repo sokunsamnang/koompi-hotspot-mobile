@@ -8,9 +8,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:508907035539:android:928207e4ebae8d327a2666",
+        "mobilesdk_app_id": "1:508907035539:android:be0c7615381a29397a2666",
         "android_client_info": {
-          "package_name": "com.example.koompi_hotspot"
+          "package_name": "com.koompi.hotspot"
         }
       },
       "oauth_client": [
@@ -36,5 +36,5 @@
       }
     }
   ],
-  "configuration_version": "16"
+  "configuration_version": "1"
 }

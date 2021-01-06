@@ -63,14 +63,20 @@ class _BodyState extends State<Body> {
   @override
   void initState() {
     super.initState();
+    // setState(() {
+    //   fetchHistory();
+    // });
     Provider.of<BalanceProvider>(context, listen: false).fetchPortforlio();
     fetchHistory();
   }
 
+  // void fetchWallet() async{
+  //   await Provider.of<BalanceProvider>(context, listen: false).fetchPortforlio();
+  //   await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
+  // }
+
   @override
   Widget build(BuildContext context) {
-    return mBalance == null
-      ? WalletChoice()
-      : MyWallet(resetState: resetState);
+    return mBalance == null ? WalletChoice() : MyWallet(resetState: resetState);
   }
 }

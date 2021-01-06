@@ -1,4 +1,4 @@
-package com.example.koompi_hotspot
+package com.koompi.hotspot
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity

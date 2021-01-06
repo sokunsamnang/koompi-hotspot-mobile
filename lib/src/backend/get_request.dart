@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:koompi_hotspot/src/backend/api_service.dart';
 import 'package:koompi_hotspot/src/backend/component.dart';
 import 'package:koompi_hotspot/src/models/model_balance.dart';
+import 'package:koompi_hotspot/src/models/model_get_plan.dart';
 import 'package:koompi_hotspot/src/models/model_userdata.dart';
 import 'package:koompi_hotspot/src/services/services.dart';
 
@@ -12,6 +13,8 @@ class GetRequest with ChangeNotifier{
   String alertText;
   var _mData = new ModelUserData();
   ModelUserData get mUser => _mData;
+  var _mPlan = new ModelPlan();
+  ModelPlan get mPlan => _mPlan;
   var _mBalance = new Balance();
   Balance get mBlanace => _mBalance;
   StorageServices _prefService = StorageServices();
@@ -33,6 +36,20 @@ class GetRequest with ChangeNotifier{
     return response;
   }
 
+  Future<http.Response> getPlannData(String _token) async {
+    var response = await http.get("${ApiService.url}/hotspot/get-plan", 
+        headers: <String, String>{
+        "accept": "application/json",
+        "authorization": "Bearer " + _token,
+    });
+    var responseBody = json.decode(response.body);
+    // mPlan = ModelPlan.fromJson(responseBody);
+
+    _mPlan = ModelPlan.fromJson(responseBody);
+    // _prefService.saveString('user', jsonEncode(responseBody));
+
+    return response;
+  }
 
 
   Future<http.Response> getWallet() async {

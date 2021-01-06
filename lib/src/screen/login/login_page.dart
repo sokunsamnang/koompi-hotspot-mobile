@@ -268,8 +268,8 @@ class _LoginPageState extends State<LoginPage> {
                   children: <Widget>[
                     SizedBox(height: ScreenUtil().setHeight(40)),
                     Image.asset(
-                      "assets/images/logo_koompi.jpg",
-                      width: ScreenUtil.getInstance().setWidth(500),
+                      "assets/images/logo.png",
+                      // width: ScreenUtil.getInstance().setWidth(500),
                       // height: ScreenUtil.getInstance().setHeight(300),
                     ),
                     SizedBox(height: ScreenUtil().setHeight(100)),

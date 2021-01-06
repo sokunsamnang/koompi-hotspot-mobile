@@ -16,7 +16,8 @@ class _CompletePaymentState extends State<CompletePayment> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         centerTitle: true,
-        title: Text('Completed', style: TextStyle(fontFamily: 'Medium', color: Colors.black)),
+        title: Text('Completed',
+            style: TextStyle(fontFamily: 'Medium', color: Colors.black)),
       ),
       backgroundColor: Colors.white,
       body: WillPopScope(
@@ -35,7 +36,8 @@ class _CompletePaymentState extends State<CompletePayment> {
                     ),
                   ),
                   Center(
-                    child: Text('Your Transfer is successfully.',
+                    child: Text(
+                      'Your Transfer is successfully.',
                       style: TextStyle(
                           fontFamily: 'Medium',
                           fontWeight: FontWeight.bold,
@@ -46,7 +48,8 @@ class _CompletePaymentState extends State<CompletePayment> {
                   Center(
                     child: InkWell(
                       child: Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 25.0),
+                        margin: const EdgeInsets.symmetric(
+                            horizontal: 25.0, vertical: 25.0),
                         width: MediaQuery.of(context).size.width,
                         height: 50,
                         decoration: BoxDecoration(
@@ -67,11 +70,14 @@ class _CompletePaymentState extends State<CompletePayment> {
                             onTap: () async {
                               dialogLoading(context);
                               Future.delayed(Duration(seconds: 1), () {
-                                Timer(Duration(milliseconds: 500), () => Navigator.pushAndRemoveUntil(
-                                  context,
-                                  MaterialPageRoute(builder: (context) => Navbar()),
-                                  ModalRoute.withName('/'),
-                                ));
+                                Timer(
+                                    Duration(milliseconds: 500),
+                                    () => Navigator.pushAndRemoveUntil(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => Navbar()),
+                                          ModalRoute.withName('/'),
+                                        ));
                               });
                             },
                             child: Center(
