@@ -29,8 +29,7 @@ Widget trxHistory(BuildContext context) {
                       ),
                       ItemList(
                         title: "Created At",
-                        trailing:
-                            AppUtils.timeStampToDateTime(history[i].createdAt),
+                        trailing: AppUtils.timeStampToDateTime(history[i].createdAt),
                       ),
                       ItemList(
                         title: "Sender",
@@ -78,7 +77,7 @@ Widget trxHistory(BuildContext context) {
                       ),
                       userWallet == history[i].destination
                           ? Text(
-                              '+ ${history[i].amount} SEL',
+                              '+ ${history[i].amount.toString()} SEL',
                               style: TextStyle(
                                 fontWeight: FontWeight.w900,
                                 color: Colors.green,
@@ -86,7 +85,7 @@ Widget trxHistory(BuildContext context) {
                               ),
                             )
                           : Text(
-                              '- ${history[i].amount} SEL',
+                              '- ${history[i].amount.toString()} SEL',
                               style: TextStyle(
                                 fontWeight: FontWeight.w900,
                                 color: Colors.red,
@@ -96,7 +95,7 @@ Widget trxHistory(BuildContext context) {
                     ],
                   ),
                   leading: SvgPicture.asset('assets/images/sld_stroke.svg',
-                      width: 30, height: 30),
+                      width: 30),
                   title: Text(
                     userWallet == history[i].destination ? 'Recieved' : 'Sent',
                     style: TextStyle(

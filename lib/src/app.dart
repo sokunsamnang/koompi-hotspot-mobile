@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:koompi_hotspot/src/components/navbar.dart';
 import 'package:koompi_hotspot/src/models/model_balance.dart';
+import 'package:koompi_hotspot/src/models/model_get_plan.dart';
 import 'package:koompi_hotspot/src/models/model_trx_history.dart';
 import 'package:koompi_hotspot/src/screen/onboarding/onboarding_screen.dart';
 import 'package:koompi_hotspot/src/services/network_status.dart';
@@ -24,7 +25,11 @@ class App extends StatelessWidget{
           create: (context) => BalanceProvider(),
         ),
         ChangeNotifierProvider<TrxHistoryProvider>(
-          create: (context) => TrxHistoryProvider()),
+          create: (context) => TrxHistoryProvider()
+        ),
+        ChangeNotifierProvider<GetPlanProvider>(
+          create: (context) => GetPlanProvider(),
+        ),
       ],
       child: MaterialApp(
         initialRoute: '/',

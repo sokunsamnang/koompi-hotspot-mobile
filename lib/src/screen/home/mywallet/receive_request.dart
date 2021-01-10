@@ -3,8 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:koompi_hotspot/src/models/model_balance.dart';
 import 'package:koompi_hotspot/src/models/model_userdata.dart';
 import 'package:koompi_hotspot/src/reuse_widget/reuse_btn_social.dart';
-import 'package:provider/provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:share/share.dart';
 
 class ReceiveRequest extends StatefulWidget {
   @override
@@ -53,7 +53,7 @@ class _ReceiveRequestState extends State<ReceiveRequest> {
           ? Stack(
               children: [
                 Container(
-                  height: MediaQuery.of(context).size.height * 0.6,
+                  height: MediaQuery.of(context).size.height * 0.65,
                   margin: const EdgeInsets.symmetric(
                       horizontal: 25.0, vertical: 80),
                   child: Card(
@@ -133,6 +133,48 @@ class _ReceiveRequestState extends State<ReceiveRequest> {
                                       },
                                       child: Center(
                                         child: Text("COPY",
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontFamily: "Poppins-Bold",
+                                                fontSize: 18,
+                                                letterSpacing: 2.5)),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 20.0,
+                            ),
+                            Center(
+                              child: InkWell(
+                                child: Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  height: 50,
+                                  decoration: BoxDecoration(
+                                      gradient: LinearGradient(colors: [
+                                        Color(0xFF17ead9),
+                                        Color(0xFF6078ea)
+                                      ]),
+                                      borderRadius: BorderRadius.circular(12),
+                                      boxShadow: [
+                                        BoxShadow(
+                                            color: Color(0xFF6078ea)
+                                                .withOpacity(.3),
+                                            offset: Offset(0.0, 8.0),
+                                            blurRadius: 8.0)
+                                      ]),
+                                  child: Material(
+                                    color: Colors.transparent,
+                                    child: InkWell(
+                                      highlightColor: Colors.transparent,
+                                      splashColor: Colors.transparent,
+                                      onTap: () async {
+                                        Share.share('Here is my Selendra wallet ID: ${mData.wallet}', subject: 'My Selendra Wallet ID');
+                                      },
+                                      child: Center(
+                                        child: Text("SHARE",
                                             style: TextStyle(
                                                 color: Colors.white,
                                                 fontFamily: "Poppins-Bold",

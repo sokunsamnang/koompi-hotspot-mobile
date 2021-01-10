@@ -5,7 +5,7 @@ import 'package:koompi_hotspot/src/backend/component.dart';
 import 'package:koompi_hotspot/src/backend/get_request.dart';
 
 class TrxHistoryModel {
-  double amount;
+  dynamic amount;
   double fee;
   String id;
   String sender;

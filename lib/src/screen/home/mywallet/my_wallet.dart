@@ -173,7 +173,7 @@ class _MyWalletState extends State<MyWallet> {
                                     ),
                                     SvgPicture.asset(
                                       'assets/images/sld_stroke.svg',
-                                      height: 30,
+                                      // height: 30,
                                       width: 30,
                                     ),
                                   ],

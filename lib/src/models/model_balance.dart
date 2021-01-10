@@ -77,7 +77,6 @@ Balance mBalance = Balance();
 class BalanceProvider with ChangeNotifier {
   StorageServices _prefService = StorageServices();
   String alertText;
-  String photoUrl;
 
   var _mData = new ModelUserData();
   ModelUserData get mData => _mData;

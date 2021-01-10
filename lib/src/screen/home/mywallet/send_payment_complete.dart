@@ -3,6 +3,8 @@ import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:koompi_hotspot/src/components/navbar.dart';
 import 'package:koompi_hotspot/src/components/reuse_widget.dart';
+import 'package:koompi_hotspot/src/models/model_balance.dart';
+import 'package:provider/provider.dart';
 
 class CompletePayment extends StatefulWidget {
   @override
@@ -69,6 +71,7 @@ class _CompletePaymentState extends State<CompletePayment> {
                             splashColor: Colors.transparent,
                             onTap: () async {
                               dialogLoading(context);
+                              await Provider.of<BalanceProvider>(context, listen: false).fetchPortforlio();
                               Future.delayed(Duration(seconds: 1), () {
                                 Timer(
                                     Duration(milliseconds: 500),

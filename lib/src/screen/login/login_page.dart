@@ -8,6 +8,7 @@ import 'package:koompi_hotspot/src/components/formcard/formcardLogin.dart';
 import 'package:koompi_hotspot/src/components/navbar.dart';
 import 'package:koompi_hotspot/src/components/reuse_widget.dart';
 import 'package:koompi_hotspot/src/models/model_balance.dart';
+import 'package:koompi_hotspot/src/models/model_get_plan.dart';
 import 'package:koompi_hotspot/src/models/model_trx_history.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:koompi_hotspot/src/services/network_status.dart';
@@ -102,11 +103,7 @@ class _LoginPageState extends State<LoginPage> {
           if(token != null){
             await StorageServices().saveString('token', token);
             await Provider.of<BalanceProvider>(context, listen: false).fetchPortforlio();
-            // await StorageServices.setData(responseJson, 'user_token');
-            // setState(() {
-            //   
-            //   Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
-            // });
+            await Provider.of<GetPlanProvider>(context, listen: false).fetchHotspotPlan();
             Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(builder: (context) => Navbar()),

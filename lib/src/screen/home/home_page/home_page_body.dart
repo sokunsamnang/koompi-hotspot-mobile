@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:koompi_hotspot/src/models/model_balance.dart';
-import 'package:koompi_hotspot/src/screen/home/hotspot/plan.dart';
-import 'package:koompi_hotspot/src/screen/home/mywallet/my_wallet.dart';
+import 'package:koompi_hotspot/src/models/model_get_plan.dart';
 import 'package:koompi_hotspot/src/screen/home/mywallet/wallet_choice.dart';
 import 'package:koompi_hotspot/src/screen/home/mywallet/wallet_screen.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 Widget bodyPage(BuildContext context) {
   return Container(
@@ -23,7 +21,7 @@ Widget bodyPage(BuildContext context) {
           Text('My Hotspot Plan', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
           SizedBox(height: 20),
           // planView(context),
-          noPlanView(context),
+          mPlan.username == null ? noPlanView(context) : planView(context),
           // SizedBox(height: 40),
           // Text('Promotions', style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold, fontSize: 18)),
           // SizedBox(height: 20),
@@ -54,7 +52,7 @@ Widget bodyPage(BuildContext context) {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            SvgPicture.asset('assets/images/sld_logo.svg', width: 25, height: 25,),
+                            SvgPicture.asset('assets/images/sld_logo.svg', width: 25),
                              SizedBox(width: 10),
                              Text(
                               'SELENDRA',
@@ -103,7 +101,7 @@ Widget bodyPage(BuildContext context) {
                             Container(
                               child: Row(
                                 children: [
-                                  SvgPicture.asset('assets/images/sld_logo.svg', width: 20, height: 20,),
+                                  SvgPicture.asset('assets/images/sld_logo.svg', width: 20),
                                   SizedBox(width: 10),
                                   Text(
                                     'SEL',
@@ -447,7 +445,7 @@ Widget planView(BuildContext context) {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Username: koompi',
+                  'Username: ${mPlan.username}',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 16,
@@ -456,7 +454,7 @@ Widget planView(BuildContext context) {
                   ),
                 ),
                 Text(
-                  '50 SEL',
+                  'Balance: ${mPlan.balance} SEL',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 16,
@@ -481,7 +479,7 @@ Widget planView(BuildContext context) {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                    'Device: 2 Devices',
+                    'Device: ${mPlan.device}',
                     style: TextStyle(
                       color: Colors.white,
                       fontFamily: 'Medium'
@@ -492,7 +490,7 @@ Widget planView(BuildContext context) {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Expiration: 30 Days',
+                        'Expiration: ${mPlan.plan} days',
                         style: TextStyle(
                           color: Colors.white,
                           fontFamily: 'Medium'

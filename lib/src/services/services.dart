@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:koompi_hotspot/src/backend/get_request.dart';
 import 'package:koompi_hotspot/src/components/navbar.dart';
 import 'package:koompi_hotspot/src/models/model_balance.dart';
+import 'package:koompi_hotspot/src/models/model_get_plan.dart';
 import 'package:koompi_hotspot/src/models/model_trx_history.dart';
 import 'package:koompi_hotspot/src/screen/login/login_page.dart';
 import 'package:koompi_hotspot/src/services/jtw_decoder.dart';
@@ -41,6 +42,7 @@ class StorageServices{
       await GetRequest().getUserProfile(token).then((value) async{
         try{
           await Provider.of<BalanceProvider>(context, listen: false).fetchPortforlio();
+          await Provider.of<GetPlanProvider>(context, listen: false).fetchHotspotPlan();
         }
         catch (e){
           print(e.toString());

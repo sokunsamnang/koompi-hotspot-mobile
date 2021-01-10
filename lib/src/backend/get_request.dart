@@ -13,10 +13,11 @@ class GetRequest with ChangeNotifier{
   String alertText;
   var _mData = new ModelUserData();
   ModelUserData get mUser => _mData;
-  var _mPlan = new ModelPlan();
-  ModelPlan get mPlan => _mPlan;
+
+
   var _mBalance = new Balance();
   Balance get mBlanace => _mBalance;
+  
   StorageServices _prefService = StorageServices();
   Backend _backend = Backend();
 
@@ -31,26 +32,9 @@ class GetRequest with ChangeNotifier{
     mData = ModelUserData.fromJson(responseBody);
 
     _mData = ModelUserData.fromJson(responseBody);
-    // _prefService.saveString('user', jsonEncode(responseBody));
 
     return response;
   }
-
-  Future<http.Response> getPlannData(String _token) async {
-    var response = await http.get("${ApiService.url}/hotspot/get-plan", 
-        headers: <String, String>{
-        "accept": "application/json",
-        "authorization": "Bearer " + _token,
-    });
-    var responseBody = json.decode(response.body);
-    // mPlan = ModelPlan.fromJson(responseBody);
-
-    _mPlan = ModelPlan.fromJson(responseBody);
-    // _prefService.saveString('user', jsonEncode(responseBody));
-
-    return response;
-  }
-
 
   Future<http.Response> getWallet() async {
     /* Expired Token In Welcome Screen */
@@ -64,29 +48,6 @@ class GetRequest with ChangeNotifier{
     }
     return null;
   }
-
-  // Future<http.Response> getPortfolio(String _token) async {
-  //    var response = await http.get("${ApiService.url}/selendra/portfolio", 
-  //       headers: <String, String>{
-  //       "accept": "application/json",
-  //       "authorization": "Bearer " + _token,
-  //   });
-  //   var responseBody = json.decode(response.body);
-  //   mBalance = Balance.fromJson(responseBody);
-
-  //   _mBalance = Balance.fromJson(responseBody);
-  //   return response;
-  // }
-  
-  // Future<http.Response> getTrxHistory() async {
-  //   String token = await StorageServices().read('token');
-  //   if (token != null) {
-  //     _backend.response = await http.get("${ApiService.url}/selendra/history",
-  //       headers: _backend.conceteHeader("authorization", "Bearer $token"));
-  //     return _backend.response;
-  //   }
-  //   return null;
-  // }
 
   Future<http.Response> getTrxHistory() async {
     /* Expired Token In Welcome Screen */
