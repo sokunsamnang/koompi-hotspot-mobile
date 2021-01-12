@@ -1,8 +1,5 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:io';
-
-import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:koompi_hotspot/src/backend/component.dart';
@@ -55,7 +52,7 @@ class _SendRequestState extends State<SendRequest> {
             .sendPayment(recieveWallet.text, amount.text, memo.text);
 
         if (_backend.response.statusCode == 200) {
-          Future.delayed(Duration(seconds: 2), () {
+          Future.delayed(Duration(seconds: 3), () {
             Timer(
                 Duration(milliseconds: 500),
                 () => Navigator.pushAndRemoveUntil(

@@ -1,10 +1,5 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:koompi_hotspot/src/components/reuse_widget.dart';
 import 'package:koompi_hotspot/src/screen/home/hotspot/edit_plan.dart';
-import 'package:koompi_hotspot/src/screen/login/login_page.dart';
-import 'package:koompi_hotspot/src/services/services.dart';
 import 'package:line_icons/line_icons.dart';
 
 class Plan extends StatefulWidget {

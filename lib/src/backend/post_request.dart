@@ -245,44 +245,11 @@ class PostRequest with ChangeNotifier {
     return null;
   }
 
-  Future<http.Response> uploadProfile(File image) async {
+  // Upload Fil Image To Get Url Image
+  Future<String> upLoadImage(File _image) async {
     await _prefService.read('token').then((value) {
       _backend.token = Map<String, dynamic>.from({'token': value});
     });
-    print("My token ${_backend.token}");
-    print("My image path ${image.path}");
-
-    if (_backend.token != null) {
-      String filename = image.path.split('/').last;
-
-      FormData formData = new FormData.fromMap({
-        "file": MultipartFile.fromBytes(
-          image.readAsBytesSync(), 
-          filename: filename,
-          contentType: new MediaType("image", "jpeg")
-        ),
-      });
-      print("FIle" + formData.toString());
-      print("My Filename: $filename");
-      Response response;
-      try {
-        await dio.post("${ApiService.url}/upload-avatar",
-          data: formData,
-          options: Options(headers: {
-            // "accept": "*/*",
-            "Authorization": "Bearer ${_backend.token['token']}",
-            "Content-Type": "multipart/form-data"
-          })).then((value) => print("My response data ${value.data}"));
-      } catch (e) {
-        print("My error $e");
-      }
-      return response.data;
-    }
-    return null;
-  }
-
-  // Upload Fil Image To Get Url Image
-  Future<String> upLoadImage(File _image) async {
     /* Compress image file */
     List<int> compressImage = await FlutterImageCompress.compressWithFile(
       _image.path,
@@ -294,6 +261,7 @@ class PostRequest with ChangeNotifier {
 
     var request = new http.MultipartRequest(
         'POST', Uri.parse('${ApiService.url}/upload-avatar'));
+        request.headers['Authorization'] = "Bearer ${_backend.token['token']}";
     /* Make Form of Multipart */
     var multipartFile = new http.MultipartFile.fromBytes(
       'file',

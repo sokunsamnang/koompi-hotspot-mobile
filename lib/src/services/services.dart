@@ -1,12 +1,9 @@
 import 'dart:async';
-import 'dart:convert';
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:koompi_hotspot/src/backend/get_request.dart';
 import 'package:koompi_hotspot/src/components/navbar.dart';
 import 'package:koompi_hotspot/src/models/model_balance.dart';
 import 'package:koompi_hotspot/src/models/model_get_plan.dart';
-import 'package:koompi_hotspot/src/models/model_trx_history.dart';
 import 'package:koompi_hotspot/src/screen/login/login_page.dart';
 import 'package:koompi_hotspot/src/services/jtw_decoder.dart';
 import 'package:provider/provider.dart';
@@ -14,9 +11,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class StorageServices{
 
-  static String _decode;
-  static SharedPreferences _preferences;
-  bool status;
+  // static String _decode;
+  // static SharedPreferences _preferences;
+  // bool status;
 
 
   void clearPref() async {

@@ -87,11 +87,10 @@ class _ReceiveRequestState extends State<ReceiveRequest> {
                             QrImage(
                               data: mData.wallet ?? '',
                               version: QrVersions.auto,
-                              embeddedImage:
-                                  AssetImage('assets/images/sld_stroke.png'),
-                              size: 200.0,
+                              embeddedImage: AssetImage('assets/images/sld_stroke.png'),
+                              size: 225.0,
                               embeddedImageStyle: QrEmbeddedImageStyle(
-                                size: Size(40, 40),
+                                size: Size(30, 30),
                               ),
                             ),
                             SizedBox(
@@ -192,13 +191,13 @@ class _ReceiveRequestState extends State<ReceiveRequest> {
                     ),
                   ),
                 ),
-                Align(
-                  alignment: Alignment.topCenter,
-                  child: Container(
-                      margin: const EdgeInsets.only(top: 50),
-                      child: BtnSocial(
-                          () {}, AssetImage('assets/images/avatar.png'))),
-                ),
+                // Align(
+                //   alignment: Alignment.topCenter,
+                //   child: Container(
+                //       margin: const EdgeInsets.only(top: 50),
+                //       child: BtnSocial(
+                //           () {}, AssetImage('assets/images/avatar.png'))),
+                // ),
                 // ReuseIndicator(currentIndex),
               ],
             )

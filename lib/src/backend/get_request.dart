@@ -4,7 +4,6 @@ import 'package:http/http.dart' as http;
 import 'package:koompi_hotspot/src/backend/api_service.dart';
 import 'package:koompi_hotspot/src/backend/component.dart';
 import 'package:koompi_hotspot/src/models/model_balance.dart';
-import 'package:koompi_hotspot/src/models/model_get_plan.dart';
 import 'package:koompi_hotspot/src/models/model_userdata.dart';
 import 'package:koompi_hotspot/src/services/services.dart';
 

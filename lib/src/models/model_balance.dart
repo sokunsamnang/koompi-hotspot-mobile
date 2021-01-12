@@ -1,9 +1,5 @@
 import 'dart:convert';
-import 'dart:io';
-
-import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:http/http.dart' as http;
-import 'package:http_parser/http_parser.dart';
 import 'package:koompi_hotspot/index.dart';
 import 'package:koompi_hotspot/src/backend/api_service.dart';
 import 'package:koompi_hotspot/src/models/model_userdata.dart';

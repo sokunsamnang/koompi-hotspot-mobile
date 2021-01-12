@@ -1,5 +1,3 @@
-import 'package:koompi_hotspot/index.dart';
-
 class ModelUserData {
   String name;
   String gender;

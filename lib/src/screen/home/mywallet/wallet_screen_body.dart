@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:koompi_hotspot/src/backend/get_request.dart';
 import 'package:koompi_hotspot/src/models/model_balance.dart';
-import 'package:koompi_hotspot/src/models/model_trx_history.dart';
 import 'package:koompi_hotspot/src/screen/home/mywallet/my_wallet.dart';
 import 'package:koompi_hotspot/src/screen/home/mywallet/wallet_choice.dart';
-import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class Body extends StatefulWidget {
   @override
@@ -13,7 +9,7 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-  GetRequest _getRequest = GetRequest();
+  // GetRequest _getRequest = GetRequest();
 
   // showAlertDialog(BuildContext context, String alertText) {
   //   Widget okButton = FlatButton(

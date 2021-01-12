@@ -9,7 +9,6 @@ import 'package:koompi_hotspot/src/components/navbar.dart';
 import 'package:koompi_hotspot/src/components/reuse_widget.dart';
 import 'package:koompi_hotspot/src/models/model_balance.dart';
 import 'package:koompi_hotspot/src/models/model_get_plan.dart';
-import 'package:koompi_hotspot/src/models/model_trx_history.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:koompi_hotspot/src/services/network_status.dart';
 import 'package:koompi_hotspot/src/services/services.dart';

@@ -207,85 +207,85 @@ Widget bodyPage(BuildContext context) {
     );
   }
 
-  Widget _noBalanceTokens(context) {
-    return Container(
-      child: ClipRRect(
-          borderRadius: BorderRadius.all(Radius.circular(12)),
-          child: Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height * .27,
-            color: Colors.blueGrey[900],
-            child: Stack(
-              fit: StackFit.expand,
-              children: <Widget>[
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                          Image.asset('assets/images/icon_launcher.png', width: 25, height: 25,),
-                          SizedBox(width: 10),
-                          Text(
-                          'SELENDRA',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 25,
-                            fontWeight: FontWeight.w800,
-                          ),
-                        ) 
-                      ],
-                    ),
-                    SizedBox(height: 40),
-                    Text(
-                      'Server in Maintanace',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ],
-                ),
-                Positioned(
-                  left: -170,
-                  top: -170,
-                  child: CircleAvatar(
-                    radius: 130,
-                    backgroundColor: Colors.lightBlueAccent[50],
-                  ),
-                ),
-                Positioned(
-                  left: -160,
-                  top: -190,
-                  child: CircleAvatar(
-                    radius: 130,
-                    backgroundColor: Colors.lightBlue[300],
-                  ),
-                ),
-                Positioned(
-                  right: -170,
-                  bottom: -170,
-                  child: CircleAvatar(
-                    radius: 130,
-                    backgroundColor: Colors.deepOrangeAccent,
-                  ),
-                ),
-                Positioned(
-                  right: -160,
-                  bottom: -190,
-                  child: CircleAvatar(
-                    radius: 130,
-                    backgroundColor: Colors.orangeAccent,
-                ),
-              )
-            ],
-          ),
-        ),
-      ),
-    );
-  }
+  // Widget _noBalanceTokens(context) {
+  //   return Container(
+  //     child: ClipRRect(
+  //         borderRadius: BorderRadius.all(Radius.circular(12)),
+  //         child: Container(
+  //           width: MediaQuery.of(context).size.width,
+  //           height: MediaQuery.of(context).size.height * .27,
+  //           color: Colors.blueGrey[900],
+  //           child: Stack(
+  //             fit: StackFit.expand,
+  //             children: <Widget>[
+  //               Column(
+  //                 mainAxisAlignment: MainAxisAlignment.center,
+  //                 crossAxisAlignment: CrossAxisAlignment.center,
+  //                 children: <Widget>[
+  //                   Row(
+  //                     mainAxisAlignment: MainAxisAlignment.center,
+  //                     children: [
+  //                         Image.asset('assets/images/icon_launcher.png', width: 25, height: 25,),
+  //                         SizedBox(width: 10),
+  //                         Text(
+  //                         'SELENDRA',
+  //                         style: TextStyle(
+  //                           color: Colors.white,
+  //                           fontSize: 25,
+  //                           fontWeight: FontWeight.w800,
+  //                         ),
+  //                       ) 
+  //                     ],
+  //                   ),
+  //                   SizedBox(height: 40),
+  //                   Text(
+  //                     'Server in Maintanace',
+  //                     style: TextStyle(
+  //                       color: Colors.white,
+  //                       fontSize: 20,
+  //                       fontWeight: FontWeight.w500,
+  //                     ),
+  //                   ),
+  //                 ],
+  //               ),
+  //               Positioned(
+  //                 left: -170,
+  //                 top: -170,
+  //                 child: CircleAvatar(
+  //                   radius: 130,
+  //                   backgroundColor: Colors.lightBlueAccent[50],
+  //                 ),
+  //               ),
+  //               Positioned(
+  //                 left: -160,
+  //                 top: -190,
+  //                 child: CircleAvatar(
+  //                   radius: 130,
+  //                   backgroundColor: Colors.lightBlue[300],
+  //                 ),
+  //               ),
+  //               Positioned(
+  //                 right: -170,
+  //                 bottom: -170,
+  //                 child: CircleAvatar(
+  //                   radius: 130,
+  //                   backgroundColor: Colors.deepOrangeAccent,
+  //                 ),
+  //               ),
+  //               Positioned(
+  //                 right: -160,
+  //                 bottom: -190,
+  //                 child: CircleAvatar(
+  //                   radius: 130,
+  //                   backgroundColor: Colors.orangeAccent,
+  //               ),
+  //             )
+  //           ],
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
 
   Widget startGetWallet(context) {
       // showAlertDialog(BuildContext context, String alertText) {

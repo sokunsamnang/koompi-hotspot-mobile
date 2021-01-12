@@ -9,7 +9,6 @@ import 'package:koompi_hotspot/src/constance/global.dart' as globals;
 import 'package:koompi_hotspot/src/constance/themes.dart';
 import 'package:koompi_hotspot/src/models/model_balance.dart';
 import 'package:koompi_hotspot/src/models/model_trx_history.dart';
-import 'package:koompi_hotspot/src/models/model_userdata.dart';
 import 'package:koompi_hotspot/src/screen/home/mywallet/history_transaction.dart';
 import 'package:koompi_hotspot/src/screen/home/mywallet/receive_request.dart';
 import 'package:koompi_hotspot/src/screen/home/mywallet/send_request.dart';
@@ -31,7 +30,7 @@ class _MyWalletState extends State<MyWallet> {
   var _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   bool _isInProgress = false;
-
+  String _token;
   @override
   void initState() {
     super.initState();
@@ -39,9 +38,11 @@ class _MyWalletState extends State<MyWallet> {
     setState(() {
       fetchWallet();
     });
+    
   }
 
   void fetchWallet() async{
+    await GetRequest().getUserProfile(_token);
     await Provider.of<BalanceProvider>(context, listen: false).fetchPortforlio();
     await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
   }

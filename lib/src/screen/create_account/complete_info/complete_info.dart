@@ -2,15 +2,17 @@ import 'dart:async';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_absolute_path/flutter_absolute_path.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_material_pickers/helpers/show_scroll_picker.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:koompi_hotspot/src/backend/post_request.dart';
 import 'package:koompi_hotspot/src/components/reuse_widget.dart';
 import 'package:koompi_hotspot/src/models/model_location.dart';
+import 'package:koompi_hotspot/src/models/model_userdata.dart';
 import 'package:koompi_hotspot/src/screen/login/login_page.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:multi_image_picker/multi_image_picker.dart';
 
 class CompleteInfo extends StatefulWidget {
 
@@ -129,18 +131,51 @@ class _CompleteInfoState extends State<CompleteInfo>{
     }
   }
 
-  @override
-  Widget build(BuildContext context) {
+  Future<void> loadAsset() async {
+    List<Asset> resultList = List<Asset>();
 
-    Future getImage() async {
-      var image = await ImagePicker.pickImage(source: ImageSource.gallery);
+    try {
+      resultList = await MultiImagePicker.pickImages(
+        enableCamera: false,
+        cupertinoOptions: CupertinoOptions(takePhotoIcon: "chat"),
+        maxImages: 1,
+        materialOptions: MaterialOptions(
+          actionBarColor: '#${Color(0xFF303F9F).value.toRadixString(16)}',
+          actionBarTitle: "KOOMPI Hotspot",
+          allViewTitle: "All Photos",
+          useDetailsView: false,
+          selectCircleStrokeColor: "#000000",
+        ),
+      );
 
       setState(() {
-        _image = image;
-        print('Image Path $_image');
+        getAssettoFile(resultList);
       });
+    } catch (e) {
+      e.toString();
     }
+    if (!mounted) return;
+  }
 
+  Future<void> getAssettoFile(List<Asset> resultList) async {
+    for (Asset asset in resultList) {
+      final filePath = await FlutterAbsolutePath.getAbsolutePath(asset.identifier);
+      _image = File(filePath);
+      if (filePath != null) {
+        print("Image $filePath");
+        await PostRequest().upLoadImage(File(filePath)).then((value) {
+          print("My response $value");
+          // setState(() {
+          //   imageUrl = json.decode(value.body)['uri'];
+          //   mData.image = imageUrl;
+          // });
+        });
+      }
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -199,8 +234,11 @@ class _CompleteInfoState extends State<CompleteInfo>{
                                     fit: BoxFit.cover,
                                   )
                                 : CircleAvatar(
-                                    backgroundImage: AssetImage('assets/images/avatar.png'),
-                            ),
+                                    backgroundImage: mData.image == null
+                                        ? AssetImage('assets/images/avatar.png')
+                                        : NetworkImage(
+                                            "https://api-hotspot.koompi.org/uploads/${mData.image}"),
+                                  ),
                           ),
                         ),
                       ),
@@ -214,7 +252,7 @@ class _CompleteInfoState extends State<CompleteInfo>{
                                 fontSize: 20.0,
                                 fontFamily: 'Medium')
                               ),
-                        onPressed: () => getImage(),
+                        onPressed: () => loadAsset(),
                       ),
                     ),
                     SizedBox(height: 16.0),

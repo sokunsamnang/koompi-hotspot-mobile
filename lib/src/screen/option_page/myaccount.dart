@@ -1,22 +1,17 @@
-import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_absolute_path/flutter_absolute_path.dart';
 import 'package:flutter_material_pickers/helpers/show_scroll_picker.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:koompi_hotspot/src/backend/post_request.dart';
 import 'package:koompi_hotspot/src/components/reuse_widget.dart';
-import 'package:koompi_hotspot/src/models/model_balance.dart';
 import 'package:koompi_hotspot/src/models/model_location.dart';
 import 'package:koompi_hotspot/src/models/model_userdata.dart';
 import 'package:koompi_hotspot/src/services/services.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
-import 'package:provider/provider.dart';
-import 'package:http/http.dart' as http;
 
 class MyAccount extends StatefulWidget {
   @override
@@ -60,11 +55,11 @@ class _MyAccountState extends State<MyAccount>
   Future<void> getAssettoFile(List<Asset> resultList) async {
     for (Asset asset in resultList) {
       final filePath = await FlutterAbsolutePath.getAbsolutePath(asset.identifier);
-
+      _image = File(filePath);
       if (filePath != null) {
         print("Image $filePath");
-        await PostRequest().uploadProfile(File(filePath)).then((value) {
-          print("My response ${value.body}");
+        await PostRequest().upLoadImage(File(filePath)).then((value) {
+          print("My response $value");
           // setState(() {
           //   imageUrl = json.decode(value.body)['uri'];
           //   mData.image = imageUrl;
@@ -207,13 +202,6 @@ class _MyAccountState extends State<MyAccount>
         selectedDate = picked;
         birthdate = dateFormart.format(selectedDate);
       });
-  }
-
-  Future<void> getImage() async {
-    var image = await ImagePicker.pickImage(source: ImageSource.gallery);
-    setState(() {
-      _image = image;
-    });
   }
 
   @override
