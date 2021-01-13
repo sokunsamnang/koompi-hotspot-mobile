@@ -14,7 +14,7 @@
 
     <application
         android:name="io.flutter.app.FlutterApplication"
-        android:label="Koompi Hotspot"
+        android:label="KOOMPI Hotspot"
         android:icon="@mipmap/ic_launcher">
 
         <activity

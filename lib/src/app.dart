@@ -7,6 +7,7 @@ import 'package:koompi_hotspot/src/components/navbar.dart';
 import 'package:koompi_hotspot/src/models/model_balance.dart';
 import 'package:koompi_hotspot/src/models/model_get_plan.dart';
 import 'package:koompi_hotspot/src/models/model_trx_history.dart';
+import 'package:koompi_hotspot/src/screen/home/hotspot/buy_plan.dart';
 import 'package:koompi_hotspot/src/screen/onboarding/onboarding_screen.dart';
 import 'package:koompi_hotspot/src/services/network_status.dart';
 import 'package:koompi_hotspot/src/services/services.dart';
@@ -35,6 +36,7 @@ class App extends StatelessWidget{
         initialRoute: '/',
         routes: {
           '/navbar': (context) => Navbar(),
+          '/plan': (context) => UserPlan(),
         },
         title: 'Koompi Hotspot',
         home: Splash(),

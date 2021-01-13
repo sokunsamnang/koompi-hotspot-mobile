@@ -60,7 +60,11 @@ Widget formCardEmail(
                       fontFamily: "Poppins-Medium",
                       fontSize: ScreenUtil().setSp(26))),
               TextFormField(
-                validator: (val) => !val.contains('@') ? 'Invalid Email' : null,
+                validator: (val) {
+                  if(val.isEmpty) return 'Email is required';
+                  if(!val.contains('@')) return 'Email invalid';                
+                  return null;
+                },
                 onSaved: (val) => _email = val,
                 autovalidate: _autoValidate,
                 controller: emailController,
@@ -77,13 +81,10 @@ Widget formCardEmail(
                       fontFamily: "Poppins-Medium",
                       fontSize: ScreenUtil().setSp(26))),
               TextFormField(
-                validator: (val){
-                  if(val.isEmpty){
-                    return 'Empty';
-                  }
-                  if(val.length < 8){
-                    return 'Password too short';
-                  }
+                validator: (val) {
+                  if(val.isEmpty) return 'Password is required';
+                  if(val.length < 8) return 'Password too short';    
+                  if(val != confirmPasswordController.text) return 'Password does not match'; 
                   return null;
                 },
                 onSaved: (val) => _password = val,
@@ -113,10 +114,10 @@ Widget formCardEmail(
               TextFormField(
                 validator: (val) {
                   if(val.isEmpty){
-                    return 'Empty';
+                    return 'Password is required';
                   }
                   if(val != passwordController.text){
-                    return 'Password not match';
+                    return 'Password does not match';
                   }
                   return null;
                 },

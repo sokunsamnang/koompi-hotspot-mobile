@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -48,9 +49,8 @@ class _SendRequestState extends State<SendRequest> {
       final result = await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
         print('Internet connected');
-        _backend.response = await PostRequest()
-            .sendPayment(recieveWallet.text, amount.text, memo.text);
-
+        _backend.response = await PostRequest().sendPayment(recieveWallet.text, amount.text, memo.text);
+        var responseJson = json.decode(_backend.response.body);
         if (_backend.response.statusCode == 200) {
           Future.delayed(Duration(seconds: 3), () {
             Timer(
@@ -66,7 +66,7 @@ class _SendRequestState extends State<SendRequest> {
           print('${_backend.response.statusCode.toString()}');
           await Components.dialog(
               context,
-              textAlignCenter(text: _backend.response.body),
+              textAlignCenter(text: responseJson['message']),
               warningTitleDialog());
           Navigator.pop(context);
           recieveWallet.clear();

@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:koompi_hotspot/src/models/model_balance.dart';
 import 'package:koompi_hotspot/src/models/model_get_plan.dart';
+import 'package:koompi_hotspot/src/screen/home/hotspot/buy_plan.dart';
 import 'package:koompi_hotspot/src/screen/home/mywallet/wallet_choice.dart';
 import 'package:koompi_hotspot/src/screen/home/mywallet/wallet_screen.dart';
+import 'package:line_icons/line_icons.dart';
 
 Widget bodyPage(BuildContext context) {
   return Container(
@@ -18,7 +21,7 @@ Widget bodyPage(BuildContext context) {
           SizedBox(height: 20),
           mBalance.token == null ? startGetWallet(context) : _balanceTokens(context),
           SizedBox(height: 40),
-          Text('My Hotspot Plan', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+          Text('My Plan', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
           SizedBox(height: 20),
           // planView(context),
           mPlan.username == null ? noPlanView(context) : planView(context),
@@ -546,17 +549,55 @@ Widget noPlanView(BuildContext context) {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'No Hotspot Plan',
+              'Buy Hotspot Plan',
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 20,
                 fontWeight: FontWeight.w500,
               ),
             ),
-            ],
-          ),
+          //   SizedBox(height: 20),
+          //   Container(
+          //     width: 125,
+          //     padding:
+          //       EdgeInsets.symmetric(horizontal: 1, vertical: 1),
+          //     decoration: BoxDecoration(
+          //       borderRadius: BorderRadius.all(Radius.circular(12)),
+          //       border: Border.all(color: Colors.white, width: 1)),
+          //     child: Row(
+          //       mainAxisAlignment: MainAxisAlignment.start,
+          //       children: <Widget>[
+          //         FlatButton(
+          //           highlightColor: Colors.transparent,
+          //           splashColor: Colors.transparent,
+          //           onPressed: () {
+          //             Navigator.push(
+          //               context,
+          //               MaterialPageRoute(builder: (context) => UserPlan()),
+          //             );
+          //           },
+          //           child: Row(
+          //             children: <Widget>[
+          //               Icon(
+          //                 FontAwesome.shopping_cart,
+          //                 color: Colors.white,
+          //                 size: 20,
+          //               ),
+          //               SizedBox(width: 5),
+          //               Text("Buy plan",
+          //                 style: TextStyle(
+          //                   fontFamily: "Medium",
+          //                   color: Colors.white),
+          //             ),
+          //           ],
+          //         ),
+          //       ),
+          //     ],
+          //   ),
+          // ),
+          ],
         ),
-      ],
-    
+      ),
+    ],
   );
 }

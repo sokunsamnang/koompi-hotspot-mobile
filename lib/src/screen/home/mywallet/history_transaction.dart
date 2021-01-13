@@ -28,7 +28,7 @@ Widget trxHistory(BuildContext context) {
                         trailing: history[i].id,
                       ),
                       ItemList(
-                        title: "Created At",
+                        title: "Created On",
                         trailing: AppUtils.timeStampToDateTime(history[i].createdAt),
                       ),
                       ItemList(

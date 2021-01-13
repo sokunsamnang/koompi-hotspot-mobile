@@ -37,8 +37,9 @@ Widget formCardNewPassword(
                       fontSize: ScreenUtil().setSp(26))),
               TextFormField(
                 validator: (val) {
+                  if(val.isEmpty) return 'Password is required';
                   if(val.length < 8) return 'Password too short';
-                  if(val != _confirmPasswordController.text) return 'Password not match';
+                  if(val != _confirmPasswordController.text) return 'Password does not match';
                   return null;
                 },
                 onSaved: (val) => _passwordController.text = val,
@@ -65,8 +66,9 @@ Widget formCardNewPassword(
                       fontSize: ScreenUtil().setSp(26))),
               TextFormField(
                 validator: (val) {
+                  if(val.isEmpty) return 'Password is required';
                   if(val.length < 8) return 'Password too short';
-                  if(val != _passwordController.text) return 'Password not match';
+                  if(val != _passwordController.text) return 'Password does not match';
                   return null;
                 },
                 onSaved: (val) => _passwordController.text = val,

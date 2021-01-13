@@ -23,6 +23,8 @@ Widget formCardForgotPasswordEmail(
     child: Padding(
       padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 16.0),
       child: Form(
+        key: formKey,
+        autovalidate: _autoValidate,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -32,8 +34,12 @@ Widget formCardForgotPasswordEmail(
                       fontSize: ScreenUtil().setSp(26))),
               TextFormField(
                 controller: _emailController,
-                // autovalidate: _autoValidate,
-                validator: (val) => !val.contains('@') ? 'Invalid Email' : null,
+                autovalidate: _autoValidate,
+                validator: (val) {
+                  if(val.isEmpty) return 'Email is required';
+                  if(!val.contains('@')) return 'Email invalid';                
+                  return null;
+                },
                 onSaved: (val) => _email = val,
                 keyboardType: TextInputType.emailAddress,
                 decoration: InputDecoration(

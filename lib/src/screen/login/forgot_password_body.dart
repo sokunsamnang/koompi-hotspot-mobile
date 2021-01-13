@@ -8,7 +8,7 @@ import 'package:koompi_hotspot/src/screen/login/login_page.dart';
     BuildContext context, 
     String _email, 
     TextEditingController _emailController, 
-    Function _submit,
+    Function _submitValidate,
     GlobalKey<FormState> formKey, 
     bool _autoValidate) {
     
@@ -65,7 +65,7 @@ import 'package:koompi_hotspot/src/screen/login/login_page.dart';
                   SizedBox(
                     height: ScreenUtil.getInstance().setHeight(50),
                   ),
-                  formCardForgotPasswordEmail(context, _emailController, _email, _submit, formKey, _autoValidate),
+                  formCardForgotPasswordEmail(context, _emailController, _email, _submitValidate, formKey, _autoValidate),
                   SizedBox(height: ScreenUtil.getInstance().setHeight(60)),
                   Center(
                     child: InkWell(
@@ -89,7 +89,7 @@ import 'package:koompi_hotspot/src/screen/login/login_page.dart';
                           splashColor: Colors.transparent,
                           onTap: () async {
                             
-                            _submit();
+                            _submitValidate();
                             // Navigator.pushReplacement(
                             //   context,
                             //   MaterialPageRoute(builder: (context) => Navbar()));

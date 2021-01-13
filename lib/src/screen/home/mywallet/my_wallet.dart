@@ -12,6 +12,7 @@ import 'package:koompi_hotspot/src/models/model_trx_history.dart';
 import 'package:koompi_hotspot/src/screen/home/mywallet/history_transaction.dart';
 import 'package:koompi_hotspot/src/screen/home/mywallet/receive_request.dart';
 import 'package:koompi_hotspot/src/screen/home/mywallet/send_request.dart';
+import 'package:koompi_hotspot/src/services/services.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:provider/provider.dart';
 
@@ -30,7 +31,6 @@ class _MyWalletState extends State<MyWallet> {
   var _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   bool _isInProgress = false;
-  String _token;
   @override
   void initState() {
     super.initState();
@@ -42,7 +42,7 @@ class _MyWalletState extends State<MyWallet> {
   }
 
   void fetchWallet() async{
-    await GetRequest().getUserProfile(_token);
+    await StorageServices().read('token');
     await Provider.of<BalanceProvider>(context, listen: false).fetchPortforlio();
     await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
   }

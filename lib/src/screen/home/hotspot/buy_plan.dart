@@ -36,13 +36,13 @@ class _UserPlanState extends State<UserPlan>
         print('Internet connected');
 
         var paymentResponse = await PostRequest().hotspotPayment(selectedPlanIndex.toString());
-        
+        var paymentResponseJson = json.decode(paymentResponse.body);
         if (paymentResponse.statusCode == 200) {
           var response = await PostRequest().buyHotspotPlan(
           usernameController.text,
           passwordController.text,
           selectedPlanIndex.toString());
-
+          var responseJson = json.decode(response.body);
           if(response.statusCode == 200){
             print('Buy plan successfully');
             print(usernameController.text);
@@ -68,7 +68,7 @@ class _UserPlanState extends State<UserPlan>
                   content: SingleChildScrollView(
                     child: ListBody(
                       children: <Widget>[
-                        Text(response.body),
+                        Text(responseJson['message']),
                       ],
                     ),
                   ),
@@ -96,7 +96,7 @@ class _UserPlanState extends State<UserPlan>
                 content: SingleChildScrollView(
                   child: ListBody(
                     children: <Widget>[
-                      Text(paymentResponse.body),
+                      Text(paymentResponseJson['message']),
                     ],
                   ),
                 ),

@@ -1,9 +1,15 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:koompi_hotspot/src/backend/get_request.dart';
 import 'package:koompi_hotspot/src/components/reuse_widget.dart';
+import 'package:koompi_hotspot/src/models/model_balance.dart';
+import 'package:koompi_hotspot/src/models/model_trx_history.dart';
 import 'package:koompi_hotspot/src/reuse_widget/reuse_widget.dart';
 import 'package:koompi_hotspot/src/screen/home/mywallet/my_wallet.dart';
+import 'package:koompi_hotspot/src/services/services.dart';
+import 'package:provider/provider.dart';
 
 class WalletChoice extends StatefulWidget {
   // final Function onGetWallet;
@@ -77,12 +83,19 @@ class _WalletChoiceState extends State<WalletChoice> {
                       onTap: () async {
                         dialogLoading(context);
                         var response = await GetRequest().getWallet();
+                        var responseJson = json.decode(response.body);
                         if (response.statusCode == 200) {
                           print(response.body);
+                          StorageServices().read('token').then((value) async{
+                            String _token = value;
+                            await GetRequest().getUserProfile(_token);
+                          });
+                          await Provider.of<BalanceProvider>(context, listen: false).fetchPortforlio();
+                          await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
                           await Components.dialog(
-                              context,
-                              textAlignCenter(text: response.body),
-                              titleDialog());
+                            context,
+                            textAlignCenter(text: responseJson['message']),
+                            titleDialog());
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(builder: (context) => MyWallet()),
@@ -97,7 +110,7 @@ class _WalletChoiceState extends State<WalletChoice> {
                                   content: SingleChildScrollView(
                                     child: ListBody(
                                       children: <Widget>[
-                                        Text(response.body),
+                                        Text(responseJson['message']),
                                       ],
                                     ),
                                   ),

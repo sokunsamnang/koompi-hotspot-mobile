@@ -7,6 +7,7 @@ import 'package:koompi_hotspot/src/backend/post_request.dart';
 import 'package:koompi_hotspot/src/components/formcard/formcardLogin.dart';
 import 'package:koompi_hotspot/src/components/navbar.dart';
 import 'package:koompi_hotspot/src/components/reuse_widget.dart';
+import 'package:koompi_hotspot/src/components/socialmedia.dart';
 import 'package:koompi_hotspot/src/models/model_balance.dart';
 import 'package:koompi_hotspot/src/models/model_get_plan.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -174,6 +175,7 @@ class _LoginPageState extends State<LoginPage> {
     var response = await PostRequest().userLogIn(
           usernameController.text,
           passwordController.text);
+    var responseJson = json.decode(response.body);
     return showDialog(
       context: context,
       barrierDismissible: false,
@@ -183,7 +185,7 @@ class _LoginPageState extends State<LoginPage> {
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Text(response.body),
+                Text(responseJson['message']),
               ],
             ),
           ),
@@ -270,39 +272,21 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     SizedBox(height: ScreenUtil().setHeight(100)),
                     formLogin(context, usernameController, passwordController,
-                          _obscureText, _toggle, _email, _password, formKey, _autoValidate, _submitLogin)
-                    // Row(
-                    //   children: <Widget>[
-                    //     Image.asset(
-                    //       "assets/images/logo_koompi.jpg",
-                    //       width: ScreenUtil.getInstance().setWidth(110),
-                    //       height: ScreenUtil.getInstance().setHeight(110),
-                    //     ),
-                    //     // Text("Hotspot",
-                    //     //     style: TextStyle(
-                    //     //         fontFamily: "Poppins-Bold",
-                    //     //         fontSize: ScreenUtil.getInstance().setSp(46),
-                    //     //         letterSpacing: .6,
-                    //     //         fontWeight: FontWeight.bold)
-                    //     // ),
-                    //   ],
-                    // ),
-                    // Stack(
-                    //   children: [
-                    //     Padding(
-                    //       padding: EdgeInsets.only(left: 150.0),
-                    //       child: Image.asset("assets/images/digital_nomad.png",
-                    //         width: 200.0,),
-                    //     ),
-                    //     Padding(
-                    //       padding: EdgeInsets.only(top: 140.0),
-                    //       child: formLogin(context, usernameController, passwordController,
-                    //       _obscureText, _toggle, _email, _password, formKey, _autoValidate, _submitLogin),
-                    //     ),
-                        
-                    //   ],
-                    // ),
-                    
+                          _obscureText, _toggle, _email, _password, formKey, _autoValidate, _submitLogin),
+                    SizedBox(height: ScreenUtil().setHeight(60)),
+                    Text("OR",
+                      style: TextStyle(
+                        fontSize: ScreenUtil().setSp(35),
+                        fontFamily: "Poppins-Bold",
+                        letterSpacing: .6)),
+                    SizedBox(height: ScreenUtil().setHeight(20)),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        onPressFB(context),
+                        onPressGoogle(context),
+                      ],
+                    ),
                   ],
                 ),
               ),
