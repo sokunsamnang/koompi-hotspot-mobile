@@ -273,8 +273,34 @@ class _LoginPageState extends State<LoginPage> {
                     SizedBox(height: ScreenUtil().setHeight(100)),
                     formLogin(context, usernameController, passwordController,
                           _obscureText, _toggle, _email, _password, formKey, _autoValidate, _submitLogin),
-                    SizedBox(height: ScreenUtil().setHeight(60)),
-                    Text("OR",
+                    SizedBox(height: ScreenUtil().setHeight(40)),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Expanded(
+                          child: new Container(
+                              margin: const EdgeInsets.only(left: 20.0, right: 10.0),
+                              child: Divider(
+                                color: Colors.black,
+                                height: 36,
+                              )),
+                        ),
+                        Text("OR",
+                          style: TextStyle(
+                            fontSize: ScreenUtil().setSp(35),
+                            fontFamily: "Poppins-BoldItalic",
+                            letterSpacing: .6)),
+                        Expanded(
+                          child: new Container(
+                              margin: const EdgeInsets.only(left: 20.0, right: 10.0),
+                              child: Divider(
+                                color: Colors.black,
+                                height: 36,
+                              )),
+                        ),
+                      ],
+                    ),
+                    Text("SIGN IN WITH",
                       style: TextStyle(
                         fontSize: ScreenUtil().setSp(35),
                         fontFamily: "Poppins-Bold",

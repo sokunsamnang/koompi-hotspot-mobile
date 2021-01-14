@@ -114,7 +114,7 @@ class _SplashState extends State<Splash> {
       backgroundColor: Colors.black,
       body: _networkStatus.connectivityResult != ConnectivityResult.none ? Center(
         child: FlareActor( 
-          'assets/animations/splash_screen.flr', 
+          'assets/animations/koompi.flr', 
           animation: 'Splash_Loop',
         ),
       ) : _networkStatus.restartApp(context),
