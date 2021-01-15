@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:koompi_hotspot/src/components/navbar.dart';
 import 'package:koompi_hotspot/src/models/model_balance.dart';
+import 'package:koompi_hotspot/src/models/model_get_plan.dart';
 import 'package:koompi_hotspot/src/models/model_trx_history.dart';
+import 'package:koompi_hotspot/src/screen/home/hotspot/buy_plan.dart';
 import 'package:koompi_hotspot/src/screen/onboarding/onboarding_screen.dart';
 import 'package:koompi_hotspot/src/services/network_status.dart';
 import 'package:koompi_hotspot/src/services/services.dart';
@@ -24,12 +26,17 @@ class App extends StatelessWidget{
           create: (context) => BalanceProvider(),
         ),
         ChangeNotifierProvider<TrxHistoryProvider>(
-          create: (context) => TrxHistoryProvider()),
+          create: (context) => TrxHistoryProvider()
+        ),
+        ChangeNotifierProvider<GetPlanProvider>(
+          create: (context) => GetPlanProvider(),
+        ),
       ],
       child: MaterialApp(
         initialRoute: '/',
         routes: {
           '/navbar': (context) => Navbar(),
+          '/plan': (context) => UserPlan(),
         },
         title: 'Koompi Hotspot',
         home: Splash(),
@@ -93,12 +100,21 @@ class _SplashState extends State<Splash> {
   }
 
   @override
+  void dispose(){
+    super.dispose();
+    // setState(() {
+    //   Provider.of<BalanceProvider>(context, listen: false).dispose();
+    //   Provider.of<TrxHistoryProvider>(context, listen: false).dispose();
+    // });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
       body: _networkStatus.connectivityResult != ConnectivityResult.none ? Center(
         child: FlareActor( 
-          'assets/animations/splash_screen.flr', 
+          'assets/animations/koompi.flr', 
           animation: 'Splash_Loop',
         ),
       ) : _networkStatus.restartApp(context),

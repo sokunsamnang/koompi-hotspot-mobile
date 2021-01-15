@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:koompi_hotspot/src/backend/get_request.dart';
 import 'package:koompi_hotspot/src/components/navbar.dart';
 import 'package:koompi_hotspot/src/constance/constance.dart';
 import 'package:koompi_hotspot/src/constance/global.dart';
@@ -11,6 +12,7 @@ import 'package:koompi_hotspot/src/models/model_trx_history.dart';
 import 'package:koompi_hotspot/src/screen/home/mywallet/history_transaction.dart';
 import 'package:koompi_hotspot/src/screen/home/mywallet/receive_request.dart';
 import 'package:koompi_hotspot/src/screen/home/mywallet/send_request.dart';
+import 'package:koompi_hotspot/src/services/services.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:provider/provider.dart';
 
@@ -29,11 +31,20 @@ class _MyWalletState extends State<MyWallet> {
   var _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   bool _isInProgress = false;
-
   @override
   void initState() {
     super.initState();
     loadUserDetails();
+    setState(() {
+      fetchWallet();
+    });
+    
+  }
+
+  void fetchWallet() async{
+    await StorageServices().read('token');
+    await Provider.of<BalanceProvider>(context, listen: false).fetchPortforlio();
+    await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
   }
 
   loadUserDetails() async {
@@ -121,7 +132,7 @@ class _MyWalletState extends State<MyWallet> {
                                   Padding(
                                     padding: const EdgeInsets.only(left: 16),
                                     child: Text(
-                                      'Wallet',
+                                      'Balance',
                                       style: TextStyle(
                                         color: Colors.black,
                                         // color: AllCoustomTheme.getsecoundTextThemeColor(),
@@ -132,7 +143,7 @@ class _MyWalletState extends State<MyWallet> {
                                 ],
                               ),
                               SizedBox(
-                                height: 10,
+                                height: 20,
                               ),
                               Padding(
                                 padding: const EdgeInsets.only(
@@ -163,7 +174,7 @@ class _MyWalletState extends State<MyWallet> {
                                     ),
                                     SvgPicture.asset(
                                       'assets/images/sld_stroke.svg',
-                                      height: 30,
+                                      // height: 30,
                                       width: 30,
                                     ),
                                   ],

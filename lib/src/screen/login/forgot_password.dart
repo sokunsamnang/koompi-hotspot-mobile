@@ -1,5 +1,5 @@
+import 'dart:convert';
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:koompi_hotspot/src/backend/post_request.dart';
 import 'package:koompi_hotspot/src/components/reuse_widget.dart';
@@ -27,7 +27,21 @@ class _ForgotPasswordState extends State<ForgotPassword> {
 
   TextEditingController _emailController = TextEditingController();
   String _email = "";
-  
+
+  void _submitValidate(){
+    final form = formKey.currentState;
+
+    if(form.validate()){
+      form.save();
+      _submit();
+    }
+    else{
+      setState(() {
+        _autoValidate = true;
+      });
+    }
+  }
+
   Future <void> _submit() async {
     dialogLoading(context);
     try {
@@ -85,7 +99,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
 
   showErrorDialog(BuildContext context) async {
     var response = await PostRequest().forgotPasswordByEmail(_emailController.text);
-
+    var responseJson = json.decode(response.body);
     return showDialog(
       context: context,
       barrierDismissible: false,
@@ -95,7 +109,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Text('${response.body}'),
+                Text(responseJson['message']),
               ],
             ),
           ),
@@ -124,7 +138,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
             context, 
             _email, 
             _emailController, 
-            _submit, 
+            _submitValidate, 
             formKey, 
             _autoValidate),
         ),

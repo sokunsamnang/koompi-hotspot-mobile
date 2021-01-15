@@ -70,7 +70,7 @@ class _ChangePasswordState extends State<ChangePassword>
       if (_modelChangePassword.responseNewPass == null) {
         _modelChangePassword.responseConfirm = newPasswordIsmatch();
       } 
-      else if (_modelChangePassword.responseConfirm == "Confirm password does not match"){ // Remove Not Match Error When New Pass Error
+      else if (_modelChangePassword.responseConfirm == "Password does not match"){ // Remove Not Match Error When New Pass Error
         _modelChangePassword.responseConfirm = null;
       }
       validateAllFieldNotEmpty();
@@ -112,7 +112,7 @@ class _ChangePasswordState extends State<ChangePassword>
         _modelChangePassword.responseConfirm = null;
       } else {
         if (_modelChangePassword.enable == true) enableButton(false);
-        _modelChangePassword.responseConfirm = "Confirm password does not match";
+        _modelChangePassword.responseConfirm = "Password does not match";
       }
     }
     return _modelChangePassword.responseConfirm;
@@ -125,7 +125,7 @@ class _ChangePasswordState extends State<ChangePassword>
         _modelChangePassword.responseConfirm = null;
       } else {
         if (_modelChangePassword.enable == true) enableButton(false);
-        _modelChangePassword.responseConfirm = "Confirm password does not match";
+        _modelChangePassword.responseConfirm = "Password does not match";
       }
     }
     return _modelChangePassword.responseConfirm;
@@ -201,11 +201,13 @@ class _ChangePasswordState extends State<ChangePassword>
           "old_password": _modelChangePassword.controlOldPassword.text,
           "new_password": _modelChangePassword.controlConfirmPassword.text,
         }));
+
+      var responseJson = json.decode(response.body);
       if (response.statusCode == 200) {
         print(response.body);
         Navigator.pop(context);
         showChangePasswordDialog(context);
-        StorageServices().clear('token');
+        StorageServices().clearToken('token');
       } else {
         Navigator.pop(context);
         print(response.body);
@@ -218,7 +220,7 @@ class _ChangePasswordState extends State<ChangePassword>
               content: SingleChildScrollView(
                 child: ListBody(
                   children: <Widget>[
-                    Text(response.body),
+                    Text(responseJson['message']),
                   ],
                 ),
               ),

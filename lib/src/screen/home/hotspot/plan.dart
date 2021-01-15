@@ -1,10 +1,5 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:koompi_hotspot/src/components/reuse_widget.dart';
 import 'package:koompi_hotspot/src/screen/home/hotspot/edit_plan.dart';
-import 'package:koompi_hotspot/src/screen/login/login_page.dart';
-import 'package:koompi_hotspot/src/services/services.dart';
 import 'package:line_icons/line_icons.dart';
 
 class Plan extends StatefulWidget {
@@ -86,53 +81,4 @@ class _PlanState extends State<Plan>
       color: Colors.grey.shade400,
     );
   }
-}
-
-showLogoutDialog(context) async {
-  return showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text(
-            'SIGN OUT',
-            textAlign: TextAlign.center,
-          ),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: <Widget>[
-                Text('Do you want to sign out?'),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            FlatButton(
-              child: Text('No'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-            FlatButton(
-              child: Text('Yes'),
-              onPressed: () async {
-                dialogLoading(context);
-                StorageServices().clear('token');
-                Future.delayed(Duration(seconds: 2), () {
-                  Timer(Duration(milliseconds: 500), () => Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(builder: (context) => LoginPage()),
-                    ModalRoute.withName('/'),
-                  ));
-                });
-                // StorageServices().clearPref();
-                // Navigator.pushAndRemoveUntil(
-                //   context,
-                //   MaterialPageRoute(builder: (context) => LoginPage()),
-                //   ModalRoute.withName('/'),
-                // );
-              },
-            ),
-          ],
-        );
-      });
 }

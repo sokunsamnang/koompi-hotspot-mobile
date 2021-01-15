@@ -10,3 +10,10 @@ Widget warningTitleDialog() {
     style: TextStyle(fontWeight: FontWeight.bold),
   );
 }
+
+Widget titleDialog() {
+  return Text(
+    'Congratulation...!',
+    style: TextStyle(fontWeight: FontWeight.bold),
+  );
+}

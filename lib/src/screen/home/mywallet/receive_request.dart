@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:koompi_hotspot/src/backend/get_request.dart';
 import 'package:koompi_hotspot/src/models/model_balance.dart';
 import 'package:koompi_hotspot/src/models/model_userdata.dart';
 import 'package:koompi_hotspot/src/reuse_widget/reuse_btn_social.dart';
-import 'package:provider/provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:share/share.dart';
 
 class ReceiveRequest extends StatefulWidget {
   @override
@@ -12,7 +13,6 @@ class ReceiveRequest extends StatefulWidget {
 }
 
 class _ReceiveRequestState extends State<ReceiveRequest> {
-
   final GlobalKey<ScaffoldState> _scaffoldkey = new GlobalKey<ScaffoldState>();
 
   void showSnackBar() {
@@ -29,7 +29,7 @@ class _ReceiveRequestState extends State<ReceiveRequest> {
       ),
     );
   }
-  
+
   @override
   void initState() {
     super.initState();
@@ -50,113 +50,161 @@ class _ReceiveRequestState extends State<ReceiveRequest> {
               color: Colors.black, fontWeight: FontWeight.bold, fontSize: 22.0),
         ),
       ),
-      body: mBalance.token != null ?
-        Stack(
-          children: [
-            Container(
-              height: MediaQuery.of(context).size.height * 0.6,
-              margin: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 80),
-              child: Card(
-                elevation: 2,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                color: Colors.white,
-                child: SingleChildScrollView(
-                  physics: NeverScrollableScrollPhysics(),
-                  child: Container(
-                    height: MediaQuery.of(context).size.height,
-                    width: MediaQuery.of(context).size.width,
-                    padding: const EdgeInsets.all(20.0),
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            height: 20,
-                          ),
-                          Text(
-                            'Selendra (SEL)',
-                            style: TextStyle(
-                              fontSize: 22,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.blue,
+      body: mBalance.token != null
+          ? Stack(
+              children: [
+                Container(
+                  height: MediaQuery.of(context).size.height * 0.65,
+                  margin: const EdgeInsets.symmetric(
+                      horizontal: 25.0, vertical: 80),
+                  child: Card(
+                    elevation: 2,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    color: Colors.white,
+                    child: SingleChildScrollView(
+                      physics: NeverScrollableScrollPhysics(),
+                      child: Container(
+                        height: MediaQuery.of(context).size.height,
+                        width: MediaQuery.of(context).size.width,
+                        padding: const EdgeInsets.all(20.0),
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              height: 20,
                             ),
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          QrImage(
-                            data: mData.wallet,
-                            version: QrVersions.auto,
-                            embeddedImage: AssetImage('assets/images/sld_stroke.png'),
-                            size: 200.0,
-                            embeddedImageStyle: QrEmbeddedImageStyle(
-                              size: Size(40, 40),
+                            Text(
+                              'Selendra (SEL)',
+                              style: TextStyle(
+                                fontSize: 22,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.blue,
+                              ),
                             ),
-                          ),
-                          SizedBox(
-                            height: 20.0,
-                          ),
-                          Text(
-                            mData.wallet,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          SizedBox(
-                            height: 40.0,
-                          ),
-                          Center(
-                            child: InkWell(
-                              child: Container(
-                                width: MediaQuery.of(context).size.width,
-                                height: 50,
-                                decoration: BoxDecoration(
-                                  gradient: LinearGradient(
-                                      colors: [Color(0xFF17ead9), Color(0xFF6078ea)]),
-                                  borderRadius: BorderRadius.circular(12),
-                                  boxShadow: [
-                                    BoxShadow(
-                                        color: Color(0xFF6078ea).withOpacity(.3),
-                                        offset: Offset(0.0, 8.0),
-                                        blurRadius: 8.0)
-                                  ]),
-                              child: Material(
-                                color: Colors.transparent,
-                                child: InkWell(
-                                  highlightColor: Colors.transparent,
-                                  splashColor: Colors.transparent,
-                                  onTap: () async {
-                                    copyWallet(mData.wallet);
-                                    showSnackBar();
-                                  },
-                                  child: Center(
-                                    child: Text("COPY",
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontFamily: "Poppins-Bold",
-                                          fontSize: 18,
-                                          letterSpacing: 2.5)),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            QrImage(
+                              data: mData.wallet ?? '',
+                              version: QrVersions.auto,
+                              embeddedImage: AssetImage('assets/images/sld_stroke.png'),
+                              size: 225.0,
+                              embeddedImageStyle: QrEmbeddedImageStyle(
+                                size: Size(30, 30),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 20.0,
+                            ),
+                            Text(
+                              mData.wallet ?? '',
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            SizedBox(
+                              height: 40.0,
+                            ),
+                            Center(
+                              child: InkWell(
+                                child: Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  height: 50,
+                                  decoration: BoxDecoration(
+                                      gradient: LinearGradient(colors: [
+                                        Color(0xFF17ead9),
+                                        Color(0xFF6078ea)
+                                      ]),
+                                      borderRadius: BorderRadius.circular(12),
+                                      boxShadow: [
+                                        BoxShadow(
+                                            color: Color(0xFF6078ea)
+                                                .withOpacity(.3),
+                                            offset: Offset(0.0, 8.0),
+                                            blurRadius: 8.0)
+                                      ]),
+                                  child: Material(
+                                    color: Colors.transparent,
+                                    child: InkWell(
+                                      highlightColor: Colors.transparent,
+                                      splashColor: Colors.transparent,
+                                      onTap: () async {
+                                        copyWallet(mData.wallet);
+                                        showSnackBar();
+                                      },
+                                      child: Center(
+                                        child: Text("COPY",
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontFamily: "Poppins-Bold",
+                                                fontSize: 18,
+                                                letterSpacing: 2.5)),
+                                      ),
                                     ),
                                   ),
                                 ),
                               ),
                             ),
-                          ),
-                      ],
+                            SizedBox(
+                              height: 20.0,
+                            ),
+                            Center(
+                              child: InkWell(
+                                child: Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  height: 50,
+                                  decoration: BoxDecoration(
+                                      gradient: LinearGradient(colors: [
+                                        Color(0xFF17ead9),
+                                        Color(0xFF6078ea)
+                                      ]),
+                                      borderRadius: BorderRadius.circular(12),
+                                      boxShadow: [
+                                        BoxShadow(
+                                            color: Color(0xFF6078ea)
+                                                .withOpacity(.3),
+                                            offset: Offset(0.0, 8.0),
+                                            blurRadius: 8.0)
+                                      ]),
+                                  child: Material(
+                                    color: Colors.transparent,
+                                    child: InkWell(
+                                      highlightColor: Colors.transparent,
+                                      splashColor: Colors.transparent,
+                                      onTap: () async {
+                                        Share.share('Here is my Selendra wallet ID: ${mData.wallet}', subject: 'My Selendra Wallet ID');
+                                      },
+                                      child: Center(
+                                        child: Text("SHARE",
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontFamily: "Poppins-Bold",
+                                                fontSize: 18,
+                                                letterSpacing: 2.5)),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
+                  ),
                 ),
-              ),
+                // Align(
+                //   alignment: Alignment.topCenter,
+                //   child: Container(
+                //       margin: const EdgeInsets.only(top: 50),
+                //       child: BtnSocial(
+                //           () {}, AssetImage('assets/images/avatar.png'))),
+                // ),
+                // ReuseIndicator(currentIndex),
+              ],
+            )
+          : Center(
+              child: Text('No Data'),
             ),
-          ),
-            Align(
-              alignment: Alignment.topCenter,
-              child: Container(
-                  margin: const EdgeInsets.only(top: 50),
-                  child: BtnSocial(
-                    () {}, AssetImage('assets/images/avatar.png'))),
-            ),
-            // ReuseIndicator(currentIndex),
-          ],
-        )
-      : Center(child: Text('No Data'),),
     );
   }
 }

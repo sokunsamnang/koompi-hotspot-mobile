@@ -54,7 +54,7 @@ class _MorePageState extends State<MorePage>
                 child: ListTile(
                   onTap: () async {
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => MyAccount()));
+                      MaterialPageRoute(builder: (context) => MyAccount()));
                   },
                   title: Text(
                     name ?? 'KOOMPI',
@@ -62,7 +62,7 @@ class _MorePageState extends State<MorePage>
                         color: Colors.black, fontWeight: FontWeight.w500),
                   ),
                   leading: CircleAvatar(
-                    backgroundImage: AssetImage('assets/images/avatar.png'),
+                    backgroundImage: mData.image == null ? AssetImage('assets/images/avatar.png') : NetworkImage("https://api-hotspot.koompi.org/uploads/${mData.image}"),
                   ),
                   trailing: Icon(LineIcons.edit),
                 ),
@@ -122,7 +122,7 @@ class _MorePageState extends State<MorePage>
                       },
                     ),
                     _buildDivider(),
-                    Text('Demo Version'),
+                    Text('Alpha Version 0.1.0'),
                   ],
                 ),
               ),
@@ -171,8 +171,7 @@ showLogoutDialog(context) async {
               child: Text('Yes'),
               onPressed: () async {
                 dialogLoading(context);
-                StorageServices().clear('token');
-                StorageServices().clear('user_token');
+                await StorageServices().clearToken('token');
                 Future.delayed(Duration(seconds: 2), () {
                   Timer(Duration(milliseconds: 500), () => Navigator.pushAndRemoveUntil(
                     context,

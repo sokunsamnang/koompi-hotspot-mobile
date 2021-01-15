@@ -1,9 +1,9 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_absolute_path/flutter_absolute_path.dart';
 import 'package:flutter_material_pickers/helpers/show_scroll_picker.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:koompi_hotspot/src/backend/post_request.dart';
 import 'package:koompi_hotspot/src/components/reuse_widget.dart';
@@ -11,6 +11,7 @@ import 'package:koompi_hotspot/src/models/model_location.dart';
 import 'package:koompi_hotspot/src/models/model_userdata.dart';
 import 'package:koompi_hotspot/src/services/services.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:multi_image_picker/multi_image_picker.dart';
 
 class MyAccount extends StatefulWidget {
   @override
@@ -23,42 +24,87 @@ class _MyAccountState extends State<MyAccount>
 
   final formKey = GlobalKey<FormState>();
   bool _autoValidate = false;
+  String imageUrl;
 
-  void _submitValidate(){
+  Future<void> loadAsset() async {
+    List<Asset> resultList = List<Asset>();
+
+    try {
+      resultList = await MultiImagePicker.pickImages(
+        enableCamera: false,
+        cupertinoOptions: CupertinoOptions(takePhotoIcon: "chat"),
+        maxImages: 1,
+        materialOptions: MaterialOptions(
+          actionBarColor: '#${Color(0xFF303F9F).value.toRadixString(16)}',
+          actionBarTitle: "KOOMPI Hotspot",
+          allViewTitle: "All Photos",
+          useDetailsView: false,
+          selectCircleStrokeColor: "#000000",
+        ),
+      );
+
+      setState(() {
+        getAssettoFile(resultList);
+      });
+    } catch (e) {
+      e.toString();
+    }
+    if (!mounted) return;
+  }
+
+  Future<void> getAssettoFile(List<Asset> resultList) async {
+    for (Asset asset in resultList) {
+      final filePath = await FlutterAbsolutePath.getAbsolutePath(asset.identifier);
+      _image = File(filePath);
+      if (filePath != null) {
+        print("Image $filePath");
+        await PostRequest().upLoadImage(File(filePath)).then((value) {
+          print("My response $value");
+          // setState(() {
+          //   imageUrl = json.decode(value.body)['uri'];
+          //   mData.image = imageUrl;
+          // });
+        });
+      }
+    }
+  }
+
+  void _submitValidate() {
     final form = formKey.currentState;
 
-    if(form.validate()){
+    if (form.validate()) {
       form.save();
       _onSubmit();
-    }
-    else{
+    } else {
       setState(() {
         _autoValidate = true;
       });
     }
   }
-  
-  Future <void> _onSubmit() async {
+
+  Future<void> _onSubmit() async {
     dialogLoading(context);
     try {
-      
       final result = await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
         print('Internet connected');
         var response = await PostRequest().completeInfoUser(
-          emailController.text,
-          fullnameController.text,
-          gender,
-          birthdate,
-          address);
-          
+            emailController.text,
+            fullnameController.text,
+            gender,
+            birthdate,
+            address);
         if (response.statusCode == 200) {
+          await StorageServices().read("token").then((value) async {
+            // String _token = value;
+            // if (_token != null) {
+            //   await PostRequest().upLoadImage(_image);
+            // }
+          });
           setState(() {
             StorageServices().updateUserData(context);
           });
-          
-        } 
-        else {
+        } else {
           print('update info not Successful');
           showErrorServerDialog(context);
         }
@@ -67,39 +113,39 @@ class _MyAccountState extends State<MyAccount>
       print('not connected');
     }
   }
-  
+
   showErrorServerDialog(BuildContext context) async {
     var response = await PostRequest().completeInfoUser(
-          emailController.value.text,
-          fullnameController.value.text,
-          gender,
-          birthdate,
-          address);
+        emailController.value.text,
+        fullnameController.value.text,
+        gender,
+        birthdate,
+        address);
     return showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Error'),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: <Widget>[
-                Text('${response.body}'),
-              ],
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Error'),
+            content: SingleChildScrollView(
+              child: ListBody(
+                children: <Widget>[
+                  Text('${response.body}'),
+                ],
+              ),
             ),
-          ),
-          actions: <Widget>[
-            FlatButton(
-              child: Text('OK'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      });
+            actions: <Widget>[
+              FlatButton(
+                child: Text('OK'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        });
   }
-  
+
   @override
   void initState() {
     super.initState();
@@ -112,17 +158,17 @@ class _MyAccountState extends State<MyAccount>
     _controller.dispose();
   }
 
-
   //Get Data
   String name = mData.name;
   String gender = mData.gender;
   String email = mData.email;
   String birthdate = mData.birthdate;
   String address = mData.address;
-  
 
-  TextEditingController fullnameController = TextEditingController(text: '${mData.name}');
-  TextEditingController emailController = TextEditingController(text: '${mData.email}');
+  TextEditingController fullnameController =
+      TextEditingController(text: '${mData.name}');
+  TextEditingController emailController =
+      TextEditingController(text: '${mData.email}');
 
   //LocationPicker
   var locationModel = LocationList();
@@ -130,10 +176,10 @@ class _MyAccountState extends State<MyAccount>
   //Image Profile
   File _image;
 
-  //Gender Select 
+  //Gender Select
   List<String> lst = ['Male', 'Female'];
   String selectedIndex;
-  
+
   void changeIndex(String index) {
     setState(() {
       gender = index;
@@ -147,29 +193,19 @@ class _MyAccountState extends State<MyAccount>
 
   Future<Null> _selectDate(BuildContext context) async {
     final DateTime picked = await showDatePicker(
-      context: context,
-      initialDate: selectedDate,
-      firstDate: DateTime(1770, 1),
-      lastDate: DateTime(2101));
+        context: context,
+        initialDate: selectedDate,
+        firstDate: DateTime(1770, 1),
+        lastDate: DateTime(2101));
     if (picked != null && picked != selectedDate)
       setState(() {
         selectedDate = picked;
         birthdate = dateFormart.format(selectedDate);
       });
   }
-  
+
   @override
   Widget build(BuildContext context) {
-
-    Future getImage() async {
-      var image = await ImagePicker.pickImage(source: ImageSource.gallery);
-
-      setState(() {
-        _image = image;
-        print('Image Path $_image');
-      });
-    }
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -238,8 +274,11 @@ class _MyAccountState extends State<MyAccount>
                                     fit: BoxFit.cover,
                                   )
                                 : CircleAvatar(
-                                    backgroundImage: AssetImage('assets/images/avatar.png'),
-                            ),
+                                    backgroundImage: mData.image == null
+                                        ? AssetImage('assets/images/avatar.png')
+                                        : NetworkImage(
+                                            "https://api-hotspot.koompi.org/uploads/${mData.image}"),
+                                  ),
                           ),
                         ),
                       ),
@@ -251,31 +290,30 @@ class _MyAccountState extends State<MyAccount>
                             style: TextStyle(
                                 color: Colors.blue,
                                 fontSize: 20.0,
-                                fontFamily: 'Medium')
-                              ),
-                        onPressed: () => getImage(),
+                                fontFamily: 'Medium')),
+                        onPressed: () => loadAsset(),
                       ),
                     ),
                     SizedBox(height: 16.0),
                     Text('Full Name'),
                     SizedBox(height: 10.0),
                     TextFormField(
-                      validator: (val) => val.length < 3 ? 'Full Name is required' : null,
+                      validator: (val) =>
+                          val.length < 3 ? 'Full Name is required' : null,
                       onSaved: (val) => fullnameController.text = val,
                       autovalidate: true,
                       controller: fullnameController ?? '',
                       decoration: InputDecoration(
-                        prefixIcon: Icon(LineIcons.user),
-                        hintText: 'Full Name',
-                        // focusedBorder: OutlineInputBorder(
-                        //   borderSide: BorderSide(color: Colors.black, width: 2),
-                        // ),
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.black),
-                          borderRadius: BorderRadius.all(Radius.circular(12.0)
-                          ),
-                        )
-                      ),
+                          prefixIcon: Icon(LineIcons.user),
+                          hintText: 'Full Name',
+                          // focusedBorder: OutlineInputBorder(
+                          //   borderSide: BorderSide(color: Colors.black, width: 2),
+                          // ),
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.black),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(12.0)),
+                          )),
                     ),
                     SizedBox(height: 16.0),
                     Text('Email'),
@@ -284,19 +322,19 @@ class _MyAccountState extends State<MyAccount>
                       readOnly: true,
                       controller: emailController ?? '',
                       decoration: InputDecoration(
-                        prefixIcon: Icon(Icons.alternate_email_outlined),
-                        hintText: 'Email',
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.black),
-                          borderRadius: BorderRadius.all(Radius.circular(12.0)
-                          ),
-                        )
-                      ),
+                          prefixIcon: Icon(Icons.alternate_email_outlined),
+                          hintText: 'Email',
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.black),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(12.0)),
+                          )),
                     ),
                     SizedBox(height: 16.0),
                     Text('Date Of Birth'),
                     SizedBox(height: 10.0),
-                    dateOfbirth(selectedDate, _selectDate, dateFormart, context),
+                    dateOfbirth(
+                        selectedDate, _selectDate, dateFormart, context),
                     SizedBox(height: 16.0),
                     Text('Gender'),
                     SizedBox(height: 10.0),
@@ -306,26 +344,30 @@ class _MyAccountState extends State<MyAccount>
                           child: GestureDetector(
                             onTap: () => setState(() => changeIndex('Male')),
                             child: Container(
-                              height: 50,
-                              width: 50,
-                              decoration: BoxDecoration(
-                                boxShadow: [
-                                  BoxShadow(color: Colors.black, blurRadius: 1),
-                                ],
-                                color: gender == 'Male' ? Colors.cyan : Colors.white,
-                                borderRadius: BorderRadius.all(Radius.circular(12)),
-                              ),
-                              child: Row(
-                                children: [
-                                  Icon(FontAwesomeIcons.male),
-                                  Text('Male',
-                                  style: TextStyle(
-                                    fontFamily: "Medium",
-                                    color: gender == 'Male' ? Colors.black : Colors.grey)
-                                  )
-                                ],
-                              )
-                            ),
+                                height: 50,
+                                width: 50,
+                                decoration: BoxDecoration(
+                                  boxShadow: [
+                                    BoxShadow(
+                                        color: Colors.black, blurRadius: 1),
+                                  ],
+                                  color: gender == 'Male'
+                                      ? Colors.cyan
+                                      : Colors.white,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(12)),
+                                ),
+                                child: Row(
+                                  children: [
+                                    Icon(FontAwesomeIcons.male),
+                                    Text('Male',
+                                        style: TextStyle(
+                                            fontFamily: "Medium",
+                                            color: gender == 'Male'
+                                                ? Colors.black
+                                                : Colors.grey))
+                                  ],
+                                )),
                           ),
                         ),
                         SizedBox(width: 20),
@@ -333,26 +375,30 @@ class _MyAccountState extends State<MyAccount>
                           child: GestureDetector(
                             onTap: () => setState(() => changeIndex('Female')),
                             child: Container(
-                              height: 50,
-                              width: 50,
-                              decoration: BoxDecoration(
-                                boxShadow: [
-                                  BoxShadow(color: Colors.black, blurRadius: 1),
-                                ],
-                                color: gender == 'Female' ? Colors.cyan : Colors.white,
-                                borderRadius: BorderRadius.all(Radius.circular(12)),
-                              ),
-                              child: Row(
-                                children: [
-                                  Icon(FontAwesomeIcons.female),
-                                  Text('Female', 
-                                    style: TextStyle(
-                                      fontFamily: "Medium",
-                                      color: gender == 'Female' ? Colors.black : Colors.grey)
-                                  )
-                                ],
-                              )
-                            ),
+                                height: 50,
+                                width: 50,
+                                decoration: BoxDecoration(
+                                  boxShadow: [
+                                    BoxShadow(
+                                        color: Colors.black, blurRadius: 1),
+                                  ],
+                                  color: gender == 'Female'
+                                      ? Colors.cyan
+                                      : Colors.white,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(12)),
+                                ),
+                                child: Row(
+                                  children: [
+                                    Icon(FontAwesomeIcons.female),
+                                    Text('Female',
+                                        style: TextStyle(
+                                            fontFamily: "Medium",
+                                            color: gender == 'Female'
+                                                ? Colors.black
+                                                : Colors.grey))
+                                  ],
+                                )),
                           ),
                         ),
                         // Expanded(
@@ -395,7 +441,6 @@ class _MyAccountState extends State<MyAccount>
   //   );
   // }
 
-
   Widget locationPicker(BuildContext context) {
     return _LocationDropdown(
       valueText: address ?? locationModel.selectedKhLocation.toString(),
@@ -405,24 +450,22 @@ class _MyAccountState extends State<MyAccount>
         items: locationModel.khLocation,
         selectedItem: locationModel.selectedKhLocation,
         onChanged: (value) =>
-          setState(() => locationModel.selectedKhLocation = value),
+            setState(() => locationModel.selectedKhLocation = value),
         onCancelled: () => print("Scroll Picker cancelled"),
         onConfirmed: () => address = locationModel.selectedKhLocation,
       ),
     );
   }
 
-  Widget dateOfbirth(DateTime selectedDate, _selectDate, dateFormart, context){
+  Widget dateOfbirth(DateTime selectedDate, _selectDate, dateFormart, context) {
     return _DateDropdown(
       valueText: birthdate ?? 'Select Date of Birth',
-      onPressed: (){
+      onPressed: () {
         _selectDate(context);
-        
       },
     );
   }
 }
-
 
 class _DateDropdown extends StatelessWidget {
   const _DateDropdown(
@@ -449,9 +492,8 @@ class _DateDropdown extends StatelessWidget {
       child: new InputDecorator(
         decoration: new InputDecoration(
           border: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.black),
-            borderRadius: BorderRadius.all(Radius.circular(12.0))
-          ),
+              borderSide: BorderSide(color: Colors.black),
+              borderRadius: BorderRadius.all(Radius.circular(12.0))),
           hoverColor: Colors.black,
           labelText: labelText,
         ),
@@ -466,14 +508,12 @@ class _DateDropdown extends StatelessWidget {
                     : Colors.white70),
             SizedBox(width: 10),
             new Text(valueText, style: valueStyle),
-            
           ],
         ),
       ),
     );
   }
 }
-
 
 class _LocationDropdown extends StatelessWidget {
   const _LocationDropdown(
@@ -500,9 +540,8 @@ class _LocationDropdown extends StatelessWidget {
       child: new InputDecorator(
         decoration: new InputDecoration(
           border: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.black),
-            borderRadius: BorderRadius.all(Radius.circular(12.0))
-          ),
+              borderSide: BorderSide(color: Colors.black),
+              borderRadius: BorderRadius.all(Radius.circular(12.0))),
           hoverColor: Colors.black,
           labelText: labelText,
         ),
@@ -517,7 +556,6 @@ class _LocationDropdown extends StatelessWidget {
                     : Colors.white70),
             SizedBox(width: 10),
             new Text(valueText, style: valueStyle),
-            
           ],
         ),
       ),

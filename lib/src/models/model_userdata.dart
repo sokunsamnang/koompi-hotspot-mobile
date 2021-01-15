@@ -1,26 +1,24 @@
-class ModelUserData{
-
+class ModelUserData {
   String name;
   String gender;
   String email;
   String birthdate;
   String address;
-  dynamic image;
+  String image = '';
   String wallet;
 
   Map<String, dynamic> userData;
-  
-  ModelUserData({
-    this.name,
-    this.gender,
-    this.email,
-    this.birthdate,
-    this.address,
-    this.image,
-    this.wallet
-  });
 
-  ModelUserData.fromJson(Map<String,dynamic> parseJson){
+  ModelUserData(
+      {this.name,
+      this.gender,
+      this.email,
+      this.birthdate,
+      this.address,
+      this.image,
+      this.wallet});
+
+  ModelUserData.fromJson(Map<String, dynamic> parseJson) {
     name = parseJson['name'];
     gender = parseJson['gender'];
     email = parseJson['email'];
@@ -32,5 +30,5 @@ class ModelUserData{
 
   Map<String, dynamic> fetchEmail = {};
 }
-  
+
 ModelUserData mData = ModelUserData();

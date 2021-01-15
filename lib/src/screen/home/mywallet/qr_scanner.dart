@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:koompi_hotspot/src/backend/component.dart';
 import 'package:koompi_hotspot/src/components/my_widget/my_appbar.dart';
 import 'package:koompi_hotspot/src/components/my_widget/my_scaffold.dart';
 import 'package:koompi_hotspot/src/screen/home/mywallet/send_request.dart';
@@ -19,7 +18,7 @@ class QrScanner extends StatefulWidget {
 class QrScannerState extends State<QrScanner> {
   final GlobalKey qrKey = GlobalKey();
 
-  Backend _backend = Backend();
+  // Backend _backend = Backend();
 
   Barcode result;
 

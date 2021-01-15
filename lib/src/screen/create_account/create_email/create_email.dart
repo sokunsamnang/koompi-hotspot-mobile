@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:koompi_hotspot/src/backend/post_request.dart';
@@ -145,7 +146,7 @@ class _CreateEmailState extends State<CreateEmail> {
     var response = await PostRequest().signUpWithEmail(
           emailController.text,
           passwordController.text);
-
+    var responseJson = json.decode(response.body);
     return showDialog(
       context: context,
       barrierDismissible: false,
@@ -155,7 +156,8 @@ class _CreateEmailState extends State<CreateEmail> {
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Text('${response.body}'),
+                Text('Invalid Email'),
+                // Text(responseJson['message']),
               ],
             ),
           ),

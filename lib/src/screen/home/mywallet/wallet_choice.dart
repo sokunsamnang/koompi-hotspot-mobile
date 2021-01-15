@@ -1,14 +1,21 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:koompi_hotspot/src/backend/get_request.dart';
 import 'package:koompi_hotspot/src/components/reuse_widget.dart';
+import 'package:koompi_hotspot/src/models/model_balance.dart';
+import 'package:koompi_hotspot/src/models/model_trx_history.dart';
+import 'package:koompi_hotspot/src/reuse_widget/reuse_widget.dart';
 import 'package:koompi_hotspot/src/screen/home/mywallet/my_wallet.dart';
+import 'package:koompi_hotspot/src/services/services.dart';
+import 'package:provider/provider.dart';
 
 class WalletChoice extends StatefulWidget {
-  final Function onGetWallet;
-  final Function showAlertDialog;
+  // final Function onGetWallet;
+  // final Function showAlertDialog;
 
-  WalletChoice(this.onGetWallet, this.showAlertDialog);
+  // WalletChoice(this.onGetWallet, this.showAlertDialog);
 
   @override
   _WalletChoiceState createState() => _WalletChoiceState();
@@ -28,43 +35,46 @@ class _WalletChoiceState extends State<WalletChoice> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         // brightness: Brightness.light,
-        title: Text('My Wallet', style: TextStyle(color: Colors.black),),
+        title: Text(
+          'My Wallet',
+          style: TextStyle(color: Colors.black),
+        ),
         iconTheme: IconThemeData(
-          color: Colors.black, 
+          color: Colors.black,
         ),
       ),
       body: Container(
-          margin: EdgeInsets.all(30.0),
-          child: Column(
-            children: <Widget>[
-              Expanded(
-                child: Container(
-                  child: SvgPicture.asset(
-                    'assets/images/undraw_wallet.svg',
-                    height: MediaQuery.of(context).size.height * 0.2,
-                    width: MediaQuery.of(context).size.height * 0.2,
-                    placeholderBuilder: (context) => Center(),
-                  ),
+        margin: EdgeInsets.all(30.0),
+        child: Column(
+          children: <Widget>[
+            Expanded(
+              child: Container(
+                child: SvgPicture.asset(
+                  'assets/images/undraw_wallet.svg',
+                  height: MediaQuery.of(context).size.height * 0.2,
+                  width: MediaQuery.of(context).size.height * 0.2,
+                  placeholderBuilder: (context) => Center(),
                 ),
               ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.1,
-              ),
-              Center(
-                child: InkWell(
-                  child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: 50,
-                    decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                            colors: [Color(0xFF17ead9), Color(0xFF6078ea)]),
-                        borderRadius: BorderRadius.circular(12),
-                        boxShadow: [
-                          BoxShadow(
-                              color: Color(0xFF6078ea).withOpacity(.3),
-                              offset: Offset(0.0, 8.0),
-                              blurRadius: 8.0)
-                        ]),
+            ),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.1,
+            ),
+            Center(
+              child: InkWell(
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: 50,
+                  decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                          colors: [Color(0xFF17ead9), Color(0xFF6078ea)]),
+                      borderRadius: BorderRadius.circular(12),
+                      boxShadow: [
+                        BoxShadow(
+                            color: Color(0xFF6078ea).withOpacity(.3),
+                            offset: Offset(0.0, 8.0),
+                            blurRadius: 8.0)
+                      ]),
                   child: Material(
                     color: Colors.transparent,
                     child: InkWell(
@@ -73,47 +83,56 @@ class _WalletChoiceState extends State<WalletChoice> {
                       onTap: () async {
                         dialogLoading(context);
                         var response = await GetRequest().getWallet();
-                        if(response.statusCode == 200){
+                        var responseJson = json.decode(response.body);
+                        if (response.statusCode == 200) {
                           print(response.body);
+                          StorageServices().read('token').then((value) async{
+                            String _token = value;
+                            await GetRequest().getUserProfile(_token);
+                          });
+                          await Provider.of<BalanceProvider>(context, listen: false).fetchPortforlio();
+                          await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
+                          await Components.dialog(
+                            context,
+                            textAlignCenter(text: responseJson['message']),
+                            titleDialog());
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(builder: (context) => MyWallet()),
                           );
-                        }
-                        else{
+                        } else {
                           return showDialog(
-                            context: context,
-                            barrierDismissible: false,
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                title: Text('Error'),
-                                content: SingleChildScrollView(
-                                  child: ListBody(
-                                    children: <Widget>[
-                                      Text(response.body),
-                                    ],
+                              context: context,
+                              barrierDismissible: false,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: Text('Error'),
+                                  content: SingleChildScrollView(
+                                    child: ListBody(
+                                      children: <Widget>[
+                                        Text(responseJson['message']),
+                                      ],
+                                    ),
                                   ),
-                                ),
-                                actions: <Widget>[
-                                  FlatButton(
-                                    child: Text('OK'),
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                  ),
-                                ],
-                              );
-                            }
-                          );
+                                  actions: <Widget>[
+                                    FlatButton(
+                                      child: Text('OK'),
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                    ),
+                                  ],
+                                );
+                              });
                         }
                       },
                       child: Center(
                         child: Text("Get Wallet",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontFamily: "Poppins-Bold",
-                              fontSize: 18,
-                              letterSpacing: 1.0)),
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontFamily: "Poppins-Bold",
+                                fontSize: 18,
+                                letterSpacing: 1.0)),
                       ),
                     ),
                   ),
