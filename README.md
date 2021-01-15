@@ -13,7 +13,7 @@ KOOMPI Wi-Fi Hotspot is for accessable and affordable for everyone and  KOOMPI s
 - [x] Register vai email Account.
 - [ ] Register vai Others social media account.
 - [x] Send to token by QR Code.
-- [ ] Send payment.
+- [x] Send payment.
 - [x] View transaction histroy.
 - [x] Buy hotspot plan.
 - [x] Speed Test.
