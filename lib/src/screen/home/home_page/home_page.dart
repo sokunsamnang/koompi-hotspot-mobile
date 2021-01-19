@@ -29,7 +29,6 @@ class _HomePageState extends State<HomePage>{
   void fetchWallet() async{
     await Provider.of<BalanceProvider>(context, listen: false).fetchPortforlio();
     await Provider.of<GetPlanProvider>(context, listen: false).fetchHotspotPlan();
-    await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
   }
   
   void dispose(){

@@ -115,12 +115,6 @@ class _MyAccountState extends State<MyAccount>
   }
 
   showErrorServerDialog(BuildContext context) async {
-    var response = await PostRequest().completeInfoUser(
-        emailController.value.text,
-        fullnameController.value.text,
-        gender,
-        birthdate,
-        address);
     return showDialog(
         context: context,
         barrierDismissible: false,
@@ -130,7 +124,7 @@ class _MyAccountState extends State<MyAccount>
             content: SingleChildScrollView(
               child: ListBody(
                 children: <Widget>[
-                  Text('${response.body}'),
+                  Text('Error server or Server in maintenance'),
                 ],
               ),
             ),

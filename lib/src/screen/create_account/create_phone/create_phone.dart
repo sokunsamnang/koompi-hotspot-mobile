@@ -3,26 +3,27 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:koompi_hotspot/src/backend/post_request.dart';
 import 'package:koompi_hotspot/src/components/reuse_widget.dart';
-import 'package:koompi_hotspot/src/screen/create_account/create_email/create_email_body.dart';
+import 'package:koompi_hotspot/src/screen/create_account/create_phone/create_phone_body.dart';
 import 'package:koompi_hotspot/src/screen/create_account/verfication/verfication_account.dart';
 
-class CreateEmail extends StatefulWidget {
+class CreatePhone extends StatefulWidget {
 
-  _CreateEmailState createState() => _CreateEmailState();
+  _CreatePhoneState createState() => _CreatePhoneState();
 }
 
-class _CreateEmailState extends State<CreateEmail> {
+class _CreatePhoneState extends State<CreatePhone> {
 
 
 
   final formKey = GlobalKey<FormState>();
   bool _autoValidate = false;
 
-  String _email;
+  String _phone;
   String _password;
   String _confirmPassword;
 
-  final TextEditingController emailController = new TextEditingController();
+
+  final TextEditingController phoneController = new TextEditingController();
   final TextEditingController passwordController = new TextEditingController();
   final TextEditingController confirmPasswordController = new TextEditingController();
 
@@ -51,7 +52,7 @@ class _CreateEmailState extends State<CreateEmail> {
 
     if(form.validate()){
       form.save();
-      onSignUpByEmail();
+      onSignUpByPhone();
     }
     else{
       setState(() {
@@ -65,19 +66,19 @@ class _CreateEmailState extends State<CreateEmail> {
     super.initState();
   }
 
-  Future <void> onSignUpByEmail() async {
+  Future <void> onSignUpByPhone() async {
     dialogLoading(context);
     try {
       final result = await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
         print('Internet connected');
-        var response = await PostRequest().signUpWithEmail(
-          emailController.text,
+        var response = await PostRequest().signUpWithPhone(
+          phoneController.text,
           passwordController.text);
         if (response.statusCode == 200) {
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => PinCodeVerificationScreen(emailController.text, passwordController.text)));
+              MaterialPageRoute(builder: (context) => PinCodeVerificationScreen("+855${phoneController.text}", passwordController.text)));
           // print(response.statusCode);
           // var responseJson = json.decode(response.body);    
           // if(response.body == 'Please check your E-mail!'){
@@ -140,10 +141,9 @@ class _CreateEmailState extends State<CreateEmail> {
   }
 
   showErrorDialog(BuildContext context) async {
-    var response = await PostRequest().signUpWithEmail(
-          emailController.text,
-          passwordController.text);
-    var responseJson = json.decode(response.body);
+    // var response = await PostRequest().signUpWithPhone(
+    //       phoneController.text,
+    //       passwordController.text);
     return showDialog(
       context: context,
       barrierDismissible: false,
@@ -235,21 +235,21 @@ class _CreateEmailState extends State<CreateEmail> {
           FocusScope.of(context).requestFocus(FocusNode());
         },
         child: Container(
-          child: createEmailBody(
+          child: createPhoneBody(
             context, 
-            emailController, 
+            phoneController, 
             passwordController, 
             confirmPasswordController,
             _obscureText, 
             _toggle, 
             _obscureText2, 
             _toggle2, 
-            _email, 
+            _phone, 
             _password,
             _confirmPassword, 
             formKey, 
             _autoValidate, 
-            onSignUpByEmail,
+            onSignUpByPhone,
             _submit, 
             ),
         ),

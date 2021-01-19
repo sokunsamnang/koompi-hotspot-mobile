@@ -71,7 +71,6 @@ class _ForgotPasswordState extends State<ForgotPassword> {
   }
 
   showErrorServerDialog(BuildContext context) async {
-    var response = await PostRequest().forgotPasswordByEmail(_emailController.text);
     return showDialog(
       context: context,
       barrierDismissible: false,
@@ -81,7 +80,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Text('${response.body}'),
+                Text('Error server or Server in maintenance'),
               ],
             ),
           ),

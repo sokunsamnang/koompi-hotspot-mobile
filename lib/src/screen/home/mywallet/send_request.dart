@@ -92,16 +92,9 @@ class _SendRequestState extends State<SendRequest> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-        onWillPop: () => Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (context) => MyWallet()),
-              ModalRoute.withName('/'),
-            ),
-        child: Scaffold(
+    return Scaffold(
           appBar: AppBar(
             backgroundColor: Colors.white,
-            elevation: 0,
             iconTheme: IconThemeData(
               color: Colors.black, //change your color here
             ),
@@ -112,16 +105,6 @@ class _SendRequestState extends State<SendRequest> {
                   fontWeight: FontWeight.bold,
                   fontSize: 22.0),
             ),
-            automaticallyImplyLeading: true,
-            leading: IconButton(
-                icon: Icon(Icons.arrow_back),
-                onPressed: () {
-                  Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(builder: (context) => MyWallet()),
-                    ModalRoute.withName('/'),
-                  );
-                }),
           ),
           body: GestureDetector(
             behavior: HitTestBehavior.opaque,
@@ -155,15 +138,16 @@ class _SendRequestState extends State<SendRequest> {
                           controller: recieveWallet ?? widget.walletKey,
                           decoration: InputDecoration(
                               prefixIcon: IconButton(
-                                  icon: Icon(Icons.qr_code),
-                                  onPressed: () async {
-                                    await Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => QrScanner(
-                                                  portList: [],
-                                                )));
-                                  }),
+                                color: Colors.blueAccent,
+                                icon: Icon(Icons.qr_code),
+                                onPressed: () async {
+                                  await Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => QrScanner(
+                                                portList: [],
+                                              )));
+                                }),
                               hintText: 'Receive Address',
                               border: OutlineInputBorder(
                                 borderSide: BorderSide(color: Colors.black),
@@ -195,8 +179,8 @@ class _SendRequestState extends State<SendRequest> {
                           onSaved: (val) => amount.text = val,
                           autovalidate: true,
                           keyboardType: TextInputType.number,
-                          inputFormatters: <TextInputFormatter>[
-                            FilteringTextInputFormatter.digitsOnly
+                          inputFormatters: [
+                            FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
                           ],
                           controller: amount,
                           decoration: InputDecoration(
@@ -269,6 +253,6 @@ class _SendRequestState extends State<SendRequest> {
               ),
             ),
           ),
-        ));
+        );
   }
 }

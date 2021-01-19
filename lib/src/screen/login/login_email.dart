@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:koompi_hotspot/index.dart';
 import 'package:koompi_hotspot/src/backend/get_request.dart';
 import 'package:koompi_hotspot/src/backend/post_request.dart';
-import 'package:koompi_hotspot/src/components/formcard/formcardLogin.dart';
+import 'package:koompi_hotspot/src/components/formcard/formcardLoginEmail.dart';
 import 'package:koompi_hotspot/src/components/navbar.dart';
 import 'package:koompi_hotspot/src/components/reuse_widget.dart';
 import 'package:koompi_hotspot/src/components/socialmedia.dart';
@@ -273,46 +273,6 @@ class _LoginPageState extends State<LoginPage> {
                     SizedBox(height: ScreenUtil().setHeight(100)),
                     formLogin(context, usernameController, passwordController,
                           _obscureText, _toggle, _email, _password, formKey, _autoValidate, _submitLogin),
-                    SizedBox(height: ScreenUtil().setHeight(40)),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Expanded(
-                          child: new Container(
-                              margin: const EdgeInsets.only(left: 20.0, right: 10.0),
-                              child: Divider(
-                                color: Colors.black,
-                                height: 36,
-                              )),
-                        ),
-                        Text("OR",
-                          style: TextStyle(
-                            fontSize: ScreenUtil().setSp(35),
-                            fontFamily: "Poppins-BoldItalic",
-                            letterSpacing: .6)),
-                        Expanded(
-                          child: new Container(
-                              margin: const EdgeInsets.only(left: 20.0, right: 10.0),
-                              child: Divider(
-                                color: Colors.black,
-                                height: 36,
-                              )),
-                        ),
-                      ],
-                    ),
-                    Text("SIGN IN WITH",
-                      style: TextStyle(
-                        fontSize: ScreenUtil().setSp(35),
-                        fontFamily: "Poppins-Bold",
-                        letterSpacing: .6)),
-                    SizedBox(height: ScreenUtil().setHeight(20)),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        onPressFB(context),
-                        onPressGoogle(context),
-                      ],
-                    ),
                   ],
                 ),
               ),

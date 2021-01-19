@@ -1,25 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:koompi_hotspot/index.dart';
-import 'package:koompi_hotspot/src/screen/login/login_page.dart';
+import 'package:koompi_hotspot/src/screen/login/login_email.dart';
+import 'package:koompi_hotspot/src/screen/login/login_phone.dart';
 
 @override
-Widget formCardEmail(
+Widget formCardPhoneNumbers(
     BuildContext context,
-    TextEditingController emailController,
+    TextEditingController phoneController,
     TextEditingController passwordController,
     TextEditingController confirmPasswordController,
     bool _obscureText,
     Function _toggle,
     bool _obscureText2,
     Function _toggle2,
-    String _email,
+    String _phone,
     String _password,
     String _confirmPassword,
     GlobalKey<FormState> formKey,
     bool _autoValidate,
     Function _submit) {
-
+    
+    PhoneNumber number = PhoneNumber(isoCode: 'KH');
+    
     return new Container(
       width: double.infinity,
   //      height: ScreenUtil.getInstance().setHeight(500),
@@ -55,23 +59,31 @@ Widget formCardEmail(
               SizedBox(
                 height: ScreenUtil().setHeight(30),
               ),
-              Text("Email",
+              Text("Phone Number",
                   style: TextStyle(
                       fontFamily: "Poppins-Medium",
                       fontSize: ScreenUtil().setSp(26))),
-              TextFormField(
-                validator: (val) {
-                  if(val.isEmpty) return 'Email is required';
-                  if(!val.contains('@')) return 'Email invalid';                
-                  return null;
+              InternationalPhoneNumberInput(
+                onInputChanged: (PhoneNumber number) {
+                  print(number.phoneNumber);
                 },
-                onSaved: (val) => _email = val,
-                autovalidate: _autoValidate,
-                controller: emailController,
-                keyboardType: TextInputType.emailAddress,
-                decoration: InputDecoration(
-                    hintText: "Email",
-                    hintStyle: TextStyle(color: Colors.grey, fontSize: 12.0)),
+                onInputValidated: (bool value) {
+                  print(value);
+                },
+                selectorConfig: SelectorConfig(
+                  selectorType: PhoneInputSelectorType.BOTTOM_SHEET,
+                ),
+                ignoreBlank: false,
+                autoValidateMode: AutovalidateMode.disabled,
+                selectorTextStyle: TextStyle(color: Colors.black),
+                initialValue: number,
+                textFieldController: phoneController,
+                formatInput: false,
+                keyboardType: TextInputType.numberWithOptions(signed: true, decimal: true),
+                inputBorder: OutlineInputBorder(),
+                onSaved: (PhoneNumber number) {
+                  print('On Saved: $number');
+                },
               ),
               SizedBox(
                 height: ScreenUtil().setHeight(30),
@@ -165,6 +177,7 @@ Widget formCardEmail(
                         splashColor: Colors.transparent,
                         onTap: () {
                           _submit();
+                          // print('+855${phoneController.text}');
                           // Navigator.pushReplacement(
                           // context,
                           // MaterialPageRoute(
@@ -207,8 +220,8 @@ Widget formCardEmail(
                         Navigator.pushAndRemoveUntil(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => LoginPage()),
-                            ModalRoute.withName('/loginScreen')  
+                                builder: (context) => LoginPhone()),
+                            ModalRoute.withName('/loginPhone')  
                           );
                       },
                       splashColor: Colors.transparent,

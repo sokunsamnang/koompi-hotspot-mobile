@@ -482,7 +482,7 @@ Widget planView(BuildContext context) {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                    'Device: ${mPlan.device}',
+                    'Device: ${mPlan.device} devices',
                     style: TextStyle(
                       color: Colors.white,
                       fontFamily: 'Medium'

@@ -6,6 +6,7 @@ import 'package:koompi_hotspot/src/screen/home/home_page/home_page.dart';
 import 'package:koompi_hotspot/src/screen/home/hotspot/buy_plan.dart';
 import 'package:koompi_hotspot/src/screen/map/MyLocationView.dart';
 import 'package:koompi_hotspot/src/screen/option_page/more_page.dart';
+import 'package:koompi_hotspot/src/screen/speedtest/speedtest.dart';
 import 'package:koompi_hotspot/src/services/network_status.dart';
 import 'package:line_icons/line_icons.dart';
 
@@ -20,7 +21,7 @@ class _NavbarState extends State<Navbar> {
   final List<Widget> _widgetOptions = <Widget>[
     HomePage(),
     MyLocationView(),
-    UserPlan(),
+    SpeedTestNet(),
     MorePage(),
   ];
 
@@ -75,7 +76,7 @@ class _NavbarState extends State<Navbar> {
                   ),
                   GButton(
                     icon: FontAwesome.wifi,
-                    text: 'Plan',
+                    text: 'Speed Test',
                   ),
                   GButton(
                     icon: LineIcons.bars,

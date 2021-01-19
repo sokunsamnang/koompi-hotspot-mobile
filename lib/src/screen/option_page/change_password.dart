@@ -4,9 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:koompi_hotspot/src/components/reuse_widget.dart';
 import 'package:koompi_hotspot/src/components/validator_mixin.dart';
 import 'package:koompi_hotspot/src/models/model_change_password.dart';
-import 'package:koompi_hotspot/src/screen/login/login_page.dart';
+import 'package:koompi_hotspot/src/screen/login/login_email.dart';
 import 'package:koompi_hotspot/src/services/services.dart';
 import 'package:http/http.dart' as http;
+import 'package:koompi_hotspot/src/welcome_screen.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -269,8 +270,8 @@ showChangePasswordDialog(context) async {
                   Future.delayed(Duration(seconds: 2), () {
                     Timer(Duration(milliseconds: 500), () => Navigator.pushAndRemoveUntil(
                       context,
-                      MaterialPageRoute(builder: (context) => LoginPage()),
-                      ModalRoute.withName('/'),
+                      MaterialPageRoute(builder: (context) => WelcomeScreen()),
+                      ModalRoute.withName('/welcome'),
                     ));
                   });
                 },

@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:koompi_hotspot/src/screen/create_account/create_email/create_email.dart';
+import 'package:koompi_hotspot/src/screen/create_account/create_phone/create_phone.dart';
 import 'package:koompi_hotspot/src/screen/login/forgot_password.dart';
 
 @override
-Widget formLogin( BuildContext context, 
-                  TextEditingController usernameController,
+Widget formLoginPhone( BuildContext context, 
+                  TextEditingController phoneController,
                   TextEditingController passwordController,
                   bool _obscureText, 
                   Function _toggle, 
@@ -15,6 +17,7 @@ Widget formLogin( BuildContext context,
                   bool _autoValidate,
                   Function _submitLogin) {
 
+  PhoneNumber number = PhoneNumber(isoCode: 'KH');
   
   return Container(
     width: double.infinity,
@@ -51,24 +54,46 @@ Widget formLogin( BuildContext context,
             SizedBox(
               height: ScreenUtil().setHeight(30),
             ),
-            Text("Email",
+            Text("Phone Number",
                 style: TextStyle(
                     fontFamily: "Poppins-Medium",
                     fontSize: ScreenUtil().setSp(26))),
-            TextFormField(
-              controller: usernameController,
-              // autovalidate: _autoValidate,
-              validator: (val) {
-                if(val.isEmpty) return 'Email is required';
-                if(!val.contains('@')) return 'Email invalid';                
-                return null;
+            InternationalPhoneNumberInput(
+              onInputChanged: (PhoneNumber number) {
+                print(number.phoneNumber);
               },
-              onSaved: (val) => _email = val,
-              keyboardType: TextInputType.emailAddress,
-              decoration: InputDecoration(
-                hintText: "Email",
-                hintStyle: TextStyle(color: Colors.grey, fontSize: 12.0)),
+              onInputValidated: (bool value) {
+                print(value);
+              },
+              selectorConfig: SelectorConfig(
+                selectorType: PhoneInputSelectorType.BOTTOM_SHEET,
+              ),
+              ignoreBlank: false,
+              autoValidateMode: AutovalidateMode.disabled,
+              selectorTextStyle: TextStyle(color: Colors.black),
+              initialValue: number,
+              textFieldController: phoneController,
+              formatInput: false,
+              keyboardType: TextInputType.numberWithOptions(signed: true, decimal: true),
+              inputBorder: OutlineInputBorder(),
+              onSaved: (PhoneNumber number) {
+                print('On Saved: $number');
+              },
             ),
+            // TextFormField(
+            //   controller: usernameController,
+            //   // autovalidate: _autoValidate,
+            //   validator: (val) {
+            //     if(val.isEmpty) return 'Phone number is required';
+            //     // if(!val.contains('@')) return 'Phone number invalid';                
+            //     return null;
+            //   },
+            //   onSaved: (val) => _email = val,
+            //   keyboardType: TextInputType.emailAddress,
+            //   decoration: InputDecoration(
+            //     hintText: "Phone Number",
+            //     hintStyle: TextStyle(color: Colors.grey, fontSize: 12.0)),
+            // ),
             SizedBox(
               height: ScreenUtil().setHeight(30),
             ),
@@ -111,7 +136,7 @@ Widget formLogin( BuildContext context,
                         context,
                         MaterialPageRoute(
                             builder: (context) => ForgotPassword())).then((value) {
-                              usernameController.clear();
+                              phoneController.clear();
                               passwordController.clear();
                             }
                     );
@@ -167,30 +192,6 @@ Widget formLogin( BuildContext context,
                 ),
               )
             ),
-            // SizedBox(
-            //   height: ScreenUtil.getInstance().setHeight(40),
-            // ),
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.center,
-            //   children: <Widget>[
-            //     horizontalLine(),
-            //     Text("Sign In With",
-            //         style: TextStyle(
-            //             fontSize: 16.0, fontFamily: "Poppins-Medium")),
-            //     horizontalLine()
-            //   ],
-            // ),
-            // SizedBox(
-            //   height: ScreenUtil.getInstance().setHeight(30),
-            // ),
-            // Center(
-            //   child: Row(
-            //     children: <Widget>[
-            //       onPressFB(context),
-            //       onPressGoogle(context),
-            //     ],
-            //   ),
-            // ),
             SizedBox(
               height: ScreenUtil.getInstance().setHeight(30),
             ),
@@ -208,8 +209,8 @@ Widget formLogin( BuildContext context,
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => CreateEmail())).then((value) {
-                              usernameController.clear();
+                            builder: (context) => CreatePhone())).then((value) {
+                              phoneController.clear();
                               passwordController.clear();
                             });
                   },

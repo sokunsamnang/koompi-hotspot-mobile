@@ -8,9 +8,12 @@ import 'package:koompi_hotspot/src/models/model_balance.dart';
 import 'package:koompi_hotspot/src/models/model_get_plan.dart';
 import 'package:koompi_hotspot/src/models/model_trx_history.dart';
 import 'package:koompi_hotspot/src/screen/home/hotspot/buy_plan.dart';
+import 'package:koompi_hotspot/src/screen/login/login_email.dart';
+import 'package:koompi_hotspot/src/screen/login/login_phone.dart';
 import 'package:koompi_hotspot/src/screen/onboarding/onboarding_screen.dart';
 import 'package:koompi_hotspot/src/services/network_status.dart';
 import 'package:koompi_hotspot/src/services/services.dart';
+import 'package:koompi_hotspot/src/welcome_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -37,6 +40,9 @@ class App extends StatelessWidget{
         routes: {
           '/navbar': (context) => Navbar(),
           '/plan': (context) => UserPlan(),
+          '/loginEmail':(context) => LoginPage(),
+          '/loginPhone': (context) => LoginPhone(),
+          '/welcome': (context) => WelcomeScreen(),
         },
         title: 'Koompi Hotspot',
         home: Splash(),
@@ -58,14 +64,14 @@ class _SplashState extends State<Splash> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool firstTime = prefs.getBool('first_time');
 
-    var _duration = new Duration(seconds: 3);
+    // var _duration = new Duration(seconds: 3);
 
     if (firstTime != null && !firstTime) {// Not first time
-      return new Timer(_duration, isLoggedIn);
+      return isLoggedIn();
     } 
     else {// First time
       prefs.setBool('first_time', false);
-      return new Timer(_duration, navigationOnboardingScreen);
+      return navigationOnboardingScreen();
     }
   }
 
@@ -89,12 +95,43 @@ class _SplashState extends State<Splash> {
     //   });
     // });
   }
+
+  void errorSide() async{
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Error'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('Error server or Server in maintenance'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Try Again'),
+              onPressed: () {
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (context) => App()),
+                  ModalRoute.withName('/'),
+                );
+              },
+            ),
+          ],
+        );
+      }
+    );
+  }
   
   @override
   void initState() {
     setState(() {
       internet();
-      startTime();
+      startTime() ?? errorSide();
     });
     super.initState();
   }

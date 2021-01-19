@@ -30,31 +30,24 @@ class _MyWalletState extends State<MyWallet> {
   var appBarheight = 0.0;
   var _scaffoldKey = new GlobalKey<ScaffoldState>();
 
-  bool _isInProgress = false;
+  GetRequest _getRequest = GetRequest();
   @override
   void initState() {
     super.initState();
-    loadUserDetails();
+    // fetchHistory();
     setState(() {
       fetchWallet();
     });
     
   }
 
-  void fetchWallet() async{
-    await StorageServices().read('token');
-    await Provider.of<BalanceProvider>(context, listen: false).fetchPortforlio();
-    await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
+  void fetchHistory() async {
+    await _getRequest.getTrxHistory();
   }
 
-  loadUserDetails() async {
-    setState(() {
-      _isInProgress = true;
-    });
-    await Future.delayed(const Duration(milliseconds: 700));
-    setState(() {
-      _isInProgress = false;
-    });
+  void fetchWallet() async{
+    await Provider.of<BalanceProvider>(context, listen: false).fetchPortforlio();
+    await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
   }
 
   @override
@@ -66,7 +59,7 @@ class _MyWalletState extends State<MyWallet> {
       onWillPop: () => Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (context) => Navbar()),
-        ModalRoute.withName('/'),
+        ModalRoute.withName('/navbar'),
       ),
       child: Stack(
         children: <Widget>[
@@ -98,7 +91,7 @@ class _MyWalletState extends State<MyWallet> {
                   Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(builder: (context) => Navbar()),
-                    ModalRoute.withName('/'),
+                    ModalRoute.withName('/navbar'),
                   );
                 }
               ),
@@ -115,170 +108,163 @@ class _MyWalletState extends State<MyWallet> {
                 physics: AlwaysScrollableScrollPhysics(),
                 child: Container(
                   height: MediaQuery.of(context).size.height,
-                  child: ModalProgressHUD(
-                    inAsyncCall: _isInProgress,
-                    opacity: 0,
-                    progressIndicator: CupertinoActivityIndicator(
-                      radius: 12,
-                    ),
-                    child: !_isInProgress
-                        ? Column(
-                            children: <Widget>[
-                              SizedBox(
-                                height: appBarheight,
+                  child: Column(
+                    children: <Widget>[
+                      SizedBox(
+                        height: appBarheight,
+                      ),
+                      Row(
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.only(left: 16),
+                            child: Text(
+                              'Balance',
+                              style: TextStyle(
+                                color: Colors.black,
+                                // color: AllCoustomTheme.getsecoundTextThemeColor(),
+                                fontWeight: FontWeight.bold,
                               ),
-                              Row(
-                                children: <Widget>[
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 16),
-                                    child: Text(
-                                      'Balance',
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        // color: AllCoustomTheme.getsecoundTextThemeColor(),
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          right: 16,
+                          left: 16,
+                        ),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: <Widget>[
+                            Text(
+                              'SEL: ',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.w400,
+                                fontSize: 30.0,
+                              ),
+                            ),
+                            mBalance.token != null ?
+                            Text(
+                              '${mBalance.token.toStringAsFixed(2)}',
+                              style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 30.0,
+                              // fontFamily: 'Poppins-ExtraLight',
+                              fontWeight: FontWeight.bold,
+                              ),
+                            ) : CircularProgressIndicator(),
+                            Expanded(
+                              child: Container(),
+                            ),
+                            SvgPicture.asset(
+                              'assets/images/sld_stroke.svg',
+                              // height: 30,
+                              width: 30,
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 6,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          left: 16,
+                        ),
+                        child: AnimatedDivider(),
+                      ),
+                      SizedBox(
+                        height: 16,
+                      ),
+                      Container(
+                        height: 80.0,
+                        margin: EdgeInsets.symmetric(horizontal: 16.0, vertical: 15.0),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: <Widget>[
+                            Expanded(
+                              child: RaisedButton(
+                                color: Colors.white,
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => SendRequest(widget.walletKey)),
+                                  );
+                                },
+                                elevation: 5,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Row(
+                                    children: <Widget>[
+                                      Image.asset('assets/images/ico_send_money.png'),
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.symmetric(horizontal: 8.0),
+                                        child: Text('Send\nmoney',
+                                          style: TextStyle(fontWeight: FontWeight.w700),),
+                                      )
+                                    ],
                                   ),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 20,
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                  right: 16,
-                                  left: 16,
-                                ),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: <Widget>[
-                                    Text(
-                                      'SEL',
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: ConstanceData.SIZE_TITLE20,
-                                      ),
-                                    ),
-                                    mBalance.token != null ?
-                                    Text(
-                                      '${mBalance.token.toStringAsFixed(2)}',
-                                      style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 30.0,
-                                      fontWeight: FontWeight.bold),
-                                    ) : CircularProgressIndicator(),
-                                    Expanded(
-                                      child: Container(),
-                                    ),
-                                    SvgPicture.asset(
-                                      'assets/images/sld_stroke.svg',
-                                      // height: 30,
-                                      width: 30,
-                                    ),
-                                  ],
                                 ),
                               ),
-                              SizedBox(
-                                height: 6,
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                  left: 16,
-                                ),
-                                child: AnimatedDivider(),
-                              ),
-                              SizedBox(
-                                height: 16,
-                              ),
-                              Container(
-                                height: 80.0,
-                                margin: EdgeInsets.symmetric(horizontal: 16.0, vertical: 15.0),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                                  children: <Widget>[
-                                    Expanded(
-                                      child: RaisedButton(
-                                        color: Colors.white,
-                                        onPressed: () {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(builder: (context) => SendRequest(widget.walletKey)),
-                                          );
-                                        },
-                                        elevation: 5,
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Row(
-                                            children: <Widget>[
-                                              Image.asset('assets/images/ico_send_money.png'),
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsets.symmetric(horizontal: 8.0),
-                                                child: Text('Send\nmoney',
-                                                  style: TextStyle(fontWeight: FontWeight.w700),),
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(width: 25),
-                                    Expanded(
-                                      child: RaisedButton(
-                                        color: Colors.white,
-                                        onPressed: () {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(builder: (context) => ReceiveRequest()),
-                                          );
-                                        },
-                                        elevation: 5,
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Row(
-                                            children: <Widget>[
-                                              Image.asset('assets/images/ico_receive_money.png'),
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsets.symmetric(horizontal: 8.0),
-                                                child: Text('Receive\nmoney',
-                                                  style: TextStyle(fontWeight: FontWeight.w700),),
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                              SizedBox(
-                                height: 30,
-                              ),
-                              Row(
-                                children: <Widget>[
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 16),
-                                    child: Text(
-                                      'Recent transactions',
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        // color: AllCoustomTheme.getsecoundTextThemeColor(),
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
+                            ),
+                            SizedBox(width: 25),
+                            Expanded(
+                              child: RaisedButton(
+                                color: Colors.white,
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => ReceiveRequest()),
+                                  );
+                                },
+                                elevation: 5,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Row(
+                                    children: <Widget>[
+                                      Image.asset('assets/images/ico_receive_money.png'),
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.symmetric(horizontal: 8.0),
+                                        child: Text('Receive\nmoney',
+                                          style: TextStyle(fontWeight: FontWeight.w700),),
+                                      )
+                                    ],
                                   ),
-                                ],
+                                ),
                               ),
-                              SizedBox(
-                                height: 20,
+                            )
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 30,
+                      ),
+                      Row(
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.only(left: 16),
+                            child: Text(
+                              'Transactions',
+                              style: TextStyle(
+                                color: Colors.black,
+                                // color: AllCoustomTheme.getsecoundTextThemeColor(),
+                                fontWeight: FontWeight.bold,
                               ),
-                              Expanded(child: trxHistory(context),)
-                            ],
-                          )
-                        : SizedBox(),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Expanded(child: trxHistory(context),)
+                    ],
                   ),
                 ),
               ),

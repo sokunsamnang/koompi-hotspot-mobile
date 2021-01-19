@@ -4,9 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:koompi_hotspot/src/components/reuse_widget.dart';
 import 'package:koompi_hotspot/src/models/model_userdata.dart';
+import 'package:koompi_hotspot/src/screen/home/hotspot/buy_plan.dart';
 import 'package:koompi_hotspot/src/screen/option_page/myaccount.dart';
-import 'package:koompi_hotspot/src/screen/login/login_page.dart';
+import 'package:koompi_hotspot/src/screen/login/login_email.dart';
 import 'package:koompi_hotspot/src/services/services.dart';
+import 'package:koompi_hotspot/src/welcome_screen.dart';
 import 'package:line_icons/line_icons.dart';
 import 'change_password.dart';
 import 'package:koompi_hotspot/src/screen/speedtest/speedtest.dart';
@@ -100,16 +102,13 @@ class _MorePageState extends State<MorePage>
                     // ),
                     _buildDivider(),
                     ListTile(
-                      leading: Icon(
-                        FontAwesomeIcons.wifi,
-                        size: 20.0,
-                      ),
-                      title: Text("Speed Test"),
+                      leading: Icon(LineIcons.user_plus),
+                      title: Text("Subscribe Plan"),
                       trailing: Icon(LineIcons.angle_right),
                       onTap: () async {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => SpeedTestNet()),
+                          MaterialPageRoute(builder: (context) => UserPlan()),
                         );
                       },
                     ),
@@ -175,8 +174,8 @@ showLogoutDialog(context) async {
                 Future.delayed(Duration(seconds: 2), () {
                   Timer(Duration(milliseconds: 500), () => Navigator.pushAndRemoveUntil(
                     context,
-                    MaterialPageRoute(builder: (context) => LoginPage()),
-                    ModalRoute.withName('/'),
+                    MaterialPageRoute(builder: (context) => WelcomeScreen()),
+                    ModalRoute.withName('/welcome'),
                   ));
                 });
               },

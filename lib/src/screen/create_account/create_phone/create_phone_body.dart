@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:koompi_hotspot/src/components/formcard/formcardCreateEmail.dart';
+import 'package:koompi_hotspot/src/components/formcard/formcardCreatePhoneNumber.dart';
 
   @override
-  Widget createEmailBody(
+  Widget createPhoneBody(
     BuildContext context, 
-    TextEditingController emailController, 
+    TextEditingController phoneController, 
     TextEditingController passwordController, 
     TextEditingController confirmPasswordController,
     bool _obscureText,
     Function _toggle,
     bool _obscureText2,
     Function _toggle2,
-    String _email,
+    String _phone,
     String _password,
     String _confirmPassword,
     GlobalKey formKey,
     bool _autoValidate,
-    Function onSignUpByEmail,
+    Function onSignUpByPhone,
     Function _submit,
     ) {
 
@@ -47,16 +47,16 @@ import 'package:koompi_hotspot/src/components/formcard/formcardCreateEmail.dart'
                     // height: ScreenUtil.getInstance().setHeight(300),
                   ),
                   SizedBox(height: ScreenUtil().setHeight(100)),
-                  formCardEmail(
+                  formCardPhoneNumbers(
                     context, 
-                    emailController, 
+                    phoneController, 
                     passwordController, 
                     confirmPasswordController,
                     _obscureText, 
                     _toggle, 
                     _obscureText2, 
                     _toggle2, 
-                    _email, 
+                    _phone, 
                     _password, 
                     _confirmPassword,
                     formKey, 

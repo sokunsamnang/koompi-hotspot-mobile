@@ -4,8 +4,9 @@ import 'package:koompi_hotspot/src/backend/get_request.dart';
 import 'package:koompi_hotspot/src/components/navbar.dart';
 import 'package:koompi_hotspot/src/models/model_balance.dart';
 import 'package:koompi_hotspot/src/models/model_get_plan.dart';
-import 'package:koompi_hotspot/src/screen/login/login_page.dart';
+import 'package:koompi_hotspot/src/screen/login/login_email.dart';
 import 'package:koompi_hotspot/src/services/jtw_decoder.dart';
+import 'package:koompi_hotspot/src/welcome_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -30,8 +31,8 @@ class StorageServices{
       clearToken('token'); 
       Navigator.pushAndRemoveUntil(
         context,
-        MaterialPageRoute(builder: (context) => LoginPage()),
-        ModalRoute.withName('/'),
+        MaterialPageRoute(builder: (context) => WelcomeScreen()),
+        ModalRoute.withName('/welcome'),
       );
     }
     else if (JwtDecoder.isExpired(token) == false ) {
@@ -50,8 +51,11 @@ class StorageServices{
           context, MaterialPageRoute(builder: (context) => Navbar()));
     }
     else{
-      Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => LoginPage()));
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => WelcomeScreen()),
+        ModalRoute.withName('/welcome'),
+      );
     }
   }
 
@@ -65,7 +69,7 @@ class StorageServices{
           Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(builder: (context) => Navbar()),
-            ModalRoute.withName('/'),
+            ModalRoute.withName('/navbar'),
           );
         }
       },

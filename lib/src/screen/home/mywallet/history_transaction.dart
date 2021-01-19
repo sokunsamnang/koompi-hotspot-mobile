@@ -7,8 +7,7 @@ import 'package:koompi_hotspot/src/utils/app_utils.dart';
 import 'package:provider/provider.dart';
 
 Widget trxHistory(BuildContext context) {
-  List _buildList(
-      List<TrxHistoryModel> history, BuildContext context, String userWallet) {
+  List _buildList(List<TrxHistoryModel> history, BuildContext context, String userWallet) {
     List<Widget> listItems = List();
     print('My History: ${history.length}');
     for (int i = 0; i < history.length; i++) {
@@ -113,7 +112,6 @@ Widget trxHistory(BuildContext context) {
         ),
       );
     }
-
     return listItems;
   }
 
@@ -150,8 +148,7 @@ Widget trxHistory(BuildContext context) {
                   slivers: [
                     SliverList(
                       delegate: SliverChildListDelegate(
-                        _buildList(
-                            history.trxHistoryList, context, mData.wallet),
+                        _buildList(history.trxHistoryList, context, mData.wallet),
                       ),
                     ),
                   ],

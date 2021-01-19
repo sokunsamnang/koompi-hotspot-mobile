@@ -10,7 +10,8 @@ import 'package:koompi_hotspot/src/backend/post_request.dart';
 import 'package:koompi_hotspot/src/components/reuse_widget.dart';
 import 'package:koompi_hotspot/src/models/model_location.dart';
 import 'package:koompi_hotspot/src/models/model_userdata.dart';
-import 'package:koompi_hotspot/src/screen/login/login_page.dart';
+import 'package:koompi_hotspot/src/screen/login/login_email.dart';
+import 'package:koompi_hotspot/src/welcome_screen.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 
@@ -115,8 +116,8 @@ class _CompleteInfoState extends State<CompleteInfo>{
           Future.delayed(Duration(seconds: 2), () {
             Timer(Duration(milliseconds: 500), () => Navigator.pushAndRemoveUntil(
               context,
-              MaterialPageRoute(builder: (context) => LoginPage()),
-              ModalRoute.withName('/'),
+              MaterialPageRoute(builder: (context) => WelcomeScreen()),
+              ModalRoute.withName('/welcome'),
             ));
           });
         } 

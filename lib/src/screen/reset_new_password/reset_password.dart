@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:koompi_hotspot/src/backend/post_request.dart';
 import 'package:koompi_hotspot/src/components/reuse_widget.dart';
-import 'package:koompi_hotspot/src/screen/login/login_page.dart';
+import 'package:koompi_hotspot/src/screen/login/login_email.dart';
 import 'package:koompi_hotspot/src/screen/reset_new_password/reset_password_body.dart';
 
 class ResetNewPassword extends StatefulWidget {
@@ -122,7 +122,6 @@ class _ResetNewPasswordState extends State<ResetNewPassword> {
   }
 
   showErrorServerDialog(BuildContext context) async {
-    var response = await PostRequest().forgotPasswordByEmail(widget.email);
     return showDialog(
       context: context,
       barrierDismissible: false,
@@ -132,7 +131,7 @@ class _ResetNewPasswordState extends State<ResetNewPassword> {
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Text('${response.body}'),
+                Text('Error server or Server in maintenance'),
               ],
             ),
           ),

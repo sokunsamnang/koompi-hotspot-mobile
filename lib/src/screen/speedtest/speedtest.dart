@@ -56,7 +56,7 @@ class SpeedTestNetState extends State<SpeedTestNet> {
             Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(builder: (context) => Navbar()),
-              ModalRoute.withName('/'),
+              ModalRoute.withName('/navbar'),
             );
           }
         ),

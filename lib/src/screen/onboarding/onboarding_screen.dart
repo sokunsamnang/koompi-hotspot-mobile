@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:koompi_hotspot/src/screen/login/login_page.dart';
+import 'package:koompi_hotspot/src/screen/login/login_email.dart';
 import 'package:koompi_hotspot/src/screen/onboarding/styles.dart';
+import 'package:koompi_hotspot/src/welcome_screen.dart';
 
 
 class OnboardingScreen extends StatefulWidget {
@@ -63,8 +64,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   alignment: Alignment.centerRight,
                   child: FlatButton(
                     onPressed: () => {
-                      Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(builder: (context) => LoginPage()))
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(builder: (context) => WelcomeScreen()),
+                        ModalRoute.withName('/welcome'),
+                      ),
                     },
                     child: Text(
                       'Skip',
@@ -220,8 +224,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         color: Colors.white,
         child: GestureDetector(
           onTap: () => {
-            Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (context) => LoginPage()))
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => WelcomeScreen()),
+              ModalRoute.withName('/welcome'),
+            ),
           },
           child: Center(
             child: Text(

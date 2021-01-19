@@ -35,6 +35,20 @@ class PostRequest with ChangeNotifier {
     return _backend.response;
   }
 
+  Future<http.Response> userLogInPhone(String phone, String password) async {
+    _backend.bodyEncode = json.encode({
+      /* Convert to Json String */
+      "phone": phone,
+      "password": password
+    });
+
+    _backend.response = await http.post('${ApiService.url}/auth/login',
+        headers: _backend.conceteHeader(null, null), body: _backend.bodyEncode);
+
+    print(_backend.response.body);
+    return _backend.response;
+  }
+
   /* complete User Information */
   Future<http.Response> completeInfoUser(String email, String name,
       String gender, String birthdate, String address) async {
@@ -98,7 +112,23 @@ class PostRequest with ChangeNotifier {
     return _backend.response;
   }
 
-  // Confirm User Account By Phone Number
+  /*register account by phone number */
+  Future<http.Response> signUpWithPhone(String phone, String password) async {
+    _backend.bodyEncode = json.encode({
+      /* Convert to Json String */
+      "phone": '+855$phone',
+      "password": password
+    });
+
+    _backend.response = await http.post('${ApiService.url}/auth/register-phone',
+        headers: _backend.conceteHeader(null, null), body: _backend.bodyEncode);
+
+    print(_backend.response.body);
+    return _backend.response;
+  }
+
+
+  // Confirm User Account By Email
   Future<http.Response> confirmAccount(String email, String vCode) async {
     _backend.bodyEncode = json.encode({"email": email, "vCode": vCode});
     _backend.response = await http.post(
