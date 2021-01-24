@@ -1,10 +1,6 @@
-import 'dart:convert';
-import 'dart:io';
-import 'package:flutter/material.dart';
-import 'package:koompi_hotspot/src/backend/post_request.dart';
-import 'package:koompi_hotspot/src/components/reuse_widget.dart';
-import 'package:koompi_hotspot/src/screen/create_account/create_email/create_email_body.dart';
-import 'package:koompi_hotspot/src/screen/create_account/verfication/verfication_account.dart';
+import 'package:koompi_hotspot/all_export.dart';
+import 'package:koompi_hotspot/src/reuse_widget/reuse_widget.dart';
+
 
 class CreateEmail extends StatefulWidget {
 
@@ -140,10 +136,6 @@ class _CreateEmailState extends State<CreateEmail> {
   }
 
   showErrorDialog(BuildContext context) async {
-    var response = await PostRequest().signUpWithEmail(
-          emailController.text,
-          passwordController.text);
-    var responseJson = json.decode(response.body);
     return showDialog(
       context: context,
       barrierDismissible: false,

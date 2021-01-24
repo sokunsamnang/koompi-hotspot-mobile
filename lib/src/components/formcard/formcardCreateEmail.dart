@@ -1,7 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:koompi_hotspot/index.dart';
-import 'package:koompi_hotspot/src/screen/login/login_email.dart';
+import 'package:koompi_hotspot/all_export.dart';
 
 @override
 Widget formCardEmail(
@@ -39,7 +36,7 @@ Widget formCardEmail(
           ]),
       child: Form(
         key: formKey,
-        autovalidate: _autoValidate,
+        autovalidateMode: AutovalidateMode.onUserInteraction,
         child: Padding(
           padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 16.0),
           child: Column(
@@ -66,7 +63,7 @@ Widget formCardEmail(
                   return null;
                 },
                 onSaved: (val) => _email = val,
-                autovalidate: _autoValidate,
+                autovalidateMode: AutovalidateMode.onUserInteraction,
                 controller: emailController,
                 keyboardType: TextInputType.emailAddress,
                 decoration: InputDecoration(
@@ -88,7 +85,7 @@ Widget formCardEmail(
                   return null;
                 },
                 onSaved: (val) => _password = val,
-                autovalidate: _autoValidate,
+                autovalidateMode: AutovalidateMode.onUserInteraction,
                 controller: passwordController,
                 obscureText: _obscureText,
                 keyboardType: TextInputType.visiblePassword,
@@ -122,7 +119,7 @@ Widget formCardEmail(
                   return null;
                 },
                 onSaved: (val) => _confirmPassword = val,
-                autovalidate: _autoValidate,
+                autovalidateMode: AutovalidateMode.onUserInteraction,
                 controller: confirmPasswordController,
                 obscureText: _obscureText2,
                 keyboardType: TextInputType.visiblePassword,

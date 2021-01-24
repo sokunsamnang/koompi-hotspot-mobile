@@ -1,7 +1,5 @@
+import 'package:koompi_hotspot/all_export.dart';
 
-import 'package:flutter/material.dart';
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:carousel_slider/carousel_options.dart';
 
 final List<Map> robot = [
   {

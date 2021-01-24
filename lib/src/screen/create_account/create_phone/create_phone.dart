@@ -1,10 +1,5 @@
-import 'dart:convert';
-import 'dart:io';
-import 'package:flutter/material.dart';
-import 'package:koompi_hotspot/src/backend/post_request.dart';
-import 'package:koompi_hotspot/src/components/reuse_widget.dart';
-import 'package:koompi_hotspot/src/screen/create_account/create_phone/create_phone_body.dart';
-import 'package:koompi_hotspot/src/screen/create_account/verfication/verfication_account.dart';
+import 'package:koompi_hotspot/all_export.dart';
+import 'package:koompi_hotspot/src/reuse_widget/reuse_widget.dart';
 
 class CreatePhone extends StatefulWidget {
 
@@ -73,27 +68,12 @@ class _CreatePhoneState extends State<CreatePhone> {
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
         print('Internet connected');
         var response = await PostRequest().signUpWithPhone(
-          phoneController.text,
+          StorageServices.removeZero(phoneController.text),
           passwordController.text);
         if (response.statusCode == 200) {
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => PinCodeVerificationScreen("+855${phoneController.text}", passwordController.text)));
-          // print(response.statusCode);
-          // var responseJson = json.decode(response.body);    
-          // if(response.body == 'Please check your E-mail!'){
-          //   print(response.statusCode);
-          //   Navigator.pushReplacement(
-          //     context,
-          //     MaterialPageRoute(builder: (context) => VerificationAccount()));
-          // }
-          // else {
-          //   try {
-          //     messageAlert = responseJson['error']['message'];
-          //   } catch (e) {
-          //     messageAlert = responseJson['message'];
-          //   }
-          // }
+              MaterialPageRoute(builder: (context) => PinCodeVerificationScreen("+855${StorageServices.removeZero(phoneController.text)}", passwordController.text)));
         } 
         else if (response.statusCode == 401){
           Navigator.pop(context);
@@ -141,9 +121,10 @@ class _CreatePhoneState extends State<CreatePhone> {
   }
 
   showErrorDialog(BuildContext context) async {
-    // var response = await PostRequest().signUpWithPhone(
-    //       phoneController.text,
-    //       passwordController.text);
+    var response = await PostRequest().signUpWithPhone(
+      StorageServices.removeZero(phoneController.text),
+      passwordController.text);
+    var responseJson = json.decode(response.body);
     return showDialog(
       context: context,
       barrierDismissible: false,
@@ -153,8 +134,8 @@ class _CreatePhoneState extends State<CreatePhone> {
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Text('Invalid Email'),
-                // Text(responseJson['message']),
+                // Text('Invalid Email'),
+                Text(responseJson['message']),
               ],
             ),
           ),
@@ -169,62 +150,6 @@ class _CreatePhoneState extends State<CreatePhone> {
         );
       });
   }
-
-  // showErrorServerDialog(BuildContext context) async {
-  //   var response = await PostRequest().register(
-  //         emailController.text,
-  //         passwordController.text);
-  //   return showDialog(
-  //     context: context,
-  //     barrierDismissible: false,
-  //     builder: (BuildContext context) {
-  //       return AlertDialog(
-  //         title: Text('Error'),
-  //         content: SingleChildScrollView(
-  //           child: ListBody(
-  //             children: <Widget>[
-  //               Text('${response.body}'),
-  //             ],
-  //           ),
-  //         ),
-  //         actions: <Widget>[
-  //           FlatButton(
-  //             child: Text('OK'),
-  //             onPressed: () {
-  //               Navigator.of(context).pop();
-  //             },
-  //           ),
-  //         ],
-  //       );
-  //     });
-  // }
-
-  // errorDialog(BuildContext context) async {
-  //   return showDialog(
-  //       context: context,
-  //       barrierDismissible: false,
-  //       builder: (BuildContext context) {
-  //         return AlertDialog(
-  //           title: Text('Error'),
-  //           content: SingleChildScrollView(
-  //             child: ListBody(
-  //               children: <Widget>[
-  //                 Text('Error Services'),
-  //               ],
-  //             ),
-  //           ),
-  //           actions: <Widget>[
-  //             FlatButton(
-  //               child: Text('OK'),
-  //               onPressed: () {
-  //                 Navigator.of(context).pop();
-  //               },
-  //             ),
-  //           ],
-  //         );
-  //       });
-  // }
-
 
   @override
   Widget build(BuildContext context) {

@@ -1,20 +1,6 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:koompi_hotspot/src/backend/get_request.dart';
-import 'package:koompi_hotspot/src/components/navbar.dart';
-import 'package:koompi_hotspot/src/constance/constance.dart';
-import 'package:koompi_hotspot/src/constance/global.dart';
-import 'package:koompi_hotspot/src/constance/global.dart' as globals;
-import 'package:koompi_hotspot/src/constance/themes.dart';
-import 'package:koompi_hotspot/src/models/model_balance.dart';
-import 'package:koompi_hotspot/src/models/model_trx_history.dart';
-import 'package:koompi_hotspot/src/screen/home/mywallet/history_transaction.dart';
-import 'package:koompi_hotspot/src/screen/home/mywallet/receive_request.dart';
-import 'package:koompi_hotspot/src/screen/home/mywallet/send_request.dart';
-import 'package:koompi_hotspot/src/services/services.dart';
-import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:koompi_hotspot/all_export.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter/cupertino.dart';
 
 class MyWallet extends StatefulWidget {
   final Function resetState;
@@ -30,19 +16,12 @@ class _MyWalletState extends State<MyWallet> {
   var appBarheight = 0.0;
   var _scaffoldKey = new GlobalKey<ScaffoldState>();
 
-  GetRequest _getRequest = GetRequest();
   @override
   void initState() {
     super.initState();
-    // fetchHistory();
     setState(() {
       fetchWallet();
     });
-    
-  }
-
-  void fetchHistory() async {
-    await _getRequest.getTrxHistory();
   }
 
   void fetchWallet() async{
@@ -63,20 +42,6 @@ class _MyWalletState extends State<MyWallet> {
       ),
       child: Stack(
         children: <Widget>[
-          Container(
-            foregroundDecoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  HexColor(globals.primaryColorString).withOpacity(0.6),
-                  HexColor(globals.primaryColorString).withOpacity(0.6),
-                  HexColor(globals.primaryColorString).withOpacity(0.6),
-                  HexColor(globals.primaryColorString).withOpacity(0.6),
-                ],
-              ),
-            ),
-          ),
           Scaffold(
             appBar: AppBar(
               title: Text('My Wallet', style: TextStyle(color: Colors.black)),
@@ -111,23 +76,23 @@ class _MyWalletState extends State<MyWallet> {
                   child: Column(
                     children: <Widget>[
                       SizedBox(
-                        height: appBarheight,
+                        height: 25,
                       ),
-                      Row(
-                        children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.only(left: 16),
-                            child: Text(
-                              'Balance',
-                              style: TextStyle(
-                                color: Colors.black,
-                                // color: AllCoustomTheme.getsecoundTextThemeColor(),
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
+                      // Row(
+                      //   children: <Widget>[
+                      //     Padding(
+                      //       padding: const EdgeInsets.only(left: 16),
+                      //       child: Text(
+                      //         'Balance',
+                      //         style: TextStyle(
+                      //           color: Colors.black,
+                      //           // color: AllCoustomTheme.getsecoundTextThemeColor(),
+                      //           fontWeight: FontWeight.bold,
+                      //         ),
+                      //       ),
+                      //     ),
+                      //   ],
+                      // ),
                       SizedBox(
                         height: 20,
                       ),
@@ -137,33 +102,35 @@ class _MyWalletState extends State<MyWallet> {
                           left: 16,
                         ),
                         child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.end,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
-                            Text(
-                              'SEL: ',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.w400,
-                                fontSize: 30.0,
-                              ),
-                            ),
-                            mBalance.token != null ?
-                            Text(
-                              '${mBalance.token.toStringAsFixed(2)}',
-                              style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 30.0,
-                              // fontFamily: 'Poppins-ExtraLight',
-                              fontWeight: FontWeight.bold,
-                              ),
-                            ) : CircularProgressIndicator(),
-                            Expanded(
-                              child: Container(),
-                            ),
                             SvgPicture.asset(
                               'assets/images/sld_stroke.svg',
                               // height: 30,
-                              width: 30,
+                              width: 50,
+                            ),
+                            SizedBox(width: 10),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'TOTAL BALANCE',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                SizedBox(width: 10),
+                                mBalance.token != null ?
+                                Text(
+                                  '${mBalance.token.toStringAsFixed(2)} SEL',
+                                  style: TextStyle(
+                                  color: Colors.blueAccent,
+                                  fontSize: 30.0,
+                                  fontWeight: FontWeight.bold,
+                                  ),
+                                ) : CircularProgressIndicator(),
+                              ],
                             ),
                           ],
                         ),
@@ -171,11 +138,9 @@ class _MyWalletState extends State<MyWallet> {
                       SizedBox(
                         height: 6,
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                          left: 16,
-                        ),
-                        child: AnimatedDivider(),
+                      Divider(
+                        thickness: 0.5,
+                        color: Colors.black,
                       ),
                       SizedBox(
                         height: 16,
@@ -253,6 +218,7 @@ class _MyWalletState extends State<MyWallet> {
                               'Transactions',
                               style: TextStyle(
                                 color: Colors.black,
+                                fontSize: 20,
                                 // color: AllCoustomTheme.getsecoundTextThemeColor(),
                                 fontWeight: FontWeight.bold,
                               ),

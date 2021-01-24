@@ -1,7 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:koompi_hotspot/src/screen/create_account/create_email/create_email.dart';
-import 'package:koompi_hotspot/src/screen/login/forgot_password.dart';
+import 'package:koompi_hotspot/all_export.dart';
 
 @override
 Widget formLogin( BuildContext context, 
@@ -37,7 +34,7 @@ Widget formLogin( BuildContext context,
       padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 16.0, bottom: 16.0),
       child: Form(
         key: formKey,
-        autovalidate: _autoValidate,
+        autovalidateMode: AutovalidateMode.onUserInteraction,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[

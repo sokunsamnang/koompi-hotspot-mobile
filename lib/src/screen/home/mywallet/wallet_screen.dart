@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:koompi_hotspot/src/screen/home/mywallet/wallet_screen_body.dart';
+import 'package:koompi_hotspot/all_export.dart';
 
 class WalletScreen extends StatelessWidget {
 

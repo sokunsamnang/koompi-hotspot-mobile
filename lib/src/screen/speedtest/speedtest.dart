@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:internet_speed_test/internet_speed_test.dart';
 import 'package:internet_speed_test/callbacks_enum.dart';
-import 'package:koompi_hotspot/src/components/navbar.dart';
 import 'package:koompi_hotspot/src/screen/speedtest/components/errorMsg.dart';
 import 'package:koompi_hotspot/src/screen/speedtest/components/progressBar.dart';
 import 'package:koompi_hotspot/src/screen/speedtest/components/speedLabels.dart';
@@ -47,19 +46,19 @@ class SpeedTestNetState extends State<SpeedTestNet> {
     return Scaffold(
       backgroundColor: bgCol,
       appBar: AppBar(
-        backgroundColor: bgCol,
-        title: Text('Speed Test'),
-        automaticallyImplyLeading: true,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back), 
-          onPressed: (){
-            Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (context) => Navbar()),
-              ModalRoute.withName('/navbar'),
-            );
-          }
-        ),
+        backgroundColor: Colors.white,
+        title: Text('Speed Test', style: TextStyle(color: Colors.black),),
+        automaticallyImplyLeading: false,
+        // leading: IconButton(
+        //   icon: Icon(Icons.arrow_back, color: Colors.black,), 
+        //   onPressed: (){
+        //     Navigator.pushAndRemoveUntil(
+        //       context,
+        //       MaterialPageRoute(builder: (context) => Navbar()),
+        //       ModalRoute.withName('/navbar'),
+        //     );
+        //   }
+        // ),
       ),
       body: Center(
         child: Column(

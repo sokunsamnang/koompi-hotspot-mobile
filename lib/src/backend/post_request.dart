@@ -1,16 +1,6 @@
-import 'dart:async';
-import 'dart:convert';
-import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_image_compress/flutter_image_compress.dart';
+import 'package:koompi_hotspot/all_export.dart';
 import 'package:http/http.dart' as http;
-import 'package:http_parser/http_parser.dart';
-import 'package:koompi_hotspot/index.dart';
-import 'package:koompi_hotspot/src/backend/component.dart';
-import 'package:koompi_hotspot/src/models/model_userdata.dart';
-import 'package:koompi_hotspot/src/services/services.dart';
-import 'api_service.dart';
+
 
 class PostRequest with ChangeNotifier {
   Backend _backend = Backend();
@@ -18,7 +8,6 @@ class PostRequest with ChangeNotifier {
   ModelUserData get mUser => _mUser;
   String alertText;
   StorageServices _prefService = StorageServices();
-  Dio dio = new Dio();
 
   /*Login Account */
   Future<http.Response> userLogIn(String email, String password) async {
@@ -38,11 +27,11 @@ class PostRequest with ChangeNotifier {
   Future<http.Response> userLogInPhone(String phone, String password) async {
     _backend.bodyEncode = json.encode({
       /* Convert to Json String */
-      "phone": phone,
+      "phone": '+855$phone',
       "password": password
     });
 
-    _backend.response = await http.post('${ApiService.url}/auth/login',
+    _backend.response = await http.post('${ApiService.url}/auth/login-phone',
         headers: _backend.conceteHeader(null, null), body: _backend.bodyEncode);
 
     print(_backend.response.body);
@@ -50,13 +39,14 @@ class PostRequest with ChangeNotifier {
   }
 
   /* complete User Information */
-  Future<http.Response> completeInfoUser(String email, String name,
+  Future<http.Response> completeInfoUser(String fullname, String phone,
       String gender, String birthdate, String address) async {
     _backend.bodyEncode = json.encode(/* Convert to Json Data ( String ) */
         {
-      "name": name,
-      "email": email,
+      "fullname": fullname,
       "gender": gender,
+      "phone": phone,
+      "email": "",
       "birthdate": birthdate,
       "address": address
     });
@@ -65,6 +55,22 @@ class PostRequest with ChangeNotifier {
     return _backend.response;
   }
 
+  /* complete User Information */
+  Future<http.Response> updateInfo(String name, String gender,
+      String phone, String birthdate, String address) async {
+    _backend.bodyEncode = json.encode(/* Convert to Json Data ( String ) */
+        {
+      "fullname": name,
+      "gender": gender,
+      "phone": phone,
+      "email": "",
+      "birthdate": birthdate,
+      "address": address
+    });
+    _backend.response = await http.put('${ApiService.url}/auth/complete-info',
+        headers: _backend.conceteHeader(null, null), body: _backend.bodyEncode);
+    return _backend.response;
+  }
   /* Change password user account */
   // Future<http.Response> changePassword(String email, String oldPassword, String newPassword) async {
   //   _backend.bodyEncode = json.encode(/* Convert to Json Data ( String ) */
@@ -139,6 +145,17 @@ class PostRequest with ChangeNotifier {
     return _backend.response;
   }
 
+  // Confirm User Account By Phone Number
+  Future<http.Response> confirmAccountPhone(String phone, String vCode) async {
+    _backend.bodyEncode = json.encode({"phone": "+855$phone", "vCode": vCode});
+    _backend.response = await http.post(
+      '${ApiService.url}/auth/confirm-phone',
+      headers: _backend.conceteHeader(null, null),
+    );
+    print(_backend.response.body);
+    return _backend.response;
+  }
+
   /*Forgot Password Verification */
   Future<http.Response> forgotPasswordByEmail(String email) async {
     _backend.bodyEncode = json.encode({
@@ -147,6 +164,20 @@ class PostRequest with ChangeNotifier {
     });
 
     _backend.response = await http.post('${ApiService.url}/forgot-password',
+        headers: _backend.conceteHeader(null, null), body: _backend.bodyEncode);
+
+    print(_backend.response.body);
+    return _backend.response;
+  }
+
+  /*Forgot Password Verification */
+  Future<http.Response> forgotPasswordByPhone(String phone) async {
+    _backend.bodyEncode = json.encode({
+      /* Convert to Json String */
+      "phone": "+855$phone",
+    });
+
+    _backend.response = await http.post('${ApiService.url}/forgot-password-phone',
         headers: _backend.conceteHeader(null, null), body: _backend.bodyEncode);
 
     print(_backend.response.body);
@@ -184,8 +215,8 @@ class PostRequest with ChangeNotifier {
 
   //Hotspot Plan
 
-  Future<http.Response> buyHotspotPlan(
-      String username, String password, String value) async {
+  Future<http.Response> buyHotspotPlan30Days(
+      String phone, String password, String value) async {
     await _prefService.read('token').then((value) {
       _backend.token = Map<String, dynamic>.from({'token': value});
     });
@@ -193,10 +224,36 @@ class PostRequest with ChangeNotifier {
     if (_backend.token != null) {
       _backend.bodyEncode = json.encode({
         /* Convert to Json String */
-        "username": username,
+        "phone": phone,
         "password": password,
         "simultaneous": "2",
         "value": value,
+      });
+
+      _backend.response = await http.post('${ApiService.url}/hotspot/set-plan',
+          headers: _backend.conceteHeader(
+              "authorization", "Bearer ${_backend.token['token']}"),
+          body: _backend.bodyEncode);
+
+      print(_backend.response.body);
+      return _backend.response;
+    }
+    return null;
+  }
+
+  Future<http.Response> buyHotspotPlan365Days(
+      String phone, String password) async {
+    await _prefService.read('token').then((value) {
+      _backend.token = Map<String, dynamic>.from({'token': value});
+    });
+
+    if (_backend.token != null) {
+      _backend.bodyEncode = json.encode({
+        /* Convert to Json String */
+        "phone": phone,
+        "password": password,
+        "simultaneous": "2",
+        "value": "365",
       });
 
       _backend.response = await http.post('${ApiService.url}/hotspot/set-plan',

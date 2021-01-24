@@ -1,20 +1,5 @@
-import 'dart:convert';
-import 'package:connectivity/connectivity.dart';
-import 'package:flutter/material.dart';
-import 'package:koompi_hotspot/index.dart';
-import 'package:koompi_hotspot/src/backend/get_request.dart';
-import 'package:koompi_hotspot/src/backend/post_request.dart';
-import 'package:koompi_hotspot/src/components/formcard/formcardLoginEmail.dart';
-import 'package:koompi_hotspot/src/components/navbar.dart';
-import 'package:koompi_hotspot/src/components/reuse_widget.dart';
-import 'package:koompi_hotspot/src/components/socialmedia.dart';
-import 'package:koompi_hotspot/src/models/model_balance.dart';
-import 'package:koompi_hotspot/src/models/model_get_plan.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:koompi_hotspot/src/services/network_status.dart';
-import 'package:koompi_hotspot/src/services/services.dart';
-import 'dart:io';
-import 'package:koompi_hotspot/src/services/updater.dart';
+import 'package:koompi_hotspot/all_export.dart';
+import 'package:koompi_hotspot/src/reuse_widget/reuse_widget.dart';
 import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
@@ -33,7 +18,7 @@ class _LoginPageState extends State<LoginPage> {
 
   String token;
   String messageAlert;
-  bool _isLoading = false;
+  bool isLoading = false;
 
   NetworkStatus _networkStatus = NetworkStatus();
   
@@ -96,7 +81,7 @@ class _LoginPageState extends State<LoginPage> {
             await GetRequest().getUserProfile(token)
               .then((values) {
                 setState(() {
-                  _isLoading = true;
+                  isLoading = true;
                 });
 
           });

@@ -1,8 +1,5 @@
-import 'dart:async';
-import 'package:flare_flutter/flare_actor.dart';
-import 'package:flutter/material.dart';
-import 'package:koompi_hotspot/src/components/navbar.dart';
-import 'package:koompi_hotspot/src/components/reuse_widget.dart';
+import 'package:koompi_hotspot/all_export.dart';
+import 'package:koompi_hotspot/src/reuse_widget/reuse_widget.dart';
 
 class CompletePlan extends StatefulWidget {
   @override
@@ -95,7 +92,7 @@ class _CompletePlanState extends State<CompletePlan> {
         onWillPop: () => Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(builder: (context) => Navbar()),
-          ModalRoute.withName('/'),
+          ModalRoute.withName('/navbar'),
         ),
       ),
     );

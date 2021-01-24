@@ -1,6 +1,4 @@
-import 'package:koompi_hotspot/index.dart';
-import 'package:koompi_hotspot/src/backend/api_service.dart';
-import 'package:koompi_hotspot/src/services/services.dart';
+import 'package:koompi_hotspot/all_export.dart';
 import 'package:http/http.dart' as http;
 
 class ModelPlan {

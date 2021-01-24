@@ -1,21 +1,5 @@
-import 'dart:convert';
-import 'package:connectivity/connectivity.dart';
-import 'package:flutter/material.dart';
-import 'package:koompi_hotspot/index.dart';
-import 'package:koompi_hotspot/src/backend/get_request.dart';
-import 'package:koompi_hotspot/src/backend/post_request.dart';
-import 'package:koompi_hotspot/src/components/formcard/formcardLoginEmail.dart';
-import 'package:koompi_hotspot/src/components/formcard/formcardLoginPhone.dart';
-import 'package:koompi_hotspot/src/components/navbar.dart';
-import 'package:koompi_hotspot/src/components/reuse_widget.dart';
-import 'package:koompi_hotspot/src/components/socialmedia.dart';
-import 'package:koompi_hotspot/src/models/model_balance.dart';
-import 'package:koompi_hotspot/src/models/model_get_plan.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:koompi_hotspot/src/services/network_status.dart';
-import 'package:koompi_hotspot/src/services/services.dart';
-import 'dart:io';
-import 'package:koompi_hotspot/src/services/updater.dart';
+import 'package:koompi_hotspot/all_export.dart';
+import 'package:koompi_hotspot/src/reuse_widget/reuse_widget.dart';
 import 'package:provider/provider.dart';
 
 class LoginPhone extends StatefulWidget {
@@ -24,7 +8,7 @@ class LoginPhone extends StatefulWidget {
 
 class _LoginPhoneState extends State<LoginPhone> {
   final formKey = GlobalKey<FormState>();
-  bool _autoValidate = false;
+  AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
 
   String _email;
   String _password;
@@ -34,7 +18,7 @@ class _LoginPhoneState extends State<LoginPhone> {
 
   String token;
   String messageAlert;
-  bool _isLoading = false;
+  bool isLoading = false;
 
   NetworkStatus _networkStatus = NetworkStatus();
   
@@ -76,7 +60,7 @@ class _LoginPhoneState extends State<LoginPhone> {
     }
     else{
       setState(() {
-        _autoValidate = true;
+        autovalidateMode = AutovalidateMode.always;
       });
     }
   }
@@ -89,7 +73,7 @@ class _LoginPhoneState extends State<LoginPhone> {
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
         print('Internet connected');
         var response = await PostRequest().userLogInPhone(
-          phoneController.text,
+          StorageServices.removeZero(phoneController.text),
           passwordController.text);
         if (response.statusCode == 200) {
           var responseJson = json.decode(response.body);
@@ -97,7 +81,7 @@ class _LoginPhoneState extends State<LoginPhone> {
             await GetRequest().getUserProfile(token)
               .then((values) {
                 setState(() {
-                  _isLoading = true;
+                  isLoading = true;
                 });
 
           });
@@ -265,15 +249,17 @@ class _LoginPhoneState extends State<LoginPhone> {
                 padding: EdgeInsets.only(left: 28.0, right: 28.0, top: 35.0),
                 child: Column(
                   children: <Widget>[
-                    SizedBox(height: ScreenUtil().setHeight(40)),
-                    Image.asset(
-                      "assets/images/logo.png",
-                      // width: ScreenUtil.getInstance().setWidth(500),
-                      // height: ScreenUtil.getInstance().setHeight(300),
+                    SizedBox(height: ScreenUtil().setHeight(80)),
+                    SizedBox(
+                      width: 100,
+                      height: 100,
+                      child: CircleAvatar(
+                        backgroundImage: AssetImage('assets/images/koompi_logo_signal.jpg')
+                      ),
                     ),
-                    SizedBox(height: ScreenUtil().setHeight(100)),
+                    SizedBox(height: ScreenUtil().setHeight(50)),
                     formLoginPhone(context, phoneController, passwordController,
-                          _obscureText, _toggle, _email, _password, formKey, _autoValidate, _submitLogin),
+                          _obscureText, _toggle, _email, _password, formKey, _submitLogin),
                   ],
                 ),
               ),

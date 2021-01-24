@@ -58,6 +58,7 @@ dependencies:
   internet_speed_test: ^1.1.2+1
   intl: ^0.16.1
   intl_phone_number_input: ^0.6.0
+  international_phone_input: ^1.0.4
   jwt_decoder: ^1.0.3
   line_icons: ^0.2.0
   location: ^2.5.4

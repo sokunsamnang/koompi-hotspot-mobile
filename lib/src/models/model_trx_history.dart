@@ -1,8 +1,4 @@
-import 'dart:convert';
-
-import 'package:flutter/material.dart';
-import 'package:koompi_hotspot/src/backend/component.dart';
-import 'package:koompi_hotspot/src/backend/get_request.dart';
+import 'package:koompi_hotspot/all_export.dart';
 
 class TrxHistoryModel {
   dynamic amount;
@@ -34,9 +30,9 @@ class TrxHistoryProvider with ChangeNotifier {
 
   List<TrxHistoryModel> trxHistoryList = [];
 
-  TrxHistoryProvider() {
-    fetchTrxHistory();
-  }
+  // TrxHistoryProvider() {
+  //   fetchTrxHistory();
+  // }
 
   Future<void> fetchTrxHistory() async {
     _backend = Backend();

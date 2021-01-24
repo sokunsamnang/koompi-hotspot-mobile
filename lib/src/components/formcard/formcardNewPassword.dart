@@ -1,5 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:koompi_hotspot/all_export.dart';
 
 @override
 Widget formCardNewPassword(
@@ -18,12 +17,6 @@ Widget formCardNewPassword(
     width: double.infinity,
 //      height: ScreenUtil.getInstance().setHeight(500),
     padding: EdgeInsets.only(bottom: 1),
-    decoration: BoxDecoration(color: Colors.white, boxShadow: [
-      BoxShadow(
-          color: Colors.black12, offset: Offset(0.0, 15.0), blurRadius: 15.0),
-      BoxShadow(
-          color: Colors.black12, offset: Offset(0.0, -10.0), blurRadius: 10.0),
-    ]),
     child: Padding(
       padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 16.0),
       child: Form(
@@ -43,21 +36,28 @@ Widget formCardNewPassword(
                   return null;
                 },
                 onSaved: (val) => _passwordController.text = val,
-                autovalidate: _autoValidate,
+                autovalidateMode: AutovalidateMode.onUserInteraction,
                 controller: _passwordController,
                 obscureText: _obscureText,
                 keyboardType: TextInputType.visiblePassword,
                 decoration: InputDecoration(
-                    suffixIcon: GestureDetector(
-                      onTap: () {
-                        _toggle();
-                      },
-                      child: Icon(
-                        _obscureText ? Icons.visibility_off : Icons.visibility,
-                      ),
+                  fillColor: Colors.grey[100],
+                  filled: true,
+                  suffixIcon: GestureDetector(
+                    onTap: () {
+                      _toggle();
+                    },
+                    child: Icon(
+                      _obscureText ? Icons.visibility_off : Icons.visibility,
                     ),
-                    hintText: "Password",
-                    hintStyle: TextStyle(color: Colors.grey, fontSize: 12.0)),
+                  ),
+                  hintText: "Password",
+                  hintStyle: TextStyle(color: Colors.grey, fontSize: 12.0),
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.black),
+                    borderRadius: BorderRadius.all(Radius.circular(12.0))
+                  ),
+                ),
               ),
               SizedBox(height: 20),
               Text("New Confirm Password",
@@ -72,21 +72,28 @@ Widget formCardNewPassword(
                   return null;
                 },
                 onSaved: (val) => _passwordController.text = val,
-                autovalidate: _autoValidate,
+                autovalidateMode: AutovalidateMode.onUserInteraction,
                 controller: _confirmPasswordController,
                 obscureText: _obscureText2,
                 keyboardType: TextInputType.visiblePassword,
                 decoration: InputDecoration(
-                    suffixIcon: GestureDetector(
-                      onTap: () {
-                        _toggle2();
-                      },
-                      child: Icon(
-                        _obscureText2 ? Icons.visibility_off : Icons.visibility,
-                      ),
+                  fillColor: Colors.grey[100],
+                  filled: true,
+                  suffixIcon: GestureDetector(
+                    onTap: () {
+                      _toggle2();
+                    },
+                    child: Icon(
+                      _obscureText2 ? Icons.visibility_off : Icons.visibility,
                     ),
-                    hintText: "Password",
-                    hintStyle: TextStyle(color: Colors.grey, fontSize: 12.0)),
+                  ),
+                  hintText: "Password",
+                  hintStyle: TextStyle(color: Colors.grey, fontSize: 12.0),
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.black),
+                    borderRadius: BorderRadius.all(Radius.circular(12.0))
+                  ),
+                ),
               ),
             SizedBox(
               height: ScreenUtil().setHeight(30),

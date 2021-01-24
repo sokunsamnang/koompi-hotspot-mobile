@@ -1,18 +1,14 @@
-import 'dart:async';
 import 'package:http/http.dart' as http;
-import 'package:flare_flutter/flare_actor.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/material.dart';
-import 'package:koompi_hotspot/index.dart';
-import 'package:koompi_hotspot/src/components/reuse_widget.dart';
-import 'package:koompi_hotspot/src/screen/create_account/complete_info/complete_info.dart';
-import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:koompi_hotspot/all_export.dart';
+import 'package:koompi_hotspot/src/reuse_widget/reuse_widget.dart';
+
+
 
 
 class PinCodeVerificationScreen extends StatefulWidget {
-  final String email, password;
+  final String phone, password;
 
-  PinCodeVerificationScreen(this.email, this.password);
+  PinCodeVerificationScreen(this.phone, this.password);
 
   @override
   _PinCodeVerificationScreenState createState() =>
@@ -28,7 +24,7 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
   StreamController<ErrorAnimationType> errorController;
   
   String alertText;
-  bool _isLoading = false;
+  bool isLoading = false;
   bool hasError = false;
   String currentText = "";
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
@@ -55,9 +51,9 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
     dialogLoading(context);
     var responseBody;
     try {
-      String apiUrl = 'https://api-hotspot.koompi.org/api/auth/confirm-email';
+      String apiUrl = 'https://api-hotspot.koompi.org/api/auth/confirm-phone';
       setState(() {
-        _isLoading = true;
+        isLoading = true;
       });
       var response = await http.post(apiUrl,
         headers: <String, String>{
@@ -65,13 +61,13 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
           "Content-Type": "application/json"
         },
         body: jsonEncode(<String, String>{
-          "email": widget.email,
+          "phone": widget.phone,
           "vCode": vCode,
         }));
         if (response.statusCode == 200 && response.body != "Incorrect Code!") {
           print(response.body);
           await Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => CompleteInfo(widget.email)));
+            context, MaterialPageRoute(builder: (context) => CompleteInfo(widget.phone)));
         } else {
           Navigator.pop(context);
           showErrorDialog(context);
@@ -136,7 +132,7 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: Text(
-                  'Email Verification',
+                  'Phone Number Verification',
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
                   textAlign: TextAlign.center,
                 ),
@@ -149,7 +145,7 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
                       text: "Enter the code sent to ",
                       children: [
                         TextSpan(
-                            text: widget.email,
+                            text: widget.phone,
                             style: TextStyle(
                                 color: Colors.black,
                                 fontWeight: FontWeight.bold,
@@ -299,26 +295,26 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
                           blurRadius: 5)
                     ]),
               ),
-              SizedBox(
-                height: 16,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  FlatButton(
-                    child: Text("Clear"),
-                    onPressed: () {
-                      textEditingController.clear();
-                    },
-                  ),
-                  // FlatButton(
-                  //   child: Text("Set Text"),
-                  //   onPressed: () {
-                  //     textEditingController.text = "123456";
-                  //   },
-                  // ),
-                ],
-              )
+              // SizedBox(
+              //   height: 16,
+              // ),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.center,
+              //   children: <Widget>[
+              //     FlatButton(
+              //       child: Text("Clear"),
+              //       onPressed: () {
+              //         textEditingController.clear();
+              //       },
+              //     ),
+              //     // FlatButton(
+              //     //   child: Text("Set Text"),
+              //     //   onPressed: () {
+              //     //     textEditingController.text = "123456";
+              //     //   },
+              //     // ),
+              //   ],
+              // )
             ],
           ),
         ),

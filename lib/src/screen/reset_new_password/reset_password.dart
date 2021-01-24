@@ -1,22 +1,17 @@
-import 'dart:async';
-import 'dart:convert';
+import 'package:koompi_hotspot/all_export.dart';
 import 'package:http/http.dart' as http;
-import 'package:flutter/material.dart';
-import 'package:koompi_hotspot/src/backend/post_request.dart';
-import 'package:koompi_hotspot/src/components/reuse_widget.dart';
-import 'package:koompi_hotspot/src/screen/login/login_email.dart';
-import 'package:koompi_hotspot/src/screen/reset_new_password/reset_password_body.dart';
+import 'package:koompi_hotspot/src/reuse_widget/reuse_widget.dart';
 
 class ResetNewPassword extends StatefulWidget {
-  final String email;
+  final String phone;
 
-  ResetNewPassword(this.email);
+  ResetNewPassword(this.phone);
   _ResetNewPasswordState createState() => _ResetNewPasswordState();
 }
 
 class _ResetNewPasswordState extends State<ResetNewPassword> {
 
-  bool _isLoading = false;
+  bool isLoading = false;
   String alertText;
   // Initially password is obscure
   bool _obscureText = true;
@@ -61,9 +56,9 @@ class _ResetNewPasswordState extends State<ResetNewPassword> {
 
     var responseBody;
     try {
-      String apiUrl = 'https://api-hotspot.koompi.org/api/reset-password';
+      String apiUrl = 'https://api-hotspot.koompi.org/api/reset-password-phone';
       setState(() {
-        _isLoading = true;
+        isLoading = true;
       });
       var response = await http.put(apiUrl,
         headers: <String, String>{
@@ -71,7 +66,7 @@ class _ResetNewPasswordState extends State<ResetNewPassword> {
           "Content-Type": "application/json"
         },
         body: jsonEncode(<String, String>{
-          "email": widget.email,
+          "phone": widget.phone,
           "new_password": _confirmPasswordController.text,
         }));
       if (response.statusCode == 200) {
@@ -79,8 +74,8 @@ class _ResetNewPasswordState extends State<ResetNewPassword> {
         Future.delayed(Duration(seconds: 2), () {
           Timer(Duration(milliseconds: 500), () => Navigator.pushAndRemoveUntil(
             context,
-            MaterialPageRoute(builder: (context) => LoginPage()),
-            ModalRoute.withName('/'),
+            MaterialPageRoute(builder: (context) => LoginPhone()),
+            ModalRoute.withName('/loginPhone'),
           ));
         });
       } else {
@@ -148,8 +143,8 @@ class _ResetNewPasswordState extends State<ResetNewPassword> {
   }
 
   showErrorDialog(BuildContext context) async {
-    var response = await PostRequest().forgotPasswordByEmail(widget.email);
-
+    var response = await PostRequest().forgotPasswordByEmail(widget.phone);
+    var responseJson = json.decode(response.body);
     return showDialog(
       context: context,
       barrierDismissible: false,
@@ -159,7 +154,7 @@ class _ResetNewPasswordState extends State<ResetNewPassword> {
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Text('${response.body}'),
+                Text(responseJson['message']),
               ],
             ),
           ),

@@ -1,11 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:koompi_hotspot/src/components/socialmedia.dart';
-import 'package:koompi_hotspot/src/screen/create_account/create_email/create_email.dart';
-import 'package:koompi_hotspot/src/screen/login/login_email.dart';
-import 'package:koompi_hotspot/src/screen/login/login_phone.dart';
+import 'package:koompi_hotspot/all_export.dart';
 
 class WelcomeScreen extends StatelessWidget {
   @override

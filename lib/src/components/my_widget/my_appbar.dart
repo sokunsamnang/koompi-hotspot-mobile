@@ -1,5 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:koompi_hotspot/src/components/my_widget/my_text.dart';
+import 'package:koompi_hotspot/all_export.dart';
 
 class MyAppBar extends StatelessWidget{
 

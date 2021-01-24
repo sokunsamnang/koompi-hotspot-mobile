@@ -1,9 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:intl_phone_number_input/intl_phone_number_input.dart';
-import 'package:koompi_hotspot/index.dart';
-import 'package:koompi_hotspot/src/screen/login/login_email.dart';
-import 'package:koompi_hotspot/src/screen/login/login_phone.dart';
+import 'package:koompi_hotspot/all_export.dart';
 
 @override
 Widget formCardPhoneNumbers(
@@ -19,68 +14,65 @@ Widget formCardPhoneNumbers(
     String _password,
     String _confirmPassword,
     GlobalKey<FormState> formKey,
-    bool _autoValidate,
     Function _submit) {
     
     PhoneNumber number = PhoneNumber(isoCode: 'KH');
     
     return new Container(
       width: double.infinity,
-  //      height: ScreenUtil.getInstance().setHeight(500),
+      // height: ScreenUtil.getInstance().setHeight(500),
       padding: EdgeInsets.only(bottom: 1),
-      decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(8.0),
-          boxShadow: [
-            BoxShadow(
-                color: Colors.black12,
-                offset: Offset(0.0, 15.0),
-                blurRadius: 15.0),
-            BoxShadow(
-                color: Colors.black12,
-                offset: Offset(0.0, -10.0),
-                blurRadius: 10.0),
-          ]),
       child: Form(
         key: formKey,
-        autovalidate: _autoValidate,
+        autovalidateMode: AutovalidateMode.onUserInteraction,
         child: Padding(
           padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Center(
-                child: Text("Sign Up",
+                child: Text("Create Account",
                   style: TextStyle(
-                      fontSize: ScreenUtil().setSp(45),
+                      fontSize: ScreenUtil().setSp(50),
                       fontFamily: "Poppins-Bold",
                       letterSpacing: .6)),
               ),
+              Center(
+              child: Text("Create a new account",
+                style: TextStyle(
+                  letterSpacing: .6)),
+            ),
               SizedBox(
-                height: ScreenUtil().setHeight(30),
+                height: ScreenUtil().setHeight(60),
               ),
-              Text("Phone Number",
-                  style: TextStyle(
-                      fontFamily: "Poppins-Medium",
-                      fontSize: ScreenUtil().setSp(26))),
               InternationalPhoneNumberInput(
+                countries: ['KH'],
                 onInputChanged: (PhoneNumber number) {
                   print(number.phoneNumber);
                 },
                 onInputValidated: (bool value) {
                   print(value);
                 },
-                selectorConfig: SelectorConfig(
-                  selectorType: PhoneInputSelectorType.BOTTOM_SHEET,
-                ),
+                // selectorConfig: SelectorConfig(
+                //   selectorType: PhoneInputSelectorType.BOTTOM_SHEET,
+                // ),
                 ignoreBlank: false,
-                autoValidateMode: AutovalidateMode.disabled,
+                autoValidateMode: AutovalidateMode.onUserInteraction,
                 selectorTextStyle: TextStyle(color: Colors.black),
                 initialValue: number,
                 textFieldController: phoneController,
                 formatInput: false,
-                keyboardType: TextInputType.numberWithOptions(signed: true, decimal: true),
-                inputBorder: OutlineInputBorder(),
+                keyboardType: TextInputType.phone,
+                inputDecoration: InputDecoration(
+                  fillColor: Colors.grey[100],
+                  filled: true,
+                  hintText: "Phone Number",
+                  hintStyle: TextStyle(color: Colors.black, fontSize: 12.0),
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.black),
+                    borderRadius: BorderRadius.all(Radius.circular(12.0))
+                  ),
+                ),
                 onSaved: (PhoneNumber number) {
                   print('On Saved: $number');
                 },
@@ -88,10 +80,6 @@ Widget formCardPhoneNumbers(
               SizedBox(
                 height: ScreenUtil().setHeight(30),
               ),
-              Text("Password",
-                  style: TextStyle(
-                      fontFamily: "Poppins-Medium",
-                      fontSize: ScreenUtil().setSp(26))),
               TextFormField(
                 validator: (val) {
                   if(val.isEmpty) return 'Password is required';
@@ -100,11 +88,13 @@ Widget formCardPhoneNumbers(
                   return null;
                 },
                 onSaved: (val) => _password = val,
-                autovalidate: _autoValidate,
+                autovalidateMode: AutovalidateMode.onUserInteraction,
                 controller: passwordController,
                 obscureText: _obscureText,
                 keyboardType: TextInputType.visiblePassword,
                 decoration: InputDecoration(
+                  fillColor: Colors.grey[100],
+                  filled: true,
                   suffixIcon: GestureDetector(
                     onTap: () {
                       _toggle();
@@ -113,16 +103,16 @@ Widget formCardPhoneNumbers(
                       _obscureText ? Icons.visibility_off : Icons.visibility,
                     ),
                   ),
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.black),
+                    borderRadius: BorderRadius.all(Radius.circular(12.0))
+                  ),
                   hintText: "Password",
                   hintStyle: TextStyle(color: Colors.grey, fontSize: 12.0)),
               ),
               SizedBox(
                 height: ScreenUtil().setHeight(30),
               ),
-              Text("Confirm Password",
-                  style: TextStyle(
-                      fontFamily: "Poppins-Medium",
-                      fontSize: ScreenUtil().setSp(26))),
               TextFormField(
                 validator: (val) {
                   if(val.isEmpty){
@@ -134,21 +124,27 @@ Widget formCardPhoneNumbers(
                   return null;
                 },
                 onSaved: (val) => _confirmPassword = val,
-                autovalidate: _autoValidate,
+                autovalidateMode: AutovalidateMode.onUserInteraction,
                 controller: confirmPasswordController,
                 obscureText: _obscureText2,
                 keyboardType: TextInputType.visiblePassword,
                 decoration: InputDecoration(
-                    suffixIcon: GestureDetector(
-                      onTap: () {
-                        _toggle2();
-                      },
-                      child: Icon(
-                        _obscureText2 ? Icons.visibility_off : Icons.visibility,
-                      ),
+                  fillColor: Colors.grey[100],
+                  filled: true,
+                  suffixIcon: GestureDetector(
+                    onTap: () {
+                      _toggle2();
+                    },
+                    child: Icon(
+                      _obscureText2 ? Icons.visibility_off : Icons.visibility,
                     ),
-                    hintText: "Confirm Password",
-                    hintStyle: TextStyle(color: Colors.grey, fontSize: 12.0)),
+                  ),
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.black),
+                    borderRadius: BorderRadius.all(Radius.circular(12.0))
+                  ),
+                  hintText: "Confirm Password",
+                  hintStyle: TextStyle(color: Colors.grey, fontSize: 12.0)),
               ),
               SizedBox(
                 height: ScreenUtil().setHeight(75),
@@ -177,12 +173,6 @@ Widget formCardPhoneNumbers(
                         splashColor: Colors.transparent,
                         onTap: () {
                           _submit();
-                          // print('+855${phoneController.text}');
-                          // Navigator.pushReplacement(
-                          // context,
-                          // MaterialPageRoute(
-                          //     builder: (context) => CompleteInfo(_email)),
-                          // );
                         },  
                         child: Center(
                           child: Text("SIGN UP",

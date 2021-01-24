@@ -8,7 +8,7 @@ import 'package:firebase_remote_config/firebase_remote_config.dart';
 const APP_STORE_URL =
 'https://phobos.apple.com/WebObjects/MZStore.woa/wa/viewSoftwareUpdate?id=YOUR-APP-ID&mt=8';
 const PLAY_STORE_URL =
-'https://play.google.com/store/apps/details?id=YOUR-APP-ID';
+'https://play.google.com/store/apps/details?id=com.koompi.hotspot&ah=JHXSy-4qzQ9tIiWywkj_dCw9xh8';
 
 versionCheck(context) async {
   //Get Current installed version of app

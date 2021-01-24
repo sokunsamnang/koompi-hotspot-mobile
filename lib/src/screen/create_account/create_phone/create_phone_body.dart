@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:koompi_hotspot/src/components/formcard/formcardCreatePhoneNumber.dart';
+import 'package:koompi_hotspot/all_export.dart';
 
   @override
   Widget createPhoneBody(
@@ -40,13 +38,13 @@ import 'package:koompi_hotspot/src/components/formcard/formcardCreatePhoneNumber
               padding: EdgeInsets.only(left: 28.0, right: 28.0, top: 35.0),
               child: Column(
                 children: <Widget>[
-                  SizedBox(height: ScreenUtil().setHeight(40)),
-                  Image.asset(
-                    "assets/images/logo.png",
-                    // width: ScreenUtil.getInstance().setWidth(500),
-                    // height: ScreenUtil.getInstance().setHeight(300),
-                  ),
-                  SizedBox(height: ScreenUtil().setHeight(100)),
+                  // SizedBox(height: ScreenUtil().setHeight(40)),
+                  // Image.asset(
+                  //   "assets/images/logo.png",
+                  //   // width: ScreenUtil.getInstance().setWidth(500),
+                  //   // height: ScreenUtil.getInstance().setHeight(300),
+                  // ),
+                  SizedBox(height: ScreenUtil().setHeight(200)),
                   formCardPhoneNumbers(
                     context, 
                     phoneController, 
@@ -60,7 +58,6 @@ import 'package:koompi_hotspot/src/components/formcard/formcardCreatePhoneNumber
                     _password, 
                     _confirmPassword,
                     formKey, 
-                    _autoValidate,
                     _submit
                     ),
                 ],

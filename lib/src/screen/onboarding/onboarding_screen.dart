@@ -1,8 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:koompi_hotspot/src/screen/login/login_email.dart';
-import 'package:koompi_hotspot/src/screen/onboarding/styles.dart';
-import 'package:koompi_hotspot/src/welcome_screen.dart';
+import 'package:koompi_hotspot/all_export.dart';
 
 
 class OnboardingScreen extends StatefulWidget {
@@ -66,8 +62,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     onPressed: () => {
                       Navigator.pushAndRemoveUntil(
                         context,
-                        MaterialPageRoute(builder: (context) => WelcomeScreen()),
-                        ModalRoute.withName('/welcome'),
+                        MaterialPageRoute(builder: (context) => LoginPhone()),
+                        ModalRoute.withName('/loginPhone'),
                       ),
                     },
                     child: Text(
@@ -226,8 +222,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           onTap: () => {
             Navigator.pushAndRemoveUntil(
               context,
-              MaterialPageRoute(builder: (context) => WelcomeScreen()),
-              ModalRoute.withName('/welcome'),
+              MaterialPageRoute(builder: (context) => LoginPhone()),
+              ModalRoute.withName('/loginPhone'),
             ),
           },
           child: Center(

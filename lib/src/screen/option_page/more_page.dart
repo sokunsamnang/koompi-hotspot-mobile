@@ -1,17 +1,5 @@
-import 'dart:async';
-
-import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:koompi_hotspot/src/components/reuse_widget.dart';
-import 'package:koompi_hotspot/src/models/model_userdata.dart';
-import 'package:koompi_hotspot/src/screen/home/hotspot/buy_plan.dart';
-import 'package:koompi_hotspot/src/screen/option_page/myaccount.dart';
-import 'package:koompi_hotspot/src/screen/login/login_email.dart';
-import 'package:koompi_hotspot/src/services/services.dart';
-import 'package:koompi_hotspot/src/welcome_screen.dart';
-import 'package:line_icons/line_icons.dart';
-import 'change_password.dart';
-import 'package:koompi_hotspot/src/screen/speedtest/speedtest.dart';
+import 'package:koompi_hotspot/src/reuse_widget/reuse_widget.dart';
+import 'package:koompi_hotspot/all_export.dart';
 
 class MorePage extends StatefulWidget {
   @override
@@ -22,7 +10,7 @@ class _MorePageState extends State<MorePage>
     with SingleTickerProviderStateMixin {
   AnimationController _controller;
 
-  String name = mData.name;
+  String name = mData.fullname;
   
   @override
   void initState() {
@@ -174,8 +162,8 @@ showLogoutDialog(context) async {
                 Future.delayed(Duration(seconds: 2), () {
                   Timer(Duration(milliseconds: 500), () => Navigator.pushAndRemoveUntil(
                     context,
-                    MaterialPageRoute(builder: (context) => WelcomeScreen()),
-                    ModalRoute.withName('/welcome'),
+                    MaterialPageRoute(builder: (context) => LoginPhone()),
+                    ModalRoute.withName('/loginPhone'),
                   ));
                 });
               },

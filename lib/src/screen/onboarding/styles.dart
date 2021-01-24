@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:koompi_hotspot/all_export.dart';
 
 final kTitleStyle = TextStyle(
   color: Colors.white,

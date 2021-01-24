@@ -1,8 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:koompi_hotspot/src/components/my_widget/my_appbar.dart';
-import 'package:koompi_hotspot/src/components/my_widget/my_scaffold.dart';
-import 'package:koompi_hotspot/src/screen/home/mywallet/send_request.dart';
-import 'package:qr_code_scanner/qr_code_scanner.dart';
+import 'package:koompi_hotspot/all_export.dart';
 
 class QrScanner extends StatefulWidget {
   final List portList;

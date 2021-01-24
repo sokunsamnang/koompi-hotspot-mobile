@@ -1,14 +1,4 @@
-import 'package:connectivity/connectivity.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_vector_icons/flutter_vector_icons.dart';
-import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:koompi_hotspot/src/screen/home/home_page/home_page.dart';
-import 'package:koompi_hotspot/src/screen/home/hotspot/buy_plan.dart';
-import 'package:koompi_hotspot/src/screen/map/MyLocationView.dart';
-import 'package:koompi_hotspot/src/screen/option_page/more_page.dart';
-import 'package:koompi_hotspot/src/screen/speedtest/speedtest.dart';
-import 'package:koompi_hotspot/src/services/network_status.dart';
-import 'package:line_icons/line_icons.dart';
+import 'package:koompi_hotspot/all_export.dart';
 
 class Navbar extends StatefulWidget {
   @override
@@ -75,7 +65,7 @@ class _NavbarState extends State<Navbar> {
                     text: 'Map',
                   ),
                   GButton(
-                    icon: FontAwesome.wifi,
+                    icon: Icons.wifi_outlined,
                     text: 'Speed Test',
                   ),
                   GButton(

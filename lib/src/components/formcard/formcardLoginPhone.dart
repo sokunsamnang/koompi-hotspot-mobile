@@ -1,9 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:intl_phone_number_input/intl_phone_number_input.dart';
-import 'package:koompi_hotspot/src/screen/create_account/create_email/create_email.dart';
-import 'package:koompi_hotspot/src/screen/create_account/create_phone/create_phone.dart';
-import 'package:koompi_hotspot/src/screen/login/forgot_password.dart';
+import 'package:koompi_hotspot/all_export.dart';
 
 @override
 Widget formLoginPhone( BuildContext context, 
@@ -13,94 +8,88 @@ Widget formLoginPhone( BuildContext context,
                   Function _toggle, 
                   String _email, 
                   String _password,
-                  GlobalKey<FormState> formKey, 
-                  bool _autoValidate,
+                  GlobalKey<FormState> formKey,
                   Function _submitLogin) {
 
   PhoneNumber number = PhoneNumber(isoCode: 'KH');
-  
+
   return Container(
     width: double.infinity,
     //  height: ScreenUtil.getInstance().setHeight(500),
     padding: EdgeInsets.only(bottom: 1),
-    decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(8.0),
-        boxShadow: [
-          BoxShadow(
-              color: Colors.black12,
-              offset: Offset(0.0, 15.0),
-              blurRadius: 15.0),
-          BoxShadow(
-              color: Colors.black12,
-              offset: Offset(0.0, -10.0),
-              blurRadius: 10.0),
-        ]),
+    // decoration: BoxDecoration(
+    //     color: Colors.white,
+    //     borderRadius: BorderRadius.circular(8.0),
+    //     boxShadow: [
+    //       BoxShadow(
+    //           color: Colors.black12,
+    //           offset: Offset(0.0, 15.0),
+    //           blurRadius: 15.0),
+    //       BoxShadow(
+    //           color: Colors.black12,
+    //           offset: Offset(0.0, -10.0),
+    //           blurRadius: 10.0),
+    //     ]),
     child: Padding(
       padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 16.0, bottom: 16.0),
       child: Form(
         key: formKey,
-        autovalidate: _autoValidate,
+        autovalidateMode: AutovalidateMode.onUserInteraction,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Center(
-              child: Text("Sign In",
+              child: Text("Welcome Back",
                 style: TextStyle(
                   fontSize: ScreenUtil().setSp(45),
                   fontFamily: "Poppins-Bold",
                   letterSpacing: .6)),
             ),
-            SizedBox(
-              height: ScreenUtil().setHeight(30),
-            ),
-            Text("Phone Number",
+            Center(
+              child: Text("Sign in to continue",
                 style: TextStyle(
-                    fontFamily: "Poppins-Medium",
-                    fontSize: ScreenUtil().setSp(26))),
+                  // fontSize: ScreenUtil().setSp(45),
+                  // fontFamily: "Poppins-Bold",
+                  letterSpacing: .6)),
+            ),
+            SizedBox(
+              height: ScreenUtil().setHeight(60),
+            ),
             InternationalPhoneNumberInput(
+              countries: ['KH'],
               onInputChanged: (PhoneNumber number) {
                 print(number.phoneNumber);
               },
               onInputValidated: (bool value) {
                 print(value);
               },
-              selectorConfig: SelectorConfig(
-                selectorType: PhoneInputSelectorType.BOTTOM_SHEET,
-              ),
+              // selectorConfig: SelectorConfig(
+              //   selectorType: PhoneInputSelectorType.BOTTOM_SHEET,
+              // ),
               ignoreBlank: false,
-              autoValidateMode: AutovalidateMode.disabled,
+              autoValidateMode: AutovalidateMode.onUserInteraction,
               selectorTextStyle: TextStyle(color: Colors.black),
               initialValue: number,
               textFieldController: phoneController,
               formatInput: false,
-              keyboardType: TextInputType.numberWithOptions(signed: true, decimal: true),
-              inputBorder: OutlineInputBorder(),
+              keyboardType: TextInputType.phone,
+              inputDecoration: InputDecoration(
+                fillColor: Colors.grey[100],
+                filled: true,
+                hintText: "Phone Number",
+                hintStyle: TextStyle(color: Colors.black, fontSize: 12.0),
+                border: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.black),
+                  borderRadius: BorderRadius.all(Radius.circular(12.0))
+                ),
+              ),
               onSaved: (PhoneNumber number) {
                 print('On Saved: $number');
               },
             ),
-            // TextFormField(
-            //   controller: usernameController,
-            //   // autovalidate: _autoValidate,
-            //   validator: (val) {
-            //     if(val.isEmpty) return 'Phone number is required';
-            //     // if(!val.contains('@')) return 'Phone number invalid';                
-            //     return null;
-            //   },
-            //   onSaved: (val) => _email = val,
-            //   keyboardType: TextInputType.emailAddress,
-            //   decoration: InputDecoration(
-            //     hintText: "Phone Number",
-            //     hintStyle: TextStyle(color: Colors.grey, fontSize: 12.0)),
-            // ),
             SizedBox(
               height: ScreenUtil().setHeight(30),
             ),
-            Text("Password",
-                style: TextStyle(
-                  fontFamily: "Poppins-Medium",
-                  fontSize: ScreenUtil().setSp(26))),
             TextFormField(
               controller: passwordController,
               validator: (val) {
@@ -108,11 +97,14 @@ Widget formLoginPhone( BuildContext context,
                 if(val.length < 8) return 'Password too short';                
                 return null;
               },
+              autovalidateMode: AutovalidateMode.onUserInteraction,
               onSaved: (val) => _password = val,
               keyboardType: TextInputType.visiblePassword,
               decoration: InputDecoration(
+                fillColor: Colors.grey[100],
+                filled: true,
                 hintText: "Password",
-                hintStyle: TextStyle(color: Colors.grey, fontSize: 12.0),
+                hintStyle: TextStyle(color: Colors.black, fontSize: 12.0),
                 suffixIcon: GestureDetector(
                   onTap: () {
                     _toggle();
@@ -120,6 +112,10 @@ Widget formLoginPhone( BuildContext context,
                   child: Icon(
                     _obscureText ? Icons.visibility_off : Icons.visibility,
                   ),
+                ),
+                border: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.black),
+                  borderRadius: BorderRadius.all(Radius.circular(12.0))
                 ),
               ),
               obscureText: _obscureText,
@@ -173,7 +169,6 @@ Widget formLoginPhone( BuildContext context,
                     highlightColor: Colors.transparent,
                     splashColor: Colors.transparent,
                     onTap: () async {
-                      
                       _submitLogin();
                       // Navigator.pushReplacement(
                       //   context,

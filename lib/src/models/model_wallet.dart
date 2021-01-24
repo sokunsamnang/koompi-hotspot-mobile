@@ -1,4 +1,4 @@
-import 'package:koompi_hotspot/src/models/model_balance.dart';
+import 'package:koompi_hotspot/all_export.dart';
 
 class Wallet{
   String title;

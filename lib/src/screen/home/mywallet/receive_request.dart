@@ -1,11 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:koompi_hotspot/src/backend/get_request.dart';
-import 'package:koompi_hotspot/src/models/model_balance.dart';
-import 'package:koompi_hotspot/src/models/model_userdata.dart';
-import 'package:koompi_hotspot/src/reuse_widget/reuse_btn_social.dart';
-import 'package:qr_flutter/qr_flutter.dart';
-import 'package:share/share.dart';
+import 'package:koompi_hotspot/all_export.dart';
 
 class ReceiveRequest extends StatefulWidget {
   @override
