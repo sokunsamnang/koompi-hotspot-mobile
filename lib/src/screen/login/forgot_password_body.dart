@@ -83,8 +83,9 @@ import 'package:koompi_hotspot/all_export.dart';
                       child: Material(
                         color: Colors.transparent,
                         child: InkWell(
-                          highlightColor: Colors.transparent,
-                          splashColor: Colors.transparent,
+                          customBorder: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
                           onTap: () async {
                             
                             _submitValidate();

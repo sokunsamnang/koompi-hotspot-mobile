@@ -124,7 +124,7 @@ class _CompleteInfoState extends State<CompleteInfo>{
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Text('Complete Profile', style: TextStyle(color: Colors.black)),
+        title: Text('Complete Profile', style: TextStyle(color: Colors.black, fontFamily: 'Medium')),
         automaticallyImplyLeading: false,
         actions: <Widget>[
           Padding(

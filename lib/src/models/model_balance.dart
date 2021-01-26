@@ -35,20 +35,15 @@ class BalanceProvider with ChangeNotifier {
   ModelUserData get mData => _mData;
 
   Future<String> fetchPortforlio() async {
-    // print("Fetch balance");
-    print("My symbol ${mBalance.symbol}");
     try {
       await _prefService.read('token').then((onValue) async {
-        print("Token $onValue");
         http.Response response = await http.get(
             '${ApiService.url}/selendra/portfolio',
             headers: <String, String>{
               "accept": "application/json",
               "authorization": "Bearer " + onValue,
             });
-        print("MY data ${response.body}");
 
-        print("MY stastus code ${response.statusCode}");
         if (response.statusCode == 200) {
           var responseBody = json.decode(response.body);
           if (mBalance.token != null) mBalance.token.toString();

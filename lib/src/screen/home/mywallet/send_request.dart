@@ -61,7 +61,6 @@ class _SendRequestState extends State<SendRequest> {
                     ));
           });
         } else {
-          print('${_backend.response.statusCode.toString()}');
           await Components.dialog(
               context,
               textAlignCenter(text: responseJson['message']),
@@ -100,7 +99,7 @@ class _SendRequestState extends State<SendRequest> {
           'Send Request',
           style: TextStyle(
               color: Colors.black,
-              fontWeight: FontWeight.bold,
+              fontFamily: 'Medium',
               fontSize: 22.0),
         ),
       ),
@@ -226,8 +225,9 @@ class _SendRequestState extends State<SendRequest> {
                           child: Material(
                             color: Colors.transparent,
                             child: InkWell(
-                              highlightColor: Colors.transparent,
-                              splashColor: Colors.transparent,
+                              customBorder: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
                               onTap: () async {
                                 _submitValidate();
                               },

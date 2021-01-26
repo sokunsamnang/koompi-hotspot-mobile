@@ -136,7 +136,12 @@ class _LoginPhoneState extends State<LoginPhone> {
         barrierDismissible: false,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Error'),
+            title: Row(
+              children: [
+                Icon(Icons.error, color: Colors.red),
+                Text('ERROR', style: TextStyle(fontFamily: 'Poppins-Bold'),),
+              ],
+            ),
             content: SingleChildScrollView(
               child: ListBody(
                 children: <Widget>[
@@ -166,7 +171,12 @@ class _LoginPhoneState extends State<LoginPhone> {
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Error'),
+          title: Row(
+            children: [
+              Icon(Icons.warning, color: Colors.yellow),
+              Text('WARNING', style: TextStyle(fontFamily: 'Poppins-Bold'),),
+            ],
+          ),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
@@ -192,7 +202,12 @@ class _LoginPhoneState extends State<LoginPhone> {
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Error'),
+          title: Row(
+            children: [
+              Icon(Icons.error, color: Colors.red),
+              Text('ERROR', style: TextStyle(fontFamily: 'Poppins-Bold'),),
+            ],
+          ),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[

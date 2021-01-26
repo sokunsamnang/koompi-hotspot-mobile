@@ -40,7 +40,7 @@ class _ReceiveRequestState extends State<ReceiveRequest> {
         title: Text(
           'Recieve Request',
           style: TextStyle(
-              color: Colors.black, fontWeight: FontWeight.bold, fontSize: 22.0),
+              color: Colors.black, fontFamily: 'Medium', fontSize: 22.0),
         ),
       ),
       body: mBalance.token != null
@@ -68,11 +68,9 @@ class _ReceiveRequestState extends State<ReceiveRequest> {
                               height: 20,
                             ),
                             Text(
-                              'Selendra (SEL)',
-                              style: TextStyle(
-                                fontSize: 22,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.blue,
+                              'SELENDRA (SEL)', 
+                              style: GoogleFonts.nunito(
+                              textStyle: TextStyle(color: Colors.blue, fontSize: 25, fontWeight: FontWeight.w700)
                               ),
                             ),
                             SizedBox(
@@ -118,8 +116,9 @@ class _ReceiveRequestState extends State<ReceiveRequest> {
                                   child: Material(
                                     color: Colors.transparent,
                                     child: InkWell(
-                                      highlightColor: Colors.transparent,
-                                      splashColor: Colors.transparent,
+                                      customBorder: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(12),
+                                      ),
                                       onTap: () async {
                                         copyWallet(mData.wallet);
                                         showSnackBar();
@@ -161,8 +160,9 @@ class _ReceiveRequestState extends State<ReceiveRequest> {
                                   child: Material(
                                     color: Colors.transparent,
                                     child: InkWell(
-                                      highlightColor: Colors.transparent,
-                                      splashColor: Colors.transparent,
+                                      customBorder: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(12),
+                                      ),
                                       onTap: () async {
                                         Share.share('Here is my Selendra wallet ID: ${mData.wallet}', subject: 'My Selendra Wallet ID');
                                       },

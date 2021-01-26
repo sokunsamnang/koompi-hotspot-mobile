@@ -2,6 +2,7 @@ import 'package:connectivity/connectivity.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:koompi_hotspot/all_export.dart';
 import 'package:koompi_hotspot/src/components/navbar.dart';
 import 'package:koompi_hotspot/src/models/model_balance.dart';
 import 'package:koompi_hotspot/src/models/model_get_plan.dart';
@@ -95,7 +96,7 @@ class _SplashState extends State<Splash> {
     // });
   }
 
-  void errorSide() async{
+  void errorApp() async{
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -125,12 +126,26 @@ class _SplashState extends State<Splash> {
       }
     );
   }
+
+  Future <void> startApp(BuildContext context) async{
+    try {
+      final result = await InternetAddress.lookup('google.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        print('Internet connected');
+        startTime();
+      }
+    } on SocketException catch (_) {
+      Navigator.pop(context);
+      print('not connected');
+      errorApp();
+    }
+  }
   
   @override
   void initState() {
     setState(() {
       internet();
-      startTime() ?? errorSide();
+      startApp(context);
     });
     super.initState();
   }
@@ -138,10 +153,6 @@ class _SplashState extends State<Splash> {
   @override
   void dispose(){
     super.dispose();
-    // setState(() {
-    //   Provider.of<BalanceProvider>(context, listen: false).dispose();
-    //   Provider.of<TrxHistoryProvider>(context, listen: false).dispose();
-    // });
   }
 
   @override

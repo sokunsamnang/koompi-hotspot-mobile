@@ -74,21 +74,6 @@ class _CreateEmailState extends State<CreateEmail> {
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(builder: (context) => PinCodeVerificationScreen(emailController.text, passwordController.text)));
-          // print(response.statusCode);
-          // var responseJson = json.decode(response.body);    
-          // if(response.body == 'Please check your E-mail!'){
-          //   print(response.statusCode);
-          //   Navigator.pushReplacement(
-          //     context,
-          //     MaterialPageRoute(builder: (context) => VerificationAccount()));
-          // }
-          // else {
-          //   try {
-          //     messageAlert = responseJson['error']['message'];
-          //   } catch (e) {
-          //     messageAlert = responseJson['message'];
-          //   }
-          // }
         } 
         else if (response.statusCode == 401){
           Navigator.pop(context);
@@ -141,7 +126,12 @@ class _CreateEmailState extends State<CreateEmail> {
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Error'),
+          title: Row(
+            children: [
+              Icon(Icons.warning, color: Colors.yellow),
+              Text('WARNING', style: TextStyle(fontFamily: 'Poppins-Bold'),),
+            ],
+          ),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[

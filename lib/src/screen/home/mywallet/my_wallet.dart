@@ -44,7 +44,7 @@ class _MyWalletState extends State<MyWallet> {
         children: <Widget>[
           Scaffold(
             appBar: AppBar(
-              title: Text('My Wallet', style: TextStyle(color: Colors.black)),
+              title: Text('My Wallet', style: TextStyle(color: Colors.black, fontFamily: 'Medium')),
               backgroundColor: Colors.white,  
               iconTheme: IconThemeData(
                 color: Colors.black, //change your color here

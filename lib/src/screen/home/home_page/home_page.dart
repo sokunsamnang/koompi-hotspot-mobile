@@ -1,4 +1,5 @@
 import 'package:koompi_hotspot/all_export.dart';
+import 'package:koompi_hotspot/src/reuse_widget/reuse_widget.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget{
@@ -57,7 +58,12 @@ class _HomePageState extends State<HomePage>{
                 ],
               ),
             ),
-            IconButton(icon: Icon(Icons.notifications), onPressed: null)
+            IconButton(
+              icon: Icon(Icons.notifications), 
+              color: Colors.grey,
+              onPressed: (){
+                snackBar(context);
+              })
           ],
         ),
         backgroundColor: Colors.white,

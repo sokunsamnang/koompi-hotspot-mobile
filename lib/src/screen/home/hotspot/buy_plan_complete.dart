@@ -1,5 +1,6 @@
 import 'package:koompi_hotspot/all_export.dart';
 import 'package:koompi_hotspot/src/reuse_widget/reuse_widget.dart';
+import 'package:provider/provider.dart';
 
 class CompletePlan extends StatefulWidget {
   @override
@@ -59,15 +60,17 @@ class _CompletePlanState extends State<CompletePlan> {
                       child: Material(
                         color: Colors.transparent,
                         child: InkWell(
-                          highlightColor: Colors.transparent,
-                          splashColor: Colors.transparent,
+                          customBorder: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
                           onTap: () async {
                             dialogLoading(context);
-                            Future.delayed(Duration(seconds: 1), () {
+                            Future.delayed(Duration(seconds: 3), () async {
+                              await Provider.of<BalanceProvider>(context, listen: false).fetchPortforlio();
                               Timer(Duration(milliseconds: 500), () => Navigator.pushAndRemoveUntil(
                                 context,
                                 MaterialPageRoute(builder: (context) => Navbar()),
-                                ModalRoute.withName('/'),
+                                ModalRoute.withName('/navbar'),
                               ));
                             });
                           },

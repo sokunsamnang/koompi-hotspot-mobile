@@ -1,158 +1,14 @@
 import 'package:koompi_hotspot/all_export.dart';
 import 'package:koompi_hotspot/src/reuse_widget/reuse_widget.dart';
-import 'package:provider/provider.dart';
 
-class UserPlan extends StatefulWidget {
+class PlanView extends StatefulWidget {
   @override
-  _UserPlanState createState() => _UserPlanState();
+  _PlanViewState createState() => _PlanViewState();
 }
 
-class _UserPlanState extends State<UserPlan> {
-
-  final GlobalKey<FormBuilderState> formKey = GlobalKey<FormBuilderState>();
-  AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
+class _PlanViewState extends State<PlanView> {
 
   final TextEditingController _passwordController = new TextEditingController();
-
-  Future <void> buyHotspot30days(BuildContext context) async {
-    dialogLoading(context);
-
-    var response = await PostRequest().buyHotspotPlan(
-      mData.phone,
-      _passwordController.text,
-      '30',
-    );
-    var responseJson = json.decode(response.body);
-
-    try {
-      final result = await InternetAddress.lookup('google.com');
-      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-        print('Internet connected');
-        if(response.statusCode == 200){    
-          Future.delayed(Duration(seconds: 2), () async{
-            await Provider.of<GetPlanProvider>(context, listen: false).fetchHotspotPlan();
-            Timer(Duration(milliseconds: 500), () => Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (context) => CompletePlan()),
-              ModalRoute.withName('/navbar'),
-            ));
-          });
-        }
-        else{
-          Navigator.of(context).pop();
-          return showDialog(
-            context: context,
-            barrierDismissible: false,
-            builder: (BuildContext context) {
-              return AlertDialog(
-                title: Row(
-                  children: [
-                    Icon(Icons.warning, color: Colors.yellow),
-                    Text('WARNING', style: TextStyle(fontFamily: 'Poppins-Bold'),),
-                  ],
-                ),
-                content: SingleChildScrollView(
-                  child: ListBody(
-                    children: <Widget>[
-                      Text(responseJson['message']),
-                    ],
-                  ),
-                ),
-                actions: <Widget>[
-                  FlatButton(
-                    child: Text('OK'),
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                ],
-              );
-            }
-          );
-        }
-      
-      }
-    } on SocketException catch (_) {
-      Navigator.pop(context);
-      print('not connected');
-    }
-  }
-
-  Future <void> buyHotspot365days(BuildContext context) async {
-     dialogLoading(context);
-
-    var response = await PostRequest().buyHotspotPlan(
-      mData.phone,
-      _passwordController.text,
-      '365',
-    );
-    var responseJson = json.decode(response.body);
-
-    try {
-      final result = await InternetAddress.lookup('google.com');
-      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-        print('Internet connected');
-        if(response.statusCode == 200){    
-          Future.delayed(Duration(seconds: 2), () async{
-            await Provider.of<GetPlanProvider>(context, listen: false).fetchHotspotPlan();
-            Timer(Duration(milliseconds: 500), () => Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (context) => CompletePlan()),
-              ModalRoute.withName('/navbar'),
-            ));
-          });
-        }
-        else{
-          Navigator.of(context).pop();
-          return showDialog(
-            context: context,
-            barrierDismissible: false,
-            builder: (BuildContext context) {
-              return AlertDialog(
-                title: Row(
-                  children: [
-                    Icon(Icons.warning, color: Colors.yellow),
-                    Text('WARNING', style: TextStyle(fontFamily: 'Poppins-Bold'),),
-                  ],
-                ),
-                content: SingleChildScrollView(
-                  child: ListBody(
-                    children: <Widget>[
-                      Text(responseJson['message']),
-                    ],
-                  ),
-                ),
-                actions: <Widget>[
-                  FlatButton(
-                    child: Text('OK'),
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                ],
-              );
-            }
-          );
-        }
-      
-      }
-    } on SocketException catch (_) {
-      Navigator.pop(context);
-      print('not connected');
-    }
-  }
-
-
-  // Initially password is obscure
-  bool _obscureText = true;
-
-  // Toggles the password show status
-  void toggle() {
-    setState(() {
-      _obscureText = !_obscureText;
-    });
-  }
-
 
   @override
   void initState() {
@@ -162,7 +18,6 @@ class _UserPlanState extends State<UserPlan> {
   @override
   void dispose() {
     super.dispose();
-    _passwordController.clear();
   }
 
   @override
@@ -172,18 +27,18 @@ class _UserPlanState extends State<UserPlan> {
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.black), 
           onPressed: (){
-            Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (context) => Navbar()),
-              ModalRoute.withName('/'),
-            );
+            Navigator.pop(context);
           }
         ),
         // automaticallyImplyLeading: false,
         backgroundColor: Colors.white,
         title: Text('Hotspot Plan', style: TextStyle(color: Colors.black, fontFamily: 'Medium')),
       ),
-      body: WillPopScope(
+      body: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: () {
+          FocusScope.of(context).requestFocus(FocusNode());
+        },
         child: Container(
           height: MediaQuery.of(context).size.height * 2,
           child: SingleChildScrollView(
@@ -193,34 +48,20 @@ class _UserPlanState extends State<UserPlan> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    SizedBox(height: 10.0),
-                    Center(
-                      child: Text(
-                        'Choose Plan', 
-                        style: GoogleFonts.nunito(
-                        textStyle: TextStyle(color: Colors.black, fontSize: 35, fontWeight: FontWeight.w700)
-                        ),
-                      ),
-                    ),
                     SizedBox(height: 16.0),
-                    plan30DaysButton(context),
-                    SizedBox(height: 50.0),
+                    myPlan(context),
+                    SizedBox(height: 36.0),
                     plan365DaysButton(context),
-                  ],
-                ),
+                ],
               ),
             ),
           ),
-        onWillPop: () => Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(builder: (context) => Navbar()),
-          ModalRoute.withName('/navbar'),
         ),
-      )
+      ),
     );
   }
 
-  Widget plan30DaysButton(BuildContext context){
+  Widget myPlan(BuildContext context){
     return Container(
       // width: MediaQuery.of(context).size.width,
       // height: MediaQuery.of(context).size.height * .27, 
@@ -338,38 +179,71 @@ class _UserPlanState extends State<UserPlan> {
                   // width: ScreenUtil.getInstance().setWidth(330),
                   height: 50,
                   decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                          colors: [Color(0xFF17ead9), Color(0xFF6078ea)]),
-                      // borderRadius: BorderRadius.circular(12),
-                      boxShadow: [
-                        BoxShadow(
-                            color: Color(0xFF6078ea).withOpacity(.3),
-                            offset: Offset(0.0, 8.0),
-                            blurRadius: 8.0)
-                      ]),
-                child: Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                    onTap: () async {
-                      _showDialog30Days(context);
-                    },
-                    child: Center(
-                      child: Text("GET THIS PLAN",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontFamily: "Poppins-Bold",
-                              fontSize: 18,
-                              letterSpacing: 1.0)),
+                    gradient: LinearGradient(
+                        colors: [Colors.greenAccent, Colors.green]),
+                    // borderRadius: BorderRadius.circular(12),
+                    boxShadow: [
+                      BoxShadow(
+                          color: Color(0xFF6078ea).withOpacity(.3),
+                          offset: Offset(0.0, 8.0),
+                          blurRadius: 8.0)
+                    ]),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.check, color: Colors.lightGreenAccent,),
+                      // SizedBox(width: 0),
+                      Text("ACTIVE",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontFamily: "Poppins-Bold",
+                          fontSize: 18,
+                          letterSpacing: 1.0,
+                        )
+                      ),
+                    ],
+                  ),
+                  ),
+                )
+              ),
+              Center(
+                child: InkWell(
+                  child: Container(
+                    // width: ScreenUtil.getInstance().setWidth(330),
+                    height: 50,
+                    decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                            colors: [Color(0xFF17ead9), Color(0xFF6078ea)]),
+                        // borderRadius: BorderRadius.circular(12),
+                        boxShadow: [
+                          BoxShadow(
+                              color: Color(0xFF6078ea).withOpacity(.3),
+                              offset: Offset(0.0, 8.0),
+                              blurRadius: 8.0)
+                        ]),
+                  child: Material(
+                    color: Colors.transparent,
+                    child: InkWell(
+                      onTap: () async {
+                        _showDialogCancelPlan(context);
+                      },
+                      child: Center(
+                        child: Text("CANCEL THIS PLAN",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontFamily: "Poppins-Bold",
+                                fontSize: 18,
+                                letterSpacing: 1.0)),
+                        ),
                       ),
                     ),
                   ),
-                ),
-              )
-            ),
-          ],
-        ),
-      ],
-    ),
+                )
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 
@@ -491,20 +365,22 @@ class _UserPlanState extends State<UserPlan> {
                   // width: ScreenUtil.getInstance().setWidth(330),
                   height: 50,
                   decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                          colors: [Color(0xFF17ead9), Color(0xFF6078ea)]),
-                      // borderRadius: BorderRadius.circular(12),
-                      boxShadow: [
-                        BoxShadow(
-                            color: Color(0xFF6078ea).withOpacity(.3),
-                            offset: Offset(0.0, 8.0),
-                            blurRadius: 8.0)
-                      ]),
+
+                    color: Colors.grey,
+                    // borderRadius: BorderRadius.circular(12),
+                    boxShadow: [
+                      BoxShadow(
+                          color: Color(0xFF6078ea).withOpacity(.3),
+                          offset: Offset(0.0, 8.0),
+                          blurRadius: 8.0)
+                    ]),
                 child: Material(
                   color: Colors.transparent,
                   child: InkWell(
+                    highlightColor: Colors.transparent,
+                    splashColor: Colors.transparent,
                     onTap: () async {
-                      _showDialog365Days(context);
+
                     },
                     child: Center(
                       child: Text("GET THIS PLAN",
@@ -513,20 +389,20 @@ class _UserPlanState extends State<UserPlan> {
                               fontFamily: "Poppins-Bold",
                               fontSize: 18,
                               letterSpacing: 1.0)),
+                        ),
                       ),
                     ),
                   ),
-                ),
-              )
-            ),
-          ],
-        ),
-      ],
-    ),
+                )
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 
-   Future<String> _showDialog30Days(BuildContext context){
+  Future<String> _showDialogCancelPlan(BuildContext context)  {
     return showDialog(
       context: context,
       barrierDismissible: false,
@@ -550,7 +426,7 @@ class _UserPlanState extends State<UserPlan> {
                   borderRadius: BorderRadius.all(Radius.circular(12.0))
                 ),
               ),
-              obscureText: _obscureText,
+              obscureText: true,
             ),
             actions: <Widget>[
               // usually buttons at the bottom of the dialog
@@ -566,7 +442,6 @@ class _UserPlanState extends State<UserPlan> {
                   new FlatButton(
                       onPressed: () {
                         dialogLoading(context);
-                        buyHotspot30days(context);
                         Navigator.of(context).pop();
                       },
                       child: new Text("OK"))
@@ -579,56 +454,4 @@ class _UserPlanState extends State<UserPlan> {
     );
   }
 
-   Future<String> _showDialog365Days(BuildContext context) {
-    return showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        // return object of type Dialog
-        return WillPopScope(
-          onWillPop: () async => false,
-          child:AlertDialog(
-            title: new Text("Please enter your password"),
-            content: TextFormField(
-              controller: _passwordController,
-              onSaved: (val) => _passwordController.text = val,
-              keyboardType: TextInputType.visiblePassword,
-              decoration: InputDecoration(
-                fillColor: Colors.grey[100],
-                filled: true,
-                hintText: "Password",
-                hintStyle: TextStyle(color: Colors.black, fontSize: 12.0),
-                border: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.black),
-                  borderRadius: BorderRadius.all(Radius.circular(12.0))
-                ),
-              ),
-              obscureText: _obscureText,
-            ),
-            actions: <Widget>[
-              // usually buttons at the bottom of the dialog
-              Row(
-                children: <Widget>[
-                  new FlatButton(
-                    child: new Text("Cancel"),
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                      _passwordController.clear(); 
-                    },
-                  ),
-                  new FlatButton(
-                      onPressed: () {
-                        dialogLoading(context);
-                        buyHotspot365days(context);
-                        Navigator.of(context).pop();
-                      },
-                      child: new Text("OK"))
-                ],
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
 }

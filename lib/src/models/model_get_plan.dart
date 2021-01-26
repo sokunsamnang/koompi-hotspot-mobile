@@ -43,20 +43,14 @@ class GetPlanProvider with ChangeNotifier {
   ModelPlan get mData => _mPlan;
 
   Future<String> fetchHotspotPlan() async {
-    // print("Fetch balance");
-    print("My username plan ${mPlan.username}");
     try {
       await _prefService.read('token').then((onValue) async {
-        print("Token $onValue");
         http.Response response = await http.get(
             '${ApiService.url}/hotspot/get-plan',
             headers: <String, String>{
               "accept": "application/json",
               "authorization": "Bearer " + onValue,
             });
-        print("MY data ${response.body}");
-
-        print("MY stastus code ${response.statusCode}");
         if (response.statusCode == 200) {
           var responseBody = json.decode(response.body);
           // if (mPlan.username != null) mPlan.username;

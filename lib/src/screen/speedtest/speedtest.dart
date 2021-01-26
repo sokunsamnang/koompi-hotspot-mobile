@@ -47,18 +47,8 @@ class SpeedTestNetState extends State<SpeedTestNet> {
       backgroundColor: bgCol,
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Text('Speed Test', style: TextStyle(color: Colors.black),),
+        title: Text('Speed Test', style: TextStyle(color: Colors.black, fontFamily: 'Medium'),),
         automaticallyImplyLeading: false,
-        // leading: IconButton(
-        //   icon: Icon(Icons.arrow_back, color: Colors.black,), 
-        //   onPressed: (){
-        //     Navigator.pushAndRemoveUntil(
-        //       context,
-        //       MaterialPageRoute(builder: (context) => Navbar()),
-        //       ModalRoute.withName('/navbar'),
-        //     );
-        //   }
-        // ),
       ),
       body: Center(
         child: Column(
@@ -143,7 +133,7 @@ class SpeedTestNetState extends State<SpeedTestNet> {
                             positionFactor: 0.5)
                       ])
                 ]),
-            Row(
+            isTesting == false ? Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 RaisedButton(
@@ -252,7 +242,7 @@ class SpeedTestNetState extends State<SpeedTestNet> {
                   },
                 ),
               ],
-            ),
+            ) : CircularProgressIndicator(),
           ],
         ),
       ),

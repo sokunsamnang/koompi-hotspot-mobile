@@ -90,8 +90,40 @@ class _CreatePhoneState extends State<CreatePhone> {
       }
     } on SocketException catch (_) {
       Navigator.pop(context);
+      errorDialog(context);
       print('not connected');
     }
+  }
+
+  errorDialog(BuildContext context) async {
+    return showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Row(
+              children: [
+                Icon(Icons.error, color: Colors.red),
+                Text('ERROR', style: TextStyle(fontFamily: 'Poppins-Bold'),),
+              ],
+            ),
+            content: SingleChildScrollView(
+              child: ListBody(
+                children: <Widget>[
+                  Text('Error Services or Lost internet connection, Please try again!'),
+                ],
+              ),
+            ),
+            actions: <Widget>[
+              FlatButton(
+                child: Text('OK'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        });
   }
 
   showErrorServerDialog(BuildContext context) async {
@@ -100,7 +132,12 @@ class _CreatePhoneState extends State<CreatePhone> {
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Error'),
+          title: Row(
+            children: [
+              Icon(Icons.error, color: Colors.red),
+              Text('ERROR', style: TextStyle(fontFamily: 'Poppins-Bold'),),
+            ],
+          ),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
@@ -130,11 +167,15 @@ class _CreatePhoneState extends State<CreatePhone> {
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Error'),
+          title: Row(
+            children: [
+              Icon(Icons.warning, color: Colors.yellow),
+              Text('WARNING', style: TextStyle(fontFamily: 'Poppins-Bold'),),
+            ],
+          ),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                // Text('Invalid Email'),
                 Text(responseJson['message']),
               ],
             ),

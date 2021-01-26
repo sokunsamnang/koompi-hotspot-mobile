@@ -215,7 +215,7 @@ class PostRequest with ChangeNotifier {
 
   //Hotspot Plan
 
-  Future<http.Response> buyHotspotPlan30Days(
+  Future<http.Response> buyHotspotPlan(
       String phone, String password, String value) async {
     await _prefService.read('token').then((value) {
       _backend.token = Map<String, dynamic>.from({'token': value});
@@ -228,6 +228,8 @@ class PostRequest with ChangeNotifier {
         "password": password,
         "simultaneous": "2",
         "value": value,
+        "asset": "SEL",
+        "memo": "Buy Hotspot Plan"
       });
 
       _backend.response = await http.post('${ApiService.url}/hotspot/set-plan',
@@ -241,31 +243,6 @@ class PostRequest with ChangeNotifier {
     return null;
   }
 
-  Future<http.Response> buyHotspotPlan365Days(
-      String phone, String password) async {
-    await _prefService.read('token').then((value) {
-      _backend.token = Map<String, dynamic>.from({'token': value});
-    });
-
-    if (_backend.token != null) {
-      _backend.bodyEncode = json.encode({
-        /* Convert to Json String */
-        "phone": phone,
-        "password": password,
-        "simultaneous": "2",
-        "value": "365",
-      });
-
-      _backend.response = await http.post('${ApiService.url}/hotspot/set-plan',
-          headers: _backend.conceteHeader(
-              "authorization", "Bearer ${_backend.token['token']}"),
-          body: _backend.bodyEncode);
-
-      print(_backend.response.body);
-      return _backend.response;
-    }
-    return null;
-  }
 
   Future<http.Response> resetHotspotPlan(String username, String value) async {
     _backend.bodyEncode = json.encode({

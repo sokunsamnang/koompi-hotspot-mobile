@@ -176,7 +176,6 @@ class _ChangePasswordState extends State<ChangePassword>
     dialogLoading(context);
     SharedPreferences pref = await SharedPreferences.getInstance();
     String _token = pref.getString('token');
-    print(_token);
     var responseBody;
     try {
       String apiUrl = 'https://api-hotspot.koompi.org/api/change-password/account-phone';
@@ -208,7 +207,12 @@ class _ChangePasswordState extends State<ChangePassword>
           barrierDismissible: false,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: Text('Error'),
+              title: Row(
+                children: [
+                  Icon(Icons.warning, color: Colors.yellow),
+                  Text('WARNING', style: TextStyle(fontFamily: 'Poppins-Bold'),),
+                ],
+              ),
               content: SingleChildScrollView(
                 child: ListBody(
                   children: <Widget>[
@@ -357,7 +361,7 @@ showChangePasswordDialog(context) async {
       key: _modelChangePassword.globalKey,
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Text('Change Password', style: TextStyle(color: Colors.black)),
+        title: Text('Change Password', style: TextStyle(color: Colors.black, fontFamily: 'Medium')),
         leading: Builder(builder: (BuildContext context) {
           return IconButton(
               icon: Icon(

@@ -188,7 +188,7 @@ class _MyAccountState extends State<MyAccount>
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Text('Edit Account', style: TextStyle(color: Colors.black)),
+        title: Text('Edit Account', style: TextStyle(color: Colors.black, fontFamily: 'Medium')),
         leading: Builder(builder: (BuildContext context) {
           return IconButton(
               icon: Icon(

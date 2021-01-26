@@ -49,7 +49,7 @@ class _MorePageState extends State<MorePage>
                   title: Text(
                     name ?? 'KOOMPI',
                     style: TextStyle(
-                        color: Colors.black, fontWeight: FontWeight.w500),
+                        color: Colors.black, fontFamily: "Poppins-Bold"),
                   ),
                   leading: CircleAvatar(
                     backgroundImage: mData.image == null ? AssetImage('assets/images/avatar.png') : NetworkImage("https://api-hotspot.koompi.org/uploads/${mData.image}"),
@@ -90,14 +90,11 @@ class _MorePageState extends State<MorePage>
                     // ),
                     _buildDivider(),
                     ListTile(
-                      leading: Icon(LineIcons.user_plus),
-                      title: Text("Subscribe Plan"),
+                      leading: Icon(LineIcons.language),
+                      title: Text("Language"),
                       trailing: Icon(LineIcons.angle_right),
                       onTap: () async {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => UserPlan()),
-                        );
+                        snackBar(context);
                       },
                     ),
                     _buildDivider(),
@@ -136,9 +133,11 @@ showLogoutDialog(context) async {
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text(
-            'SIGN OUT',
-            textAlign: TextAlign.center,
+          title: Row(
+            children: [
+              Icon(Icons.warning, color: Colors.yellow),
+              Text('WARNING', style: TextStyle(fontFamily: 'Poppins-Bold'),),
+            ],
           ),
           content: SingleChildScrollView(
             child: ListBody(

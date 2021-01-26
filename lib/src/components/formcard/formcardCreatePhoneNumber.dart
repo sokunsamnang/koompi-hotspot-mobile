@@ -169,8 +169,9 @@ Widget formCardPhoneNumbers(
                     child: Material(
                       color: Colors.transparent,
                       child: InkWell(
-                        highlightColor: Colors.transparent,
-                        splashColor: Colors.transparent,
+                        customBorder: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
                         onTap: () {
                           _submit();
                         },  
