@@ -106,7 +106,7 @@ class _MorePageState extends State<MorePage>
                       },
                     ),
                     _buildDivider(),
-                    Text('Alpha Version 0.1.0'),
+                    Text('Beta Version 0.1.9'),
                   ],
                 ),
               ),

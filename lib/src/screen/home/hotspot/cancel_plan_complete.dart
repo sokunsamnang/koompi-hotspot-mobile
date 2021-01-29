@@ -2,12 +2,12 @@ import 'package:koompi_hotspot/all_export.dart';
 import 'package:koompi_hotspot/src/reuse_widget/reuse_widget.dart';
 import 'package:provider/provider.dart';
 
-class CompletePlan extends StatefulWidget {
+class CancelPlan extends StatefulWidget {
   @override
-  _CompletePlanState createState() => _CompletePlanState();
+  _CancelPlanState createState() => _CancelPlanState();
 }
 
-class _CompletePlanState extends State<CompletePlan> {
+class _CancelPlanState extends State<CancelPlan> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,7 +33,7 @@ class _CompletePlanState extends State<CompletePlan> {
                     ),
                   ),
                   Center(
-                    child: Text('Your plan bought successfully.', 
+                    child: Text('Your plan cancelled successfully.', 
                     style: TextStyle(
                       fontFamily: 'Medium',
                       fontWeight: FontWeight.bold, 
@@ -65,8 +65,8 @@ class _CompletePlanState extends State<CompletePlan> {
                           ),
                           onTap: () async {
                             dialogLoading(context);
-                            Future.delayed(Duration(seconds: 3), () async {
-                              await Provider.of<BalanceProvider>(context, listen: false).fetchPortforlio();
+                            Future.delayed(Duration(seconds: 2), () async {
+                              await Provider.of<GetPlanProvider>(context, listen: false).fetchHotspotPlan();
                               Timer(Duration(milliseconds: 500), () => Navigator.pushAndRemoveUntil(
                                 context,
                                 MaterialPageRoute(builder: (context) => Navbar()),

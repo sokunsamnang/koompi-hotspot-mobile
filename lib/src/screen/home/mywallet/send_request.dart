@@ -22,7 +22,7 @@ class _SendRequestState extends State<SendRequest> {
   TextEditingController asset = TextEditingController(text: 'SEL');
   TextEditingController amount = TextEditingController();
   TextEditingController memo = TextEditingController();
-
+  TextEditingController _passwordController = TextEditingController();
   Backend _backend = Backend();
 
   final formKey = GlobalKey<FormState>();
@@ -33,7 +33,7 @@ class _SendRequestState extends State<SendRequest> {
 
     if (form.validate()) {
       form.save();
-      _onSubmit();
+      _showDialogPassword(context, recieveWallet, amount, memo);
     } else {
       setState(() {
         autovalidateMode = AutovalidateMode.always;
@@ -47,7 +47,7 @@ class _SendRequestState extends State<SendRequest> {
       final result = await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
         print('Internet connected');
-        _backend.response = await PostRequest().sendPayment(recieveWallet.text, amount.text, memo.text);
+        _backend.response = await PostRequest().sendPayment(_passwordController.text, recieveWallet.text, amount.text, memo.text);
         var responseJson = json.decode(_backend.response.body);
         if (_backend.response.statusCode == 200) {
           Future.delayed(Duration(seconds: 2), () {
@@ -57,7 +57,7 @@ class _SendRequestState extends State<SendRequest> {
                       context,
                       MaterialPageRoute(
                           builder: (context) => CompletePayment()),
-                      ModalRoute.withName('/'),
+                      ModalRoute.withName('/navbar'),
                     ));
           });
         } else {
@@ -66,6 +66,7 @@ class _SendRequestState extends State<SendRequest> {
               textAlignCenter(text: responseJson['message']),
               warningTitleDialog());
           Navigator.pop(context);
+          _passwordController.clear();
           recieveWallet.clear();
           amount.clear();
           memo.clear();
@@ -75,6 +76,66 @@ class _SendRequestState extends State<SendRequest> {
       print('not connected');
     }
   }
+
+   Future<String> _showDialogPassword(
+     BuildContext context, 
+     TextEditingController recieveWallet, 
+     TextEditingController asset,
+     TextEditingController memo,
+    ) {
+    return showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return WillPopScope(
+          onWillPop: () async => false,
+          child:AlertDialog(
+            title: new Text("Please enter your password"),
+            content: TextFormField(
+              controller: _passwordController,
+              onSaved: (val) => _passwordController.text = val,
+              keyboardType: TextInputType.visiblePassword,
+              decoration: InputDecoration(
+                fillColor: Colors.grey[100],
+                filled: true,
+                hintText: "Password",
+                hintStyle: TextStyle(color: Colors.black, fontSize: 12.0),
+                border: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.black),
+                  borderRadius: BorderRadius.all(Radius.circular(12.0))
+                ),
+              ),
+              obscureText: true,
+            ),
+            actions: <Widget>[
+              // usually buttons at the bottom of the dialog
+              Row(
+                children: <Widget>[
+                  new FlatButton(
+                    child: new Text("Cancel"),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                      _passwordController.clear(); 
+                    },
+                  ),
+                  new FlatButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                        dialogLoading(context);
+                        _onSubmit();
+                        Navigator.of(context).pop();
+                      },
+                      child: new Text("OK"))
+                ],
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
 
   @override
   void initState() {
@@ -126,7 +187,7 @@ class _SendRequestState extends State<SendRequest> {
                     Text('Receive Address'),
                     SizedBox(height: 10.0),
                     TextFormField(
-                      validator: (val) => val == null
+                      validator: (val) => val.isEmpty
                           ? 'Receiver address is required'
                           : null,
                       onSaved: (val) => recieveWallet.text = val,
@@ -172,7 +233,7 @@ class _SendRequestState extends State<SendRequest> {
                     SizedBox(height: 10.0),
                     TextFormField(
                       validator: (val) =>
-                          val == null ? 'Amount is required' : null,
+                          val.isEmpty ? 'Amount is required' : null,
                       onSaved: (val) => amount.text = val,
                       autovalidateMode: AutovalidateMode.always,
                       keyboardType: TextInputType.number,

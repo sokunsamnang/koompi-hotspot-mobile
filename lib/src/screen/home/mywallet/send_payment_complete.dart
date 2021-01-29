@@ -81,7 +81,7 @@ class _CompletePaymentState extends State<CompletePayment> {
                               });
                             },
                             child: Center(
-                              child: Text("BACK HOME",
+                              child: Text("HOME",
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontFamily: "Poppins-Bold",

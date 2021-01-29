@@ -73,7 +73,8 @@ class _HomePageState extends State<HomePage>{
           await Provider.of<BalanceProvider>(context, listen: false).fetchPortforlio();
           await Provider.of<GetPlanProvider>(context, listen: false).fetchHotspotPlan();
         },
-        child: SafeArea(
+        child: Container(
+          height: MediaQuery.of(context).size.height,
           child: SingleChildScrollView(
             physics: AlwaysScrollableScrollPhysics(),
             child: bodyPage(context),

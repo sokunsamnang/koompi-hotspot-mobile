@@ -8,11 +8,38 @@ class UserPlan extends StatefulWidget {
 }
 
 class _UserPlanState extends State<UserPlan> {
-
-  final GlobalKey<FormBuilderState> formKey = GlobalKey<FormBuilderState>();
+  final formKey = GlobalKey<FormState>();
   AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
 
   final TextEditingController _passwordController = new TextEditingController();
+
+  void _submitHotspotPlan30Days(){
+    final form = formKey.currentState;
+
+    if(form.validate()){
+      form.save();
+      buyHotspot30days(context);
+    }
+    else{
+      setState(() {
+        autovalidateMode = AutovalidateMode.always;
+      });
+    }
+  }
+
+  void _submitHotspotPlan365Days(){
+    final form = formKey.currentState;
+
+    if(form.validate()){
+      form.save();
+      buyHotspot365days(context);
+    }
+    else{
+      setState(() {
+        autovalidateMode = AutovalidateMode.always;
+      });
+    }
+  }
 
   Future <void> buyHotspot30days(BuildContext context) async {
     dialogLoading(context);
@@ -39,6 +66,7 @@ class _UserPlanState extends State<UserPlan> {
           });
         }
         else{
+          _passwordController.clear();
           Navigator.of(context).pop();
           return showDialog(
             context: context,
@@ -103,6 +131,7 @@ class _UserPlanState extends State<UserPlan> {
           });
         }
         else{
+          _passwordController.clear();
           Navigator.of(context).pop();
           return showDialog(
             context: context,
@@ -162,7 +191,6 @@ class _UserPlanState extends State<UserPlan> {
   @override
   void dispose() {
     super.dispose();
-    _passwordController.clear();
   }
 
   @override
@@ -175,13 +203,19 @@ class _UserPlanState extends State<UserPlan> {
             Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(builder: (context) => Navbar()),
-              ModalRoute.withName('/'),
+              ModalRoute.withName('/navbar'),
             );
           }
         ),
         // automaticallyImplyLeading: false,
+        centerTitle: true,
         backgroundColor: Colors.white,
-        title: Text('Hotspot Plan', style: TextStyle(color: Colors.black, fontFamily: 'Medium')),
+        title: Image.asset(
+          "assets/images/logo.png",
+          // height: 100,
+          // width: 100,
+          scale: 4,
+        ),
       ),
       body: WillPopScope(
         child: Container(
@@ -198,7 +232,7 @@ class _UserPlanState extends State<UserPlan> {
                       child: Text(
                         'Choose Plan', 
                         style: GoogleFonts.nunito(
-                        textStyle: TextStyle(color: Colors.black, fontSize: 35, fontWeight: FontWeight.w700)
+                        textStyle: TextStyle(color: Colors.black, fontSize: 30, fontWeight: FontWeight.w700)
                         ),
                       ),
                     ),
@@ -237,10 +271,7 @@ class _UserPlanState extends State<UserPlan> {
               offset: Offset(0.0, -10.0),
               blurRadius: 10.0),
         ],
-        border: Border.all(
-          color: Colors.blue,
-          width: 2.0,
-        ),
+        borderRadius: BorderRadius.all(Radius.circular(12)),
       ),
       child: Column(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -250,23 +281,20 @@ class _UserPlanState extends State<UserPlan> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Padding(
-              padding: EdgeInsets.only(left:15, top: 15),
-              child: Image.asset(
-                "assets/images/logo.png",
-                // height: 100,
-                // width: 100,
-                scale: 5,
-              ),
-            ),
             SizedBox(height: 20),
             Center(
               child: Text(
                 '50 SEL', 
                 style: GoogleFonts.nunito(
-                textStyle: TextStyle(color: Colors.blue, fontSize: 30, fontWeight: FontWeight.w700)
+                textStyle: TextStyle(color: Colors.blue[900], fontSize: 30, fontWeight: FontWeight.w700)
                 ),
               ),
+            ),
+            Divider(
+              thickness: 1.5,
+              color: Colors.grey[300],
+              indent: 20,
+              endIndent: 20,
             ),
             SizedBox(height: 20),
             Padding(
@@ -276,14 +304,14 @@ class _UserPlanState extends State<UserPlan> {
                   Text(
                     'Device:', 
                     style: GoogleFonts.nunito(
-                    textStyle: TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.w700)
+                    textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
                     ),
                   ),
                   Expanded(child: Container()),
                   Text(
                     '2 Devices', 
                     style: GoogleFonts.nunito(
-                    textStyle: TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.w700)
+                    textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
                     ),
                   ),
                 ],
@@ -297,14 +325,14 @@ class _UserPlanState extends State<UserPlan> {
                   Text(
                     'Expire:', 
                     style: GoogleFonts.nunito(
-                    textStyle: TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.w700)
+                    textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
                     ),
                   ),
                   Expanded(child: Container()),
                   Text(
                     '30 Days', 
                     style: GoogleFonts.nunito(
-                    textStyle: TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.w700)
+                    textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
                     ),
                   ),
                 ],
@@ -318,14 +346,14 @@ class _UserPlanState extends State<UserPlan> {
                   Text(
                     'Speed:', 
                     style: GoogleFonts.nunito(
-                    textStyle: TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.w700)
+                    textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
                     ),
                   ),
                   Expanded(child: Container()),
                   Text(
                     '5 MB', 
                     style: GoogleFonts.nunito(
-                    textStyle: TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.w700)
+                    textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
                     ),
                   ),
                 ],
@@ -340,7 +368,10 @@ class _UserPlanState extends State<UserPlan> {
                   decoration: BoxDecoration(
                       gradient: LinearGradient(
                           colors: [Color(0xFF17ead9), Color(0xFF6078ea)]),
-                      // borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(12), 
+                        bottomRight: Radius.circular(12),
+                      ),
                       boxShadow: [
                         BoxShadow(
                             color: Color(0xFF6078ea).withOpacity(.3),
@@ -350,16 +381,22 @@ class _UserPlanState extends State<UserPlan> {
                 child: Material(
                   color: Colors.transparent,
                   child: InkWell(
+                    customBorder: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(12), 
+                        bottomRight: Radius.circular(12),
+                      ),
+                    ),
                     onTap: () async {
                       _showDialog30Days(context);
                     },
                     child: Center(
-                      child: Text("GET THIS PLAN",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontFamily: "Poppins-Bold",
-                              fontSize: 18,
-                              letterSpacing: 1.0)),
+                      child: Text(
+                          'Subscribe', 
+                          style: GoogleFonts.nunito(
+                          textStyle: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w700)
+                          ),
+                        ),
                       ),
                     ),
                   ),
@@ -390,10 +427,7 @@ class _UserPlanState extends State<UserPlan> {
               offset: Offset(0.0, -10.0),
               blurRadius: 10.0),
         ],
-        border: Border.all(
-          color: Colors.blue,
-          width: 2.0,
-        ),
+        borderRadius: BorderRadius.all(Radius.circular(12)),
       ),
       child: Column(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -403,23 +437,20 @@ class _UserPlanState extends State<UserPlan> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Padding(
-              padding: EdgeInsets.only(left:15, top: 15),
-              child: Image.asset(
-                "assets/images/logo.png",
-                // height: 100,
-                // width: 100,
-                scale: 5,
-              ),
-            ),
             SizedBox(height: 20),
             Center(
               child: Text(
                 '600 SEL', 
                 style: GoogleFonts.nunito(
-                textStyle: TextStyle(color: Colors.blue, fontSize: 30, fontWeight: FontWeight.w700)
+                textStyle: TextStyle(color: Colors.blue[900], fontSize: 30, fontWeight: FontWeight.w700)
                 ),
               ),
+            ),
+            Divider(
+              thickness: 1.5,
+              color: Colors.grey[300],
+              indent: 20,
+              endIndent: 20,
             ),
             SizedBox(height: 20),
             Padding(
@@ -429,14 +460,14 @@ class _UserPlanState extends State<UserPlan> {
                   Text(
                     'Device:', 
                     style: GoogleFonts.nunito(
-                    textStyle: TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.w700)
+                    textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
                     ),
                   ),
                   Expanded(child: Container()),
                   Text(
                     '2 Devices', 
                     style: GoogleFonts.nunito(
-                    textStyle: TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.w700)
+                    textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
                     ),
                   ),
                 ],
@@ -450,14 +481,14 @@ class _UserPlanState extends State<UserPlan> {
                   Text(
                     'Expire:', 
                     style: GoogleFonts.nunito(
-                    textStyle: TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.w700)
+                    textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
                     ),
                   ),
                   Expanded(child: Container()),
                   Text(
                     '365 Days', 
                     style: GoogleFonts.nunito(
-                    textStyle: TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.w700)
+                    textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
                     ),
                   ),
                 ],
@@ -471,14 +502,14 @@ class _UserPlanState extends State<UserPlan> {
                   Text(
                     'Speed:', 
                     style: GoogleFonts.nunito(
-                    textStyle: TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.w700)
+                    textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
                     ),
                   ),
                   Expanded(child: Container()),
                   Text(
                     '5 MB', 
                     style: GoogleFonts.nunito(
-                    textStyle: TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.w700)
+                    textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
                     ),
                   ),
                 ],
@@ -491,28 +522,36 @@ class _UserPlanState extends State<UserPlan> {
                   // width: ScreenUtil.getInstance().setWidth(330),
                   height: 50,
                   decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                          colors: [Color(0xFF17ead9), Color(0xFF6078ea)]),
-                      // borderRadius: BorderRadius.circular(12),
-                      boxShadow: [
-                        BoxShadow(
-                            color: Color(0xFF6078ea).withOpacity(.3),
-                            offset: Offset(0.0, 8.0),
-                            blurRadius: 8.0)
-                      ]),
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(12), 
+                      bottomRight: Radius.circular(12),
+                    ),
+                    gradient: LinearGradient(
+                        colors: [Color(0xFF17ead9), Color(0xFF6078ea)]),
+                    // borderRadius: BorderRadius.circular(12),
+                    boxShadow: [
+                      BoxShadow(
+                          color: Color(0xFF6078ea).withOpacity(.3),
+                          offset: Offset(0.0, 8.0),
+                          blurRadius: 8.0)
+                    ]),
                 child: Material(
                   color: Colors.transparent,
                   child: InkWell(
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(12), 
+                      bottomRight: Radius.circular(12),
+                    ),
                     onTap: () async {
                       _showDialog365Days(context);
                     },
                     child: Center(
-                      child: Text("GET THIS PLAN",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontFamily: "Poppins-Bold",
-                              fontSize: 18,
-                              letterSpacing: 1.0)),
+                      child: Text(
+                          'Subscribe', 
+                          style: GoogleFonts.nunito(
+                          textStyle: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w700)
+                          ),
+                        ),
                       ),
                     ),
                   ),
@@ -536,21 +575,30 @@ class _UserPlanState extends State<UserPlan> {
           onWillPop: () async => false,
           child:AlertDialog(
             title: new Text("Please enter your password"),
-            content: TextFormField(
-              controller: _passwordController,
-              onSaved: (val) => _passwordController.text = val,
-              keyboardType: TextInputType.visiblePassword,
-              decoration: InputDecoration(
-                fillColor: Colors.grey[100],
-                filled: true,
-                hintText: "Password",
-                hintStyle: TextStyle(color: Colors.black, fontSize: 12.0),
-                border: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.black),
-                  borderRadius: BorderRadius.all(Radius.circular(12.0))
+            content: Form(
+              key: formKey,
+              child: TextFormField(
+                validator: (val) {
+                  if(val.isEmpty) return 'Password is required';
+                  if(val.length < 8) return 'Password too short';                
+                  return null;
+                },
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                controller: _passwordController,
+                onSaved: (val) => _passwordController.text = val,
+                keyboardType: TextInputType.visiblePassword,
+                decoration: InputDecoration(
+                  fillColor: Colors.grey[100],
+                  filled: true,
+                  hintText: "Password",
+                  hintStyle: TextStyle(color: Colors.black, fontSize: 12.0),
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.black),
+                    borderRadius: BorderRadius.all(Radius.circular(12.0))
+                  ),
                 ),
+                obscureText: _obscureText,
               ),
-              obscureText: _obscureText,
             ),
             actions: <Widget>[
               // usually buttons at the bottom of the dialog
@@ -565,8 +613,9 @@ class _UserPlanState extends State<UserPlan> {
                   ),
                   new FlatButton(
                       onPressed: () {
+                        // Navigator.of(context).pop();
                         dialogLoading(context);
-                        buyHotspot30days(context);
+                        _submitHotspotPlan30Days();
                         Navigator.of(context).pop();
                       },
                       child: new Text("OK"))
@@ -589,21 +638,30 @@ class _UserPlanState extends State<UserPlan> {
           onWillPop: () async => false,
           child:AlertDialog(
             title: new Text("Please enter your password"),
-            content: TextFormField(
-              controller: _passwordController,
-              onSaved: (val) => _passwordController.text = val,
-              keyboardType: TextInputType.visiblePassword,
-              decoration: InputDecoration(
-                fillColor: Colors.grey[100],
-                filled: true,
-                hintText: "Password",
-                hintStyle: TextStyle(color: Colors.black, fontSize: 12.0),
-                border: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.black),
-                  borderRadius: BorderRadius.all(Radius.circular(12.0))
+            content: Form(
+              key: formKey,
+              child: TextFormField(
+                validator: (val) {
+                  if(val.isEmpty) return 'Password is required';
+                  if(val.length < 8) return 'Password too short';                
+                  return null;
+                },
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                controller: _passwordController,
+                onSaved: (val) => _passwordController.text = val,
+                keyboardType: TextInputType.visiblePassword,
+                decoration: InputDecoration(
+                  fillColor: Colors.grey[100],
+                  filled: true,
+                  hintText: "Password",
+                  hintStyle: TextStyle(color: Colors.black, fontSize: 12.0),
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.black),
+                    borderRadius: BorderRadius.all(Radius.circular(12.0))
+                  ),
                 ),
+                obscureText: true,
               ),
-              obscureText: _obscureText,
             ),
             actions: <Widget>[
               // usually buttons at the bottom of the dialog
@@ -619,7 +677,7 @@ class _UserPlanState extends State<UserPlan> {
                   new FlatButton(
                       onPressed: () {
                         dialogLoading(context);
-                        buyHotspot365days(context);
+                        _submitHotspotPlan365Days();
                         Navigator.of(context).pop();
                       },
                       child: new Text("OK"))

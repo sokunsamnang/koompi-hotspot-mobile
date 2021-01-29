@@ -167,8 +167,8 @@ Widget formLoginPhone( BuildContext context,
                   color: Colors.transparent,
                   child: InkWell(
                     customBorder: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
                     onTap: () async {
                       _submitLogin();
                       // Navigator.pushReplacement(

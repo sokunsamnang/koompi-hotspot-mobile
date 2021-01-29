@@ -259,8 +259,7 @@ class PostRequest with ChangeNotifier {
     return _backend.response;
   }
 
-  Future<http.Response> sendPayment(
-      String dest, String amount, String memo) async {
+  Future<http.Response> sendPayment(String password, String dest, String amount, String memo) async {
     await _prefService.read('token').then((value) {
       _backend.token = Map<String, dynamic>.from({'token': value});
     });
@@ -268,6 +267,7 @@ class PostRequest with ChangeNotifier {
     if (_backend.token != null) {
       _backend.bodyEncode = json.encode({
         /* Convert to Json String */
+        "password": password,
         "dest_wallet": dest,
         "asset": 'SEL',
         "amount": amount,
@@ -277,6 +277,28 @@ class PostRequest with ChangeNotifier {
       _backend.response = await http.post('${ApiService.url}/selendra/transfer',
           headers: _backend.conceteHeader(
               "authorization", "Bearer ${_backend.token['token']}"),
+          body: _backend.bodyEncode);
+
+      print(_backend.response.body);
+      return _backend.response;
+    }
+    return null;
+  }
+
+  Future<http.Response> cancelPlanHotspot(String password) async {
+
+    await _prefService.read('token').then((value) {
+      _backend.token = Map<String, dynamic>.from({'token': value});
+    });
+
+    if (_backend.token != null) {
+      _backend.bodyEncode = json.encode({
+        /* Convert to Json String */
+        "password": password,
+      });
+
+      _backend.response = await http.put('${ApiService.url}/hotspot/cancel-plan',
+          headers: _backend.conceteHeader("authorization", "Bearer ${_backend.token['token']}"),
           body: _backend.bodyEncode);
 
       print(_backend.response.body);

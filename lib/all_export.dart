@@ -96,3 +96,4 @@ export 'package:koompi_hotspot/src/screen/reset_new_password/reset_password_body
 export 'package:koompi_hotspot/src/app.dart';
 export 'package:koompi_hotspot/src/components/socialmedia.dart';
 export 'package:koompi_hotspot/src/screen/home/hotspot/view_plan.dart';
+export 'package:koompi_hotspot/src/screen/home/home_page/promotion.dart';

@@ -1,90 +1,47 @@
+import 'package:getwidget/getwidget.dart';
 import 'package:koompi_hotspot/all_export.dart';
 
 
-final List<Map> robot = [
-  {
-    "name": "Image1",
-    "image": 'assets/images/image1.png',
-    "routeName": "/image1Dashboard"
-  },
-  {
-    "name": "Image2",
-    "image": 'assets/images/image2.png',
-    "routeName": "/image2Dashboard"
-  },
-  {
-    "name": "Simulation",
-    "image": 'assets/images/sim.png',
-    "routeName": "/simDashboard"
-  },
+
+final List<String> imageList = [
+  "https://cdn.pixabay.com/photo/2017/12/03/18/04/christmas-balls-2995437_960_720.jpg",
+  "https://cdn.pixabay.com/photo/2017/12/13/00/23/christmas-3015776_960_720.jpg",
+  "https://cdn.pixabay.com/photo/2019/12/19/10/55/christmas-market-4705877_960_720.jpg",
+  "https://cdn.pixabay.com/photo/2019/12/20/00/03/road-4707345_960_720.jpg",
+  "https://cdn.pixabay.com/photo/2019/12/22/04/18/x-mas-4711785__340.jpg",
+  "https://cdn.pixabay.com/photo/2016/11/22/07/09/spruce-1848543__340.jpg"
 ];
 
-final List<Widget> imageSliders = robot
-    .map((item) => new Container(
-          child: Container(
-            margin: EdgeInsets.all(5.0),
-            child: ClipRRect(
-                borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                child: Stack(
-                  alignment: Alignment.center,
-                  children: <Widget>[
-                    Image.asset(item["image"], fit: BoxFit.cover, width: 700.0),
-                    Positioned(
-                      bottom: 0.0,
-                      // left: 0.0,
-                      // right: 0.0,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [
-                              Color.fromARGB(0, 0, 0, 0),
-                              Color.fromARGB(0, 0, 0, 0)
-                            ],
-                            begin: Alignment.bottomCenter,
-                            end: Alignment.topCenter,
-                          ),
-                        ),
-                        padding: EdgeInsets.symmetric(
-                            vertical: 10.0, horizontal: 10.0),
-                        child: Text(
-                          '${item["name"]}',
-                          // '${nameList[imgList.indexOf(item)]}',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 20.0,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                )),
-          ),
-        ))
-    .toList();
+class MyCarousel extends StatefulWidget{
 
-class MyCarousel extends StatelessWidget {
+  @override
+  _MyCarouselState createState() => _MyCarouselState();
+}
+
+class _MyCarouselState extends State<MyCarousel> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-          // margin: EdgeInsets.symmetric(horizontal: 5),
-          alignment: Alignment.center,
-          child: CarouselSlider(
-            options: CarouselOptions(
-              height: 400,
-              // aspectRatio: 2,
-              enlargeCenterPage: true,
-              enableInfiniteScroll: false,
-              viewportFraction: .5,
-              initialPage: 0,
-              autoPlay: true,
-              autoPlayInterval: Duration(seconds: 4),
-              autoPlayCurve: Curves.fastOutSlowIn,
-              enlargeStrategy: CenterPageEnlargeStrategy.scale,
+    return  GFCarousel(
+      items: imageList.map(
+      (url) {
+      return Container(
+        margin: EdgeInsets.all(8.0),
+        child: ClipRRect(
+          borderRadius: BorderRadius.all(Radius.circular(5.0)),
+            child: Image.network(
+              url,
+              fit: BoxFit.cover,
+                width: 1000.0
             ),
-            items: imageSliders,
-          )),
-    );
+          ),
+        );
+        },
+      ).toList(),
+      onPageChanged: (index) {
+        setState(() {
+          index;
+        });
+      },
+  );
   }
 }
