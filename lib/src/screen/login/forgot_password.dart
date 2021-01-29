@@ -1,10 +1,5 @@
-import 'dart:convert';
-import 'dart:io';
-import 'package:flutter/material.dart';
-import 'package:koompi_hotspot/src/backend/post_request.dart';
-import 'package:koompi_hotspot/src/components/reuse_widget.dart';
-import 'package:koompi_hotspot/src/screen/create_account/verfication/forgot_password_verification.dart';
-import 'package:koompi_hotspot/src/screen/login/forgot_password_body.dart';
+import 'package:koompi_hotspot/src/reuse_widget/reuse_widget.dart';
+import 'package:koompi_hotspot/all_export.dart';
 
 class ForgotPassword extends StatefulWidget {
   _ForgotPasswordState createState() => _ForgotPasswordState();
@@ -25,8 +20,8 @@ class _ForgotPasswordState extends State<ForgotPassword> {
   final formKey = GlobalKey<FormState>();
   bool _autoValidate = false;
 
-  TextEditingController _emailController = TextEditingController();
-  String _email = "";
+  TextEditingController _phoneController = TextEditingController();
+  String _phone = "";
 
   void _submitValidate(){
     final form = formKey.currentState;
@@ -48,12 +43,12 @@ class _ForgotPasswordState extends State<ForgotPassword> {
       final result = await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
         print('Internet connected');
-        var response = await PostRequest().forgotPasswordByEmail(
-          _emailController.text);
+        var response = await PostRequest().forgotPasswordByPhone(
+          StorageServices.removeZero(_phoneController.text),);
         if (response.statusCode == 200) {
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) => ForgotPasswordVerification(_emailController.text)));
+            MaterialPageRoute(builder: (context) => ForgotPasswordVerification("+855${StorageServices.removeZero(_phoneController.text)}")));
         } 
         else if (response.statusCode == 401){
           Navigator.pop(context);
@@ -71,17 +66,21 @@ class _ForgotPasswordState extends State<ForgotPassword> {
   }
 
   showErrorServerDialog(BuildContext context) async {
-    var response = await PostRequest().forgotPasswordByEmail(_emailController.text);
     return showDialog(
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Error'),
+          title: Row(
+            children: [
+              Icon(Icons.error, color: Colors.red),
+              Text('ERROR', style: TextStyle(fontFamily: 'Poppins-Bold'),),
+            ],
+          ),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Text('${response.body}'),
+                Text('Error server or Server in maintenance'),
               ],
             ),
           ),
@@ -98,14 +97,19 @@ class _ForgotPasswordState extends State<ForgotPassword> {
   }
 
   showErrorDialog(BuildContext context) async {
-    var response = await PostRequest().forgotPasswordByEmail(_emailController.text);
+    var response = await PostRequest().forgotPasswordByEmail(_phoneController.text);
     var responseJson = json.decode(response.body);
     return showDialog(
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Error'),
+          title: Row(
+            children: [
+              Icon(Icons.warning, color: Colors.yellow),
+              Text('WARNING', style: TextStyle(fontFamily: 'Poppins-Bold'),),
+            ],
+          ),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
@@ -136,8 +140,8 @@ class _ForgotPasswordState extends State<ForgotPassword> {
         child: Container(
           child: forgetPasswordBody(
             context, 
-            _email, 
-            _emailController, 
+            _phone, 
+            _phoneController, 
             _submitValidate, 
             formKey, 
             _autoValidate),

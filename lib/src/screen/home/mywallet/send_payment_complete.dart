@@ -1,9 +1,5 @@
-import 'dart:async';
-import 'package:flare_flutter/flare_actor.dart';
-import 'package:flutter/material.dart';
-import 'package:koompi_hotspot/src/components/navbar.dart';
-import 'package:koompi_hotspot/src/components/reuse_widget.dart';
-import 'package:koompi_hotspot/src/models/model_balance.dart';
+import 'package:koompi_hotspot/all_export.dart';
+import 'package:koompi_hotspot/src/reuse_widget/reuse_widget.dart';
 import 'package:provider/provider.dart';
 
 class CompletePayment extends StatefulWidget {
@@ -67,24 +63,25 @@ class _CompletePaymentState extends State<CompletePayment> {
                         child: Material(
                           color: Colors.transparent,
                           child: InkWell(
-                            highlightColor: Colors.transparent,
-                            splashColor: Colors.transparent,
+                            customBorder: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
                             onTap: () async {
                               dialogLoading(context);
-                              await Provider.of<BalanceProvider>(context, listen: false).fetchPortforlio();
-                              Future.delayed(Duration(seconds: 4), () {
+                              Future.delayed(Duration(seconds: 3), () async{
+                                await Provider.of<BalanceProvider>(context, listen: false).fetchPortforlio();
                                 Timer(
                                     Duration(milliseconds: 500),
                                     () => Navigator.pushAndRemoveUntil(
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) => Navbar()),
-                                          ModalRoute.withName('/'),
+                                          ModalRoute.withName('/navbar'),
                                         ));
                               });
                             },
                             child: Center(
-                              child: Text("BACK HOME",
+                              child: Text("HOME",
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontFamily: "Poppins-Bold",
@@ -104,7 +101,7 @@ class _CompletePaymentState extends State<CompletePayment> {
         onWillPop: () => Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(builder: (context) => Navbar()),
-          ModalRoute.withName('/'),
+          ModalRoute.withName('/navbar'),
         ),
       ),
     );

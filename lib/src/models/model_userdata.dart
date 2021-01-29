@@ -1,7 +1,8 @@
 class ModelUserData {
-  String name;
+  String fullname;
   String gender;
   String email;
+  String phone;
   String birthdate;
   String address;
   String image = '';
@@ -10,18 +11,20 @@ class ModelUserData {
   Map<String, dynamic> userData;
 
   ModelUserData(
-      {this.name,
+      {this.fullname,
       this.gender,
       this.email,
+      this.phone,
       this.birthdate,
       this.address,
       this.image,
       this.wallet});
 
   ModelUserData.fromJson(Map<String, dynamic> parseJson) {
-    name = parseJson['name'];
+    fullname = parseJson['fullname'];
     gender = parseJson['gender'];
     email = parseJson['email'];
+    phone = parseJson['phone'];
     birthdate = parseJson['birthdate'];
     address = parseJson['address'];
     image = parseJson['image'];

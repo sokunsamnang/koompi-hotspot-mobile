@@ -1,14 +1,10 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:koompi_hotspot/src/components/reuse_widget.dart';
-import 'package:koompi_hotspot/src/models/model_trx_history.dart';
-import 'package:koompi_hotspot/src/models/model_userdata.dart';
+import 'package:koompi_hotspot/all_export.dart';
+import 'package:koompi_hotspot/src/reuse_widget/reuse_widget.dart';
 import 'package:koompi_hotspot/src/utils/app_utils.dart';
 import 'package:provider/provider.dart';
 
 Widget trxHistory(BuildContext context) {
-  List _buildList(
-      List<TrxHistoryModel> history, BuildContext context, String userWallet) {
+  List _buildList(List<TrxHistoryModel> history, BuildContext context, String userWallet) {
     List<Widget> listItems = List();
     print('My History: ${history.length}');
     for (int i = 0; i < history.length; i++) {
@@ -113,7 +109,6 @@ Widget trxHistory(BuildContext context) {
         ),
       );
     }
-
     return listItems;
   }
 
@@ -150,8 +145,7 @@ Widget trxHistory(BuildContext context) {
                   slivers: [
                     SliverList(
                       delegate: SliverChildListDelegate(
-                        _buildList(
-                            history.trxHistoryList, context, mData.wallet),
+                        _buildList(history.trxHistoryList, context, mData.wallet),
                       ),
                     ),
                   ],

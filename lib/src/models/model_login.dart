@@ -2,7 +2,7 @@
 //
 //     final modelLogin = modelLoginFromMap(jsonString);
 
-import 'dart:convert';
+import 'package:koompi_hotspot/all_export.dart';
 
 ModelLogin modelLoginFromMap(String str) => ModelLogin.fromMap(json.decode(str));
 

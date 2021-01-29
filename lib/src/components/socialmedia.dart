@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:flutter_facebook_login/flutter_facebook_login.dart';
+import 'package:koompi_hotspot/all_export.dart';
 import 'package:http/http.dart' as http;
 
 void _signInFacebook() async {
@@ -8,7 +6,7 @@ void _signInFacebook() async {
   final result = await facebookLogin.logIn(['email']);
   final token = result.accessToken.token;
   final graphResponse = await http.get(
-      'https://graph.facebook.com/v2.12/me?fields=name,first_name,last_name,email,gender,birthday&access_token=${token}');
+      'https://graph.facebook.com/v2.12/me?fields=name,first_name,last_name,email,gender,birthday&access_token=$token');
   print(graphResponse.body);
 }
 

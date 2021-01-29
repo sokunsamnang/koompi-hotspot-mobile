@@ -1,48 +1,5 @@
-import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:koompi_hotspot/index.dart';
-import 'package:koompi_hotspot/src/backend/api_service.dart';
-import 'package:koompi_hotspot/src/models/model_userdata.dart';
-import 'package:koompi_hotspot/src/models/model_wallet.dart';
-import 'package:koompi_hotspot/src/services/services.dart';
-
-// class Balance {
-//   Balance({this.data});
-
-//   Data data;
-
-//   factory Balance.fromMap(Map<String, dynamic> json) => Balance(
-//         data: Data.fromMap(json["data"]),
-//       );
-// }
-
-// class Data {
-//   Data({
-//     this.timestamp,
-//     this.balance,
-//     this.otherassets,
-//   });
-
-//   String timestamp;
-//   String balance = '';
-//   String otherassets;
-
-//   factory Data.fromMap(Map<String, dynamic> json) => Data(
-//         timestamp: json["timestamp"],
-//         balance: json["balance"],
-//         otherassets: json["otherassets"],
-//       );
-
-//   Map<String, dynamic> toMap() => {
-//         "timestamp": timestamp,
-//         "balance": balance,
-//         "otherassets": otherassets,
-//       };
-// }
-
-// To parse this JSON data, do
-//
-//     final balance = balanceFromMap(jsonString);
+import 'package:koompi_hotspot/all_export.dart';
 
 class Balance {
   Balance({
@@ -78,20 +35,15 @@ class BalanceProvider with ChangeNotifier {
   ModelUserData get mData => _mData;
 
   Future<String> fetchPortforlio() async {
-    // print("Fetch balance");
-    print("My symbol ${mBalance.symbol}");
     try {
       await _prefService.read('token').then((onValue) async {
-        print("Token $onValue");
         http.Response response = await http.get(
             '${ApiService.url}/selendra/portfolio',
             headers: <String, String>{
               "accept": "application/json",
               "authorization": "Bearer " + onValue,
             });
-        print("MY data ${response.body}");
 
-        print("MY stastus code ${response.statusCode}");
         if (response.statusCode == 200) {
           var responseBody = json.decode(response.body);
           if (mBalance.token != null) mBalance.token.toString();

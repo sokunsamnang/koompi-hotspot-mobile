@@ -1,43 +1,34 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_vector_icons/flutter_vector_icons.dart';
-import 'package:koompi_hotspot/src/models/model_balance.dart';
-import 'package:koompi_hotspot/src/models/model_get_plan.dart';
-import 'package:koompi_hotspot/src/screen/home/hotspot/buy_plan.dart';
-import 'package:koompi_hotspot/src/screen/home/mywallet/wallet_choice.dart';
-import 'package:koompi_hotspot/src/screen/home/mywallet/wallet_screen.dart';
-import 'package:line_icons/line_icons.dart';
+import 'package:koompi_hotspot/all_export.dart';
+
 
 Widget bodyPage(BuildContext context) {
   return Container(
     // height: MediaQuery.of(context).size.height,
-    child: Padding(
-      padding: EdgeInsets.symmetric(horizontal: 15),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(height: 15),
-          Text('My Wallet', style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold, fontSize: 18)),
-          SizedBox(height: 20),
-          mBalance.token == null ? startGetWallet(context) : _balanceTokens(context),
-          SizedBox(height: 40),
-          Text('My Plan', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
-          SizedBox(height: 20),
-          // planView(context),
-          mPlan.username == null ? noPlanView(context) : planView(context),
-          // SizedBox(height: 40),
-          // Text('Promotions', style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold, fontSize: 18)),
-          // SizedBox(height: 20),
-          // Expanded(child: MyCarousel(),)
-        ],
-      ),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(height: 20),
+        mPlan.username == null ? noPlanView(context) : _planViewButton(context),
+        SizedBox(height: 20),
+        mBalance.token == null ? startGetWallet(context) : _balanceTokens(context),
+        SizedBox(height: 20),
+        // MyCarousel(),
+        // SizedBox(height: 40),
+        // Text('Promotions', style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold, fontSize: 18)),
+        // SizedBox(height: 20),
+        // Expanded(child: MyCarousel(),)
+      ],
     ),
   );
 }
 
+
+
   Widget _balanceTokens(context) {
     return Container(
-      child: ClipRRect(
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 15),
+        child: ClipRRect(
           borderRadius: BorderRadius.all(Radius.circular(12)),
           child: Container(
             width: MediaQuery.of(context).size.width,
@@ -55,16 +46,14 @@ Widget bodyPage(BuildContext context) {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            SvgPicture.asset('assets/images/sld_logo.svg', width: 25),
-                             SizedBox(width: 10),
-                             Text(
-                              'SELENDRA',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 25,
-                                fontWeight: FontWeight.w800,
+                            Image.asset('assets/images/sld_stroke.png', width: 25),
+                            SizedBox(width: 10),
+                            Text(
+                              'SELENDRA', 
+                              style: GoogleFonts.nunito(
+                              textStyle: TextStyle(color: Colors.white, fontSize: 25, fontWeight: FontWeight.w700)
                               ),
-                            ) 
+                            ),
                           ],
                         )
                       ],
@@ -104,7 +93,7 @@ Widget bodyPage(BuildContext context) {
                             Container(
                               child: Row(
                                 children: [
-                                  SvgPicture.asset('assets/images/sld_logo.svg', width: 20),
+                                  Image.asset('assets/images/sld_stroke.png', width: 20),
                                   SizedBox(width: 10),
                                   Text(
                                     'SEL',
@@ -153,7 +142,7 @@ Widget bodyPage(BuildContext context) {
                               child: Row(
                                 children: <Widget>[
                                   Icon(
-                                    Icons.read_more,
+                                    Icons.more_vert,
                                     color: Colors.white,
                                     size: 20,
                                   ),
@@ -207,128 +196,16 @@ Widget bodyPage(BuildContext context) {
           ),
         ),
       ),
+      )
     );
   }
 
-  // Widget _noBalanceTokens(context) {
-  //   return Container(
-  //     child: ClipRRect(
-  //         borderRadius: BorderRadius.all(Radius.circular(12)),
-  //         child: Container(
-  //           width: MediaQuery.of(context).size.width,
-  //           height: MediaQuery.of(context).size.height * .27,
-  //           color: Colors.blueGrey[900],
-  //           child: Stack(
-  //             fit: StackFit.expand,
-  //             children: <Widget>[
-  //               Column(
-  //                 mainAxisAlignment: MainAxisAlignment.center,
-  //                 crossAxisAlignment: CrossAxisAlignment.center,
-  //                 children: <Widget>[
-  //                   Row(
-  //                     mainAxisAlignment: MainAxisAlignment.center,
-  //                     children: [
-  //                         Image.asset('assets/images/icon_launcher.png', width: 25, height: 25,),
-  //                         SizedBox(width: 10),
-  //                         Text(
-  //                         'SELENDRA',
-  //                         style: TextStyle(
-  //                           color: Colors.white,
-  //                           fontSize: 25,
-  //                           fontWeight: FontWeight.w800,
-  //                         ),
-  //                       ) 
-  //                     ],
-  //                   ),
-  //                   SizedBox(height: 40),
-  //                   Text(
-  //                     'Server in Maintanace',
-  //                     style: TextStyle(
-  //                       color: Colors.white,
-  //                       fontSize: 20,
-  //                       fontWeight: FontWeight.w500,
-  //                     ),
-  //                   ),
-  //                 ],
-  //               ),
-  //               Positioned(
-  //                 left: -170,
-  //                 top: -170,
-  //                 child: CircleAvatar(
-  //                   radius: 130,
-  //                   backgroundColor: Colors.lightBlueAccent[50],
-  //                 ),
-  //               ),
-  //               Positioned(
-  //                 left: -160,
-  //                 top: -190,
-  //                 child: CircleAvatar(
-  //                   radius: 130,
-  //                   backgroundColor: Colors.lightBlue[300],
-  //                 ),
-  //               ),
-  //               Positioned(
-  //                 right: -170,
-  //                 bottom: -170,
-  //                 child: CircleAvatar(
-  //                   radius: 130,
-  //                   backgroundColor: Colors.deepOrangeAccent,
-  //                 ),
-  //               ),
-  //               Positioned(
-  //                 right: -160,
-  //                 bottom: -190,
-  //                 child: CircleAvatar(
-  //                   radius: 130,
-  //                   backgroundColor: Colors.orangeAccent,
-  //               ),
-  //             )
-  //           ],
-  //         ),
-  //       ),
-  //     ),
-  //   );
-  // }
 
   Widget startGetWallet(context) {
-      // showAlertDialog(BuildContext context, String alertText) {
-      //   Widget okButton = FlatButton(
-      //     child: Text("OK"),
-      //     onPressed: () {
-      //       Navigator.pop(context);
-      //     },
-      //   );
-      //   AlertDialog alert = AlertDialog(
-      //     title: Text('Oops!'),
-      //     content: Text(alertText),
-      //     actions: [
-      //       okButton,
-      //     ],
-      //   );
-      //   showDialog(
-      //     barrierDismissible: false,
-      //     builder: (BuildContext context) {
-      //       return alert;
-      //     }, context: null,
-      //   );
-      // }
-
-      // onGetWallet() async {
-      //   String _token;
-      //   SharedPreferences isToken = await SharedPreferences.getInstance();
-      //   _token = isToken.get('token');
-      //   if (_token == null) {
-      //     String alertText = 'Please Sign up with Email or Phone to get wallet';
-      //     showAlertDialog(context, alertText);
-      //   } else {
-      //     Navigator.push(
-      //       context,
-      //       MaterialPageRoute(builder: (context) => MyWallet()),
-      //     );
-      //   }
-      // }
     return Container(
-      child: ClipRRect(
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 15),
+        child: ClipRRect(
           borderRadius: BorderRadius.all(Radius.circular(12)),
           child: Container(
             width: MediaQuery.of(context).size.width,
@@ -341,7 +218,7 @@ Widget bodyPage(BuildContext context) {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                     Container(
+                    Container(
                         width: 140,
                         padding:
                           EdgeInsets.symmetric(horizontal: 1, vertical: 1),
@@ -363,7 +240,7 @@ Widget bodyPage(BuildContext context) {
                               child: Row(
                                 children: <Widget>[
                                   Icon(
-                                    Icons.account_balance_wallet_outlined,
+                                    Icons.more_vert,
                                     color: Colors.white,
                                     size: 20,
                                   ),
@@ -411,193 +288,363 @@ Widget bodyPage(BuildContext context) {
                   child: CircleAvatar(
                     radius: 130,
                     backgroundColor: Colors.orangeAccent,
-                ),
-              )
-            ],
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),
     );
   }
 
-Widget planView(BuildContext context) {
+// Widget planView(BuildContext context) {
+//   return Container(
+//     width: MediaQuery.of(context).size.width,
+//     height: MediaQuery.of(context).size.height * .27,
+//     decoration: BoxDecoration(
+//       borderRadius: BorderRadius.circular(12.0),
+//       color: Colors.grey[900],
+//     ),
+//   child: Column(
+//     mainAxisAlignment: MainAxisAlignment.start,
+//     crossAxisAlignment: CrossAxisAlignment.start,
+//     children: <Widget>[
+//       SizedBox(height: 20),
+//       Center(
+//         child: Image.asset(
+//           "assets/images/logo.png",
+//           // height: 100,
+//           // width: 100,
+//           color: Colors.white,
+//           scale: 4,
+//         ),
+//       ),
+//       Container(
+//         padding: EdgeInsets.all(20),
+//         child: Column(
+//           crossAxisAlignment: CrossAxisAlignment.start,
+//           children: [
+//             Container(
+//               child: Padding(
+//                 padding: EdgeInsets.only(left: 50, right: 50),
+//                 child: Row(
+//                   mainAxisAlignment: MainAxisAlignment.center,
+//                   children: [
+//                     Text(
+//                       'Device:',
+//                       style: TextStyle(
+//                         color: Colors.white,
+//                         fontFamily: 'Medium'
+//                       ),
+//                     ),
+//                     Expanded(child: Container()),
+//                     Text(
+//                       '2 Devices',
+//                       style: TextStyle(
+//                         color: Colors.white,
+//                         fontWeight: FontWeight.w800,
+//                       ),
+//                     ),
+//                   ],
+//                 ),
+//               ),
+//             ),
+//             SizedBox(height: 10),
+//             Container(
+//               child: Padding(
+//                 padding: EdgeInsets.only(left: 50, right: 50),
+//                 child: Row(
+//                   mainAxisAlignment: MainAxisAlignment.center,
+//                   children: [
+//                     Text(
+//                       'Expiration:',
+//                       style: TextStyle(
+//                         color: Colors.white,
+//                         fontFamily: 'Medium'
+//                       ),
+//                     ),
+//                     Expanded(child: Container()),
+//                     Text(
+//                       '${mPlan.plan} Days',
+//                       style: TextStyle(
+//                         color: Colors.white,
+//                         fontWeight: FontWeight.w800,
+//                       ),
+//                     ),
+//                   ],
+//                 ),
+//               ),
+//             ),
+//             SizedBox(height: 10),
+//             Container(
+//               child: Padding(
+//                 padding: EdgeInsets.only(left: 50, right: 50),
+//                 child: Row(
+//                   mainAxisAlignment: MainAxisAlignment.center,
+//                   children: [
+//                     Text(
+//                       'Speed:',
+//                       style: TextStyle(
+//                         color: Colors.white,
+//                         fontFamily: 'Medium'
+//                       ),
+//                     ),
+//                     Expanded(child: Container()),
+//                     Text(
+//                       '5 MB',
+//                       style: TextStyle(
+//                         color: Colors.white,
+//                         fontWeight: FontWeight.w800,
+//                       ),
+//                     ),
+//                   ],
+//                 ),
+//               ),
+//             ),
+//             ],
+//           ),
+//         ),
+//       ],
+//     ),
+//   );
+// }
+
+Widget noPlanView(BuildContext context) {
   return Container(
-    width: MediaQuery.of(context).size.width,
-    height: MediaQuery.of(context).size.height * .27,
-    decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(12.0),
-      color: Colors.grey[900],
-    ),
-  child: Column(
-    mainAxisAlignment: MainAxisAlignment.start,
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: <Widget>[
-      Container(
-        width: MediaQuery.of(context).copyWith().size.width * 2,
-        padding: EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.only(
-            topLeft: const Radius.circular(12.0),
-            topRight: const Radius.circular(12.0),
-          ),
-          color: Colors.blueGrey[900],
-        ),
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    child: Padding(
+      padding: EdgeInsets.symmetric(horizontal: 15),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Container(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height * .27, 
+            padding: EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(
+                Radius.circular(12.0),
+              ),
+              color: Colors.blueGrey[900],
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  'Username: ${mPlan.username}',
+                  'Buy Hotspot Plan',
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'Poppins-Medium'
+                    fontSize: 20,
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
-                Text(
-                  'Balance: ${mPlan.balance} SEL',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'Poppins-Medium'
-                  ),
-                ),
-              ],
-            ),
-          ],
-        )
-      ),
-      Container(
-        padding: EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              child: Padding(
-                padding: EdgeInsets.only(top: 10, bottom: 10),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                    'Device: ${mPlan.device}',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontFamily: 'Medium'
-                    ),
-                  ),
-                  SizedBox(height: 10),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Expiration: ${mPlan.plan} days',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontFamily: 'Medium'
+                SizedBox(height: 20),
+                Container(
+                  width: 125,
+                  padding: EdgeInsets.symmetric(horizontal: 1, vertical: 1),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(12)),
+                    border: Border.all(color: Colors.white, width: 1)),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      FlatButton(
+                        highlightColor: Colors.transparent,
+                        splashColor: Colors.transparent,
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => UserPlan()),
+                          );
+                        },
+                        child: Row(
+                          children: <Widget>[
+                            Icon(
+                              Icons.more_vert,
+                              color: Colors.white,
+                              size: 20,
+                            ),
+                            SizedBox(width: 5),
+                            Text("Buy plan",
+                              style: TextStyle(
+                                fontFamily: "Medium",
+                                color: Colors.white),
                           ),
-                        ),
-                        // FlatButton(
-                        //   color: Colors.transparent,
-                        //   highlightColor: Colors.transparent,
-                        //   splashColor: Colors.transparent,
-                        //   onPressed: () {
-                        //     Navigator.push(
-                        //       context,
-                        //       MaterialPageRoute(
-                        //           builder: (context) => Plan(),
-                        //       )
-                        //     );
-                        //   },
-                        //   child: Text("Detail",
-                        //     style: TextStyle(color: Colors.lightBlue)
-                        //   ),
-                        // )
-                      ],
+                        ],
+                      ),
                     ),
                   ],
                 ),
               ),
-            )
-            ],
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     ),
   );
 }
 
-Widget noPlanView(BuildContext context) {
-  return Column(
-    mainAxisAlignment: MainAxisAlignment.start,
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: <Widget>[
-      Container(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height * .27, 
-        padding: EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(
-            Radius.circular(12.0),
-          ),
-          color: Colors.blueGrey[900],
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'Buy Hotspot Plan',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 20,
-                fontWeight: FontWeight.w500,
+Widget _planViewButton(context){
+  return Container(
+    child: Padding(
+      padding: EdgeInsets.symmetric(horizontal: 15),
+      child: Center(
+        child: InkWell(
+          child: Container(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height * .27,
+            // width: ScreenUtil.getInstance().setWidth(330),
+            // height: ScreenUtil.getInstance().setHeight(100),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12.0),
+              color: Colors.grey[900],
+            ),
+          child: Material(
+            color: Colors.transparent,
+            child: InkWell(
+              customBorder: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              // highlightColor: Colors.transparent,
+              // splashColor: Colors.transparent,
+              onTap: () async {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => PlanView()));
+              },
+              child: Column(
+                children: [
+                  SizedBox(height: 20),
+                  Center(
+                    child: Image.asset(
+                      "assets/images/logo.png",
+                      // height: 100,
+                      // width: 100,
+                      color: Colors.white,
+                      scale: 4,
+                    ),
+                  ),
+                  Container(
+                    padding: EdgeInsets.all(20),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          child: Padding(
+                            padding: EdgeInsets.only(left: 50, right: 50),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'Device:',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: 'Medium'
+                                  ),
+                                ),
+                                Expanded(child: Container()),
+                                Text(
+                                  '${mPlan.device} Devices',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w800,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                        Container(
+                          child: Padding(
+                            padding: EdgeInsets.only(left: 50, right: 50),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'Expire:',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: 'Medium'
+                                  ),
+                                ),
+                                Expanded(child: Container()),
+                                Text(
+                                  '${mPlan.plan} Days',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w800,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                        Container(
+                          child: Padding(
+                            padding: EdgeInsets.only(left: 50, right: 50),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'Speed:',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: 'Medium'
+                                  ),
+                                ),
+                                Expanded(child: Container()),
+                                Text(
+                                  '5 MB',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w800,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 10),
+                        Container(
+                          child: Padding(
+                            padding: EdgeInsets.only(left: 50, right: 50),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'Valid until:',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: 'Medium'
+                                  ),
+                                ),
+                                Expanded(child: Container()),
+                                Text(
+                                  '${mPlan.timeLeft.split(' ').reversed.join(' ')}', 
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w800,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
-          //   SizedBox(height: 20),
-          //   Container(
-          //     width: 125,
-          //     padding:
-          //       EdgeInsets.symmetric(horizontal: 1, vertical: 1),
-          //     decoration: BoxDecoration(
-          //       borderRadius: BorderRadius.all(Radius.circular(12)),
-          //       border: Border.all(color: Colors.white, width: 1)),
-          //     child: Row(
-          //       mainAxisAlignment: MainAxisAlignment.start,
-          //       children: <Widget>[
-          //         FlatButton(
-          //           highlightColor: Colors.transparent,
-          //           splashColor: Colors.transparent,
-          //           onPressed: () {
-          //             Navigator.push(
-          //               context,
-          //               MaterialPageRoute(builder: (context) => UserPlan()),
-          //             );
-          //           },
-          //           child: Row(
-          //             children: <Widget>[
-          //               Icon(
-          //                 FontAwesome.shopping_cart,
-          //                 color: Colors.white,
-          //                 size: 20,
-          //               ),
-          //               SizedBox(width: 5),
-          //               Text("Buy plan",
-          //                 style: TextStyle(
-          //                   fontFamily: "Medium",
-          //                   color: Colors.white),
-          //             ),
-          //           ],
-          //         ),
-          //       ),
-          //     ],
-          //   ),
-          // ),
-          ],
-        ),
+          ),
+        )
       ),
-    ],
+    ),
   );
 }

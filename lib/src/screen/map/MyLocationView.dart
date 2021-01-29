@@ -1,8 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_map/flutter_map.dart';
+import 'package:koompi_hotspot/all_export.dart';
 import 'package:latlong/latlong.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:app_settings/app_settings.dart';
 
 class MyLocationView extends StatefulWidget {
   @override

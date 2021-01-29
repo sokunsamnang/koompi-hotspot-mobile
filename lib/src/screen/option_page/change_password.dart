@@ -1,14 +1,6 @@
-import 'dart:async';
-import 'dart:convert';
-import 'package:flutter/material.dart';
-import 'package:koompi_hotspot/src/components/reuse_widget.dart';
-import 'package:koompi_hotspot/src/components/validator_mixin.dart';
-import 'package:koompi_hotspot/src/models/model_change_password.dart';
-import 'package:koompi_hotspot/src/screen/login/login_page.dart';
-import 'package:koompi_hotspot/src/services/services.dart';
+import 'package:koompi_hotspot/src/reuse_widget/reuse_widget.dart';
 import 'package:http/http.dart' as http;
-import 'package:line_icons/line_icons.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:koompi_hotspot/all_export.dart';
 
 class ChangePassword extends StatefulWidget {
   @override
@@ -178,18 +170,17 @@ class _ChangePasswordState extends State<ChangePassword>
   }
 
   String alertText;
-  bool _isLoading = false;
+  bool isLoading = false;
 
   Future <void> _resetPassword() async {
     dialogLoading(context);
     SharedPreferences pref = await SharedPreferences.getInstance();
     String _token = pref.getString('token');
-    print(_token);
     var responseBody;
     try {
-      String apiUrl = 'https://api-hotspot.koompi.org/api/change-password/account';
+      String apiUrl = 'https://api-hotspot.koompi.org/api/change-password/account-phone';
       setState(() {
-        _isLoading = true;
+        isLoading = true;
       });
       var response = await http.put(apiUrl,
         headers: <String, String>{
@@ -216,7 +207,12 @@ class _ChangePasswordState extends State<ChangePassword>
           barrierDismissible: false,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: Text('Error'),
+              title: Row(
+                children: [
+                  Icon(Icons.warning, color: Colors.yellow),
+                  Text('WARNING', style: TextStyle(fontFamily: 'Poppins-Bold'),),
+                ],
+              ),
               content: SingleChildScrollView(
                 child: ListBody(
                   children: <Widget>[
@@ -248,7 +244,7 @@ showChangePasswordDialog(context) async {
       barrierDismissible: false,
       builder: (BuildContext context) {
         return WillPopScope(
-          onWillPop: () {},
+          onWillPop: () async => false,
           child: AlertDialog(
             title: Text(
               'Completed',
@@ -269,8 +265,8 @@ showChangePasswordDialog(context) async {
                   Future.delayed(Duration(seconds: 2), () {
                     Timer(Duration(milliseconds: 500), () => Navigator.pushAndRemoveUntil(
                       context,
-                      MaterialPageRoute(builder: (context) => LoginPage()),
-                      ModalRoute.withName('/'),
+                      MaterialPageRoute(builder: (context) => LoginPhone()),
+                      ModalRoute.withName('/loginPhone'),
                     ));
                   });
                 },
@@ -365,7 +361,7 @@ showChangePasswordDialog(context) async {
       key: _modelChangePassword.globalKey,
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Text('Change Password', style: TextStyle(color: Colors.black)),
+        title: Text('Change Password', style: TextStyle(color: Colors.black, fontFamily: 'Medium')),
         leading: Builder(builder: (BuildContext context) {
           return IconButton(
               icon: Icon(

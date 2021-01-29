@@ -1,20 +1,5 @@
-import 'dart:convert';
-import 'package:connectivity/connectivity.dart';
-import 'package:flutter/material.dart';
-import 'package:koompi_hotspot/index.dart';
-import 'package:koompi_hotspot/src/backend/get_request.dart';
-import 'package:koompi_hotspot/src/backend/post_request.dart';
-import 'package:koompi_hotspot/src/components/formcard/formcardLogin.dart';
-import 'package:koompi_hotspot/src/components/navbar.dart';
-import 'package:koompi_hotspot/src/components/reuse_widget.dart';
-import 'package:koompi_hotspot/src/components/socialmedia.dart';
-import 'package:koompi_hotspot/src/models/model_balance.dart';
-import 'package:koompi_hotspot/src/models/model_get_plan.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:koompi_hotspot/src/services/network_status.dart';
-import 'package:koompi_hotspot/src/services/services.dart';
-import 'dart:io';
-import 'package:koompi_hotspot/src/services/updater.dart';
+import 'package:koompi_hotspot/all_export.dart';
+import 'package:koompi_hotspot/src/reuse_widget/reuse_widget.dart';
 import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
@@ -33,7 +18,7 @@ class _LoginPageState extends State<LoginPage> {
 
   String token;
   String messageAlert;
-  bool _isLoading = false;
+  bool isLoading = false;
 
   NetworkStatus _networkStatus = NetworkStatus();
   
@@ -96,7 +81,7 @@ class _LoginPageState extends State<LoginPage> {
             await GetRequest().getUserProfile(token)
               .then((values) {
                 setState(() {
-                  _isLoading = true;
+                  isLoading = true;
                 });
 
           });
@@ -151,7 +136,12 @@ class _LoginPageState extends State<LoginPage> {
         barrierDismissible: false,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Error'),
+            title: Row(
+              children: [
+                Icon(Icons.error, color: Colors.red),
+                Text('ERROR', style: TextStyle(fontFamily: 'Poppins-Bold'),),
+              ],
+            ),
             content: SingleChildScrollView(
               child: ListBody(
                 children: <Widget>[
@@ -181,7 +171,12 @@ class _LoginPageState extends State<LoginPage> {
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Error'),
+          title: Row(
+            children: [
+              Icon(Icons.warning, color: Colors.yellow),
+              Text('WARNING', style: TextStyle(fontFamily: 'Poppins-Bold'),),
+            ],
+          ),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
@@ -273,46 +268,6 @@ class _LoginPageState extends State<LoginPage> {
                     SizedBox(height: ScreenUtil().setHeight(100)),
                     formLogin(context, usernameController, passwordController,
                           _obscureText, _toggle, _email, _password, formKey, _autoValidate, _submitLogin),
-                    SizedBox(height: ScreenUtil().setHeight(40)),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Expanded(
-                          child: new Container(
-                              margin: const EdgeInsets.only(left: 20.0, right: 10.0),
-                              child: Divider(
-                                color: Colors.black,
-                                height: 36,
-                              )),
-                        ),
-                        Text("OR",
-                          style: TextStyle(
-                            fontSize: ScreenUtil().setSp(35),
-                            fontFamily: "Poppins-BoldItalic",
-                            letterSpacing: .6)),
-                        Expanded(
-                          child: new Container(
-                              margin: const EdgeInsets.only(left: 20.0, right: 10.0),
-                              child: Divider(
-                                color: Colors.black,
-                                height: 36,
-                              )),
-                        ),
-                      ],
-                    ),
-                    Text("SIGN IN WITH",
-                      style: TextStyle(
-                        fontSize: ScreenUtil().setSp(35),
-                        fontFamily: "Poppins-Bold",
-                        letterSpacing: .6)),
-                    SizedBox(height: ScreenUtil().setHeight(20)),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        onPressFB(context),
-                        onPressGoogle(context),
-                      ],
-                    ),
                   ],
                 ),
               ),

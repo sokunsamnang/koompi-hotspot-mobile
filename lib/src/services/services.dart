@@ -1,20 +1,19 @@
-import 'dart:async';
-import 'package:flutter/material.dart';
-import 'package:koompi_hotspot/src/backend/get_request.dart';
-import 'package:koompi_hotspot/src/components/navbar.dart';
-import 'package:koompi_hotspot/src/models/model_balance.dart';
-import 'package:koompi_hotspot/src/models/model_get_plan.dart';
-import 'package:koompi_hotspot/src/screen/login/login_page.dart';
+import 'package:koompi_hotspot/all_export.dart';
 import 'package:koompi_hotspot/src/services/jtw_decoder.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class StorageServices{
 
   // static String _decode;
   // static SharedPreferences _preferences;
   // bool status;
-
+  
+  static String removeZero(String number){
+    if (number.startsWith("0")){
+      number = number.replaceRange(0, 1, '');
+    }
+    return number;
+  }
 
   void clearPref() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
@@ -30,8 +29,8 @@ class StorageServices{
       clearToken('token'); 
       Navigator.pushAndRemoveUntil(
         context,
-        MaterialPageRoute(builder: (context) => LoginPage()),
-        ModalRoute.withName('/'),
+        MaterialPageRoute(builder: (context) => LoginPhone()),
+        ModalRoute.withName('/loginPhone'),
       );
     }
     else if (JwtDecoder.isExpired(token) == false ) {
@@ -50,8 +49,11 @@ class StorageServices{
           context, MaterialPageRoute(builder: (context) => Navbar()));
     }
     else{
-      Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => LoginPage()));
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => LoginPhone()),
+        ModalRoute.withName('/loginPhone'),
+      );
     }
   }
 
@@ -65,41 +67,13 @@ class StorageServices{
           Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(builder: (context) => Navbar()),
-            ModalRoute.withName('/'),
+            ModalRoute.withName('/navbar'),
           );
         }
       },
     );
   }
-
-
-
-  // static Future<SharedPreferences> setData(dynamic _data, String _path) async {
-  //   _preferences = await SharedPreferences.getInstance();
-  //   _decode = jsonEncode(_data);
-  //   _preferences.setString(_path, _decode);
-  //   return _preferences;
-  // }
-
-  // static Future<dynamic>fetchData(String _path) async {
-  //   _preferences = await SharedPreferences.getInstance();
-  //   dynamic _data = _preferences.getString(_path);
-  //   if ( _data == null ) return null;
-  //   else {
-  //     return await jsonDecode(_data);
-  //   }
-  // }
-
-  // static Future<void> removeKey(String path) async {
-  //   _preferences = await SharedPreferences.getInstance();
-  //   _preferences.remove(path);
-  // }
-
-  // static Future<void> clearStorage() async {
-  //   SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-  //   await sharedPreferences.clear();
-  // }
-
+  
 
   Future<String> read(String key) async {
     SharedPreferences pref = await SharedPreferences.getInstance();

@@ -1,13 +1,11 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:koompi_hotspot/src/components/formcard/formcardForgotPassword.dart';
-import 'package:koompi_hotspot/src/screen/login/login_page.dart';
+import 'package:koompi_hotspot/all_export.dart';
+
 
   @override
   Widget forgetPasswordBody(
     BuildContext context, 
-    String _email, 
-    TextEditingController _emailController, 
+    String _phone, 
+    TextEditingController _phoneController, 
     Function _submitValidate,
     GlobalKey<FormState> formKey, 
     bool _autoValidate) {
@@ -51,7 +49,7 @@ import 'package:koompi_hotspot/src/screen/login/login_page.dart';
                         ),
                       ),
                       Center(
-                        child: Text('we just need your registered email to send you password reset',
+                        child: Text('we just need your registered phone number to send you password reset',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   color: Colors.black,
@@ -65,7 +63,7 @@ import 'package:koompi_hotspot/src/screen/login/login_page.dart';
                   SizedBox(
                     height: ScreenUtil.getInstance().setHeight(50),
                   ),
-                  formCardForgotPasswordEmail(context, _emailController, _email, _submitValidate, formKey, _autoValidate),
+                  formCardForgotPasswordPhone(context, _phoneController, _phone, _submitValidate, formKey, _autoValidate),
                   SizedBox(height: ScreenUtil.getInstance().setHeight(60)),
                   Center(
                     child: InkWell(
@@ -85,8 +83,9 @@ import 'package:koompi_hotspot/src/screen/login/login_page.dart';
                       child: Material(
                         color: Colors.transparent,
                         child: InkWell(
-                          highlightColor: Colors.transparent,
-                          splashColor: Colors.transparent,
+                          customBorder: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
                           onTap: () async {
                             
                             _submitValidate();
@@ -115,14 +114,14 @@ import 'package:koompi_hotspot/src/screen/login/login_page.dart';
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         Text(
-                          "BACK TO LOGIN ",
+                          "BACK TO LOGIN?",
                           style: TextStyle(fontFamily: "Poppins-Medium"),
                         ),
                         SizedBox(width: 10,),
                         InkWell(
                           onTap: () {
                             Navigator.pop(context,
-                            MaterialPageRoute(builder: (context) => LoginPage()));
+                            MaterialPageRoute(builder: (context) => LoginPhone()));
                           },
                           splashColor: Colors.transparent,
                           highlightColor: Colors.transparent,

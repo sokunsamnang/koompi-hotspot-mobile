@@ -48,7 +48,7 @@ android {
         applicationId "com.koompi.hotspot"
         minSdkVersion 24
         targetSdkVersion 29
-        ndkVersion '21.3.6528147'
+        // ndkVersion '21.3.6528147'
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"

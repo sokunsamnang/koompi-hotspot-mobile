@@ -1,17 +1,6 @@
-import 'dart:io';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_absolute_path/flutter_absolute_path.dart';
-import 'package:flutter_material_pickers/helpers/show_scroll_picker.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
-import 'package:koompi_hotspot/src/backend/post_request.dart';
-import 'package:koompi_hotspot/src/components/reuse_widget.dart';
-import 'package:koompi_hotspot/src/models/model_location.dart';
-import 'package:koompi_hotspot/src/models/model_userdata.dart';
-import 'package:koompi_hotspot/src/services/services.dart';
-import 'package:line_icons/line_icons.dart';
-import 'package:multi_image_picker/multi_image_picker.dart';
+import 'package:koompi_hotspot/src/reuse_widget/reuse_widget.dart';
+import 'package:koompi_hotspot/all_export.dart';
 
 class MyAccount extends StatefulWidget {
   @override
@@ -23,7 +12,7 @@ class _MyAccountState extends State<MyAccount>
   AnimationController _controller;
 
   final formKey = GlobalKey<FormState>();
-  bool _autoValidate = false;
+  AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
   String imageUrl;
 
   Future<void> loadAsset() async {
@@ -77,7 +66,7 @@ class _MyAccountState extends State<MyAccount>
       _onSubmit();
     } else {
       setState(() {
-        _autoValidate = true;
+        autovalidateMode = AutovalidateMode.always;
       });
     }
   }
@@ -89,22 +78,17 @@ class _MyAccountState extends State<MyAccount>
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
         print('Internet connected');
         var response = await PostRequest().completeInfoUser(
-            emailController.text,
-            fullnameController.text,
-            gender,
-            birthdate,
-            address);
+          fullnameController.text,
+          phoneController.text,
+          gender,
+          birthdate,
+          address);
         if (response.statusCode == 200) {
-          await StorageServices().read("token").then((value) async {
-            // String _token = value;
-            // if (_token != null) {
-            //   await PostRequest().upLoadImage(_image);
-            // }
-          });
           setState(() {
             StorageServices().updateUserData(context);
           });
         } else {
+          Navigator.pop(context);
           print('update info not Successful');
           showErrorServerDialog(context);
         }
@@ -115,12 +99,7 @@ class _MyAccountState extends State<MyAccount>
   }
 
   showErrorServerDialog(BuildContext context) async {
-    var response = await PostRequest().completeInfoUser(
-        emailController.value.text,
-        fullnameController.value.text,
-        gender,
-        birthdate,
-        address);
+    
     return showDialog(
         context: context,
         barrierDismissible: false,
@@ -130,7 +109,7 @@ class _MyAccountState extends State<MyAccount>
             content: SingleChildScrollView(
               child: ListBody(
                 children: <Widget>[
-                  Text('${response.body}'),
+                  Text('Update info not successfully'),
                 ],
               ),
             ),
@@ -159,16 +138,16 @@ class _MyAccountState extends State<MyAccount>
   }
 
   //Get Data
-  String name = mData.name;
+  String name = mData.fullname;
   String gender = mData.gender;
   String email = mData.email;
   String birthdate = mData.birthdate;
   String address = mData.address;
 
   TextEditingController fullnameController =
-      TextEditingController(text: '${mData.name}');
-  TextEditingController emailController =
-      TextEditingController(text: '${mData.email}');
+      TextEditingController(text: '${mData.fullname}');
+  TextEditingController phoneController =
+      TextEditingController(text: '${mData.phone}');
 
   //LocationPicker
   var locationModel = LocationList();
@@ -209,7 +188,7 @@ class _MyAccountState extends State<MyAccount>
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Text('Edit Account', style: TextStyle(color: Colors.black)),
+        title: Text('Edit Account', style: TextStyle(color: Colors.black, fontFamily: 'Medium')),
         leading: Builder(builder: (BuildContext context) {
           return IconButton(
               icon: Icon(
@@ -248,7 +227,7 @@ class _MyAccountState extends State<MyAccount>
           height: MediaQuery.of(context).size.height * 2,
           child: Form(
             key: formKey,
-            autovalidate: _autoValidate,
+            autovalidateMode: AutovalidateMode.onUserInteraction,
             child: SingleChildScrollView(
               physics: BouncingScrollPhysics(),
               child: Padding(
@@ -301,29 +280,29 @@ class _MyAccountState extends State<MyAccount>
                       validator: (val) =>
                           val.length < 3 ? 'Full Name is required' : null,
                       onSaved: (val) => fullnameController.text = val,
-                      autovalidate: true,
+                      autovalidateMode: AutovalidateMode.always,
                       controller: fullnameController ?? '',
                       decoration: InputDecoration(
-                          prefixIcon: Icon(LineIcons.user),
-                          hintText: 'Full Name',
-                          // focusedBorder: OutlineInputBorder(
-                          //   borderSide: BorderSide(color: Colors.black, width: 2),
-                          // ),
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.black),
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(12.0)),
-                          )),
+                        prefixIcon: Icon(LineIcons.user),
+                        hintText: 'Full Name',
+                        // focusedBorder: OutlineInputBorder(
+                        //   borderSide: BorderSide(color: Colors.black, width: 2),
+                        // ),
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.black),
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(12.0)),
+                        )),
                     ),
                     SizedBox(height: 16.0),
-                    Text('Email'),
+                    Text('Phone Number'),
                     SizedBox(height: 10.0),
                     TextFormField(
                       readOnly: true,
-                      controller: emailController ?? '',
+                      controller: phoneController ?? '',
                       decoration: InputDecoration(
-                          prefixIcon: Icon(Icons.alternate_email_outlined),
-                          hintText: 'Email',
+                          prefixIcon: Icon(Icons.phone),
+                          hintText: 'Phone Number',
                           border: OutlineInputBorder(
                             borderSide: BorderSide(color: Colors.black),
                             borderRadius:
@@ -333,8 +312,11 @@ class _MyAccountState extends State<MyAccount>
                     SizedBox(height: 16.0),
                     Text('Date Of Birth'),
                     SizedBox(height: 10.0),
-                    dateOfbirth(
-                        selectedDate, _selectDate, dateFormart, context),
+                    dateOfbirth(selectedDate, _selectDate, dateFormart, context),
+                    SizedBox(height: 16.0),
+                    Text('Location'),
+                    SizedBox(height: 10.0),
+                    locationPicker(context),
                     SizedBox(height: 16.0),
                     Text('Gender'),
                     SizedBox(height: 10.0),
@@ -410,10 +392,6 @@ class _MyAccountState extends State<MyAccount>
                         // ),
                       ],
                     ),
-                    SizedBox(height: 16.0),
-                    Text('Location'),
-                    SizedBox(height: 10.0),
-                    locationPicker(context),
                   ],
                 ),
               ),

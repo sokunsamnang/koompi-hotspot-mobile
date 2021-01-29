@@ -1,102 +1,88 @@
-import 'dart:async';
-import 'dart:io';
-import 'package:flare_flutter/flare_actor.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:koompi_hotspot/index.dart';
-import 'package:koompi_hotspot/src/backend/post_request.dart';
-import 'package:koompi_hotspot/src/components/reuse_widget.dart';
-import 'package:koompi_hotspot/src/screen/home/hotspot/buy_plan_complete.dart';
-import 'package:line_icons/line_icons.dart';
+import 'package:koompi_hotspot/all_export.dart';
+import 'package:koompi_hotspot/src/reuse_widget/reuse_widget.dart';
+import 'package:provider/provider.dart';
 
 class UserPlan extends StatefulWidget {
   @override
   _UserPlanState createState() => _UserPlanState();
 }
 
-class _UserPlanState extends State<UserPlan>
-    with SingleTickerProviderStateMixin {
-  AnimationController _controller;
+class _UserPlanState extends State<UserPlan> {
+  final formKey = GlobalKey<FormState>();
+  AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
 
-  final GlobalKey<FormBuilderState> formKey = GlobalKey<FormBuilderState>();
-  bool _autoValidate = false;
+  final TextEditingController _passwordController = new TextEditingController();
 
-  final TextEditingController usernameController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-  final TextEditingController confirmPasswordController = TextEditingController();
-  final TextEditingController planUserController = TextEditingController();
+  void _submitHotspotPlan30Days(){
+    final form = formKey.currentState;
 
+    if(form.validate()){
+      form.save();
+      buyHotspot30days(context);
+    }
+    else{
+      setState(() {
+        autovalidateMode = AutovalidateMode.always;
+      });
+    }
+  }
 
-  //check connection and login
-  Future <void> buyHotspot(BuildContext context) async {
+  void _submitHotspotPlan365Days(){
+    final form = formKey.currentState;
+
+    if(form.validate()){
+      form.save();
+      buyHotspot365days(context);
+    }
+    else{
+      setState(() {
+        autovalidateMode = AutovalidateMode.always;
+      });
+    }
+  }
+
+  Future <void> buyHotspot30days(BuildContext context) async {
     dialogLoading(context);
+
+    var response = await PostRequest().buyHotspotPlan(
+      mData.phone,
+      _passwordController.text,
+      '30',
+    );
+    var responseJson = json.decode(response.body);
+
     try {
       final result = await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
         print('Internet connected');
-
-        var paymentResponse = await PostRequest().hotspotPayment(selectedPlanIndex.toString());
-        var paymentResponseJson = json.decode(paymentResponse.body);
-        if (paymentResponse.statusCode == 200) {
-          var response = await PostRequest().buyHotspotPlan(
-          usernameController.text,
-          passwordController.text,
-          selectedPlanIndex.toString());
-          var responseJson = json.decode(response.body);
-          if(response.statusCode == 200){
-            print('Buy plan successfully');
-            print(usernameController.text);
-            print(passwordController.text);
-            print(confirmPasswordController.text);
-            print(selectedPlanIndex);
-            Future.delayed(Duration(seconds: 2), () {
-              Timer(Duration(milliseconds: 500), () => Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(builder: (context) => CompletePlan()),
-                ModalRoute.withName('/'),
-              ));
-            });
-          }
-          else{
-            Navigator.of(context).pop();
-            return showDialog(
-              context: context,
-              barrierDismissible: false,
-              builder: (BuildContext context) {
-                return AlertDialog(
-                  title: Text('Error'),
-                  content: SingleChildScrollView(
-                    child: ListBody(
-                      children: <Widget>[
-                        Text(responseJson['message']),
-                      ],
-                    ),
-                  ),
-                  actions: <Widget>[
-                    FlatButton(
-                      child: Text('OK'),
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                    ),
-                  ],
-                );
-              }
-            );
-          }
-        } 
-        else {
+        if(response.statusCode == 200){    
+          Future.delayed(Duration(seconds: 2), () async{
+            await Provider.of<GetPlanProvider>(context, listen: false).fetchHotspotPlan();
+            Timer(Duration(milliseconds: 500), () => Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => CompletePlan()),
+              ModalRoute.withName('/navbar'),
+            ));
+          });
+        }
+        else{
+          _passwordController.clear();
           Navigator.of(context).pop();
           return showDialog(
             context: context,
             barrierDismissible: false,
             builder: (BuildContext context) {
               return AlertDialog(
-                title: Text('Error'),
+                title: Row(
+                  children: [
+                    Icon(Icons.warning, color: Colors.yellow),
+                    Text('WARNING', style: TextStyle(fontFamily: 'Poppins-Bold'),),
+                  ],
+                ),
                 content: SingleChildScrollView(
                   child: ListBody(
                     children: <Widget>[
-                      Text(paymentResponseJson['message']),
+                      Text(responseJson['message']),
                     ],
                   ),
                 ),
@@ -111,7 +97,73 @@ class _UserPlanState extends State<UserPlan>
               );
             }
           );
-        } 
+        }
+      
+      }
+    } on SocketException catch (_) {
+      Navigator.pop(context);
+      print('not connected');
+    }
+  }
+
+  Future <void> buyHotspot365days(BuildContext context) async {
+     dialogLoading(context);
+
+    var response = await PostRequest().buyHotspotPlan(
+      mData.phone,
+      _passwordController.text,
+      '365',
+    );
+    var responseJson = json.decode(response.body);
+
+    try {
+      final result = await InternetAddress.lookup('google.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        print('Internet connected');
+        if(response.statusCode == 200){    
+          Future.delayed(Duration(seconds: 2), () async{
+            await Provider.of<GetPlanProvider>(context, listen: false).fetchHotspotPlan();
+            Timer(Duration(milliseconds: 500), () => Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => CompletePlan()),
+              ModalRoute.withName('/navbar'),
+            ));
+          });
+        }
+        else{
+          _passwordController.clear();
+          Navigator.of(context).pop();
+          return showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: Row(
+                  children: [
+                    Icon(Icons.warning, color: Colors.yellow),
+                    Text('WARNING', style: TextStyle(fontFamily: 'Poppins-Bold'),),
+                  ],
+                ),
+                content: SingleChildScrollView(
+                  child: ListBody(
+                    children: <Widget>[
+                      Text(responseJson['message']),
+                    ],
+                  ),
+                ),
+                actions: <Widget>[
+                  FlatButton(
+                    child: Text('OK'),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              );
+            }
+          );
+        }
+      
       }
     } on SocketException catch (_) {
       Navigator.pop(context);
@@ -120,116 +172,53 @@ class _UserPlanState extends State<UserPlan>
   }
 
 
-  String lastChoiceChipSelection = '';
-  // Expiration DATE
-
-  String finalDate30Days = '';
-  String finalDate365Days = '';
-
-
-  //Plan Select 
-
-  List<String> planList = ['30', '365'];
-  var selectedPlanIndex;
-  
-  void changeIndex(String index) {
-    setState(() {
-      selectedPlanIndex = index;
-    });
-  }
-
   // Initially password is obscure
   bool _obscureText = true;
 
   // Toggles the password show status
-  void _toggle() {
+  void toggle() {
     setState(() {
       _obscureText = !_obscureText;
     });
   }
 
-  // Initially password is obscure2
-  bool _obscureText2 = true;
-
-  // Toggles2 the password show status
-  void _toggle2() {
-    setState(() {
-      _obscureText2 = !_obscureText2;
-    });
-  }
 
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(vsync: this);
-
-    setState(() {
-      dateFormatter();
-    });
   }
 
   @override
   void dispose() {
     super.dispose();
-    _controller.dispose();
-  }
-
-  void dateFormatter(){
-    //DATE FORMAT Expiration
-    var date30Days = DateTime.now().add(Duration(days: 30));
-    var date365Days = DateTime.now().add(Duration(days: 365));
-
-    var formattedDate30days = "Time ${date30Days.hour}:${date30Days.minute}, Date ${date30Days.day}-${date30Days.month}-${date30Days.year}";
-    var formattedDate365days = "Time ${date365Days.hour}:${date365Days.minute}, Date ${date365Days.day}-${date365Days.month}-${date365Days.year}";
-
-    setState(() {
-      
-      finalDate30Days = formattedDate30days;
-      finalDate365Days = formattedDate365days;
-
-    });
-  }
-
-  void _submitValidate(BuildContext context){
-    final form = formKey.currentState;
-
-    if(form.validate()){
-      form.save();
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => _reviewPlan(
-            usernameController,
-            selectedPlanIndex
-          )
-        )
-      );
-    }
-    else{
-      setState(() {
-        _autoValidate = true;
-      });
-    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: false,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.black), 
+          onPressed: (){
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => Navbar()),
+              ModalRoute.withName('/navbar'),
+            );
+          }
+        ),
+        // automaticallyImplyLeading: false,
+        centerTitle: true,
         backgroundColor: Colors.white,
-        title: Text('Buy Hotspot Plan', style: TextStyle(color: Colors.black)),
+        title: Image.asset(
+          "assets/images/logo.png",
+          // height: 100,
+          // width: 100,
+          scale: 4,
+        ),
       ),
-      body: GestureDetector(
-        behavior: HitTestBehavior.opaque,
-        onTap: () {
-          FocusScope.of(context).requestFocus(FocusNode());
-        },
-        child: FormBuilder(
-          key: formKey,
-          autovalidateMode: AutovalidateMode.always,
-          // autovalidate: _autoValidate,
-          child: Container(
+      body: WillPopScope(
+        child: Container(
           height: MediaQuery.of(context).size.height * 2,
           child: SingleChildScrollView(
             physics: BouncingScrollPhysics(),
@@ -238,367 +227,466 @@ class _UserPlanState extends State<UserPlan>
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    SizedBox(height: 16.0),
-                    Text('Hotspot Username'),
                     SizedBox(height: 10.0),
-                    TextFormField(
-                      controller: usernameController,
-                      validator: (val) => val.length < 3 ? 'Username is required.' : null,
-                      onSaved: (val) => usernameController.text = val,
-                      decoration: InputDecoration(
-                        hintText: 'Username',
-                        prefixIcon: Icon(Icons.people_outline),
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.black),
-                          borderRadius: BorderRadius.all(Radius.circular(12.0))
-                        )
-                      ),
-                    ),
-                    SizedBox(height: 16.0),
-                    Text('Hotspot Password'),
-                    SizedBox(height: 10.0),
-                    TextFormField(
-                      controller: passwordController,
-                      validator: (val) {
-                        if(val.isEmpty){
-                          return 'Password is required.';
-                        }
-                        if(val.length < 8){
-                          return 'Password too short';
-                        }
-                        return null;
-                      },
-                      onSaved: (val) => passwordController.text = val,
-                      decoration: InputDecoration(
-                        hintText: 'Password',
-                        prefixIcon: Icon(LineIcons.lock),
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.black),
-                          borderRadius: BorderRadius.all(Radius.circular(12.0))
-                        ),
-                      suffixIcon: GestureDetector(
-                          onTap: () {
-                            _toggle();
-                          },
-                          child: Icon(
-                            _obscureText ? Icons.visibility_off : Icons.visibility,
-                          ),
-                        ),
-                      ),
-                      obscureText: _obscureText,
-                    ),
-                    SizedBox(height: 16.0),
-                    Text('Hotspot Confirm Password'),
-                    SizedBox(height: 10.0),
-                    TextFormField(
-                      controller: confirmPasswordController,
-                      validator: (val) {
-                        if(val.isEmpty){
-                          return 'Confirm password is required.';
-                        }
-                        if(val != passwordController.text){
-                          return 'Password not match';
-                        }
-                        return null;
-                      },
-                      onSaved: (val) => confirmPasswordController.text = val,
-                      decoration: InputDecoration(
-                        hintText: 'Confirm Password',
-                        prefixIcon: Icon(LineIcons.lock),
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.black),
-                          borderRadius: BorderRadius.all(Radius.circular(12.0))
-                        ),
-                      suffixIcon: GestureDetector(
-                          onTap: () {
-                            _toggle2();
-                          },
-                          child: Icon(
-                            _obscureText2 ? Icons.visibility_off : Icons.visibility,
-                          ),
-                        ),
-                      ),
-                      obscureText: _obscureText2,
-                    ),
-                    SizedBox(height: 16.0),
-                    FormBuilderChoiceChip(
-                      onSaved: (newValue) => selectedPlanIndex = newValue,
-                      validators: [FormBuilderValidators.required()],
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                        labelText: 'Plan Date',
-                        labelStyle: TextStyle(color: Colors.black, fontSize: 20)
-                      ),
-                      labelStyle: TextStyle(
-                        color: Colors.black,
-                        fontSize: 18,
-                        fontFamily: "Medium"
-                      ),
-                      selectedColor: Colors.cyan,
-                      elevation: 2,
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
-                      alignment: WrapAlignment.spaceBetween,
-                      labelPadding: EdgeInsets.only(left: 35, right: 35),
-                      attribute: "planDate",
-                      options: [
-                        FormBuilderFieldOption(value: '30', label: '30 Days',),
-                        FormBuilderFieldOption(value: '365', label: '365 Days',),
-                      ],
-                      onChanged: (value) {
-                        if (value == null) {
-                          //* If chip unselected, set value to last selection
-                          formKey.currentState.fields['planDate'].currentState
-                              .didChange(lastChoiceChipSelection);
-                        } else {
-                          //* If chip selected, save the value and rebuild
-                          setState(() {
-                            lastChoiceChipSelection = value;
-                          });
-                        }
-                      },
-                    ),
-                    SizedBox(height: 50.0),
                     Center(
-                      child: InkWell(
-                        child: Container(
-                          // width: MediaQuery.of(context).copyWith().size.height/2,
-                          height: 50,
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              colors: [Color(0xFF17ead9), Color(0xFF6078ea)]),
-                            borderRadius: BorderRadius.circular(12),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Color(0xFF6078ea).withOpacity(.3),
-                                offset: Offset(0.0, 8.0),
-                                blurRadius: 8.0)
-                            ]),
-                          child: Material(
-                            color: Colors.transparent,
-                            child: InkWell(
-                              highlightColor: Colors.transparent,
-                              splashColor: Colors.transparent,
-                              onTap: () async {
-                                _submitValidate(context);
-                              },
-                              child: Center(
-                                child: Text("SUBMIT",
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontFamily: "Poppins-Bold",
-                                        fontSize: 18,
-                                        letterSpacing: 1.0)),
-                              ),
-                            ),
-                          ),
+                      child: Text(
+                        'Choose Plan', 
+                        style: GoogleFonts.nunito(
+                        textStyle: TextStyle(color: Colors.black, fontSize: 30, fontWeight: FontWeight.w700)
                         ),
                       ),
                     ),
+                    SizedBox(height: 16.0),
+                    plan30DaysButton(context),
+                    SizedBox(height: 50.0),
+                    plan365DaysButton(context),
                   ],
                 ),
               ),
             ),
           ),
+        onWillPop: () => Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => Navbar()),
+          ModalRoute.withName('/navbar'),
         ),
       )
     );
   }
 
-
-
-  // Widget planCustomRadio(String txt, String index) {
-  //   return ButtonTheme(
-  //     height: 50.0,
-  //     padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
-  //     child: OutlineButton(
-  //       onPressed: () => changeIndex(index),
-  //       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
-  //       splashColor: Colors.transparent,
-  //       borderSide: BorderSide(
-  //           color: selectedPlanIndex == index ? Colors.cyan : Colors.grey),
-  //       child: Text(txt,
-  //         style: TextStyle(
-  //             color: selectedPlanIndex == index ? Colors.black : Colors.grey),
-  //       ),
-  //     ),
-  //   );
-  // }
-
-  Widget _planBalance(){
-    if(selectedPlanIndex == planList[0]){
-      return Text(
-        'Balance: 50 RSEL', 
-        style: TextStyle(
-          fontSize: 15.0,
-          fontFamily: 'Poppins-Medium'
-          )
-        );
-    }
-    else if(selectedPlanIndex == planList[1]){
-      return Text(
-        'Balance: 600 RSEL', 
-        style: TextStyle(
-          fontSize: 15.0,
-          fontFamily: 'Poppins-Medium'
-        )
-      );
-    }
-    else{
-      return Container();
-    }
-  }
-
-  Widget _expirationDate(){
-    if(selectedPlanIndex == planList[0]){
-      return Text(
-        'Expiration: $finalDate30Days', 
-        style: TextStyle(
-          fontSize: 15.0,
-          fontFamily: 'Poppins-Medium'
-          )
-        );
-    }
-    else if(selectedPlanIndex == planList[1]){
-      return Text(
-        'Expiration: $finalDate365Days', 
-        style: TextStyle(
-          fontSize: 15.0,
-          fontFamily: 'Poppins-Medium'
-        )
-      );
-    }
-    else{
-      return Container();
-    }
-  }
-
-  Widget _reviewPlan(
-    usernameController,
-    _selectPlanDate) {
-
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: SafeArea(
-        child: Column(
+  Widget plan30DaysButton(BuildContext context){
+    return Container(
+      // width: MediaQuery.of(context).size.width,
+      // height: MediaQuery.of(context).size.height * .27, 
+      // padding: EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+              color: Colors.black12,
+              offset: Offset(0.0, 15.0),
+              blurRadius: 15.0),
+          BoxShadow(
+              color: Colors.black12,
+              offset: Offset(0.0, -10.0),
+              blurRadius: 10.0),
+        ],
+        borderRadius: BorderRadius.all(Radius.circular(12)),
+      ),
+      child: Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Container(
-              child: IconButton(
-                icon: Icon(Icons.arrow_back, color: Colors.black, size: 30,),
-                onPressed: () => Navigator.of(context).pop(),
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            SizedBox(height: 20),
+            Center(
+              child: Text(
+                '50 SEL', 
+                style: GoogleFonts.nunito(
+                textStyle: TextStyle(color: Colors.blue[900], fontSize: 30, fontWeight: FontWeight.w700)
+                ),
               ),
             ),
-            Column(
-              children: <Widget>[
-                Container(
-                  width: 300,
-                  height: 300,
-                  child: FlareActor( 
-                    'assets/animations/alert_icon.flr', 
-                    alignment: Alignment.topCenter,
-                    fit: BoxFit.contain,
-                    animation: 'show',
+            Divider(
+              thickness: 1.5,
+              color: Colors.grey[300],
+              indent: 20,
+              endIndent: 20,
+            ),
+            SizedBox(height: 20),
+            Padding(
+              padding: EdgeInsets.only(right: 25, left:25),
+              child: Row(
+                children: [
+                  Text(
+                    'Device:', 
+                    style: GoogleFonts.nunito(
+                    textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
+                    ),
                   ),
-                ),
-                Center(
-                  child: Text('Please review before buy', 
-                  style: TextStyle(
-                    fontFamily: 'Medium',
-                    fontWeight: FontWeight.bold, 
-                    fontSize: 25),
+                  Expanded(child: Container()),
+                  Text(
+                    '2 Devices', 
+                    style: GoogleFonts.nunito(
+                    textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
+                    ),
                   ),
-                ),
-                SizedBox(height: 25.0),
-                Container(
-                  padding: EdgeInsets.all(5),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      SizedBox(height: 10.0),
-                      Container(
-                        child: Text('Username: ${usernameController.text}',
-                        style: TextStyle(
-                          fontSize: 15.0,
-                          fontFamily: 'Poppins-Medium',
-                          )
-                        ),
+                ],
+              ),
+            ),
+            SizedBox(height: 10),
+            Padding(
+              padding: EdgeInsets.only(right: 25, left:25),
+              child: Row(
+                children: [
+                  Text(
+                    'Expire:', 
+                    style: GoogleFonts.nunito(
+                    textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
+                    ),
+                  ),
+                  Expanded(child: Container()),
+                  Text(
+                    '30 Days', 
+                    style: GoogleFonts.nunito(
+                    textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 10),
+            Padding(
+              padding: EdgeInsets.only(right: 25, left:25),
+              child: Row(
+                children: [
+                  Text(
+                    'Speed:', 
+                    style: GoogleFonts.nunito(
+                    textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
+                    ),
+                  ),
+                  Expanded(child: Container()),
+                  Text(
+                    '5 MB', 
+                    style: GoogleFonts.nunito(
+                    textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 20),
+            Center(
+              child: InkWell(
+                child: Container(
+                  // width: ScreenUtil.getInstance().setWidth(330),
+                  height: 50,
+                  decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                          colors: [Color(0xFF17ead9), Color(0xFF6078ea)]),
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(12), 
+                        bottomRight: Radius.circular(12),
                       ),
-                      SizedBox(height: 10.0),
-                      Container(
-                        child: Text('Date: $_selectPlanDate Days',
-                        style: TextStyle(
-                          fontSize: 15.0,
-                          fontFamily: 'Poppins-Medium',
-                          )
-                        ),
-                      ),
-                      SizedBox(height: 10.0),
-                      _planBalance(),
-                      SizedBox(height: 10.0),
-                      _expirationDate(),
-                    ],
-                  ),
-                ),
-                // SizedBox(height: 50.0),
-                Center(
+                      boxShadow: [
+                        BoxShadow(
+                            color: Color(0xFF6078ea).withOpacity(.3),
+                            offset: Offset(0.0, 8.0),
+                            blurRadius: 8.0)
+                      ]),
+                child: Material(
+                  color: Colors.transparent,
                   child: InkWell(
-                    child: Container(
-                     margin: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 25.0),
-                      height: 50,
-                      decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                              colors: [Color(0xFF17ead9), Color(0xFF6078ea)]),
-                          borderRadius: BorderRadius.circular(12),
-                          boxShadow: [
-                            BoxShadow(
-                                color: Color(0xFF6078ea).withOpacity(.3),
-                                offset: Offset(0.0, 8.0),
-                                blurRadius: 8.0)
-                          ]),
-                    child: Material(
-                      color: Colors.transparent,
-                      child: InkWell(
-                        highlightColor: Colors.transparent,
-                        splashColor: Colors.transparent,
-                        onTap: () async {
-                          buyHotspot(context);
-                        },
-                        child: Center(
-                          child: Text("BUY",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontFamily: "Poppins-Bold",
-                                  fontSize: 18,
-                                  letterSpacing: 1.0)),
+                    customBorder: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(12), 
+                        bottomRight: Radius.circular(12),
+                      ),
+                    ),
+                    onTap: () async {
+                      _showDialog30Days(context);
+                    },
+                    child: Center(
+                      child: Text(
+                          'Subscribe', 
+                          style: GoogleFonts.nunito(
+                          textStyle: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w700)
                           ),
                         ),
                       ),
                     ),
                   ),
                 ),
-              ],
+              )
             ),
           ],
         ),
+      ],
+    ),
+    );
+  }
+
+  Widget plan365DaysButton(BuildContext context){
+    return Container(
+      // width: MediaQuery.of(context).size.width,
+      // height: MediaQuery.of(context).size.height * .27, 
+      // padding: EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+              color: Colors.black12,
+              offset: Offset(0.0, 15.0),
+              blurRadius: 15.0),
+          BoxShadow(
+              color: Colors.black12,
+              offset: Offset(0.0, -10.0),
+              blurRadius: 10.0),
+        ],
+        borderRadius: BorderRadius.all(Radius.circular(12)),
       ),
+      child: Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            SizedBox(height: 20),
+            Center(
+              child: Text(
+                '600 SEL', 
+                style: GoogleFonts.nunito(
+                textStyle: TextStyle(color: Colors.blue[900], fontSize: 30, fontWeight: FontWeight.w700)
+                ),
+              ),
+            ),
+            Divider(
+              thickness: 1.5,
+              color: Colors.grey[300],
+              indent: 20,
+              endIndent: 20,
+            ),
+            SizedBox(height: 20),
+            Padding(
+              padding: EdgeInsets.only(right: 25, left:25),
+              child: Row(
+                children: [
+                  Text(
+                    'Device:', 
+                    style: GoogleFonts.nunito(
+                    textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
+                    ),
+                  ),
+                  Expanded(child: Container()),
+                  Text(
+                    '2 Devices', 
+                    style: GoogleFonts.nunito(
+                    textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 10),
+            Padding(
+              padding: EdgeInsets.only(right: 25, left:25),
+              child: Row(
+                children: [
+                  Text(
+                    'Expire:', 
+                    style: GoogleFonts.nunito(
+                    textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
+                    ),
+                  ),
+                  Expanded(child: Container()),
+                  Text(
+                    '365 Days', 
+                    style: GoogleFonts.nunito(
+                    textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 10),
+            Padding(
+              padding: EdgeInsets.only(right: 25, left:25),
+              child: Row(
+                children: [
+                  Text(
+                    'Speed:', 
+                    style: GoogleFonts.nunito(
+                    textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
+                    ),
+                  ),
+                  Expanded(child: Container()),
+                  Text(
+                    '5 MB', 
+                    style: GoogleFonts.nunito(
+                    textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 20),
+            Center(
+              child: InkWell(
+                child: Container(
+                  // width: ScreenUtil.getInstance().setWidth(330),
+                  height: 50,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(12), 
+                      bottomRight: Radius.circular(12),
+                    ),
+                    gradient: LinearGradient(
+                        colors: [Color(0xFF17ead9), Color(0xFF6078ea)]),
+                    // borderRadius: BorderRadius.circular(12),
+                    boxShadow: [
+                      BoxShadow(
+                          color: Color(0xFF6078ea).withOpacity(.3),
+                          offset: Offset(0.0, 8.0),
+                          blurRadius: 8.0)
+                    ]),
+                child: Material(
+                  color: Colors.transparent,
+                  child: InkWell(
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(12), 
+                      bottomRight: Radius.circular(12),
+                    ),
+                    onTap: () async {
+                      _showDialog365Days(context);
+                    },
+                    child: Center(
+                      child: Text(
+                          'Subscribe', 
+                          style: GoogleFonts.nunito(
+                          textStyle: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w700)
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              )
+            ),
+          ],
+        ),
+      ],
+    ),
+    );
+  }
+
+   Future<String> _showDialog30Days(BuildContext context){
+    return showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return WillPopScope(
+          onWillPop: () async => false,
+          child:AlertDialog(
+            title: new Text("Please enter your password"),
+            content: Form(
+              key: formKey,
+              child: TextFormField(
+                validator: (val) {
+                  if(val.isEmpty) return 'Password is required';
+                  if(val.length < 8) return 'Password too short';                
+                  return null;
+                },
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                controller: _passwordController,
+                onSaved: (val) => _passwordController.text = val,
+                keyboardType: TextInputType.visiblePassword,
+                decoration: InputDecoration(
+                  fillColor: Colors.grey[100],
+                  filled: true,
+                  hintText: "Password",
+                  hintStyle: TextStyle(color: Colors.black, fontSize: 12.0),
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.black),
+                    borderRadius: BorderRadius.all(Radius.circular(12.0))
+                  ),
+                ),
+                obscureText: _obscureText,
+              ),
+            ),
+            actions: <Widget>[
+              // usually buttons at the bottom of the dialog
+              Row(
+                children: <Widget>[
+                  new FlatButton(
+                    child: new Text("Cancel"),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                      _passwordController.clear(); 
+                    },
+                  ),
+                  new FlatButton(
+                      onPressed: () {
+                        // Navigator.of(context).pop();
+                        dialogLoading(context);
+                        _submitHotspotPlan30Days();
+                        Navigator.of(context).pop();
+                      },
+                      child: new Text("OK"))
+                ],
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+   Future<String> _showDialog365Days(BuildContext context) {
+    return showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return WillPopScope(
+          onWillPop: () async => false,
+          child:AlertDialog(
+            title: new Text("Please enter your password"),
+            content: Form(
+              key: formKey,
+              child: TextFormField(
+                validator: (val) {
+                  if(val.isEmpty) return 'Password is required';
+                  if(val.length < 8) return 'Password too short';                
+                  return null;
+                },
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                controller: _passwordController,
+                onSaved: (val) => _passwordController.text = val,
+                keyboardType: TextInputType.visiblePassword,
+                decoration: InputDecoration(
+                  fillColor: Colors.grey[100],
+                  filled: true,
+                  hintText: "Password",
+                  hintStyle: TextStyle(color: Colors.black, fontSize: 12.0),
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.black),
+                    borderRadius: BorderRadius.all(Radius.circular(12.0))
+                  ),
+                ),
+                obscureText: true,
+              ),
+            ),
+            actions: <Widget>[
+              // usually buttons at the bottom of the dialog
+              Row(
+                children: <Widget>[
+                  new FlatButton(
+                    child: new Text("Cancel"),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                      _passwordController.clear(); 
+                    },
+                  ),
+                  new FlatButton(
+                      onPressed: () {
+                        dialogLoading(context);
+                        _submitHotspotPlan365Days();
+                        Navigator.of(context).pop();
+                      },
+                      child: new Text("OK"))
+                ],
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }
-
-
-void checkLoading(BuildContext context, {String content}) {
-  showDialog(
-    barrierDismissible: false,
-    context: context,
-    builder: (context) {
-      return WillPopScope(
-        child: FlareActor( 
-          'assets/animations/success_check.flr', 
-          animation: 'success',
-          ), 
-          onWillPop: () async{return false;},);
-    });
-}
-
-

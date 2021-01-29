@@ -2,7 +2,7 @@
 //
 //     final getWallet = getWalletFromMap(jsonString);
 
-import 'dart:convert';
+import 'package:koompi_hotspot/all_export.dart';
 
 class GetWallet {
     GetWallet({

@@ -1,23 +1,11 @@
-import 'dart:async';
-import 'dart:io';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_absolute_path/flutter_absolute_path.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:flutter_material_pickers/helpers/show_scroll_picker.dart';
+import 'package:koompi_hotspot/all_export.dart';
 import 'package:intl/intl.dart';
-import 'package:koompi_hotspot/src/backend/post_request.dart';
-import 'package:koompi_hotspot/src/components/reuse_widget.dart';
-import 'package:koompi_hotspot/src/models/model_location.dart';
-import 'package:koompi_hotspot/src/models/model_userdata.dart';
-import 'package:koompi_hotspot/src/screen/login/login_page.dart';
-import 'package:line_icons/line_icons.dart';
-import 'package:multi_image_picker/multi_image_picker.dart';
+import 'package:koompi_hotspot/src/reuse_widget/reuse_widget.dart';
 
 class CompleteInfo extends StatefulWidget {
 
-  final String email;
-  CompleteInfo(this.email);
+  final String phone;
+  CompleteInfo(this.phone);
   
   @override
   _CompleteInfoState createState() => _CompleteInfoState();
@@ -25,7 +13,7 @@ class CompleteInfo extends StatefulWidget {
 
 class _CompleteInfoState extends State<CompleteInfo>{
   final GlobalKey<FormBuilderState> formKey = GlobalKey<FormBuilderState>();
-  bool _autoValidate = false;
+  AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
   String lastChoiceChipSelection = '';
 
   TextEditingController _usernameController = TextEditingController();
@@ -36,7 +24,7 @@ class _CompleteInfoState extends State<CompleteInfo>{
   void initState() {
     _address = 'Phnom Penh';
     _birthdate = DateFormat('dd-MMM-yyyy').format(DateTime.now());
-    _emailController = TextEditingController(text: widget.email);
+    _emailController = TextEditingController(text: widget.phone);
     super.initState();
   }
 
@@ -50,7 +38,7 @@ class _CompleteInfoState extends State<CompleteInfo>{
   var locationModel = LocationList();
 
   //Image Profile
-  File _image;
+  File image;
 
   //Gender 
   
@@ -92,7 +80,7 @@ class _CompleteInfoState extends State<CompleteInfo>{
     }
     else{
       setState(() {
-        _autoValidate = true;
+        autovalidateMode = AutovalidateMode.always;
       });
     }
   }
@@ -105,8 +93,8 @@ class _CompleteInfoState extends State<CompleteInfo>{
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
         print('Internet connected');
         var response = await PostRequest().completeInfoUser(
-          _emailController.text,
           _usernameController.text,
+          widget.phone,
           _gender,
           _birthdate,
           _address);
@@ -115,8 +103,8 @@ class _CompleteInfoState extends State<CompleteInfo>{
           Future.delayed(Duration(seconds: 2), () {
             Timer(Duration(milliseconds: 500), () => Navigator.pushAndRemoveUntil(
               context,
-              MaterialPageRoute(builder: (context) => LoginPage()),
-              ModalRoute.withName('/'),
+              MaterialPageRoute(builder: (context) => LoginPhone()),
+              ModalRoute.withName('/loginPhone'),
             ));
           });
         } 
@@ -131,55 +119,12 @@ class _CompleteInfoState extends State<CompleteInfo>{
     }
   }
 
-  Future<void> loadAsset() async {
-    List<Asset> resultList = List<Asset>();
-
-    try {
-      resultList = await MultiImagePicker.pickImages(
-        enableCamera: false,
-        cupertinoOptions: CupertinoOptions(takePhotoIcon: "chat"),
-        maxImages: 1,
-        materialOptions: MaterialOptions(
-          actionBarColor: '#${Color(0xFF303F9F).value.toRadixString(16)}',
-          actionBarTitle: "KOOMPI Hotspot",
-          allViewTitle: "All Photos",
-          useDetailsView: false,
-          selectCircleStrokeColor: "#000000",
-        ),
-      );
-
-      setState(() {
-        getAssettoFile(resultList);
-      });
-    } catch (e) {
-      e.toString();
-    }
-    if (!mounted) return;
-  }
-
-  Future<void> getAssettoFile(List<Asset> resultList) async {
-    for (Asset asset in resultList) {
-      final filePath = await FlutterAbsolutePath.getAbsolutePath(asset.identifier);
-      _image = File(filePath);
-      if (filePath != null) {
-        print("Image $filePath");
-        await PostRequest().upLoadImage(File(filePath)).then((value) {
-          print("My response $value");
-          // setState(() {
-          //   imageUrl = json.decode(value.body)['uri'];
-          //   mData.image = imageUrl;
-          // });
-        });
-      }
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Text('Complete Profile', style: TextStyle(color: Colors.black)),
+        title: Text('Complete Profile', style: TextStyle(color: Colors.black, fontFamily: 'Medium')),
         automaticallyImplyLeading: false,
         actions: <Widget>[
           Padding(
@@ -190,8 +135,7 @@ class _CompleteInfoState extends State<CompleteInfo>{
                   Icons.check,
                   color: Colors.blueAccent,
                 ),
-                onPressed: () async {              
-                  // _onSubmitBtn();
+                onPressed: () async {        
                   _submitValidate(context);
                 },
               ),
@@ -208,7 +152,7 @@ class _CompleteInfoState extends State<CompleteInfo>{
           height: MediaQuery.of(context).size.height * 2,
           child: FormBuilder(
             key: formKey,
-            autovalidateMode: AutovalidateMode.always,
+            autovalidateMode: AutovalidateMode.onUserInteraction,
             child: SingleChildScrollView(
               physics: BouncingScrollPhysics(),
               child: Padding(
@@ -216,53 +160,14 @@ class _CompleteInfoState extends State<CompleteInfo>{
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    SizedBox(
-                      height: 10.0,
-                    ),
-                    Align(
-                      alignment: Alignment.center,
-                      child: CircleAvatar(
-                        radius: 50.0,
-                        backgroundColor: const Color(0xff476cfb),
-                        child: ClipOval(
-                          child: SizedBox(
-                            width: 100.0,
-                            height: 100.0,
-                            child: (_image != null)
-                                ? Image.file(
-                                    _image,
-                                    fit: BoxFit.cover,
-                                  )
-                                : CircleAvatar(
-                                    backgroundImage: mData.image == null
-                                        ? AssetImage('assets/images/avatar.png')
-                                        : NetworkImage(
-                                            "https://api-hotspot.koompi.org/uploads/${mData.image}"),
-                                  ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Center(
-                      child: FlatButton(
-                        colorBrightness: Brightness.dark,
-                        child: Text('Add Profile Photo',
-                            style: TextStyle(
-                                color: Colors.blue,
-                                fontSize: 20.0,
-                                fontFamily: 'Medium')
-                              ),
-                        onPressed: () => loadAsset(),
-                      ),
-                    ),
-                    SizedBox(height: 16.0),
+                    SizedBox(height: 36.0),
                     Text('Full Name'),
                     SizedBox(height: 10.0),
                     TextFormField(
                       controller: _usernameController,
                       validator: (val) => val.length < 3 ? 'Full Name is required' : null,
                       onSaved: (val) => _usernameController.text = val,
-                      autovalidate: true,
+                      autovalidateMode: AutovalidateMode.always,
                       decoration: InputDecoration(
                         prefixIcon: Icon(LineIcons.user),
                         hintText: 'Full Name',
@@ -273,14 +178,14 @@ class _CompleteInfoState extends State<CompleteInfo>{
                       ),
                     ),
                     SizedBox(height: 16.0),
-                    Text('Email'),
+                    Text('Phone Number'),
                     SizedBox(height: 10.0),
                     TextFormField(
-                      controller: _emailController ?? widget.email,
+                      controller: _emailController ?? widget.phone,
                       readOnly: true,
                       decoration: InputDecoration(
-                        hintText: 'Email',
-                        prefixIcon: Icon(Icons.alternate_email_outlined),
+                        hintText: 'Phone Number',
+                        prefixIcon: Icon(Icons.phone),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(12.0))
                         )
@@ -289,37 +194,12 @@ class _CompleteInfoState extends State<CompleteInfo>{
                     SizedBox(height: 16.0),
                     Text('Date Of Birth'),
                     SizedBox(height: 10.0),
-                    // FormBuilderDateTimePicker(
-                    //   onFieldSubmitted: (value) {
-                    //     if(value != null && value != selectedDate){
-                    //       selectedDate = value;
-                    //       _birthdate = dateFormart.format(selectedDate);
-                    //     }
-                    //   },
-                    //   validators: [
-                    //     FormBuilderValidators.required(),
-                    //   ],
-                    //   attribute: "date",
-                    //   inputType: InputType.date,
-                    //   format: DateFormat("dd-MMM-yyyy"),
-                    //   decoration:
-                    //     InputDecoration(labelText: "Date Of Birth"),
-                    // ),
                     dateOfbirth(selectedDate, _selectDate, dateFormart, context),
+                    SizedBox(height: 16.0),
+                    Text('Location'),
                     SizedBox(height: 10.0),
-                    // Text('Gender'),
-                    // SizedBox(height: 10.0),
-                    // Row(
-                    //   children: <Widget>[
-                    //     Expanded(
-                    //       child: genderCustomRadio(lst[0], 'Male'),
-                    //     ),
-                    //     SizedBox(width: 20.0),
-                    //     Expanded(
-                    //       child: genderCustomRadio(lst[1], 'Female'),
-                    //     ),
-                    //   ],
-                    // ),
+                    locationPicker(context),
+                    SizedBox(height: 10.0),
                     FormBuilderChoiceChip(
                       onSaved: (newValue) => _gender = newValue,
                       validators: [FormBuilderValidators.required()],
@@ -356,32 +236,11 @@ class _CompleteInfoState extends State<CompleteInfo>{
                         }
                       },
                     ),
-                    SizedBox(height: 16.0),
-                    Text('Location'),
-                    SizedBox(height: 10.0),
-                    locationPicker(context),
                   ],
                 ),
               ),
             ),
           ),
-        ),
-      ),
-    );
-  }
-
-  Widget genderCustomRadio(String txt, String index) {
-    return ButtonTheme(
-      height: 50.0,
-      child: OutlineButton(
-        onPressed: () => changeIndex(index),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
-        splashColor: Colors.transparent,
-        borderSide: BorderSide(
-            color: _gender == index ? Colors.cyan : Colors.grey),
-        child: Text(txt,
-          style: TextStyle(
-              color: _gender == index ? Colors.black : Colors.grey),
         ),
       ),
     );

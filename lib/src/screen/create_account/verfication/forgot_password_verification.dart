@@ -1,18 +1,13 @@
-import 'dart:async';
 import 'package:http/http.dart' as http;
-import 'package:flare_flutter/flare_actor.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/material.dart';
-import 'package:koompi_hotspot/index.dart';
-import 'package:koompi_hotspot/src/components/reuse_widget.dart';
-import 'package:koompi_hotspot/src/screen/reset_new_password/reset_password.dart';
-import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:koompi_hotspot/src/reuse_widget/reuse_widget.dart';
+import 'package:koompi_hotspot/all_export.dart';
+
 
 
 class ForgotPasswordVerification extends StatefulWidget {
-  final String email;
+  final String phone;
 
-  ForgotPasswordVerification(this.email);
+  ForgotPasswordVerification(this.phone);
 
   @override
   _ForgotPasswordVerificationState createState() => _ForgotPasswordVerificationState();
@@ -27,7 +22,7 @@ class _ForgotPasswordVerificationState extends State<ForgotPasswordVerification>
   StreamController<ErrorAnimationType> errorController;
   
   String alertText;
-  bool _isLoading = false;
+  bool isLoading = false;
   bool hasError = false;
   String currentText = "";
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
@@ -55,9 +50,9 @@ class _ForgotPasswordVerificationState extends State<ForgotPasswordVerification>
     dialogLoading(context);
     var responseBody;
     try {
-      String apiUrl = 'https://api-hotspot.koompi.org/api/auth/confirm-email';
+      String apiUrl = 'https://api-hotspot.koompi.org/api/auth/confirm-phone';
       setState(() {
-        _isLoading = true;
+        isLoading = true;
       });
       var response = await http.post(apiUrl,
         headers: <String, String>{
@@ -65,13 +60,14 @@ class _ForgotPasswordVerificationState extends State<ForgotPasswordVerification>
           "Content-Type": "application/json"
         },
         body: jsonEncode(<String, String>{
-          "email": widget.email,
+          "phone": widget.phone,
           "vCode": vCode,
         }));
+        var responseJson = json.decode(response.body);
         if (response.statusCode == 200 && response.body != "Incorrect Code!") {
           print(response.body);
           Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => ResetNewPassword(widget.email)));
+            context, MaterialPageRoute(builder: (context) => ResetNewPassword(widget.phone)));
         } else {
           Navigator.pop(context);
           print(response.body);
@@ -84,7 +80,7 @@ class _ForgotPasswordVerificationState extends State<ForgotPasswordVerification>
                 content: SingleChildScrollView(
                   child: ListBody(
                     children: <Widget>[
-                      Text('${response.body}'),
+                      Text(responseJson['message']),
                     ],
                   ),
                 ),
@@ -143,7 +139,7 @@ class _ForgotPasswordVerificationState extends State<ForgotPasswordVerification>
                       text: "Enter the code sent to ",
                       children: [
                         TextSpan(
-                            text: widget.email,
+                            text: widget.phone,
                             style: TextStyle(
                                 color: Colors.black,
                                 fontWeight: FontWeight.bold,

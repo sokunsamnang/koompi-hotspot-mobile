@@ -1,15 +1,5 @@
-import 'dart:async';
-
-import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:koompi_hotspot/src/components/reuse_widget.dart';
-import 'package:koompi_hotspot/src/models/model_userdata.dart';
-import 'package:koompi_hotspot/src/screen/option_page/myaccount.dart';
-import 'package:koompi_hotspot/src/screen/login/login_page.dart';
-import 'package:koompi_hotspot/src/services/services.dart';
-import 'package:line_icons/line_icons.dart';
-import 'change_password.dart';
-import 'package:koompi_hotspot/src/screen/speedtest/speedtest.dart';
+import 'package:koompi_hotspot/src/reuse_widget/reuse_widget.dart';
+import 'package:koompi_hotspot/all_export.dart';
 
 class MorePage extends StatefulWidget {
   @override
@@ -20,7 +10,7 @@ class _MorePageState extends State<MorePage>
     with SingleTickerProviderStateMixin {
   AnimationController _controller;
 
-  String name = mData.name;
+  String name = mData.fullname;
   
   @override
   void initState() {
@@ -59,7 +49,7 @@ class _MorePageState extends State<MorePage>
                   title: Text(
                     name ?? 'KOOMPI',
                     style: TextStyle(
-                        color: Colors.black, fontWeight: FontWeight.w500),
+                        color: Colors.black, fontFamily: "Poppins-Bold"),
                   ),
                   leading: CircleAvatar(
                     backgroundImage: mData.image == null ? AssetImage('assets/images/avatar.png') : NetworkImage("https://api-hotspot.koompi.org/uploads/${mData.image}"),
@@ -100,17 +90,11 @@ class _MorePageState extends State<MorePage>
                     // ),
                     _buildDivider(),
                     ListTile(
-                      leading: Icon(
-                        FontAwesomeIcons.wifi,
-                        size: 20.0,
-                      ),
-                      title: Text("Speed Test"),
+                      leading: Icon(LineIcons.language),
+                      title: Text("Language"),
                       trailing: Icon(LineIcons.angle_right),
                       onTap: () async {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => SpeedTestNet()),
-                        );
+                        snackBar(context);
                       },
                     ),
                     _buildDivider(),
@@ -122,7 +106,7 @@ class _MorePageState extends State<MorePage>
                       },
                     ),
                     _buildDivider(),
-                    Text('Alpha Version 0.1.0'),
+                    Text('Beta Version 0.1.9'),
                   ],
                 ),
               ),
@@ -149,9 +133,11 @@ showLogoutDialog(context) async {
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text(
-            'SIGN OUT',
-            textAlign: TextAlign.center,
+          title: Row(
+            children: [
+              Icon(Icons.warning, color: Colors.yellow),
+              Text('WARNING', style: TextStyle(fontFamily: 'Poppins-Bold'),),
+            ],
           ),
           content: SingleChildScrollView(
             child: ListBody(
@@ -175,8 +161,8 @@ showLogoutDialog(context) async {
                 Future.delayed(Duration(seconds: 2), () {
                   Timer(Duration(milliseconds: 500), () => Navigator.pushAndRemoveUntil(
                     context,
-                    MaterialPageRoute(builder: (context) => LoginPage()),
-                    ModalRoute.withName('/'),
+                    MaterialPageRoute(builder: (context) => LoginPhone()),
+                    ModalRoute.withName('/loginPhone'),
                   ));
                 });
               },

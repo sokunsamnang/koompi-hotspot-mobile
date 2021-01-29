@@ -2,7 +2,7 @@
 //
 //     final registerModel = registerModelFromMap(jsonString);
 
-import 'dart:convert';
+import 'package:koompi_hotspot/all_export.dart';
 
 RegisterModel registerModelFromMap(String str) => RegisterModel.fromMap(json.decode(str));
 
