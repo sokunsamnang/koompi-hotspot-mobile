@@ -17,14 +17,14 @@ class _CompleteInfoState extends State<CompleteInfo>{
   String lastChoiceChipSelection = '';
 
   TextEditingController _usernameController = TextEditingController();
-  TextEditingController _emailController;
+  TextEditingController _phoneController;
 
   
   @override
   void initState() {
     _address = 'Phnom Penh';
     _birthdate = DateFormat('dd-MMM-yyyy').format(DateTime.now());
-    _emailController = TextEditingController(text: widget.phone);
+    _phoneController = TextEditingController(text: widget.phone);
     super.initState();
   }
 
@@ -121,10 +121,11 @@ class _CompleteInfoState extends State<CompleteInfo>{
 
   @override
   Widget build(BuildContext context) {
+    var _lang = AppLocalizeService.of(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Text('Complete Profile', style: TextStyle(color: Colors.black, fontFamily: 'Medium')),
+        title: Text(_lang.translate('complete_profile_appbar'), style: TextStyle(color: Colors.black, fontFamily: 'Medium')),
         automaticallyImplyLeading: false,
         actions: <Widget>[
           Padding(
@@ -161,16 +162,16 @@ class _CompleteInfoState extends State<CompleteInfo>{
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     SizedBox(height: 36.0),
-                    Text('Full Name'),
+                    Text(_lang.translate('fullname')),
                     SizedBox(height: 10.0),
                     TextFormField(
                       controller: _usernameController,
-                      validator: (val) => val.length < 3 ? 'Full Name is required' : null,
+                      validator: (val) => val.length < 3 ? _lang.translate('fullname_validate') : null,
                       onSaved: (val) => _usernameController.text = val,
                       autovalidateMode: AutovalidateMode.always,
                       decoration: InputDecoration(
                         prefixIcon: Icon(LineIcons.user),
-                        hintText: 'Full Name',
+                        hintText: _lang.translate('fullname'),
                         border: OutlineInputBorder(
                           borderSide: BorderSide(color: Colors.black),
                           borderRadius: BorderRadius.all(Radius.circular(12.0))
@@ -178,13 +179,13 @@ class _CompleteInfoState extends State<CompleteInfo>{
                       ),
                     ),
                     SizedBox(height: 16.0),
-                    Text('Phone Number'),
+                    Text(_lang.translate('phone_number_tf'),),
                     SizedBox(height: 10.0),
                     TextFormField(
-                      controller: _emailController ?? widget.phone,
+                      controller: _phoneController ?? widget.phone,
                       readOnly: true,
                       decoration: InputDecoration(
-                        hintText: 'Phone Number',
+                        hintText: _lang.translate('phone_number_tf'),
                         prefixIcon: Icon(Icons.phone),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(12.0))
@@ -192,11 +193,11 @@ class _CompleteInfoState extends State<CompleteInfo>{
                       ),
                     ),
                     SizedBox(height: 16.0),
-                    Text('Date Of Birth'),
+                    Text(_lang.translate('dateofbirth'),),
                     SizedBox(height: 10.0),
                     dateOfbirth(selectedDate, _selectDate, dateFormart, context),
                     SizedBox(height: 16.0),
-                    Text('Location'),
+                    Text(_lang.translate('locaton'),),
                     SizedBox(height: 10.0),
                     locationPicker(context),
                     SizedBox(height: 10.0),
@@ -205,7 +206,7 @@ class _CompleteInfoState extends State<CompleteInfo>{
                       validators: [FormBuilderValidators.required()],
                       decoration: InputDecoration(
                         border: InputBorder.none,
-                        labelText: 'Gender',
+                        labelText: _lang.translate('gender'),
                         labelStyle: TextStyle(color: Colors.black, fontSize: 20)
                       ),
                       labelStyle: TextStyle(

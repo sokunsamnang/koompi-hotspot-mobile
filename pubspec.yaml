@@ -26,6 +26,7 @@ dependencies:
   connectivity: ^2.0.2
   cupertino_icons: ^0.1.2
   date_format: ^1.0.9
+  easy_localization: ^2.1.0
   file_picker: ^2.1.0
   firebase_remote_config: ^0.4.2
   flare_flutter: any
@@ -92,6 +93,7 @@ flutter:
     - assets/images/
     - assets/images/sld_stroke.svg
     - assets/animations/
+    - assets/lang/
     # - assets/images/avatar.png
     # - assets/images/koompi_logo.png
     # - assets/images/koompi_logo_signal.png

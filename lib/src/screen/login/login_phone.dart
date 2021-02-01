@@ -1,5 +1,6 @@
 import 'package:koompi_hotspot/all_export.dart';
 import 'package:koompi_hotspot/src/reuse_widget/reuse_widget.dart';
+import 'package:koompi_hotspot/src/utils/language.dart';
 import 'package:provider/provider.dart';
 
 class LoginPhone extends StatefulWidget {
@@ -261,10 +262,25 @@ class _LoginPhoneState extends State<LoginPhone> {
             ),
             SingleChildScrollView(
               child: Padding(
-                padding: EdgeInsets.only(left: 28.0, right: 28.0, top: 35.0),
+                padding: EdgeInsets.only(top: 35.0),
                 child: Column(
                   children: <Widget>[
-                    SizedBox(height: ScreenUtil().setHeight(80)),
+                    Container(
+                      alignment: Alignment.topLeft,
+                      child: FlatButton(
+                        highlightColor: Colors.transparent,
+                        splashColor: Colors.transparent,
+                        child: Icon(Icons.language, color: Colors.black),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => LanguageView()),
+                          );
+                        },
+                      ),
+                    ),
+                    SizedBox(height: ScreenUtil().setHeight(40)),
                     SizedBox(
                       width: 100,
                       height: 100,
@@ -272,9 +288,11 @@ class _LoginPhoneState extends State<LoginPhone> {
                         backgroundImage: AssetImage('assets/images/koompi_logo_signal.jpg')
                       ),
                     ),
-                    SizedBox(height: ScreenUtil().setHeight(50)),
-                    formLoginPhone(context, phoneController, passwordController,
+                    Padding(
+                      padding: EdgeInsets.only(left: 28.0, right: 28.0),
+                      child: formLoginPhone(context, phoneController, passwordController,
                           _obscureText, _toggle, _email, _password, formKey, _submitLogin),
+                    ),
                   ],
                 ),
               ),

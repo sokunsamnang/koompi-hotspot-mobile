@@ -1,5 +1,6 @@
 import 'package:koompi_hotspot/all_export.dart';
 
+
 @override
 Widget formCardPhoneNumbers(
     BuildContext context,
@@ -17,7 +18,7 @@ Widget formCardPhoneNumbers(
     Function _submit) {
     
     PhoneNumber number = PhoneNumber(isoCode: 'KH');
-    
+    var _lang = AppLocalizeService.of(context);
     return new Container(
       width: double.infinity,
       // height: ScreenUtil.getInstance().setHeight(500),
@@ -31,14 +32,14 @@ Widget formCardPhoneNumbers(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Center(
-                child: Text("Create Account",
+                child: Text(_lang.translate('create_account'),
                   style: TextStyle(
                       fontSize: ScreenUtil().setSp(50),
                       fontFamily: "Poppins-Bold",
                       letterSpacing: .6)),
               ),
               Center(
-              child: Text("Create a new account",
+              child: Text(_lang.translate('create_a_new_account'),
                 style: TextStyle(
                   letterSpacing: .6)),
             ),
@@ -53,9 +54,7 @@ Widget formCardPhoneNumbers(
                 onInputValidated: (bool value) {
                   print(value);
                 },
-                // selectorConfig: SelectorConfig(
-                //   selectorType: PhoneInputSelectorType.BOTTOM_SHEET,
-                // ),
+                errorMessage: _lang.translate('invalid_phone_number_validate'),
                 ignoreBlank: false,
                 autoValidateMode: AutovalidateMode.onUserInteraction,
                 selectorTextStyle: TextStyle(color: Colors.black),
@@ -66,7 +65,7 @@ Widget formCardPhoneNumbers(
                 inputDecoration: InputDecoration(
                   fillColor: Colors.grey[100],
                   filled: true,
-                  hintText: "Phone Number",
+                  hintText: _lang.translate('phone_number_tf'),
                   hintStyle: TextStyle(color: Colors.black, fontSize: 12.0),
                   border: OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.black),
@@ -82,9 +81,9 @@ Widget formCardPhoneNumbers(
               ),
               TextFormField(
                 validator: (val) {
-                  if(val.isEmpty) return 'Password is required';
-                  if(val.length < 8) return 'Password too short';    
-                  if(val != confirmPasswordController.text) return 'Password does not match'; 
+                  if(val.isEmpty) return _lang.translate('password_is_required_validate');
+                  if(val.length < 8) return _lang.translate('password_too_short_validate');   
+                  if(val != confirmPasswordController.text) return _lang.translate('password_does_not_match_validate');
                   return null;
                 },
                 onSaved: (val) => _password = val,
@@ -107,8 +106,9 @@ Widget formCardPhoneNumbers(
                     borderSide: BorderSide(color: Colors.black),
                     borderRadius: BorderRadius.all(Radius.circular(12.0))
                   ),
-                  hintText: "Password",
-                  hintStyle: TextStyle(color: Colors.grey, fontSize: 12.0)),
+                  hintText: _lang.translate('password_tf'),
+                  hintStyle: TextStyle(color: Colors.black, fontSize: 12.0),
+                ),
               ),
               SizedBox(
                 height: ScreenUtil().setHeight(30),
@@ -116,10 +116,10 @@ Widget formCardPhoneNumbers(
               TextFormField(
                 validator: (val) {
                   if(val.isEmpty){
-                    return 'Password is required';
+                    return _lang.translate('password_is_required_validate');
                   }
                   if(val != passwordController.text){
-                    return 'Password does not match';
+                    return _lang.translate('password_does_not_match_validate');
                   }
                   return null;
                 },
@@ -143,8 +143,9 @@ Widget formCardPhoneNumbers(
                     borderSide: BorderSide(color: Colors.black),
                     borderRadius: BorderRadius.all(Radius.circular(12.0))
                   ),
-                  hintText: "Confirm Password",
-                  hintStyle: TextStyle(color: Colors.grey, fontSize: 12.0)),
+                  hintText: _lang.translate('confirm_password_tf'),
+                  hintStyle: TextStyle(color: Colors.black, fontSize: 12.0),
+                ),
               ),
               SizedBox(
                 height: ScreenUtil().setHeight(75),
@@ -176,7 +177,7 @@ Widget formCardPhoneNumbers(
                           _submit();
                         },  
                         child: Center(
-                          child: Text("SIGN UP",
+                          child: Text(_lang.translate('sign_up_bt'),
                               style: TextStyle(
                                   color: Colors.white,
                                   fontFamily: "Poppins-Bold",
@@ -198,14 +199,14 @@ Widget formCardPhoneNumbers(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Text(
-                      'ALREADY HAVE AN ACCOUNT?',
+                      _lang.translate('already_have_an_account'),
                       style: TextStyle(
                         fontFamily: "Poppins-Medium",
                       ),
                     ),
-                    SizedBox(
-                      width: 10,
-                    ),
+                    // SizedBox(
+                    //   width: 10,
+                    // ),
                     InkWell(
                       onTap: () {
                         Navigator.pushAndRemoveUntil(
@@ -218,7 +219,7 @@ Widget formCardPhoneNumbers(
                       splashColor: Colors.transparent,
                       highlightColor: Colors.transparent,
                       child: Text(
-                        'LOGIN',
+                        _lang.translate('sign_in_bt'),
                         style: TextStyle(
                             color: Color(0xfff79c4f),
                             fontFamily: "Poppins-Bold"),

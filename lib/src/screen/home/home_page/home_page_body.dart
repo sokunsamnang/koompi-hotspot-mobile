@@ -32,7 +32,7 @@ Widget bodyPage(BuildContext context) {
           borderRadius: BorderRadius.all(Radius.circular(12)),
           child: Container(
             width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height * .27,
+            height: MediaQuery.of(context).size.height * .30,
             color: Colors.blueGrey[900],
             child: Stack(
               fit: StackFit.expand,
@@ -209,7 +209,7 @@ Widget bodyPage(BuildContext context) {
           borderRadius: BorderRadius.all(Radius.circular(12)),
           child: Container(
             width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height * .27,
+            height: MediaQuery.of(context).size.height * .30,
             color: Colors.blueGrey[900],
             child: Stack(
               fit: StackFit.expand,
@@ -420,7 +420,7 @@ Widget noPlanView(BuildContext context) {
         children: <Widget>[
           Container(
             width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height * .27, 
+            height: MediaQuery.of(context).size.height * .30, 
             padding: EdgeInsets.all(16),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.all(
@@ -442,7 +442,7 @@ Widget noPlanView(BuildContext context) {
                 ),
                 SizedBox(height: 20),
                 Container(
-                  width: 125,
+                  width: 130,
                   padding: EdgeInsets.symmetric(horizontal: 1, vertical: 1),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(12)),
@@ -495,7 +495,7 @@ Widget _planViewButton(context){
         child: InkWell(
           child: Container(
             width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height * .27,
+            height: MediaQuery.of(context).size.height * .30,
             // width: ScreenUtil.getInstance().setWidth(330),
             // height: ScreenUtil.getInstance().setHeight(100),
             decoration: BoxDecoration(

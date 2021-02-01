@@ -10,6 +10,7 @@ Widget formCardForgotPasswordPhone(
   bool _autoValidate) {
 
   PhoneNumber number = PhoneNumber(isoCode: 'KH');
+  var _lang = AppLocalizeService.of(context);
   return new Container(
     width: double.infinity,
 //      height: ScreenUtil.getInstance().setHeight(500),
@@ -36,6 +37,7 @@ Widget formCardForgotPasswordPhone(
                 onInputValidated: (bool value) {
                   print(value);
                 },
+                errorMessage: _lang.translate('invalid_phone_number_validate'),
                 // selectorConfig: SelectorConfig(
                 //   selectorType: PhoneInputSelectorType.BOTTOM_SHEET,
                 // ),
@@ -49,7 +51,7 @@ Widget formCardForgotPasswordPhone(
                 inputDecoration: InputDecoration(
                   fillColor: Colors.grey[100],
                   filled: true,
-                  hintText: "Phone Number",
+                  hintText: _lang.translate('phone_number_tf'),
                   hintStyle: TextStyle(color: Colors.black, fontSize: 12.0),
                   border: OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.black),

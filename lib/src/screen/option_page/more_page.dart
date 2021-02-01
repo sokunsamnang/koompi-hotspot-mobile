@@ -1,5 +1,6 @@
 import 'package:koompi_hotspot/src/reuse_widget/reuse_widget.dart';
 import 'package:koompi_hotspot/all_export.dart';
+import 'package:koompi_hotspot/src/utils/language.dart';
 
 class MorePage extends StatefulWidget {
   @override
@@ -28,6 +29,7 @@ class _MorePageState extends State<MorePage>
 
   @override
   Widget build(BuildContext context) {
+    var _lang = AppLocalizeService.of(context);
     return Scaffold(
       body: SingleChildScrollView(
         child: SafeArea(
@@ -37,7 +39,7 @@ class _MorePageState extends State<MorePage>
               Card(
                 elevation: 8.0,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0),
+                  borderRadius: BorderRadius.circular(12.0),
                 ),
                 margin: const EdgeInsets.all(8.0),
                 color: Colors.white,
@@ -67,15 +69,18 @@ class _MorePageState extends State<MorePage>
                 child: Column(
                   children: <Widget>[
                     ListTile(
-                        leading: Icon(LineIcons.key),
-                        title: Text("Change Password"),
-                        trailing: Icon(LineIcons.angle_right),
-                        onTap: () async {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => ChangePassword()));
-                        }),
+                      leading: Icon(LineIcons.key),
+                      title: Text("Change Password"),
+                      trailing: Icon(LineIcons.angle_right),
+                      onTap: () async {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ChangePassword()
+                          )  
+                        );
+                      }
+                    ),
                     // _buildDivider(),
                     // ListTile(
                     //   leading: Icon(LineIcons.money),
@@ -91,10 +96,14 @@ class _MorePageState extends State<MorePage>
                     _buildDivider(),
                     ListTile(
                       leading: Icon(LineIcons.language),
-                      title: Text("Language"),
+                      title: Text(_lang.translate('language')),
                       trailing: Icon(LineIcons.angle_right),
                       onTap: () async {
-                        snackBar(context);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => LanguageView()),
+                        );
                       },
                     ),
                     _buildDivider(),

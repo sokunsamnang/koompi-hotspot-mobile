@@ -1,21 +1,7 @@
-import 'package:connectivity/connectivity.dart';
-import 'package:flare_flutter/flare_actor.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:koompi_hotspot/all_export.dart';
-import 'package:koompi_hotspot/src/components/navbar.dart';
-import 'package:koompi_hotspot/src/models/model_balance.dart';
-import 'package:koompi_hotspot/src/models/model_get_plan.dart';
-import 'package:koompi_hotspot/src/models/model_trx_history.dart';
-import 'package:koompi_hotspot/src/screen/home/hotspot/buy_plan.dart';
-import 'package:koompi_hotspot/src/screen/login/login_email.dart';
-import 'package:koompi_hotspot/src/screen/login/login_phone.dart';
-import 'package:koompi_hotspot/src/screen/onboarding/onboarding_screen.dart';
-import 'package:koompi_hotspot/src/services/network_status.dart';
-import 'package:koompi_hotspot/src/services/services.dart';
-import 'package:koompi_hotspot/src/welcome_screen.dart';
+import 'package:koompi_hotspot/src/models/lang.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
 
 class App extends StatelessWidget{
   Widget build (context){
@@ -25,6 +11,9 @@ class App extends StatelessWidget{
     ]);
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider<LangProvider>(
+          create: (context) => LangProvider(),
+        ),
         ChangeNotifierProvider<BalanceProvider>(
           create: (context) => BalanceProvider(),
         ),
@@ -35,18 +24,39 @@ class App extends StatelessWidget{
           create: (context) => GetPlanProvider(),
         ),
       ],
-      child: MaterialApp(
-        initialRoute: '/',
-        routes: {
-          '/navbar': (context) => Navbar(),
-          '/plan': (context) => UserPlan(),
-          '/loginEmail':(context) => LoginPage(),
-          '/loginPhone': (context) => LoginPhone(),
-          '/welcome': (context) => WelcomeScreen(),
-        },
-        title: 'Koompi Hotspot',
-        home: Splash(),
+      child: Consumer<LangProvider>(
+        builder: (context, value, child) => MaterialApp(
+          builder: (context, child) => ScrollConfiguration(
+            behavior: ScrollBehavior()
+              ..buildViewportChrome(context, child, AxisDirection.down),
+            child: child,
+          ),
+
+          locale: value.manualLocale,
+          supportedLocales: [
+              const Locale('en', 'US'),
+              const Locale('km', 'KH'),
+            ],
+          localizationsDelegates: [
+            AppLocalizeService.delegate,
+            //build-in localization for material wiidgets
+            GlobalWidgetsLocalizations.delegate,
+
+            GlobalMaterialLocalizations.delegate,
+          ],
+          initialRoute: '/',
+          routes: {
+            '/navbar': (context) => Navbar(),
+            '/plan': (context) => UserPlan(),
+            '/loginEmail':(context) => LoginPage(),
+            '/loginPhone': (context) => LoginPhone(),
+            '/welcome': (context) => WelcomeScreen(),
+          },
+          title: 'Koompi Hotspot',
+          home: Splash(),
+        ),
       ),
+      
     );
   }
 }
@@ -86,7 +96,16 @@ class _SplashState extends State<Splash> {
       StorageServices().checkUser(context);
     });
   }
-  
+
+  void setDefaultLang() {
+    var _lang = Provider.of<LangProvider>(context, listen: false);
+    StorageServices().read('lang').then(
+      (value) {
+        _lang.setLocal(value, context);
+      },
+    );
+  }
+
   void internet() async {
     _networkStatus.connectivityResult = await Connectivity().checkConnectivity();
     // _networkStatus.connectivitySubscription = _networkStatus.connectivity.onConnectivityChanged.listen((event) {
@@ -143,11 +162,15 @@ class _SplashState extends State<Splash> {
   
   @override
   void initState() {
+    super.initState();
+
     setState(() {
       internet();
       startApp(context);
     });
-    super.initState();
+  
+    //Set Language
+    setDefaultLang();
   }
 
   @override

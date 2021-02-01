@@ -13,6 +13,7 @@ Widget formCardNewPassword(
   GlobalKey<FormState> formKey, 
   bool _autoValidate) {
 
+    var _lang = AppLocalizeService.of(context);
   return new Container(
     width: double.infinity,
 //      height: ScreenUtil.getInstance().setHeight(500),
@@ -24,15 +25,15 @@ Widget formCardNewPassword(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text("New Password",
+            Text(_lang.translate('new_password_tf'),
                   style: TextStyle(
                       fontFamily: "Poppins-Medium",
                       fontSize: ScreenUtil().setSp(26))),
               TextFormField(
                 validator: (val) {
-                  if(val.isEmpty) return 'Password is required';
-                  if(val.length < 8) return 'Password too short';
-                  if(val != _confirmPasswordController.text) return 'Password does not match';
+                  if(val.isEmpty) return _lang.translate('password_is_required_validate');
+                  if(val.length < 8) return _lang.translate('password_too_short_validate');
+                  if(val != _confirmPasswordController.text) return _lang.translate('password_does_not_match_validate');
                   return null;
                 },
                 onSaved: (val) => _passwordController.text = val,
@@ -51,7 +52,7 @@ Widget formCardNewPassword(
                       _obscureText ? Icons.visibility_off : Icons.visibility,
                     ),
                   ),
-                  hintText: "Password",
+                  hintText: _lang.translate('new_password_tf'),
                   hintStyle: TextStyle(color: Colors.grey, fontSize: 12.0),
                   border: OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.black),
@@ -60,15 +61,15 @@ Widget formCardNewPassword(
                 ),
               ),
               SizedBox(height: 20),
-              Text("New Confirm Password",
+              Text(_lang.translate('new_confirm_password_tf'),
                   style: TextStyle(
                       fontFamily: "Poppins-Medium",
                       fontSize: ScreenUtil().setSp(26))),
               TextFormField(
                 validator: (val) {
-                  if(val.isEmpty) return 'Password is required';
-                  if(val.length < 8) return 'Password too short';
-                  if(val != _passwordController.text) return 'Password does not match';
+                  if(val.isEmpty) return _lang.translate('password_is_required_validate');
+                  if(val.length < 8) return _lang.translate('password_too_short_validate');
+                  if(val != _passwordController.text) return _lang.translate('password_does_not_match_validate');
                   return null;
                 },
                 onSaved: (val) => _passwordController.text = val,
@@ -87,7 +88,7 @@ Widget formCardNewPassword(
                       _obscureText2 ? Icons.visibility_off : Icons.visibility,
                     ),
                   ),
-                  hintText: "Password",
+                  hintText: _lang.translate('new_password_tf'),
                   hintStyle: TextStyle(color: Colors.grey, fontSize: 12.0),
                   border: OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.black),

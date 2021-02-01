@@ -12,6 +12,7 @@ import 'package:koompi_hotspot/all_export.dart';
     
     ScreenUtil.instance = ScreenUtil.getInstance()..init(context);
     ScreenUtil.instance = ScreenUtil(width: 750, height: 1334, allowFontScaling: true);
+    var _lang = AppLocalizeService.of(context);
     return new Scaffold(
       backgroundColor: Colors.white,
       resizeToAvoidBottomPadding: true,
@@ -44,12 +45,12 @@ import 'package:koompi_hotspot/all_export.dart';
                         height: ScreenUtil.getInstance().setHeight(30),
                       ),
                       Center(
-                        child: Text('Forgot Password?',
+                        child: Text(_lang.translate('forgot_password'),
                           style: TextStyle(color: Colors.deepOrangeAccent[400], fontFamily: 'Medium', fontSize: 23),
                         ),
                       ),
                       Center(
-                        child: Text('we just need your registered phone number to send you password reset',
+                        child: Text(_lang.translate('forgot_password_tx'),
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   color: Colors.black,
@@ -94,7 +95,7 @@ import 'package:koompi_hotspot/all_export.dart';
                             //   MaterialPageRoute(builder: (context) => Navbar()));
                           },
                           child: Center(
-                            child: Text("RESET PASSWORD",
+                            child: Text(_lang.translate('reset_password_bt'),
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontFamily: "Poppins-Bold",
@@ -114,10 +115,9 @@ import 'package:koompi_hotspot/all_export.dart';
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         Text(
-                          "BACK TO LOGIN?",
+                          _lang.translate('back_to_login'),
                           style: TextStyle(fontFamily: "Poppins-Medium"),
                         ),
-                        SizedBox(width: 10,),
                         InkWell(
                           onTap: () {
                             Navigator.pop(context,
@@ -126,7 +126,7 @@ import 'package:koompi_hotspot/all_export.dart';
                           splashColor: Colors.transparent,
                           highlightColor: Colors.transparent,
 
-                          child: Text("LOGIN",
+                          child: Text(_lang.translate('sign_in_bt'),
                             style: TextStyle(
                               color: Color(0xfff79c4f),
                               fontFamily: "Poppins-Bold")),
