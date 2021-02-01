@@ -9,15 +9,16 @@ KOOMPI Wi-Fi Hotspot is for accessable and affordable for everyone and  KOOMPI s
 
 ### Features:
 
-- [ ] Register vai SMS. 
-- [x] Register vai email Account.
-- [ ] Register vai Others social media account.
+- [x] Register vai SMS. 
 - [x] Send to token by QR Code.
 - [x] Send payment.
 - [x] View transaction histroy.
-- [x] Buy hotspot plan.
+- [x] Subscribe hotspot plan.
+- [x] Unsubscribe hotspot plan.
 - [x] Speed Test.
 - [ ] Notification.
+- [ ] KH Language
+
 
 
 ## Prerequisite: 
