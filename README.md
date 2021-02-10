@@ -17,7 +17,7 @@ KOOMPI Wi-Fi Hotspot is for accessable and affordable for everyone and  KOOMPI s
 - [x] Unsubscribe hotspot plan.
 - [x] Speed Test.
 - [ ] Notification.
-- [ ] KH Language
+- [x] KH Language
 
 
 ## Prerequisite: 
