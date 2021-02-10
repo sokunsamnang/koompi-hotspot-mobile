@@ -29,13 +29,14 @@ class QrScannerState extends State<QrScanner> {
       // Navigator.pop(context, scanData);
       Navigator.pushAndRemoveUntil(
         context,
-        MaterialPageRoute(builder: (context) => SendRequest(result.code)),
+        MaterialPageRoute(builder: (context) => SendRequest(result.code, "")),
         ModalRoute.withName('/'),
       );
     });
   }
 
 Widget build(BuildContext context) {
+  var _lang = AppLocalizeService.of(context);
   return Scaffold(
     body: BodyScaffold(
       height: MediaQuery.of(context).size.height,
@@ -43,7 +44,7 @@ Widget build(BuildContext context) {
       child: Column(
         children: [
           MyAppBar(
-            title: "QR Scanner Transaction",
+            title: _lang.translate('qr_scanner'),
             onPressed: () {
               Navigator.pop(context);
             },

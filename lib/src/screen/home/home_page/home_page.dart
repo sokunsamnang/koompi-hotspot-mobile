@@ -54,7 +54,7 @@ class _HomePageState extends State<HomePage>{
                   fontSize: 18,
                   letterSpacing: 1.0),
                 children: <TextSpan>[
-                  TextSpan(text: 'Wi-Fi', style: TextStyle(color: Colors.blue,fontWeight: FontWeight.bold)),
+                  TextSpan(text: 'Fi-Fi', style: TextStyle(color: Colors.blue,fontWeight: FontWeight.bold)),
                 ],
               ),
             ),

@@ -11,7 +11,7 @@ description: A new Flutter project.
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 0.1.9+2
+version: 0.2.2+5
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
@@ -26,6 +26,7 @@ dependencies:
   connectivity: ^2.0.2
   cupertino_icons: ^0.1.2
   date_format: ^1.0.9
+  easy_localization: ^2.1.0
   file_picker: ^2.1.0
   firebase_remote_config: ^0.4.2
   flare_flutter: any
@@ -53,6 +54,7 @@ dependencies:
   jwt_decoder: ^1.0.3
   line_icons: ^0.2.0
   location: ^2.5.4
+  line_awesome_icons: ^1.0.4+2
   modal_progress_hud: ^0.1.3
   multi_image_picker: ^4.7.14
   package_info: ^0.4.3+2
@@ -67,11 +69,12 @@ dependencies:
   share: ^0.6.5+4
   syncfusion_flutter_gauges: ^18.4.31
   url_launcher: ^5.7.10
+  flutter_inappwebview: ^4.0.0+4
 
 flutter_icons:
-  android: "launcher_icon"
+  image_path: "assets/images/Koompi-WiFi-Icon.png"
   ios: true
-  image_path: "assets/images/koompi_logo_signal.jpg"
+  android: true
   
 
 dev_dependencies:
@@ -92,6 +95,7 @@ flutter:
     - assets/images/
     - assets/images/sld_stroke.svg
     - assets/animations/
+    - assets/lang/
     # - assets/images/avatar.png
     # - assets/images/koompi_logo.png
     # - assets/images/koompi_logo_signal.png

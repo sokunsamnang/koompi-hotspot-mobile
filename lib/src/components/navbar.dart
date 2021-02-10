@@ -35,6 +35,7 @@ class _NavbarState extends State<Navbar> {
   
   @override
   Widget build(BuildContext context) {
+    var _lang = AppLocalizeService.of(context);
     return Scaffold(
       body: Center(
         child: SafeArea(
@@ -58,19 +59,19 @@ class _NavbarState extends State<Navbar> {
                 tabs: [
                   GButton(
                     icon: LineIcons.home,
-                    text: 'Home',
+                    text: _lang.translate('home'),
                   ),
                   GButton(
                     icon: LineIcons.map,
-                    text: 'Map',
+                    text: _lang.translate('map'),
                   ),
                   GButton(
                     icon: Icons.wifi_outlined,
-                    text: 'Speed Test',
+                    text: _lang.translate('speed_test'),
                   ),
                   GButton(
                     icon: LineIcons.bars,
-                    text: 'More',
+                    text: _lang.translate('more'),
                   ),
                 ],
                 selectedIndex: _selectedIndex,

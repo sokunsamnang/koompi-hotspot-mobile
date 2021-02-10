@@ -8,11 +8,12 @@ import 'package:koompi_hotspot/src/backend/post_request.dart';
 import 'package:koompi_hotspot/src/reuse_widget/reuse_widget.dart';
 import 'package:koompi_hotspot/src/screen/home/mywallet/qr_scanner.dart';
 import 'package:koompi_hotspot/src/screen/home/mywallet/send_payment_complete.dart';
+import 'package:koompi_hotspot/src/utils/app_localization.dart';
 
 class SendRequest extends StatefulWidget {
   final String walletKey;
-
-  SendRequest(this.walletKey);
+  final String amount;
+  SendRequest(this.walletKey, this.amount);
   @override
   _SendRequestState createState() => _SendRequestState();
 }
@@ -20,7 +21,7 @@ class SendRequest extends StatefulWidget {
 class _SendRequestState extends State<SendRequest> {
   TextEditingController recieveWallet;
   TextEditingController asset = TextEditingController(text: 'SEL');
-  TextEditingController amount = TextEditingController();
+  TextEditingController amount;
   TextEditingController memo = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
   Backend _backend = Backend();
@@ -80,7 +81,7 @@ class _SendRequestState extends State<SendRequest> {
    Future<String> _showDialogPassword(
      BuildContext context, 
      TextEditingController recieveWallet, 
-     TextEditingController asset,
+     TextEditingController amount,
      TextEditingController memo,
     ) {
     return showDialog(
@@ -140,6 +141,7 @@ class _SendRequestState extends State<SendRequest> {
   @override
   void initState() {
     recieveWallet = TextEditingController(text: widget.walletKey);
+    amount = TextEditingController(text: widget.amount.toString());
     super.initState();
   }
 
@@ -150,6 +152,7 @@ class _SendRequestState extends State<SendRequest> {
 
   @override
   Widget build(BuildContext context) {
+    var _lang = AppLocalizeService.of(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -157,7 +160,7 @@ class _SendRequestState extends State<SendRequest> {
           color: Colors.black, //change your color here
         ),
         title: Text(
-          'Send Request',
+          _lang.translate('send_request'),
           style: TextStyle(
               color: Colors.black,
               fontFamily: 'Medium',
@@ -184,11 +187,11 @@ class _SendRequestState extends State<SendRequest> {
                     SizedBox(
                       height: 10.0,
                     ),
-                    Text('Receive Address'),
+                    Text(_lang.translate('receive_address')),
                     SizedBox(height: 10.0),
                     TextFormField(
                       validator: (val) => val.isEmpty
-                          ? 'Receiver address is required'
+                          ? _lang.translate('receive_address_validate')
                           : null,
                       onSaved: (val) => recieveWallet.text = val,
                       autovalidateMode: AutovalidateMode.always,
@@ -206,7 +209,7 @@ class _SendRequestState extends State<SendRequest> {
                                             portList: [],
                                           )));
                             }),
-                          hintText: 'Receive Address',
+                          hintText: _lang.translate('receive_address'),
                           border: OutlineInputBorder(
                             borderSide: BorderSide(color: Colors.black),
                             borderRadius:
@@ -214,7 +217,7 @@ class _SendRequestState extends State<SendRequest> {
                           )),
                     ),
                     SizedBox(height: 16.0),
-                    Text('Wallet'),
+                    Text(_lang.translate('asset')),
                     SizedBox(height: 10.0),
                     TextFormField(
                       controller: asset,
@@ -229,11 +232,11 @@ class _SendRequestState extends State<SendRequest> {
                           )),
                     ),
                     SizedBox(height: 16.0),
-                    Text('Amont'),
+                    Text(_lang.translate('amount')),
                     SizedBox(height: 10.0),
                     TextFormField(
                       validator: (val) =>
-                          val.isEmpty ? 'Amount is required' : null,
+                          val.isEmpty ? _lang.translate('amount_validate') : null,
                       onSaved: (val) => amount.text = val,
                       autovalidateMode: AutovalidateMode.always,
                       keyboardType: TextInputType.number,
@@ -243,7 +246,7 @@ class _SendRequestState extends State<SendRequest> {
                       controller: amount,
                       decoration: InputDecoration(
                           prefixIcon: Icon(Icons.attach_money),
-                          hintText: 'Amount',
+                          hintText: _lang.translate('amount'),
                           border: OutlineInputBorder(
                             borderSide: BorderSide(color: Colors.black),
                             borderRadius:
@@ -293,12 +296,11 @@ class _SendRequestState extends State<SendRequest> {
                                 _submitValidate();
                               },
                               child: Center(
-                                child: Text("SEND",
+                                child: Text(_lang.translate('send'),
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontFamily: "Poppins-Bold",
-                                        fontSize: 18,
-                                        letterSpacing: 2.5)),
+                                        fontSize: 18)),
                               ),
                             ),
                           ),

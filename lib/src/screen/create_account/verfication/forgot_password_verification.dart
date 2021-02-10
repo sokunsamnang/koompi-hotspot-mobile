@@ -102,6 +102,7 @@ class _ForgotPasswordVerificationState extends State<ForgotPasswordVerification>
   }
   @override
   Widget build(BuildContext context) {
+    var _lang = AppLocalizeService.of(context);
     return Scaffold(
       backgroundColor: Colors.blue.shade50,
       key: scaffoldKey,
@@ -126,7 +127,7 @@ class _ForgotPasswordVerificationState extends State<ForgotPasswordVerification>
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: Text(
-                  'Email Verification',
+                  _lang.translate('phone_number_verification'),
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
                   textAlign: TextAlign.center,
                 ),
@@ -136,7 +137,7 @@ class _ForgotPasswordVerificationState extends State<ForgotPasswordVerification>
                     const EdgeInsets.symmetric(horizontal: 30.0, vertical: 8),
                 child: RichText(
                   text: TextSpan(
-                      text: "Enter the code sent to ",
+                      text: _lang.translate('enter_the_code_sent_to'),
                       children: [
                         TextSpan(
                             text: widget.phone,
@@ -167,8 +168,8 @@ class _ForgotPasswordVerificationState extends State<ForgotPasswordVerification>
                       obscureText: false,
                       animationType: AnimationType.fade,
                       validator: (v) {
-                        if (v.length < 3) {
-                          return "I'm from validator";
+                        if (v.length < 6) {
+                          return _lang.translate('verify_validate');
                         } else {
                           return null;
                         }
@@ -213,7 +214,7 @@ class _ForgotPasswordVerificationState extends State<ForgotPasswordVerification>
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30.0),
                 child: Text(
-                  hasError ? "*Please fill up all the cells properly" : "",
+                  hasError ? _lang.translate('please_fill_up_all_the_cells_properly_validate') : "",
                   style: TextStyle(
                       color: Colors.red,
                       fontSize: 12,
@@ -269,9 +270,9 @@ class _ForgotPasswordVerificationState extends State<ForgotPasswordVerification>
                       }
                     },
                     child: Center(
-                        child: Text(
-                      "VERIFY".toUpperCase(),
-                      style: TextStyle(
+                      child: Text(
+                        _lang.translate('verify_bt'),
+                        style: TextStyle(
                           color: Colors.white,
                           fontSize: 18,
                           fontWeight: FontWeight.bold),
@@ -292,26 +293,26 @@ class _ForgotPasswordVerificationState extends State<ForgotPasswordVerification>
                           blurRadius: 5)
                     ]),
               ),
-              SizedBox(
-                height: 16,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  FlatButton(
-                    child: Text("Clear"),
-                    onPressed: () {
-                      textEditingController.clear();
-                    },
-                  ),
-                  // FlatButton(
-                  //   child: Text("Set Text"),
-                  //   onPressed: () {
-                  //     textEditingController.text = "123456";
-                  //   },
-                  // ),
-                ],
-              )
+              // SizedBox(
+              //   height: 16,
+              // ),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.center,
+              //   children: <Widget>[
+              //     FlatButton(
+              //       child: Text("Clear"),
+              //       onPressed: () {
+              //         textEditingController.clear();
+              //       },
+              //     ),
+              //     // FlatButton(
+              //     //   child: Text("Set Text"),
+              //     //   onPressed: () {
+              //     //     textEditingController.text = "123456";
+              //     //   },
+              //     // ),
+              //   ],
+              // )
             ],
           ),
         ),

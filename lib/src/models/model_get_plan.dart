@@ -7,7 +7,8 @@ class ModelPlan {
     this.balance,
     this.device,
     this.plan,
-    this.timeLeft
+    this.timeLeft,
+    this.status
   });
 
   String username;
@@ -15,25 +16,28 @@ class ModelPlan {
   String device;
   String plan;
   String timeLeft;
+  bool status;
 
   factory ModelPlan.fromJson(String str) => ModelPlan.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
   factory ModelPlan.fromMap(Map<String, dynamic> json) => ModelPlan(
-        username: json["username"],
-        balance: json["balance"],
-        device: json["device"],
-        plan: json["plan"],
-        timeLeft: json["time_left"]
-      );
+    username: json["username"],
+    balance: json["balance"],
+    device: json["device"],
+    plan: json["plan"],
+    timeLeft: json["time_left"],
+    status: json["status"]
+  );
 
   Map<String, dynamic> toMap() => {
-        "username": username,
-        "balance": balance,
-        "device": device,
-        "plan": plan,
-      };
+    "username": username,
+    "balance": balance,
+    "device": device,
+    "plan": plan,
+    "status": status
+  };
 }
 
 ModelPlan mPlan = ModelPlan();

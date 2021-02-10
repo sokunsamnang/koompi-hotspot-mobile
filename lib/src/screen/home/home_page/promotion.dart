@@ -1,47 +1,112 @@
-import 'package:getwidget/getwidget.dart';
-import 'package:koompi_hotspot/all_export.dart';
+// import 'package:flutter/material.dart';
+// import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+// class HomeScreen extends StatefulWidget {
+//   @override
+//   _HomeScreenState createState() => _HomeScreenState();
+// }
 
+// class _HomeScreenState extends State<HomeScreen> {
+//   int _selectedIndex = 0;
+//   int _currentTab = 0;
+//   List<IconData> _icons = [
+//     FontAwesomeIcons.plane,
+//     FontAwesomeIcons.bed,
+//     FontAwesomeIcons.walking,
+//     FontAwesomeIcons.biking,
+//   ];
 
-final List<String> imageList = [
-  "https://cdn.pixabay.com/photo/2017/12/03/18/04/christmas-balls-2995437_960_720.jpg",
-  "https://cdn.pixabay.com/photo/2017/12/13/00/23/christmas-3015776_960_720.jpg",
-  "https://cdn.pixabay.com/photo/2019/12/19/10/55/christmas-market-4705877_960_720.jpg",
-  "https://cdn.pixabay.com/photo/2019/12/20/00/03/road-4707345_960_720.jpg",
-  "https://cdn.pixabay.com/photo/2019/12/22/04/18/x-mas-4711785__340.jpg",
-  "https://cdn.pixabay.com/photo/2016/11/22/07/09/spruce-1848543__340.jpg"
-];
+//   Widget _buildIcon(int index) {
+//     return GestureDetector(
+//       onTap: () {
+//         setState(() {
+//           _selectedIndex = index;
+//         });
+//       },
+//       child: Container(
+//         height: 60.0,
+//         width: 60.0,
+//         decoration: BoxDecoration(
+//           color: _selectedIndex == index
+//               ? Theme.of(context).accentColor
+//               : Color(0xFFE7EBEE),
+//           borderRadius: BorderRadius.circular(30.0),
+//         ),
+//         child: Icon(
+//           _icons[index],
+//           size: 25.0,
+//           color: _selectedIndex == index
+//               ? Theme.of(context).primaryColor
+//               : Color(0xFFB4C1C4),
+//         ),
+//       ),
+//     );
+//   }
 
-class MyCarousel extends StatefulWidget{
-
-  @override
-  _MyCarouselState createState() => _MyCarouselState();
-}
-
-class _MyCarouselState extends State<MyCarousel> {
-  @override
-  Widget build(BuildContext context) {
-    return  GFCarousel(
-      items: imageList.map(
-      (url) {
-      return Container(
-        margin: EdgeInsets.all(8.0),
-        child: ClipRRect(
-          borderRadius: BorderRadius.all(Radius.circular(5.0)),
-            child: Image.network(
-              url,
-              fit: BoxFit.cover,
-                width: 1000.0
-            ),
-          ),
-        );
-        },
-      ).toList(),
-      onPageChanged: (index) {
-        setState(() {
-          index;
-        });
-      },
-  );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       body: SafeArea(
+//         child: ListView(
+//           padding: EdgeInsets.symmetric(vertical: 30.0),
+//           children: <Widget>[
+//             Padding(
+//               padding: EdgeInsets.only(left: 20.0, right: 120.0),
+//               child: Text(
+//                 'What would you like to find?',
+//                 style: TextStyle(
+//                   fontSize: 30.0,
+//                   fontWeight: FontWeight.bold,
+//                 ),
+//               ),
+//             ),
+//             SizedBox(height: 20.0),
+//             Row(
+//               mainAxisAlignment: MainAxisAlignment.spaceAround,
+//               children: _icons
+//                   .asMap()
+//                   .entries
+//                   .map(
+//                     (MapEntry map) => _buildIcon(map.key),
+//                   )
+//                   .toList(),
+//             ),
+//             SizedBox(height: 20.0),
+//             DestinationCarousel(),
+//           ],
+//         ),
+//       ),
+//       bottomNavigationBar: BottomNavigationBar(
+//         currentIndex: _currentTab,
+//         onTap: (int value) {
+//           setState(() {
+//             _currentTab = value; 
+//           });
+//         },
+//         items: [
+//           BottomNavigationBarItem(
+//             icon: Icon(
+//               Icons.search,
+//               size: 30.0,
+//             ),
+//             title: SizedBox.shrink(),
+//           ),
+//           BottomNavigationBarItem(
+//             icon: Icon(
+//               Icons.local_pizza,
+//               size: 30.0,
+//             ),
+//             title: SizedBox.shrink(),
+//           ),
+//           BottomNavigationBarItem(
+//             icon: CircleAvatar(
+//               radius: 15.0,
+//               backgroundImage: NetworkImage('http://i.imgur.com/zL4Krbz.jpg'),
+//             ),
+//             title: SizedBox.shrink(),
+//           )
+//         ],
+//       ),
+//     );
+//   }
+// }

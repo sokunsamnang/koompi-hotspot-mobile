@@ -74,7 +74,7 @@ class Components {
           return AlertDialog(
             backgroundColor: bgColor,
             shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10.0)),
+              borderRadius: BorderRadius.circular(12.0)),
             title: Align(
               alignment: Alignment.center,
               child: title,
@@ -85,7 +85,10 @@ class Components {
             ),
             actions: <Widget>[
               FlatButton(
-                child: Text('Close'),
+                child: Text('CLOSE', style: GoogleFonts.nunito(
+                  textStyle: TextStyle(color: Colors.blue, fontSize: 14, fontWeight: FontWeight.w700)
+                  ),
+                ),
                 onPressed: () => Navigator.of(context).pop(text),
               ),
               action

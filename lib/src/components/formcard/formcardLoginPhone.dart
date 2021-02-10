@@ -12,7 +12,7 @@ Widget formLoginPhone( BuildContext context,
                   Function _submitLogin) {
 
   PhoneNumber number = PhoneNumber(isoCode: 'KH');
-
+  var _lang = AppLocalizeService.of(context);
   return Container(
     width: double.infinity,
     //  height: ScreenUtil.getInstance().setHeight(500),
@@ -39,14 +39,14 @@ Widget formLoginPhone( BuildContext context,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Center(
-              child: Text("Welcome Back",
+              child: Text(_lang.translate('welcome_back'),
                 style: TextStyle(
                   fontSize: ScreenUtil().setSp(45),
                   fontFamily: "Poppins-Bold",
                   letterSpacing: .6)),
             ),
             Center(
-              child: Text("Sign in to continue",
+              child: Text(_lang.translate('sign_in_to_continue'),
                 style: TextStyle(
                   // fontSize: ScreenUtil().setSp(45),
                   // fontFamily: "Poppins-Bold",
@@ -63,6 +63,7 @@ Widget formLoginPhone( BuildContext context,
               onInputValidated: (bool value) {
                 print(value);
               },
+              errorMessage: _lang.translate('invalid_phone_number_validate'),
               // selectorConfig: SelectorConfig(
               //   selectorType: PhoneInputSelectorType.BOTTOM_SHEET,
               // ),
@@ -72,11 +73,11 @@ Widget formLoginPhone( BuildContext context,
               initialValue: number,
               textFieldController: phoneController,
               formatInput: false,
-              keyboardType: TextInputType.phone,
+              keyboardType: TextInputType.number,
               inputDecoration: InputDecoration(
                 fillColor: Colors.grey[100],
                 filled: true,
-                hintText: "Phone Number",
+                hintText: _lang.translate('phone_number_tf'),
                 hintStyle: TextStyle(color: Colors.black, fontSize: 12.0),
                 border: OutlineInputBorder(
                   borderSide: BorderSide(color: Colors.black),
@@ -93,8 +94,8 @@ Widget formLoginPhone( BuildContext context,
             TextFormField(
               controller: passwordController,
               validator: (val) {
-                if(val.isEmpty) return 'Password is required';
-                if(val.length < 8) return 'Password too short';                
+                if(val.isEmpty) return _lang.translate('password_is_required_validate');
+                if(val.length < 8) return _lang.translate('password_too_short_validate');           
                 return null;
               },
               autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -103,7 +104,7 @@ Widget formLoginPhone( BuildContext context,
               decoration: InputDecoration(
                 fillColor: Colors.grey[100],
                 filled: true,
-                hintText: "Password",
+                hintText: _lang.translate('password_tf'),
                 hintStyle: TextStyle(color: Colors.black, fontSize: 12.0),
                 suffixIcon: GestureDetector(
                   onTap: () {
@@ -138,7 +139,7 @@ Widget formLoginPhone( BuildContext context,
                     );
                   },
                   child: Text(
-                    "Forgot Password?",
+                    _lang.translate('forgot_password_bt'),
                     style: TextStyle(
                         color: Color(0xFF5d74e3),
                         fontFamily: "Poppins-Bold",
@@ -176,7 +177,7 @@ Widget formLoginPhone( BuildContext context,
                       //   MaterialPageRoute(builder: (context) => Navbar()));
                     },
                     child: Center(
-                      child: Text("SIGN IN",
+                      child: Text(_lang.translate('sign_in_bt'),
                           style: TextStyle(
                               color: Colors.white,
                               fontFamily: "Poppins-Bold",
@@ -195,7 +196,7 @@ Widget formLoginPhone( BuildContext context,
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Text(
-                  "DON'T HAVE AN ACCOUNT? ",
+                  _lang.translate('dont_have_an_account'),
                   style: TextStyle(fontFamily: "Poppins-Medium"),
                 ),
                 InkWell(
@@ -210,7 +211,7 @@ Widget formLoginPhone( BuildContext context,
                               passwordController.clear();
                             });
                   },
-                  child: Text("SIGN UP",
+                  child: Text(_lang.translate('sign_up_bt'),
                       style: TextStyle(
                           color: Color(0xFF5d74e3),
                           fontFamily: "Poppins-Bold")),

@@ -8,6 +8,7 @@ import 'package:koompi_hotspot/src/screen/speedtest/constants/alertStyle.dart';
 import 'package:koompi_hotspot/src/screen/speedtest/constants/btnStyle.dart';
 import 'package:koompi_hotspot/src/screen/speedtest/constants/palette.dart';
 import 'package:koompi_hotspot/src/screen/speedtest/constants/testServer.dart';
+import 'package:koompi_hotspot/src/utils/app_localization.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
@@ -43,11 +44,12 @@ class SpeedTestNetState extends State<SpeedTestNet> {
 
   @override
   Widget build(BuildContext context) {
+    var _lang = AppLocalizeService.of(context);
     return Scaffold(
       backgroundColor: bgCol,
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Text('Speed Test', style: TextStyle(color: Colors.black, fontFamily: 'Medium'),),
+        title: Text(_lang.translate('speed_test'), style: TextStyle(color: Colors.black, fontFamily: 'Medium'),),
         automaticallyImplyLeading: false,
       ),
       body: Center(
@@ -69,13 +71,13 @@ class SpeedTestNetState extends State<SpeedTestNet> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                showLabel('Download', downloadRate, unitText),
+                showLabel('${_lang.translate('download_speed')}', downloadRate, unitText),
               ],
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                showLabel('Upload', uploadRate, unitText),
+                showLabel('${_lang.translate('upload_speed')}', uploadRate, unitText),
               ],
             ),
             SfRadialGauge(
@@ -137,9 +139,27 @@ class SpeedTestNetState extends State<SpeedTestNet> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 RaisedButton(
-                  child: btnInk,
+                  child: Ink(
+                    decoration: BoxDecoration(
+                      gradient: buttonGradient,
+                      borderRadius: BorderRadius.all(Radius.circular(12.0)),
+                    ),
+                    child: Container(
+                      constraints: const BoxConstraints(
+                          minWidth: 188.0, minHeight: 46.0), // min sizes for Material buttons
+                      alignment: Alignment.center,
+                      child: Text(
+                        _lang.translate('start_test'),
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
                   shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(80.0)),
+                    borderRadius: BorderRadius.circular(12.0)),
                   padding: const EdgeInsets.all(0.0),
                   color: Colors.red,
                   textColor: txtCol,

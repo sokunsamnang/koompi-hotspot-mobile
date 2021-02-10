@@ -12,8 +12,9 @@ Widget resetNewPasswordBody(
     Function _submit,
     GlobalKey<FormState> formKey,
     bool _autoValidate) {
-  ScreenUtil.instance = ScreenUtil.getInstance()..init(context);
-  ScreenUtil.instance =
+      var _lang = AppLocalizeService.of(context);
+      ScreenUtil.instance = ScreenUtil.getInstance()..init(context);
+      ScreenUtil.instance =
       ScreenUtil(width: 750, height: 1334, allowFontScaling: true);
   return new Scaffold(
     backgroundColor: Colors.white,
@@ -48,7 +49,7 @@ Widget resetNewPasswordBody(
                     ),
                     Center(
                       child: Text(
-                        'Please Enter New Password',
+                        _lang.translate('new_password_tx'),
                         style: TextStyle(
                             color: Colors.deepOrangeAccent[400],
                             fontFamily: 'Medium',
@@ -96,7 +97,7 @@ Widget resetNewPasswordBody(
                             _submit();
                           },
                           child: Center(
-                            child: Text("Change Password",
+                            child: Text(_lang.translate('change_password_bt'),
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontFamily: "Poppins-Bold",

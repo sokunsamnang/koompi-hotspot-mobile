@@ -185,10 +185,11 @@ class _MyAccountState extends State<MyAccount>
 
   @override
   Widget build(BuildContext context) {
+    var _lang = AppLocalizeService.of(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Text('Edit Account', style: TextStyle(color: Colors.black, fontFamily: 'Medium')),
+        title: Text(_lang.translate('edit_account'), style: TextStyle(color: Colors.black, fontFamily: 'Medium')),
         leading: Builder(builder: (BuildContext context) {
           return IconButton(
               icon: Icon(
@@ -265,7 +266,7 @@ class _MyAccountState extends State<MyAccount>
                     Center(
                       child: FlatButton(
                         colorBrightness: Brightness.dark,
-                        child: Text('Edit Profile Photo',
+                        child: Text(_lang.translate('edit_profile_picture'),
                             style: TextStyle(
                                 color: Colors.blue,
                                 fontSize: 20.0,
@@ -274,17 +275,17 @@ class _MyAccountState extends State<MyAccount>
                       ),
                     ),
                     SizedBox(height: 16.0),
-                    Text('Full Name'),
+                    Text(_lang.translate('fullname')),
                     SizedBox(height: 10.0),
                     TextFormField(
                       validator: (val) =>
-                          val.length < 3 ? 'Full Name is required' : null,
+                          val.length < 3 ? _lang.translate('fullname_validate') : null,
                       onSaved: (val) => fullnameController.text = val,
                       autovalidateMode: AutovalidateMode.always,
                       controller: fullnameController ?? '',
                       decoration: InputDecoration(
                         prefixIcon: Icon(LineIcons.user),
-                        hintText: 'Full Name',
+                        hintText: _lang.translate('fullname'),
                         // focusedBorder: OutlineInputBorder(
                         //   borderSide: BorderSide(color: Colors.black, width: 2),
                         // ),
@@ -295,14 +296,14 @@ class _MyAccountState extends State<MyAccount>
                         )),
                     ),
                     SizedBox(height: 16.0),
-                    Text('Phone Number'),
+                    Text(_lang.translate('phone_number_tf')),
                     SizedBox(height: 10.0),
                     TextFormField(
                       readOnly: true,
                       controller: phoneController ?? '',
                       decoration: InputDecoration(
                           prefixIcon: Icon(Icons.phone),
-                          hintText: 'Phone Number',
+                          hintText: _lang.translate('phone_number_tf'),
                           border: OutlineInputBorder(
                             borderSide: BorderSide(color: Colors.black),
                             borderRadius:
@@ -310,15 +311,15 @@ class _MyAccountState extends State<MyAccount>
                           )),
                     ),
                     SizedBox(height: 16.0),
-                    Text('Date Of Birth'),
+                    Text(_lang.translate('dateofbirth')),
                     SizedBox(height: 10.0),
                     dateOfbirth(selectedDate, _selectDate, dateFormart, context),
                     SizedBox(height: 16.0),
-                    Text('Location'),
+                    Text(_lang.translate('locaton')),
                     SizedBox(height: 10.0),
                     locationPicker(context),
                     SizedBox(height: 16.0),
-                    Text('Gender'),
+                    Text(_lang.translate('gender')),
                     SizedBox(height: 10.0),
                     Row(
                       children: <Widget>[
@@ -426,7 +427,7 @@ class _MyAccountState extends State<MyAccount>
         context: context,
         title: "Pick Your Location",
         items: locationModel.khLocation,
-        selectedItem: locationModel.selectedKhLocation,
+        selectedItem: address,
         onChanged: (value) =>
             setState(() => locationModel.selectedKhLocation = value),
         onCancelled: () => print("Scroll Picker cancelled"),

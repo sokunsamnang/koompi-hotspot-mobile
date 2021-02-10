@@ -34,6 +34,8 @@ export 'package:flutter_map/flutter_map.dart';
 export 'package:app_settings/app_settings.dart';
 export 'package:shared_preferences/shared_preferences.dart';
 export 'package:google_fonts/google_fonts.dart';
+export 'package:koompi_hotspot/src/utils/app_localization.dart';
+export 'package:flutter_localizations/flutter_localizations.dart';
 
 /* Local File */
 export 'package:koompi_hotspot/src/models/model_balance.dart';
@@ -97,3 +99,5 @@ export 'package:koompi_hotspot/src/app.dart';
 export 'package:koompi_hotspot/src/components/socialmedia.dart';
 export 'package:koompi_hotspot/src/screen/home/hotspot/view_plan.dart';
 export 'package:koompi_hotspot/src/screen/home/home_page/promotion.dart';
+export 'package:koompi_hotspot/src/welcome_screen.dart';
+export 'package:koompi_hotspot/src/screen/onboarding/onboarding_screen.dart';

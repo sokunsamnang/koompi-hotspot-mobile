@@ -59,7 +59,7 @@ Widget formCardEmail(
               TextFormField(
                 validator: (val) {
                   if(val.isEmpty) return 'Email is required';
-                  if(!val.contains('@')) return 'Email invalid';                
+                  if(!val.contains('@')) return 'Email is invalid';                
                   return null;
                 },
                 onSaved: (val) => _email = val,
