@@ -31,6 +31,7 @@ class _MyWalletState extends State<MyWallet> {
 
   @override
   Widget build(BuildContext context) {
+    var _lang = AppLocalizeService.of(context);
     AppBar appBar = AppBar();
     appBarheight = appBar.preferredSize.height;
     
@@ -44,7 +45,7 @@ class _MyWalletState extends State<MyWallet> {
         children: <Widget>[
           Scaffold(
             appBar: AppBar(
-              title: Text('My Wallet', style: TextStyle(color: Colors.black, fontFamily: 'Medium')),
+              title: Text(_lang.translate('my_wallet'), style: TextStyle(color: Colors.black, fontFamily: 'Medium')),
               backgroundColor: Colors.white,  
               iconTheme: IconThemeData(
                 color: Colors.black, //change your color here
@@ -114,7 +115,7 @@ class _MyWalletState extends State<MyWallet> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'TOTAL BALANCE',
+                                  _lang.translate('total_balance'),
                                   style: TextStyle(
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold,
@@ -157,19 +158,19 @@ class _MyWalletState extends State<MyWallet> {
                                 onPressed: () {
                                   Navigator.push(
                                     context,
-                                    MaterialPageRoute(builder: (context) => SendRequest(widget.walletKey)),
+                                    MaterialPageRoute(builder: (context) => SendRequest(widget.walletKey, "")),
                                   );
                                 },
                                 elevation: 5,
                                 child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
+                                  padding: const EdgeInsets.all(2.0),
                                   child: Row(
                                     children: <Widget>[
                                       Image.asset('assets/images/ico_send_money.png'),
                                       Padding(
                                         padding:
                                             const EdgeInsets.symmetric(horizontal: 8.0),
-                                        child: Text('Send\nmoney',
+                                        child: Text(_lang.translate('send_money'),
                                           style: TextStyle(fontWeight: FontWeight.w700),),
                                       )
                                     ],
@@ -189,14 +190,14 @@ class _MyWalletState extends State<MyWallet> {
                                 },
                                 elevation: 5,
                                 child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
+                                  padding: const EdgeInsets.all(2.0),
                                   child: Row(
                                     children: <Widget>[
                                       Image.asset('assets/images/ico_receive_money.png'),
                                       Padding(
                                         padding:
                                             const EdgeInsets.symmetric(horizontal: 8.0),
-                                        child: Text('Receive\nmoney',
+                                        child: Text(_lang.translate('receive_money'),
                                           style: TextStyle(fontWeight: FontWeight.w700),),
                                       )
                                     ],
@@ -215,7 +216,7 @@ class _MyWalletState extends State<MyWallet> {
                           Padding(
                             padding: const EdgeInsets.only(left: 16),
                             child: Text(
-                              'Transactions',
+                              _lang.translate('transactions'),
                               style: TextStyle(
                                 color: Colors.black,
                                 fontSize: 20,

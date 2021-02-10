@@ -47,7 +47,7 @@ Widget formCardForgotPasswordPhone(
                 initialValue: number,
                 textFieldController: _phoneController,
                 formatInput: false,
-                keyboardType: TextInputType.numberWithOptions(signed: true, decimal: true),
+                keyboardType: TextInputType.number,
                 inputDecoration: InputDecoration(
                   fillColor: Colors.grey[100],
                   filled: true,

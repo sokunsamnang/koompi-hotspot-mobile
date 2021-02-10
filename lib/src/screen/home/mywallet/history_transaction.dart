@@ -4,6 +4,7 @@ import 'package:koompi_hotspot/src/utils/app_utils.dart';
 import 'package:provider/provider.dart';
 
 Widget trxHistory(BuildContext context) {
+  var _lang = AppLocalizeService.of(context);
   List _buildList(List<TrxHistoryModel> history, BuildContext context, String userWallet) {
     List<Widget> listItems = List();
     print('My History: ${history.length}');
@@ -14,45 +15,161 @@ Widget trxHistory(BuildContext context) {
           children: [
             GestureDetector(
               onTap: () async {
-                await Components.dialog(
-                  context,
-                  Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      ItemList(
-                        title: "ID",
-                        trailing: history[i].id,
+                await showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      backgroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12.0)),
+                      title: Align(
+                        alignment: Alignment.center,
+                        child: Text(
+                          _lang.translate('transaction_history'),
+                          style: GoogleFonts.nunito(
+                            textStyle: TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.w700)
+                            ),
+                          textAlign: TextAlign.center,
+                        ),
                       ),
-                      ItemList(
-                        title: "Created On",
-                        trailing: AppUtils.timeStampToDateTime(history[i].createdAt),
+                      contentPadding: EdgeInsets.only(top: 15.0),
+                      content: Container(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(left: 24.0, right: 24.0),
+                              child: ItemList(
+                                title: _lang.translate('id'),
+                                trailing: history[i].id,
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(left: 24.0, right: 24.0),
+                              child: ItemList(
+                              title: _lang.translate('created_on'),
+                              trailing: AppUtils.timeStampToDateTime(history[i].createdAt),
+                            ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(left: 24.0, right: 24.0),
+                              child: ItemList(
+                                title: _lang.translate('sender'),
+                                trailing: history[i].sender,
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(left: 24.0, right: 24.0),
+                              child: ItemList(
+                                title: _lang.translate('destination'),
+                                trailing: history[i].destination,
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(left: 24.0, right: 24.0),
+                              child: ItemList(
+                                title: _lang.translate('amount'),
+                                trailing: history[i].amount.toString() + " SEL",
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(left: 24.0, right: 24.0),
+                              child: ItemList(
+                                title: _lang.translate('fee'),
+                                trailing: history[i].fee.toString() + " SEL",
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(left: 24.0, right: 24.0),
+                              child: ItemList(
+                                title: _lang.translate('memo'),
+                                trailing: history[i].memo,
+                              ),
+                            ),
+                            Divider(
+                              thickness: 1.5,
+                              color: Colors.grey[300],
+                            ),
+                            InkWell(
+                              child: Container(
+                                // padding: EdgeInsets.only(top: 20.0),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.only(
+                                      bottomLeft: Radius.circular(12.0),
+                                      bottomRight: Radius.circular(12.0)),
+                                ),
+                                child:  mData.wallet == history[i].destination 
+                                  ? FlatButton.icon(
+                                    icon: Icon(Icons.replay_sharp, color: Colors.blue[700], size: 18),
+                                    label: Text('RETURN', 
+                                      style: GoogleFonts.nunito(
+                                        textStyle: TextStyle(color: Colors.blue[700], fontSize: 17)
+                                        ),
+                                    ),
+                                    onPressed: () => {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(builder: (context) => SendRequest(history[i].sender, history[i].amount.toString())),
+                                      ),
+                                    }
+                                  )
+                                  :
+                                  FlatButton.icon(
+                                    icon: Icon(Icons.repeat_sharp, color: Colors.blue[700], size: 18),
+                                    label: Text('REPEAT',
+                                      style: GoogleFonts.nunito(
+                                        textStyle: TextStyle(color: Colors.blue[700], fontSize: 17)
+                                        ),
+                                    ),
+                                    onPressed: () => {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(builder: (context) => SendRequest(history[i].destination, history[i].amount.toString())),
+                                      ),
+                                    }
+                                  ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                      ItemList(
-                        title: "Sender",
-                        trailing: history[i].sender,
-                      ),
-                      ItemList(
-                        title: "Destination",
-                        trailing: history[i].destination,
-                      ),
-                      ItemList(
-                        title: "Amount",
-                        trailing: history[i].amount.toString() + " SEL",
-                      ),
-                      ItemList(
-                        title: "Fee",
-                        trailing: history[i].fee.toString() + " SEL",
-                      ),
-                      ItemList(
-                        title: "Memo",
-                        trailing: history[i].memo,
-                      ),
-                    ],
-                  ),
-                  Text(
-                    "Transaction history",
-                    textAlign: TextAlign.left,
-                  ),
+                      // actions: <Widget>[
+                      //   mData.wallet == history[i].destination 
+                      //   ? FlatButton.icon(
+                      //     icon: Icon(Icons.replay_sharp, color: Colors.blue[700], size: 18),
+                      //     label: Text('RETURN', 
+                      //       style: GoogleFonts.nunito(
+                      //         textStyle: TextStyle(color: Colors.blue[700], fontSize: 17)
+                      //         ),
+                      //     ),
+                      //     onPressed: () => {
+                      //       Navigator.push(
+                      //         context,
+                      //         MaterialPageRoute(builder: (context) => SendRequest(history[i].sender, history[i].amount.toString())),
+                      //       ),
+                      //     }
+                      //   )
+                      //   :
+                      //   FlatButton.icon(
+                      //     icon: Icon(Icons.repeat_sharp, color: Colors.blue[700], size: 18),
+                      //     label: Text('REPEAT',
+                      //       style: GoogleFonts.nunito(
+                      //         textStyle: TextStyle(color: Colors.blue[700], fontSize: 17)
+                      //         ),
+                      //     ),
+                      //     onPressed: () => {
+                      //       Navigator.push(
+                      //         context,
+                      //         MaterialPageRoute(builder: (context) => SendRequest(history[i].destination, history[i].amount.toString())),
+                      //       ),
+                      //     }
+                      //   ),
+                      // ],
+                    );
+                  }
                 );
               },
               child: Container(
@@ -93,7 +210,7 @@ Widget trxHistory(BuildContext context) {
                   leading: SvgPicture.asset('assets/images/sld_stroke.svg',
                       width: 30),
                   title: Text(
-                    userWallet == history[i].destination ? 'Recieved' : 'Sent',
+                    userWallet == history[i].destination ? _lang.translate('recieved') : _lang.translate('sent'),
                     style: TextStyle(
                       fontWeight: FontWeight.w900,
                       fontSize: 18.0,

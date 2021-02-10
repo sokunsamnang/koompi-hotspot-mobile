@@ -15,7 +15,6 @@ class _ChangePasswordState extends State<ChangePassword>
   ModelChangePassword _modelChangePassword = ModelChangePassword();
   
   
-  
   @override
   void initState() {
     super.initState();
@@ -50,7 +49,7 @@ class _ChangePasswordState extends State<ChangePassword>
 
   String validateOldPass(String value){
     if(_modelChangePassword.nodeOldPassword.hasFocus){
-      _modelChangePassword.responseOldPass = instanceValidate.validatePassword(value);
+      _modelChangePassword.responseOldPass = instanceValidate.validatePassword(value, context);
       validateAllFieldNotEmpty();
     }
     return _modelChangePassword.responseOldPass;
@@ -58,7 +57,7 @@ class _ChangePasswordState extends State<ChangePassword>
 
   String validateNewPass(String value){
     if (_modelChangePassword.nodeNewPassword.hasFocus){
-      _modelChangePassword.responseNewPass = instanceValidate.validatePassword(value);
+      _modelChangePassword.responseNewPass = instanceValidate.validatePassword(value, context);
       if (_modelChangePassword.responseNewPass == null) {
         _modelChangePassword.responseConfirm = newPasswordIsmatch();
       } 
@@ -72,7 +71,7 @@ class _ChangePasswordState extends State<ChangePassword>
 
   String validateConfirmPass(String value){
     if(_modelChangePassword.nodeConfirmPassword.hasFocus){
-      _modelChangePassword.responseConfirm = instanceValidate.validatePassword(value);
+      _modelChangePassword.responseConfirm = instanceValidate.validatePassword(value, context);
       if (_modelChangePassword.responseConfirm == null) _modelChangePassword.responseConfirm = confirmPasswordIsMatch();
       validateAllFieldNotEmpty();
     }
@@ -98,26 +97,28 @@ class _ChangePasswordState extends State<ChangePassword>
   }
 
   String newPasswordIsmatch(){
+    var _lang = AppLocalizeService.of(context);
     if (_modelChangePassword.controlConfirmPassword.text.length >= 8){
       if (_modelChangePassword.controlNewPassword.text == _modelChangePassword.controlConfirmPassword.text){
         enableButton(true);
         _modelChangePassword.responseConfirm = null;
       } else {
         if (_modelChangePassword.enable == true) enableButton(false);
-        _modelChangePassword.responseConfirm = "Password does not match";
+        _modelChangePassword.responseConfirm = "${_lang.translate('password_does_not_match_validate')}";
       }
     }
     return _modelChangePassword.responseConfirm;
   }
 
   String confirmPasswordIsMatch(){
+    var _lang = AppLocalizeService.of(context);
     if (_modelChangePassword.controlNewPassword.text.length >= 8){
       if (_modelChangePassword.controlNewPassword.text == _modelChangePassword.controlConfirmPassword.text){
         enableButton(true);
         _modelChangePassword.responseConfirm = null;
       } else {
         if (_modelChangePassword.enable == true) enableButton(false);
-        _modelChangePassword.responseConfirm = "Password does not match";
+        _modelChangePassword.responseConfirm = "${_lang.translate('password_does_not_match_validate')}";
       }
     }
     return _modelChangePassword.responseConfirm;
@@ -357,11 +358,12 @@ showChangePasswordDialog(context) async {
 
   @override
   Widget build(BuildContext context) {
+    var _lang = AppLocalizeService.of(context);
     return Scaffold(
       key: _modelChangePassword.globalKey,
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Text('Change Password', style: TextStyle(color: Colors.black, fontFamily: 'Medium')),
+        title: Text(_lang.translate('change_password'), style: TextStyle(color: Colors.black, fontFamily: 'Medium')),
         leading: Builder(builder: (BuildContext context) {
           return IconButton(
               icon: Icon(
@@ -408,7 +410,7 @@ showChangePasswordDialog(context) async {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         SizedBox(height: 16.0),
-                        Text('Current Password'),
+                        Text(_lang.translate('current_password')),
                         SizedBox(height: 10.0),
                         TextFormField(
                           obscureText: _obscureText,
@@ -428,7 +430,7 @@ showChangePasswordDialog(context) async {
                                 _obscureText ? Icons.visibility_off : Icons.visibility,
                               ),
                             ),
-                            hintText: 'Current Password',
+                            hintText: _lang.translate('current_password'),
                             border: OutlineInputBorder(
                               borderSide: BorderSide(color: Colors.black),
                               borderRadius: BorderRadius.all(Radius.circular(12.0))
@@ -437,7 +439,7 @@ showChangePasswordDialog(context) async {
                           
                         ),
                         SizedBox(height: 16.0),
-                        Text('New Password'),
+                        Text(_lang.translate('new_password_tf')),
                         SizedBox(height: 10.0),
                         TextFormField(
                           obscureText: _obscureText2,
@@ -456,7 +458,7 @@ showChangePasswordDialog(context) async {
                                 _obscureText2 ? Icons.visibility_off : Icons.visibility,
                               ),
                             ),
-                            hintText: 'New Password',
+                            hintText: _lang.translate('new_password_tf'),
                             border: OutlineInputBorder(
                               borderSide: BorderSide(color: Colors.black),
                               borderRadius: BorderRadius.all(Radius.circular(12.0))
@@ -464,7 +466,7 @@ showChangePasswordDialog(context) async {
                           ),
                         ),
                         SizedBox(height: 16.0),
-                        Text('Confirm New Password'),
+                        Text(_lang.translate('new_confirm_password_tf')),
                         SizedBox(height: 10.0),
                         TextFormField(
                           obscureText: _obscureText3,
@@ -483,7 +485,7 @@ showChangePasswordDialog(context) async {
                                 _obscureText3 ? Icons.visibility_off : Icons.visibility,
                               ),
                             ),
-                            hintText: 'Confirm New Password',
+                            hintText: _lang.translate('new_confirm_password_tf'),
                             border: OutlineInputBorder(
                               borderSide: BorderSide(color: Colors.black),
                               borderRadius: BorderRadius.all(Radius.circular(12.0))

@@ -125,7 +125,7 @@ class _SplashState extends State<Splash> {
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Text('Error server or Server in maintenance'),
+                Text('You may lost the internet connect nor Error server or Server in maintenance'),
               ],
             ),
           ),

@@ -4,7 +4,7 @@ import 'package:koompi_hotspot/src/screen/speedtest/constants/palette.dart';
 Text showLabel(String label, double speed, String unit) {
   String displaySpeed = speed.toStringAsFixed(2);
   return Text(
-    '$label Speed: $displaySpeed $unit',
+    '$label: $displaySpeed $unit',
     style: TextStyle(
       color: txtCol,
       fontWeight: FontWeight.bold,

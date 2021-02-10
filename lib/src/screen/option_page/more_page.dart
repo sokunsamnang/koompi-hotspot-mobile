@@ -1,5 +1,6 @@
 import 'package:koompi_hotspot/src/reuse_widget/reuse_widget.dart';
 import 'package:koompi_hotspot/all_export.dart';
+import 'package:koompi_hotspot/src/screen/web_view/captive_portal_web.dart';
 import 'package:koompi_hotspot/src/utils/language.dart';
 
 class MorePage extends StatefulWidget {
@@ -70,7 +71,7 @@ class _MorePageState extends State<MorePage>
                   children: <Widget>[
                     ListTile(
                       leading: Icon(LineIcons.key),
-                      title: Text("Change Password"),
+                      title: Text(_lang.translate('change_password')),
                       trailing: Icon(LineIcons.angle_right),
                       onTap: () async {
                         Navigator.push(
@@ -106,16 +107,29 @@ class _MorePageState extends State<MorePage>
                         );
                       },
                     ),
+                    // _buildDivider(),
+                    // ListTile(
+                    //   leading: Icon(Icons.wifi_outlined),
+                    //   title: Text('Login Hotspot'),
+                    //   trailing: Icon(LineIcons.angle_right),
+                    //   onTap: () async {
+                    //     Navigator.push(
+                    //       context,
+                    //       MaterialPageRoute(
+                    //         builder: (_) => CaptivePortalWeb()),
+                    //     );
+                    //   },
+                    // ),
                     _buildDivider(),
                     ListTile(
                       leading: Icon(LineIcons.sign_out),
-                      title: Text("Sign Out"),
+                      title: Text(_lang.translate('sign_out')),
                       onTap: () async {
                         showLogoutDialog(context);
                       },
                     ),
                     _buildDivider(),
-                    Text('Beta Version 0.1.9'),
+                    Text('Beta Version 0.2.2'),
                   ],
                 ),
               ),

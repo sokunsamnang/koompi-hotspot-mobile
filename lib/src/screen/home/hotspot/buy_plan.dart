@@ -195,6 +195,7 @@ class _UserPlanState extends State<UserPlan> {
 
   @override
   Widget build(BuildContext context) {
+    var _lang = AppLocalizeService.of(context);
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -230,7 +231,7 @@ class _UserPlanState extends State<UserPlan> {
                     SizedBox(height: 10.0),
                     Center(
                       child: Text(
-                        'Choose Plan', 
+                        _lang.translate('choose_plan'),
                         style: GoogleFonts.nunito(
                         textStyle: TextStyle(color: Colors.black, fontSize: 30, fontWeight: FontWeight.w700)
                         ),
@@ -255,6 +256,7 @@ class _UserPlanState extends State<UserPlan> {
   }
 
   Widget plan30DaysButton(BuildContext context){
+    var _lang = AppLocalizeService.of(context);
     return Container(
       // width: MediaQuery.of(context).size.width,
       // height: MediaQuery.of(context).size.height * .27, 
@@ -302,14 +304,14 @@ class _UserPlanState extends State<UserPlan> {
               child: Row(
                 children: [
                   Text(
-                    'Device:', 
+                    '${_lang.translate('device')}:', 
                     style: GoogleFonts.nunito(
                     textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
                     ),
                   ),
                   Expanded(child: Container()),
                   Text(
-                    '2 Devices', 
+                    '2 ${_lang.translate('devices')}', 
                     style: GoogleFonts.nunito(
                     textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
                     ),
@@ -323,14 +325,14 @@ class _UserPlanState extends State<UserPlan> {
               child: Row(
                 children: [
                   Text(
-                    'Expire:', 
+                    '${_lang.translate('expire')}:', 
                     style: GoogleFonts.nunito(
                     textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
                     ),
                   ),
                   Expanded(child: Container()),
                   Text(
-                    '30 Days', 
+                    '30 ${_lang.translate('day')}', 
                     style: GoogleFonts.nunito(
                     textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
                     ),
@@ -344,14 +346,14 @@ class _UserPlanState extends State<UserPlan> {
               child: Row(
                 children: [
                   Text(
-                    'Speed:', 
+                    '${_lang.translate('speed')}:', 
                     style: GoogleFonts.nunito(
                     textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
                     ),
                   ),
                   Expanded(child: Container()),
                   Text(
-                    '5 MB', 
+                    '5 ${_lang.translate('mb')}', 
                     style: GoogleFonts.nunito(
                     textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
                     ),
@@ -392,7 +394,7 @@ class _UserPlanState extends State<UserPlan> {
                     },
                     child: Center(
                       child: Text(
-                          'Subscribe', 
+                          _lang.translate('subscribe'), 
                           style: GoogleFonts.nunito(
                           textStyle: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w700)
                           ),
@@ -411,6 +413,7 @@ class _UserPlanState extends State<UserPlan> {
   }
 
   Widget plan365DaysButton(BuildContext context){
+    var _lang = AppLocalizeService.of(context);
     return Container(
       // width: MediaQuery.of(context).size.width,
       // height: MediaQuery.of(context).size.height * .27, 
@@ -458,14 +461,14 @@ class _UserPlanState extends State<UserPlan> {
               child: Row(
                 children: [
                   Text(
-                    'Device:', 
+                    '${_lang.translate('device')}:', 
                     style: GoogleFonts.nunito(
                     textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
                     ),
                   ),
                   Expanded(child: Container()),
                   Text(
-                    '2 Devices', 
+                    '2 ${_lang.translate('devices')}', 
                     style: GoogleFonts.nunito(
                     textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
                     ),
@@ -479,14 +482,14 @@ class _UserPlanState extends State<UserPlan> {
               child: Row(
                 children: [
                   Text(
-                    'Expire:', 
+                    '${_lang.translate('expire')}:', 
                     style: GoogleFonts.nunito(
                     textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
                     ),
                   ),
                   Expanded(child: Container()),
                   Text(
-                    '365 Days', 
+                    '365 ${_lang.translate('day')}', 
                     style: GoogleFonts.nunito(
                     textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
                     ),
@@ -500,14 +503,14 @@ class _UserPlanState extends State<UserPlan> {
               child: Row(
                 children: [
                   Text(
-                    'Speed:', 
+                    '${_lang.translate('speed')}:', 
                     style: GoogleFonts.nunito(
                     textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
                     ),
                   ),
                   Expanded(child: Container()),
                   Text(
-                    '5 MB', 
+                    '5 ${_lang.translate('mb')}', 
                     style: GoogleFonts.nunito(
                     textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
                     ),
@@ -547,7 +550,7 @@ class _UserPlanState extends State<UserPlan> {
                     },
                     child: Center(
                       child: Text(
-                          'Subscribe', 
+                          _lang.translate('subscribe'),
                           style: GoogleFonts.nunito(
                           textStyle: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w700)
                           ),

@@ -30,6 +30,7 @@ class _ReceiveRequestState extends State<ReceiveRequest> {
 
   @override
   Widget build(BuildContext context) {
+    var _lang = AppLocalizeService.of(context);
     return Scaffold(
       key: _scaffoldkey,
       appBar: AppBar(
@@ -38,7 +39,7 @@ class _ReceiveRequestState extends State<ReceiveRequest> {
           color: Colors.black, //change your color here
         ),
         title: Text(
-          'Recieve Request',
+          _lang.translate('receive_request'),
           style: TextStyle(
               color: Colors.black, fontFamily: 'Medium', fontSize: 22.0),
         ),
@@ -124,12 +125,11 @@ class _ReceiveRequestState extends State<ReceiveRequest> {
                                         showSnackBar();
                                       },
                                       child: Center(
-                                        child: Text("COPY",
+                                        child: Text(_lang.translate('copy'),
                                             style: TextStyle(
                                                 color: Colors.white,
                                                 fontFamily: "Poppins-Bold",
-                                                fontSize: 18,
-                                                letterSpacing: 2.5)),
+                                                fontSize: 18,)),
                                       ),
                                     ),
                                   ),
@@ -167,12 +167,11 @@ class _ReceiveRequestState extends State<ReceiveRequest> {
                                         Share.share('Here is my Selendra wallet ID: ${mData.wallet}', subject: 'My Selendra Wallet ID');
                                       },
                                       child: Center(
-                                        child: Text("SHARE",
+                                        child: Text(_lang.translate('share'),
                                             style: TextStyle(
                                                 color: Colors.white,
                                                 fontFamily: "Poppins-Bold",
-                                                fontSize: 18,
-                                                letterSpacing: 2.5)),
+                                                fontSize: 18,)),
                                       ),
                                     ),
                                   ),

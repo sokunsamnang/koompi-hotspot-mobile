@@ -10,11 +10,12 @@ class CompletePayment extends StatefulWidget {
 class _CompletePaymentState extends State<CompletePayment> {
   @override
   Widget build(BuildContext context) {
+    var _lang = AppLocalizeService.of(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
         centerTitle: true,
-        title: Text('Completed',
+        title: Text(_lang.translate('complete'),
             style: TextStyle(fontFamily: 'Medium', color: Colors.black)),
       ),
       backgroundColor: Colors.white,
@@ -35,7 +36,7 @@ class _CompletePaymentState extends State<CompletePayment> {
                   ),
                   Center(
                     child: Text(
-                      'Your Transfer is successfully.',
+                      _lang.translate('payment_complete'),
                       style: TextStyle(
                           fontFamily: 'Medium',
                           fontWeight: FontWeight.bold,
@@ -81,7 +82,7 @@ class _CompletePaymentState extends State<CompletePayment> {
                               });
                             },
                             child: Center(
-                              child: Text("HOME",
+                              child: Text(_lang.translate('home'),
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontFamily: "Poppins-Bold",

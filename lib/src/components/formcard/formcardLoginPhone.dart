@@ -73,7 +73,7 @@ Widget formLoginPhone( BuildContext context,
               initialValue: number,
               textFieldController: phoneController,
               formatInput: false,
-              keyboardType: TextInputType.phone,
+              keyboardType: TextInputType.number,
               inputDecoration: InputDecoration(
                 fillColor: Colors.grey[100],
                 filled: true,

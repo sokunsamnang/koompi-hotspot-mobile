@@ -282,10 +282,10 @@ class _LoginPhoneState extends State<LoginPhone> {
                     ),
                     SizedBox(height: ScreenUtil().setHeight(40)),
                     SizedBox(
-                      width: 100,
+                      width: 150,
                       height: 100,
                       child: CircleAvatar(
-                        backgroundImage: AssetImage('assets/images/koompi_logo_signal.jpg')
+                        backgroundImage: AssetImage('assets/images/Koompi-WiFi-Icon.png')
                       ),
                     ),
                     Padding(

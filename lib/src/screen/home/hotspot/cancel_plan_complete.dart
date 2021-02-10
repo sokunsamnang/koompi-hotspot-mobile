@@ -10,11 +10,12 @@ class CancelPlan extends StatefulWidget {
 class _CancelPlanState extends State<CancelPlan> {
   @override
   Widget build(BuildContext context) {
+    var _lang = AppLocalizeService.of(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
         centerTitle: true,
-        title: Text('Completed', style: TextStyle(fontFamily: 'Medium', color: Colors.black)),
+        title: Text(_lang.translate('complete'), style: TextStyle(fontFamily: 'Medium', color: Colors.black)),
       ),
       backgroundColor: Colors.white,
       body: WillPopScope(
@@ -33,7 +34,7 @@ class _CancelPlanState extends State<CancelPlan> {
                     ),
                   ),
                   Center(
-                    child: Text('Your plan cancelled successfully.', 
+                    child: Text(_lang.translate('unsubscribe_complete'), 
                     style: TextStyle(
                       fontFamily: 'Medium',
                       fontWeight: FontWeight.bold, 
@@ -75,7 +76,7 @@ class _CancelPlanState extends State<CancelPlan> {
                             });
                           },
                           child: Center(
-                            child: Text("HOME",
+                            child: Text(_lang.translate('home'),
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontFamily: "Poppins-Bold",
