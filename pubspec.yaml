@@ -67,9 +67,12 @@ dependencies:
   rflutter_alert: ^1.1.0
   shared_preferences: ^0.5.7+3
   share: ^0.6.5+4
+  simply_wifi: ^1.0.5
   syncfusion_flutter_gauges: ^18.4.31
   url_launcher: ^5.7.10
   flutter_inappwebview: ^4.0.0+4
+  flutter_webview_plugin: ^0.3.11
+  
 
 flutter_icons:
   image_path: "assets/images/Koompi-WiFi-Icon.png"

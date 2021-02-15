@@ -4,7 +4,7 @@ import 'src/app.dart';
 
 void main() {
 
-  //Fluter_inAppWebView
+  //Fluter_webview
   WidgetsFlutterBinding.ensureInitialized();
 
 
