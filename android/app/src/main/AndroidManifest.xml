@@ -16,8 +16,10 @@
     <application
         android:name="io.flutter.app.FlutterApplication"
         android:label="KOOMPI Hotspot"
-        android:icon="@mipmap/ic_launcher">
-
+        android:icon="@mipmap/ic_launcher"
+        android:usesCleartextTraffic="true"
+        android:networkSecurityConfig="@xml/network_security_config">
+        
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

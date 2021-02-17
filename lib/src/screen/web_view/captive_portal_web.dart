@@ -7,7 +7,7 @@ import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 const kAndroidUserAgent =
     'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Mobile Safari/537.36';
 
-String selectedUrl = 'https://hotspot.koompi.pi/hotspotlogin.php?res=notyet&uamip=172.16.1.1&uamport=3990&challenge=f936c0e792ae3f1db35e6e06fc68cfd3&called=01&mac=1E-37-D9-31-D3-F1&ip=172.16.1.3&ssid=Koompi-wifi&nasid=nas01&sessionid=161337035000000002&userurl=http%3A%2F%2Fconnectivitycheck.gstatic.com%2Fgenerate_204&md=0FFDFBFEC402CDD0144EE653B79C7FD5';
+String selectedUrl = 'connectivitycheck.gstatic.com/generate_204';
 
 // ignore: prefer_collection_literals
 final Set<JavascriptChannel> jsChannels = [
