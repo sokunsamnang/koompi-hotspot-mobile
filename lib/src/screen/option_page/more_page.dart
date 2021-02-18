@@ -3,7 +3,6 @@ import 'package:koompi_hotspot/all_export.dart';
 import 'package:koompi_hotspot/src/screen/web_view/captive_portal_web.dart';
 import 'package:koompi_hotspot/src/screen/wifi/wifi.dart';
 import 'package:koompi_hotspot/src/utils/language.dart';
-import 'package:http/http.dart' as http;
 
 class MorePage extends StatefulWidget {
   @override

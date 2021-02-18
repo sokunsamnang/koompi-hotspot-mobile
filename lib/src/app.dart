@@ -1,7 +1,10 @@
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 import 'package:koompi_hotspot/all_export.dart';
 import 'package:koompi_hotspot/src/models/lang.dart';
+import 'package:koompi_hotspot/src/utils/shortcut.dart';
 import 'package:provider/provider.dart';
+import 'package:quick_actions/quick_actions.dart';
+import 'package:koompi_hotspot/src/screen/web_view/captive_portal_web.dart';
 
 
 class App extends StatelessWidget{
@@ -109,83 +112,41 @@ class _SplashState extends State<Splash> {
 
   void internet() async {
     _networkStatus.connectivityResult = await Connectivity().checkConnectivity();
-    // _networkStatus.connectivitySubscription = _networkStatus.connectivity.onConnectivityChanged.listen((event) {
-    //   setState(() {
-    //     _networkStatus.connectivityResult = event;
-    //   });
-    // });
+    _networkStatus.connectivitySubscription = _networkStatus.connectivity.onConnectivityChanged.listen((event) {
+      setState(() {
+        _networkStatus.connectivityResult = event;
+      });
+    });
   }
 
-  errorApp(){
-    const kAndroidUserAgent =
-    'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Mobile Safari/537.36';
-
-    String selectedUrl = 'https://hotspot.koompi.pi/hotspotlogin.php?res=notyet&uamip=172.16.1.1&uamport=3990&challenge=f936c0e792ae3f1db35e6e06fc68cfd3&called=01&mac=1E-37-D9-31-D3-F1&ip=172.16.1.3&ssid=Koompi-wifi&nasid=nas01&sessionid=161337035000000002&userurl=http%3A%2F%2Fconnectivitycheck.gstatic.com%2Fgenerate_204&md=0FFDFBFEC402CDD0144EE653B79C7FD5';
-
-    // ignore: prefer_collection_literals
-    final Set<JavascriptChannel> jsChannels = [
-      JavascriptChannel(
-          name: 'Print',
-          onMessageReceived: (JavascriptMessage message) {
-            print('Logs: ${message.message}');
-          }),
-    ].toSet();
-    final flutterWebViewPlugin = FlutterWebviewPlugin();
-    return WillPopScope(
-      onWillPop: () async{
-        dispose();
-        return Navigator.canPop(context);
-      },
-      child: WebviewScaffold(
-        url: selectedUrl,
-        withJavascript: true,
-        javascriptChannels: jsChannels,
-        userAgent: kAndroidUserAgent,
-        withLocalUrl: true,
-        allowFileURLs: true,
-        withLocalStorage: true,
-        hidden: true,
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          title: Text('Hotspot Login', style: TextStyle(color: Colors.black, fontFamily: 'Medium')),
-          leading: Builder(builder: (BuildContext context) {
-            return IconButton(
-                icon: Icon(
-                  Icons.arrow_back,
-                  color: Colors.black,
-                ),
-                onPressed: () {
-                  dispose();
-                  Navigator.pop(context);
-                });
-          }),
-        ),
-        ignoreSSLErrors: true,
-        bottomNavigationBar: BottomAppBar(
-          child: Row(
-            children: <Widget>[
-              IconButton(
-                icon: const Icon(Icons.arrow_back_ios),
-                onPressed: () {
-                  flutterWebViewPlugin.goBack();
-                },
-              ),
-              IconButton(
-                icon: const Icon(Icons.arrow_forward_ios),
-                onPressed: () {
-                  flutterWebViewPlugin.goForward();
-                },
-              ),
-              IconButton(
-                icon: const Icon(Icons.autorenew),
-                onPressed: () {
-                  flutterWebViewPlugin.reload();
-                },
-              ),
-            ],
+  errorApp() async{
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Error'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('You may lost the internet connect nor Error server or Server in maintenance'),
+              ],
+            ),
           ),
-        ),
-      ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Try Again'),
+              onPressed: () {
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (context) => App()),
+                  ModalRoute.withName('/'),
+                );
+              },
+            ),
+          ],
+        );
+      }
     );
   }
 
@@ -201,11 +162,53 @@ class _SplashState extends State<Splash> {
       internet();
       startApp(context);
     });
-  
+    initQuickActions();
+
     //Set Language
     setDefaultLang();
   }
 
+  bool connectionStatus = false;
+
+  Future check() async {
+    try {
+      final result = await InternetAddress.lookup('example.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) 
+      connectionStatus = true;
+      print("connected $connectionStatus");
+        }
+      on SocketException catch (_) {
+      connectionStatus = false;
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) => CaptivePortalWeb()),
+      );
+    }
+  }
+
+  final quickActions = QuickActions();
+  
+  void initQuickActions() {
+    quickActions.initialize((type) {
+      if (type == null) return;
+
+      if (type == ShortcutItems.actionCaptivePortal.type) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) => CaptivePortalWeb()),
+        );
+      }
+    });
+
+    quickActions.setShortcutItems(ShortcutItems.items);
+  }
+
+  void connectApp(){
+    
+
+  }
   @override
   void dispose(){
     super.dispose();
@@ -215,14 +218,14 @@ class _SplashState extends State<Splash> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      body: _networkStatus.connectivityResult != ConnectivityResult.none ? Center(
+      body: _networkStatus.connectivityResult == ConnectivityResult.wifi ? _networkStatus.captivePortal(context)
+      :
+      Center(
         child: FlareActor( 
           'assets/animations/koompi.flr', 
           animation: 'Splash_Loop',
         ),
       ) 
-      : 
-      errorApp(),  
     );
   }
 }
