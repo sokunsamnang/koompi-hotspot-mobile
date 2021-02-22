@@ -57,6 +57,7 @@
     "subscribe": "Subscribe",
     "unsubscribe": "Unsubscribe",
     "auto_renew_every": "Auto-renew every",
+    "manual_renew": "Renew manually",
     "change_password": "Change Password",
     "sign_out": "Sign Out",
     "my_wallet": "My Wallet",

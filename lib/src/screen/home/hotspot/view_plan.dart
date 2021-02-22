@@ -1,7 +1,7 @@
 import 'package:koompi_hotspot/all_export.dart';
 import 'package:koompi_hotspot/src/reuse_widget/reuse_widget.dart';
 import 'package:koompi_hotspot/src/screen/home/hotspot/cancel_plan_complete.dart';
-import 'package:koompi_hotspot/src/utils/app_utils.dart';
+import 'package:koompi_hotspot/src/screen/home/hotspot/renew_option.dart';
 import 'package:provider/provider.dart';
 
 class PlanView extends StatefulWidget {
@@ -282,7 +282,7 @@ class _PlanViewState extends State<PlanView> {
             Column(
               children: [
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Image.asset('assets/images/Koompi-WiFi-Icon.png', width: 25),
                     SizedBox(width: 10),
@@ -292,6 +292,15 @@ class _PlanViewState extends State<PlanView> {
                       textStyle: TextStyle(fontSize: 25, fontWeight: FontWeight.w700)
                       ),
                     ),
+                    IconButton(
+                      icon: Icon(Icons.more_vert), 
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => RenewOption())
+                        );
+                      }
+                    )
                   ],
                 )
               ],
@@ -408,9 +417,22 @@ class _PlanViewState extends State<PlanView> {
                 padding: EdgeInsets.only(right: 35, left:35),
                 child: Row(
                   children: [
-                    Icon(Icons.autorenew, color: Colors.blue[700]),
+                    mPlan.automatically == true
+                    ?
+                    Icon(Icons.autorenew, color: Colors.blue[700])
+                    :
+                    Icon(Icons.touch_app_sharp, color: Colors.blue[700]),
+
+                    mPlan.automatically == true 
+                    ? 
                     Text(
                       '${_lang.translate('auto_renew_every')} ${mPlan.plan} ${_lang.translate('day')}', 
+                      style: GoogleFonts.nunito(
+                      textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
+                      ),
+                    ) 
+                    : 
+                    Text(_lang.translate('manual_renew'),
                       style: GoogleFonts.nunito(
                       textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
                       ),
@@ -473,158 +495,8 @@ class _PlanViewState extends State<PlanView> {
       ),
     );
   }
-  // Widget plan365DaysButton(BuildContext context){
-  //   return Container(
-  //     // width: MediaQuery.of(context).size.width,
-  //     // height: MediaQuery.of(context).size.height * .27, 
-  //     // padding: EdgeInsets.all(16),
-  //     decoration: BoxDecoration(
-  //       color: Colors.white,
-  //       boxShadow: [
-  //         BoxShadow(
-  //             color: Colors.black12,
-  //             offset: Offset(0.0, 15.0),
-  //             blurRadius: 15.0),
-  //         BoxShadow(
-  //             color: Colors.black12,
-  //             offset: Offset(0.0, -10.0),
-  //             blurRadius: 10.0),
-  //       ],
-  //     ),
-  //     child: Column(
-  //     mainAxisAlignment: MainAxisAlignment.start,
-  //     crossAxisAlignment: CrossAxisAlignment.start,
-  //     children: <Widget>[
-  //       Column(
-  //         crossAxisAlignment: CrossAxisAlignment.start,
-  //         mainAxisAlignment: MainAxisAlignment.start,
-  //         children: [
-  //           Padding(
-  //             padding: EdgeInsets.only(left:15, top: 15),
-  //             child: Image.asset(
-  //               "assets/images/logo.png",
-  //               // height: 100,
-  //               // width: 100,
-  //               scale: 5,
-  //             ),
-  //           ),
-  //           SizedBox(height: 20),
-  //           Center(
-  //             child: Text(
-  //               '600 SEL', 
-  //               style: GoogleFonts.nunito(
-  //               textStyle: TextStyle(color: Colors.blue, fontSize: 30, fontWeight: FontWeight.w700)
-  //               ),
-  //             ),
-  //           ),
-  //           SizedBox(height: 20),
-  //           Padding(
-  //             padding: EdgeInsets.only(right: 25, left:25),
-  //             child: Row(
-  //               children: [
-  //                 Text(
-  //                   'Device:', 
-  //                   style: GoogleFonts.nunito(
-  //                   textStyle: TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.w700)
-  //                   ),
-  //                 ),
-  //                 Expanded(child: Container()),
-  //                 Text(
-  //                   '2 Devices', 
-  //                   style: GoogleFonts.nunito(
-  //                   textStyle: TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.w700)
-  //                   ),
-  //                 ),
-  //               ],
-  //             ),
-  //           ),
-  //           SizedBox(height: 10),
-  //           Padding(
-  //             padding: EdgeInsets.only(right: 25, left:25),
-  //             child: Row(
-  //               children: [
-  //                 Text(
-  //                   'Expire:', 
-  //                   style: GoogleFonts.nunito(
-  //                   textStyle: TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.w700)
-  //                   ),
-  //                 ),
-  //                 Expanded(child: Container()),
-  //                 Text(
-  //                   '365 Days', 
-  //                   style: GoogleFonts.nunito(
-  //                   textStyle: TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.w700)
-  //                   ),
-  //                 ),
-  //               ],
-  //             ),
-  //           ),
-  //           SizedBox(height: 10),
-  //           Padding(
-  //             padding: EdgeInsets.only(right: 25, left:25),
-  //             child: Row(
-  //               children: [
-  //                 Text(
-  //                   'Speed:', 
-  //                   style: GoogleFonts.nunito(
-  //                   textStyle: TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.w700)
-  //                   ),
-  //                 ),
-  //                 Expanded(child: Container()),
-  //                 Text(
-  //                   '5 MB', 
-  //                   style: GoogleFonts.nunito(
-  //                   textStyle: TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.w700)
-  //                   ),
-  //                 ),
-  //               ],
-  //             ),
-  //           ),
-  //           SizedBox(height: 20),
-  //           Center(
-  //             child: InkWell(
-  //               child: Container(
-  //                 // width: ScreenUtil.getInstance().setWidth(330),
-  //                 height: 50,
-  //                 decoration: BoxDecoration(
 
-  //                   color: Colors.grey,
-  //                   // borderRadius: BorderRadius.circular(12),
-  //                   boxShadow: [
-  //                     BoxShadow(
-  //                         color: Color(0xFF6078ea).withOpacity(.3),
-  //                         offset: Offset(0.0, 8.0),
-  //                         blurRadius: 8.0)
-  //                   ]),
-  //               child: Material(
-  //                 color: Colors.transparent,
-  //                 child: InkWell(
-  //                   highlightColor: Colors.transparent,
-  //                   splashColor: Colors.transparent,
-  //                   onTap: () async {
-
-  //                   },
-  //                   child: Center(
-  //                     child: Text("Subscribe",
-  //                         style: TextStyle(
-  //                             color: Colors.white,
-  //                             fontFamily: "Poppins-Bold",
-  //                             fontSize: 18,
-  //                             letterSpacing: 1.0)),
-  //                       ),
-  //                     ),
-  //                   ),
-  //                 ),
-  //               )
-  //             ),
-  //           ],
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
-
-   Future<String> _showDialogCancelPlan(BuildContext context){
+  Future<String> _showDialogCancelPlan(BuildContext context){
     return showDialog(
       context: context,
       barrierDismissible: false,

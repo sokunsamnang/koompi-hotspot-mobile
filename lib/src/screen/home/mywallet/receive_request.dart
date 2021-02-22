@@ -1,4 +1,9 @@
+import 'dart:typed_data';
+import 'dart:ui';
+
 import 'package:koompi_hotspot/all_export.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:share_extend/share_extend.dart';
 
 class ReceiveRequest extends StatefulWidget {
   @override
@@ -7,6 +12,7 @@ class ReceiveRequest extends StatefulWidget {
 
 class _ReceiveRequestState extends State<ReceiveRequest> {
   final GlobalKey<ScaffoldState> _scaffoldkey = new GlobalKey<ScaffoldState>();
+  GlobalKey _keyQrShare = GlobalKey();
 
   void showSnackBar() {
     final snackBarContent = SnackBar(
@@ -21,6 +27,29 @@ class _ReceiveRequestState extends State<ReceiveRequest> {
         text: _wallet,
       ),
     );
+  }
+
+  void qrShare(GlobalKey globalKey, String _wallet) async {
+    try{
+      RenderRepaintBoundary boundary = globalKey.currentContext.findRenderObject();
+      var image = await boundary.toImage(pixelRatio: 5.0);
+      ByteData byteData = await image.toByteData(format: ImageByteFormat.png);
+      Uint8List pngBytes = byteData.buffer.asUint8List();
+      final tempDir = await getTemporaryDirectory();
+      final file = await File("${tempDir.path}/KOOMPI_HOTSPOT.png").create();
+      await file.writeAsBytes(pngBytes);
+      ShareExtend.share(
+        file.path, 
+        "image",
+        subject: _wallet,
+      );
+      // Share.file(title, name, bytes, mimeType)
+      // Share.file(title, name, bytes, mimeType)
+      // multi("Zeetomic QR", "image", pngBytes, "My image");
+      // Share.share(text)
+    } catch (e) {
+      print(e); 
+    }
   }
 
   @override
@@ -48,9 +77,10 @@ class _ReceiveRequestState extends State<ReceiveRequest> {
           ? Stack(
               children: [
                 Container(
-                  height: MediaQuery.of(context).size.height * 0.65,
+                  height: MediaQuery.of(context).size.height * 0.70,
                   margin: const EdgeInsets.symmetric(
-                      horizontal: 25.0, vertical: 80),
+                    horizontal: 25.0, vertical: 40
+                  ),
                   child: Card(
                     elevation: 2,
                     shape: RoundedRectangleBorder(
@@ -65,36 +95,57 @@ class _ReceiveRequestState extends State<ReceiveRequest> {
                         padding: const EdgeInsets.all(20.0),
                         child: Column(
                           children: [
-                            SizedBox(
-                              height: 20,
-                            ),
-                            Text(
-                              'SELENDRA (SEL)', 
-                              style: GoogleFonts.nunito(
-                              textStyle: TextStyle(color: Colors.blue, fontSize: 25, fontWeight: FontWeight.w700)
+                            Container(
+                              child: RepaintBoundary(
+                                key: _keyQrShare,
+                                child: Container(
+                                  color: Colors.white,
+                                  child: Column(
+                                    children: [
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      Text(
+                                        'SELENDRA (SEL)', 
+                                        style: GoogleFonts.nunito(
+                                        textStyle: TextStyle(color: Colors.blue, fontSize: 25, fontWeight: FontWeight.w700)
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 20,
+                                      ),
+                                      QrImage(
+                                        data: mData.wallet ?? '',
+                                        version: QrVersions.auto,
+                                        embeddedImage: AssetImage('assets/images/sld_stroke.png'),
+                                        size: 225.0,
+                                        embeddedImageStyle: QrEmbeddedImageStyle(
+                                          size: Size(30, 30),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 20.0,
+                                      ),
+                                      Text(
+                                        mData.fullname ?? '', 
+                                        style: GoogleFonts.nunito(
+                                        textStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.w700)
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 10.0,
+                                      ),
+                                      Text(
+                                        mData.wallet ?? '',
+                                        textAlign: TextAlign.center,
+                                      ),
+                                      SizedBox(
+                                        height: 20.0,
+                                      ),
+                                    ],
+                                  ),
+                                ),
                               ),
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            QrImage(
-                              data: mData.wallet ?? '',
-                              version: QrVersions.auto,
-                              embeddedImage: AssetImage('assets/images/sld_stroke.png'),
-                              size: 225.0,
-                              embeddedImageStyle: QrEmbeddedImageStyle(
-                                size: Size(30, 30),
-                              ),
-                            ),
-                            SizedBox(
-                              height: 20.0,
-                            ),
-                            Text(
-                              mData.wallet ?? '',
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                            SizedBox(
-                              height: 40.0,
                             ),
                             Center(
                               child: InkWell(
@@ -164,7 +215,7 @@ class _ReceiveRequestState extends State<ReceiveRequest> {
                                         borderRadius: BorderRadius.circular(12),
                                       ),
                                       onTap: () async {
-                                        Share.share('Here is my Selendra wallet ID: ${mData.wallet}', subject: 'My Selendra Wallet ID');
+                                        qrShare(_keyQrShare, mData.wallet);
                                       },
                                       child: Center(
                                         child: Text(_lang.translate('share'),

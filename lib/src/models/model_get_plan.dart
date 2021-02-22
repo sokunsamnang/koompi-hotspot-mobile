@@ -8,7 +8,8 @@ class ModelPlan {
     this.device,
     this.plan,
     this.timeLeft,
-    this.status
+    this.status,
+    this.automatically
   });
 
   String username;
@@ -17,6 +18,7 @@ class ModelPlan {
   String plan;
   String timeLeft;
   bool status;
+  bool automatically;
 
   factory ModelPlan.fromJson(String str) => ModelPlan.fromMap(json.decode(str));
 
@@ -28,7 +30,8 @@ class ModelPlan {
     device: json["device"],
     plan: json["plan"],
     timeLeft: json["time_left"],
-    status: json["status"]
+    status: json["status"],
+    automatically: json["automatically"]
   );
 
   Map<String, dynamic> toMap() => {
@@ -36,7 +39,8 @@ class ModelPlan {
     "balance": balance,
     "device": device,
     "plan": plan,
-    "status": status
+    "status": status,
+    "automatically": automatically
   };
 }
 

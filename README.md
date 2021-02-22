@@ -19,6 +19,7 @@ KOOMPI Wi-Fi Hotspot is for accessable and affordable for everyone and  KOOMPI s
 - [ ] Notification.
 - [x] KH Language
 - [x] Login Captive Portal in the app
+- [x] Quick action to login Captive Portal
 
 
 ## Prerequisite: 

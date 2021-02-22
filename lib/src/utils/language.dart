@@ -1,7 +1,5 @@
 import 'package:koompi_hotspot/src/models/lang.dart';
-import 'package:koompi_hotspot/src/reuse_widget/reuse_widget.dart';
 import 'package:koompi_hotspot/all_export.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:provider/provider.dart';
 
 class LanguageView extends StatefulWidget {
@@ -134,49 +132,4 @@ class _LanguageViewState extends State<LanguageView>
       color: Colors.grey.shade400,
     );
   }
-}
-
-showLogoutDialog(context) async {
-  return showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Row(
-            children: [
-              Icon(Icons.warning, color: Colors.yellow),
-              Text('WARNING', style: TextStyle(fontFamily: 'Poppins-Bold'),),
-            ],
-          ),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: <Widget>[
-                Text('Do you want to sign out?'),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            FlatButton(
-              child: Text('No'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-            FlatButton(
-              child: Text('Yes'),
-              onPressed: () async {
-                dialogLoading(context);
-                await StorageServices().clearToken('token');
-                Future.delayed(Duration(seconds: 2), () {
-                  Timer(Duration(milliseconds: 500), () => Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(builder: (context) => LoginPhone()),
-                    ModalRoute.withName('/loginPhone'),
-                  ));
-                });
-              },
-            ),
-          ],
-        );
-      });
 }

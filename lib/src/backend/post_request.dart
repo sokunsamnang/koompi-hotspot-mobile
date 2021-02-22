@@ -329,6 +329,28 @@ class PostRequest with ChangeNotifier {
     return null;
   }
 
+  Future<http.Response> renewOption(String automatically) async {
+
+    await _prefService.read('token').then((value) {
+      _backend.token = Map<String, dynamic>.from({'token': value});
+    });
+
+    if (_backend.token != null) {
+      _backend.bodyEncode = json.encode({
+        /* Convert to Json String */
+        "automatically": automatically,
+      });
+
+      _backend.response = await http.put('${ApiService.url}/hotspot/auto',
+          headers: _backend.conceteHeader("authorization", "Bearer ${_backend.token['token']}"),
+          body: _backend.bodyEncode);
+
+      print(_backend.response.body);
+      return _backend.response;
+    }
+    return null;
+  }
+
   Future<http.Response> hotspotPayment(String amount) async {
     await _prefService.read('token').then((value) {
       _backend.token = Map<String, dynamic>.from({'token': value});

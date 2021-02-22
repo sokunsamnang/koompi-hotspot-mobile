@@ -55,6 +55,7 @@ class App extends StatelessWidget{
             '/loginEmail':(context) => LoginPage(),
             '/loginPhone': (context) => LoginPhone(),
             '/welcome': (context) => WelcomeScreen(),
+            '/walletScreen': (context) => WalletScreen(),
           },
           title: 'Koompi Hotspot',
           home: Splash(),
@@ -205,10 +206,6 @@ class _SplashState extends State<Splash> {
     quickActions.setShortcutItems(ShortcutItems.items);
   }
 
-  void connectApp(){
-    
-
-  }
   @override
   void dispose(){
     super.dispose();

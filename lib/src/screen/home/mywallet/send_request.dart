@@ -8,6 +8,7 @@ import 'package:koompi_hotspot/src/backend/post_request.dart';
 import 'package:koompi_hotspot/src/reuse_widget/reuse_widget.dart';
 import 'package:koompi_hotspot/src/screen/home/mywallet/qr_scanner.dart';
 import 'package:koompi_hotspot/src/screen/home/mywallet/send_payment_complete.dart';
+import 'package:koompi_hotspot/src/screen/home/mywallet/wallet_screen.dart';
 import 'package:koompi_hotspot/src/utils/app_localization.dart';
 
 class SendRequest extends StatefulWidget {
@@ -153,161 +154,178 @@ class _SendRequestState extends State<SendRequest> {
   @override
   Widget build(BuildContext context) {
     var _lang = AppLocalizeService.of(context);
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        iconTheme: IconThemeData(
-          color: Colors.black, //change your color here
-        ),
-        title: Text(
-          _lang.translate('send_request'),
-          style: TextStyle(
-              color: Colors.black,
-              fontFamily: 'Medium',
-              fontSize: 22.0),
-        ),
+    return WillPopScope(
+      onWillPop: () => Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => WalletScreen()),
+        ModalRoute.withName('/walletScreen'),
       ),
-      body: GestureDetector(
-        behavior: HitTestBehavior.opaque,
-        onTap: () {
-          FocusScope.of(context).requestFocus(FocusNode());
-        },
-        child: Container(
-          height: MediaQuery.of(context).size.height * 2,
-          child: Form(
-            key: formKey,
-            autovalidateMode: AutovalidateMode.onUserInteraction,
-            child: SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
-              child: Padding(
-                padding: EdgeInsets.only(left: 28.0, right: 28.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    SizedBox(
-                      height: 10.0,
-                    ),
-                    Text(_lang.translate('receive_address')),
-                    SizedBox(height: 10.0),
-                    TextFormField(
-                      validator: (val) => val.isEmpty
-                          ? _lang.translate('receive_address_validate')
-                          : null,
-                      onSaved: (val) => recieveWallet.text = val,
-                      autovalidateMode: AutovalidateMode.always,
-                      maxLength: null,
-                      controller: recieveWallet ?? widget.walletKey,
-                      decoration: InputDecoration(
-                          prefixIcon: IconButton(
-                            color: Colors.blueAccent,
-                            icon: Icon(Icons.qr_code),
-                            onPressed: () async {
-                              await Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => QrScanner(
-                                            portList: [],
-                                          )));
-                            }),
-                          hintText: _lang.translate('receive_address'),
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.black),
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(12.0)),
-                          )),
-                    ),
-                    SizedBox(height: 16.0),
-                    Text(_lang.translate('asset')),
-                    SizedBox(height: 10.0),
-                    TextFormField(
-                      controller: asset,
-                      readOnly: true,
-                      decoration: InputDecoration(
-                          prefixIcon: Icon(Icons.account_balance_wallet),
-                          hintText: 'Wallet',
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.black),
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(12.0)),
-                          )),
-                    ),
-                    SizedBox(height: 16.0),
-                    Text(_lang.translate('amount')),
-                    SizedBox(height: 10.0),
-                    TextFormField(
-                      validator: (val) =>
-                          val.isEmpty ? _lang.translate('amount_validate') : null,
-                      onSaved: (val) => amount.text = val,
-                      autovalidateMode: AutovalidateMode.always,
-                      keyboardType: TextInputType.number,
-                      inputFormatters: [
-                        FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
-                      ],
-                      controller: amount,
-                      decoration: InputDecoration(
-                          prefixIcon: Icon(Icons.attach_money),
-                          hintText: _lang.translate('amount'),
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.black),
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(12.0)),
-                          )),
-                    ),
-                    SizedBox(height: 16.0),
-                    Text('Memo'),
-                    SizedBox(height: 10.0),
-                    TextFormField(
-                      controller: memo,
-                      decoration: InputDecoration(
-                          prefixIcon: Icon(Icons.my_library_books),
-                          hintText: 'Memo',
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.black),
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(12.0)),
-                          )),
-                    ),
-                    SizedBox(height: 50.0),
-                    Center(
-                      child: InkWell(
-                        child: Container(
-                          width: MediaQuery.of(context).size.width,
-                          height: 50,
-                          decoration: BoxDecoration(
-                              gradient: LinearGradient(colors: [
-                                Color(0xFF17ead9),
-                                Color(0xFF6078ea)
-                              ]),
-                              borderRadius: BorderRadius.circular(12),
-                              boxShadow: [
-                                BoxShadow(
-                                    color:
-                                        Color(0xFF6078ea).withOpacity(.3),
-                                    offset: Offset(0.0, 8.0),
-                                    blurRadius: 8.0)
-                              ]),
-                          child: Material(
-                            color: Colors.transparent,
-                            child: InkWell(
-                              customBorder: RoundedRectangleBorder(
+      child: Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back, color: Colors.black), 
+            onPressed: (){
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => WalletScreen()),
+                ModalRoute.withName('/walletScreen'),
+              );
+            }
+          ),
+          backgroundColor: Colors.white,
+          iconTheme: IconThemeData(
+            color: Colors.black, //change your color here
+          ),
+          title: Text(
+            _lang.translate('send_request'),
+            style: TextStyle(
+                color: Colors.black,
+                fontFamily: 'Medium',
+                fontSize: 22.0),
+          ),
+        ),
+        body: GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTap: () {
+            FocusScope.of(context).requestFocus(FocusNode());
+          },
+          child: Container(
+            height: MediaQuery.of(context).size.height * 2,
+            child: Form(
+              key: formKey,
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              child: SingleChildScrollView(
+                physics: BouncingScrollPhysics(),
+                child: Padding(
+                  padding: EdgeInsets.only(left: 28.0, right: 28.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      SizedBox(
+                        height: 10.0,
+                      ),
+                      Text(_lang.translate('receive_address')),
+                      SizedBox(height: 10.0),
+                      TextFormField(
+                        validator: (val) => val.isEmpty
+                            ? _lang.translate('receive_address_validate')
+                            : null,
+                        onSaved: (val) => recieveWallet.text = val,
+                        autovalidateMode: AutovalidateMode.always,
+                        maxLength: null,
+                        controller: recieveWallet ?? widget.walletKey,
+                        decoration: InputDecoration(
+                            prefixIcon: IconButton(
+                              color: Colors.blueAccent,
+                              icon: Icon(Icons.qr_code),
+                              onPressed: () async {
+                                await Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => QrScanner(
+                                              portList: [],
+                                            )));
+                              }),
+                            hintText: _lang.translate('receive_address'),
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.black),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(12.0)),
+                            )),
+                      ),
+                      SizedBox(height: 16.0),
+                      Text(_lang.translate('asset')),
+                      SizedBox(height: 10.0),
+                      TextFormField(
+                        controller: asset,
+                        readOnly: true,
+                        decoration: InputDecoration(
+                            prefixIcon: Icon(Icons.account_balance_wallet),
+                            hintText: 'Wallet',
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.black),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(12.0)),
+                            )),
+                      ),
+                      SizedBox(height: 16.0),
+                      Text(_lang.translate('amount')),
+                      SizedBox(height: 10.0),
+                      TextFormField(
+                        validator: (val) =>
+                            val.isEmpty ? _lang.translate('amount_validate') : null,
+                        onSaved: (val) => amount.text = val,
+                        autovalidateMode: AutovalidateMode.always,
+                        keyboardType: TextInputType.number,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
+                        ],
+                        controller: amount,
+                        decoration: InputDecoration(
+                            prefixIcon: Icon(Icons.attach_money),
+                            hintText: _lang.translate('amount'),
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.black),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(12.0)),
+                            )),
+                      ),
+                      SizedBox(height: 16.0),
+                      Text('Memo'),
+                      SizedBox(height: 10.0),
+                      TextFormField(
+                        controller: memo,
+                        decoration: InputDecoration(
+                            prefixIcon: Icon(Icons.my_library_books),
+                            hintText: 'Memo',
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.black),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(12.0)),
+                            )),
+                      ),
+                      SizedBox(height: 50.0),
+                      Center(
+                        child: InkWell(
+                          child: Container(
+                            width: MediaQuery.of(context).size.width,
+                            height: 50,
+                            decoration: BoxDecoration(
+                                gradient: LinearGradient(colors: [
+                                  Color(0xFF17ead9),
+                                  Color(0xFF6078ea)
+                                ]),
                                 borderRadius: BorderRadius.circular(12),
-                              ),
-                              onTap: () async {
-                                _submitValidate();
-                              },
-                              child: Center(
-                                child: Text(_lang.translate('send'),
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontFamily: "Poppins-Bold",
-                                        fontSize: 18)),
+                                boxShadow: [
+                                  BoxShadow(
+                                      color:
+                                          Color(0xFF6078ea).withOpacity(.3),
+                                      offset: Offset(0.0, 8.0),
+                                      blurRadius: 8.0)
+                                ]),
+                            child: Material(
+                              color: Colors.transparent,
+                              child: InkWell(
+                                customBorder: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                onTap: () async {
+                                  _submitValidate();
+                                },
+                                child: Center(
+                                  child: Text(_lang.translate('send'),
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontFamily: "Poppins-Bold",
+                                          fontSize: 18)),
+                                ),
                               ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),

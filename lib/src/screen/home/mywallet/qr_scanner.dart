@@ -27,10 +27,10 @@ class QrScannerState extends State<QrScanner> {
       });
       controller.pauseCamera();
       // Navigator.pop(context, scanData);
-      Navigator.pushAndRemoveUntil(
+      Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => SendRequest(result.code, "")),
-        ModalRoute.withName('/'),
+        // ModalRoute.withName('/navbar'),
       );
     });
   }

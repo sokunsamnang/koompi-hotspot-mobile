@@ -86,7 +86,11 @@ class NetworkStatus {
     return WillPopScope(
       onWillPop: () async{
         flutterWebViewPlugin.close();
-        return Navigator.canPop(context);
+        return Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => App()),
+                ModalRoute.withName('/'),
+              );
       },
       child: WebviewScaffold(
         url: selectedUrl,
@@ -108,7 +112,11 @@ class NetworkStatus {
                 ),
                 onPressed: () {
                   flutterWebViewPlugin.close();
-                  Navigator.pop(context);
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (context) => App()),
+                    ModalRoute.withName('/'),
+                  );
                 });
           }),
         ),
