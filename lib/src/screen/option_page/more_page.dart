@@ -195,6 +195,8 @@ showLogoutDialog(context) async {
               onPressed: () async {
                 dialogLoading(context);
                 await StorageServices().clearToken('token');
+                await StorageServices().clearToken('phone');
+                await StorageServices().clearToken('password');
                 Future.delayed(Duration(seconds: 2), () {
                   Timer(Duration(milliseconds: 500), () => Navigator.pushAndRemoveUntil(
                     context,

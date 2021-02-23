@@ -199,7 +199,10 @@ class _ChangePasswordState extends State<ChangePassword>
         print(response.body);
         Navigator.pop(context);
         showChangePasswordDialog(context);
-        StorageServices().clearToken('token');
+        await StorageServices().clearToken('token');
+        await StorageServices().clearToken('phone');
+        await StorageServices().clearToken('password');
+        
       } else {
         Navigator.pop(context);
         print(response.body);

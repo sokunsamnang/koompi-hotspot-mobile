@@ -207,8 +207,8 @@ Widget trxHistory(BuildContext context) {
                             ),
                     ],
                   ),
-                  leading: SvgPicture.asset('assets/images/sld_stroke.svg',
-                      width: 30),
+                  leading: Image.asset('assets/images/sld.png',
+                      width: 25),
                   title: Text(
                     userWallet == history[i].destination ? _lang.translate('recieved') : _lang.translate('sent'),
                     style: TextStyle(

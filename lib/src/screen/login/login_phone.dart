@@ -44,7 +44,6 @@ class _LoginPhoneState extends State<LoginPhone> {
     });
   }
 
-
   @override
   void dispose() {
     super.dispose();
@@ -88,6 +87,8 @@ class _LoginPhoneState extends State<LoginPhone> {
           });
           if(token != null){
             await StorageServices().saveString('token', token);
+            await StorageServices().saveString('phone', '0${StorageServices.removeZero(phoneController.text)}');
+            await StorageServices().saveString('password', passwordController.text);
             await Provider.of<BalanceProvider>(context, listen: false).fetchPortforlio();
             await Provider.of<GetPlanProvider>(context, listen: false).fetchHotspotPlan();
             Navigator.pushAndRemoveUntil(
@@ -164,7 +165,7 @@ class _LoginPhoneState extends State<LoginPhone> {
 
   showErrorDialog(BuildContext context) async {
     var response = await PostRequest().userLogInPhone(
-          phoneController.text,
+          StorageServices.removeZero(phoneController.text),
           passwordController.text);
     var responseJson = json.decode(response.body);
     return showDialog(

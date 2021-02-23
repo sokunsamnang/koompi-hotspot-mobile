@@ -5,7 +5,7 @@ import 'package:koompi_hotspot/src/utils/shortcut.dart';
 import 'package:provider/provider.dart';
 import 'package:quick_actions/quick_actions.dart';
 import 'package:koompi_hotspot/src/screen/web_view/captive_portal_web.dart';
-
+import 'package:koompi_hotspot/src/utils/constants.dart' as global;
 
 class App extends StatelessWidget{
   Widget build (context){
@@ -154,12 +154,23 @@ class _SplashState extends State<Splash> {
   Future <void> startApp(BuildContext context) async{
     _networkStatus.connectivityResult != ConnectivityResult.none ? startTime() : errorApp();
   }
-  
+
+  getValue() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      global.phone = prefs.getString('phone');
+      global.password = prefs.getString('password');
+    });
+    print('${global.phone}');
+    print('${global.password}');
+  }
+
   @override
   void initState() {
     super.initState();
 
     setState(() {
+      getValue();
       internet();
       startApp(context);
     });
@@ -215,7 +226,7 @@ class _SplashState extends State<Splash> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      body: _networkStatus.connectivityResult == ConnectivityResult.wifi ? _networkStatus.captivePortal(context)
+      body: _networkStatus.connectivityResult == ConnectivityResult.wifi ? CaptivePortalWeb()
       :
       Center(
         child: FlareActor( 

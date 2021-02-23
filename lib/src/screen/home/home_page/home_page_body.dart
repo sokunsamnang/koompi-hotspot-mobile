@@ -432,7 +432,7 @@ Widget _myWalletButton(context){
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Image.asset('assets/images/sld_stroke.png', width: 20),
+                                  Image.asset('assets/images/sld.png', width: 18),
                                   SizedBox(width: 10),
                                   Text(
                                     'SELENDRA', 
@@ -479,7 +479,7 @@ Widget _myWalletButton(context){
                                   Container(
                                     child: Row(
                                       children: [
-                                        Image.asset('assets/images/sld_stroke.png', width: 18),
+                                        Image.asset('assets/images/sld.png', width: 15),
                                         SizedBox(width: 10),
                                         Text(
                                           'SEL', 

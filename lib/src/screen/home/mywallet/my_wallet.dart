@@ -105,10 +105,10 @@ class _MyWalletState extends State<MyWallet> {
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
-                            SvgPicture.asset(
-                              'assets/images/sld_stroke.svg',
+                            Image.asset(
+                              'assets/images/sld.png',
                               // height: 30,
-                              width: 50,
+                              width: 35,
                             ),
                             SizedBox(width: 10),
                             Column(

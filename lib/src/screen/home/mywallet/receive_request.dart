@@ -117,10 +117,10 @@ class _ReceiveRequestState extends State<ReceiveRequest> {
                                       QrImage(
                                         data: mData.wallet ?? '',
                                         version: QrVersions.auto,
-                                        embeddedImage: AssetImage('assets/images/sld_stroke.png'),
+                                        embeddedImage: AssetImage('assets/images/sld.png'),
                                         size: 225.0,
                                         embeddedImageStyle: QrEmbeddedImageStyle(
-                                          size: Size(30, 30),
+                                          size: Size(30, 42),
                                         ),
                                       ),
                                       SizedBox(
