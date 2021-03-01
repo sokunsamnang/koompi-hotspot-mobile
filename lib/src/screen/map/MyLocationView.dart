@@ -215,10 +215,8 @@ class MyLocationViewState extends State<MyLocationView>
                     builder: (ctx) => Container(
                       child: InkWell(
                         onTap: () {},
-                        child: Icon(
-                          Icons.location_on,
-                          color: Colors.red,
-                          size: 50,
+                        child: Image.asset(
+                          'assets/images/koompi_logo_signal.png',
                         ),
                       ),
                     ),
@@ -232,10 +230,8 @@ class MyLocationViewState extends State<MyLocationView>
                     builder: (ctx) => Container(
                       child: InkWell(
                         onTap: () {},
-                        child: Icon(
-                          Icons.location_on,
-                          color: Colors.red,
-                          size: 50,
+                        child: Image.asset(
+                          'assets/images/koompi_logo_signal.png',
                         ),
                       ),
                     ),
@@ -249,10 +245,8 @@ class MyLocationViewState extends State<MyLocationView>
                     builder: (ctx) => Container(
                       child: InkWell(
                         onTap: () {},
-                        child: Icon(
-                          Icons.location_on,
-                          color: Colors.red,
-                          size: 50,
+                        child: Image.asset(
+                          'assets/images/koompi_logo_signal.png',
                         ),
                       ),
                     ),

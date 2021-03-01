@@ -121,19 +121,19 @@ class _MorePageState extends State<MorePage>
                         );
                       },
                     ),
-                    _buildDivider(),
-                    ListTile(
-                      leading: Icon(Icons.wifi_outlined),
-                      title: Text('Wi-Fi'),
-                      trailing: Icon(LineIcons.angle_right),
-                      onTap: () async {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => WifiConnect()),
-                        );
-                      },
-                    ),
+                    // _buildDivider(),
+                    // ListTile(
+                    //   leading: Icon(Icons.wifi_outlined),
+                    //   title: Text('Wi-Fi'),
+                    //   trailing: Icon(LineIcons.angle_right),
+                    //   onTap: () async {
+                    //     Navigator.push(
+                    //       context,
+                    //       MaterialPageRoute(
+                    //         builder: (_) => WifiConnect()),
+                    //     );
+                    //   },
+                    // ),
                     _buildDivider(),
                     ListTile(
                       leading: Icon(LineIcons.sign_out),
@@ -143,7 +143,7 @@ class _MorePageState extends State<MorePage>
                       },
                     ),
                     _buildDivider(),
-                    Text('Beta Version 0.2.2'),
+                    Text('Beta Version 0.2.7'),
                   ],
                 ),
               ),

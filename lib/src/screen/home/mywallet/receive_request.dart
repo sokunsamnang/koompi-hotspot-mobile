@@ -36,7 +36,7 @@ class _ReceiveRequestState extends State<ReceiveRequest> {
       ByteData byteData = await image.toByteData(format: ImageByteFormat.png);
       Uint8List pngBytes = byteData.buffer.asUint8List();
       final tempDir = await getTemporaryDirectory();
-      final file = await File("${tempDir.path}/KOOMPI_HOTSPOT.png").create();
+      final file = await new File("${tempDir.path}/KOOMPI_HOTSPOT.png").create();
       await file.writeAsBytes(pngBytes);
       ShareExtend.share(
         file.path, 
@@ -48,7 +48,7 @@ class _ReceiveRequestState extends State<ReceiveRequest> {
       // multi("Zeetomic QR", "image", pngBytes, "My image");
       // Share.share(text)
     } catch (e) {
-      print(e); 
+      print(e.toString()); 
     }
   }
 
