@@ -285,7 +285,7 @@ class PostRequest with ChangeNotifier {
     return null;
   }
 
-  Future<http.Response> cancelPlanHotspot(String password) async {
+  Future<http.Response> changePlanHotspot(String password, String value) async {
 
     await _prefService.read('token').then((value) {
       _backend.token = Map<String, dynamic>.from({'token': value});
@@ -295,9 +295,10 @@ class PostRequest with ChangeNotifier {
       _backend.bodyEncode = json.encode({
         /* Convert to Json String */
         "password": password,
+        "value": value
       });
 
-      _backend.response = await http.put('${ApiService.url}/hotspot/cancel-plan',
+      _backend.response = await http.put('${ApiService.url}/hotspot/change-plan',
           headers: _backend.conceteHeader("authorization", "Bearer ${_backend.token['token']}"),
           body: _backend.bodyEncode);
 
@@ -320,8 +321,8 @@ class PostRequest with ChangeNotifier {
       });
 
       _backend.response = await http.put('${ApiService.url}/hotspot/renew',
-          headers: _backend.conceteHeader("authorization", "Bearer ${_backend.token['token']}"),
-          body: _backend.bodyEncode);
+        headers: _backend.conceteHeader("authorization", "Bearer ${_backend.token['token']}"),
+        body: _backend.bodyEncode);
 
       print(_backend.response.body);
       return _backend.response;

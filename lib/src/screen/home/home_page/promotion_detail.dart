@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:koompi_hotspot/src/models/model_activity.dart';
+import 'package:koompi_hotspot/all_export.dart';
 import 'package:koompi_hotspot/src/models/model_promotion.dart';
 
 class PromotionScreen extends StatefulWidget {
@@ -15,10 +15,11 @@ class PromotionScreen extends StatefulWidget {
 class _PromotionScreenState extends State<PromotionScreen> {
   @override
   Widget build(BuildContext context) {
+    var _lang = AppLocalizeService.of(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Text('Promotions', style: TextStyle(color: Colors.black, fontFamily: 'Medium')),
+        title: Text(_lang.translate('promotion'), style: TextStyle(color: Colors.black, fontFamily: 'Medium')),
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.black), 
           onPressed: (){
@@ -27,76 +28,79 @@ class _PromotionScreenState extends State<PromotionScreen> {
         ),
       ),
       body: SafeArea(
-        child: Column(
-          children: <Widget>[
-            Stack(
-              children: <Widget>[
-                Container(
-                  height: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12.0),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black26,
-                        offset: Offset(0.0, 2.0),
-                        blurRadius: 6.0,
-                      ),
-                    ],
-                  ),
-                  child: Hero(
-                    tag: widget.promotion.imageUrl,
-                    child: ClipRRect(
-                      // borderRadius: BorderRadius.circular(12.0),
-                      child: Image(
-                        image: AssetImage(widget.promotion.imageUrl),
-                        fit: BoxFit.cover,
+        child: SingleChildScrollView(
+          physics: BouncingScrollPhysics(),
+          child: Column(
+            children: <Widget>[
+              Stack(
+                children: <Widget>[
+                  Container(
+                    height: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12.0),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black26,
+                          offset: Offset(0.0, 2.0),
+                          blurRadius: 6.0,
+                        ),
+                      ],
+                    ),
+                    child: Hero(
+                      tag: widget.promotion.imageUrl,
+                      child: ClipRRect(
+                        // borderRadius: BorderRadius.circular(12.0),
+                        child: Image(
+                          image: AssetImage(widget.promotion.imageUrl),
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
                   ),
-                ),
-                Positioned(
-                  left: 20.0,
-                  bottom: 20.0,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        widget.promotion.city,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 35.0,
-                          fontWeight: FontWeight.w600,
-                          letterSpacing: 1.2,
+                ],
+              ),
+              SizedBox(height: 10),
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 15),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      widget.promotion.title,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 27.0,
+                        fontWeight: FontWeight.w600,
+                        letterSpacing: 1.2,
+                      ),
+                    ),
+                    Row(
+                      children: <Widget>[
+                        Icon(
+                          FontAwesomeIcons.info,
+                          size: 15.0,
+                          color: Colors.black,
                         ),
-                      ),
-                      Row(
-                        children: <Widget>[
-                          Icon(
-                            FontAwesomeIcons.info,
-                            size: 15.0,
-                            color: Colors.white70,
+                        SizedBox(width: 5.0),
+                        Text(
+                          widget.promotion.category,
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 20.0,
                           ),
-                          SizedBox(width: 5.0),
-                          Text(
-                            widget.promotion.country,
-                            style: TextStyle(
-                              color: Colors.white70,
-                              fontSize: 20.0,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
-              ],
-            ),
-            SizedBox(height: 25),
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 15),
-              child: widget.promotion.description,
-            )
-          ],
+              ),
+              SizedBox(height: 25),
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 15),
+                child: widget.promotion.description,
+              )
+            ],
+          ),
         ),
       ),
     );

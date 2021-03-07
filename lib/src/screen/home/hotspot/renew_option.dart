@@ -1,4 +1,3 @@
-import 'package:koompi_hotspot/src/models/lang.dart';
 import 'package:koompi_hotspot/all_export.dart';
 import 'package:koompi_hotspot/src/reuse_widget/reuse_widget.dart';
 import 'package:provider/provider.dart';

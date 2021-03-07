@@ -1,4 +1,4 @@
-import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
+import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:koompi_hotspot/all_export.dart';
 import 'package:koompi_hotspot/src/models/lang.dart';
 import 'package:koompi_hotspot/src/utils/shortcut.dart';
@@ -51,7 +51,7 @@ class App extends StatelessWidget{
           initialRoute: '/',
           routes: {
             '/navbar': (context) => Navbar(),
-            '/plan': (context) => UserPlan(),
+            '/plan': (context) => HotspotPlan(),
             '/loginEmail':(context) => LoginPage(),
             '/loginPhone': (context) => LoginPhone(),
             '/welcome': (context) => WelcomeScreen(),
@@ -120,41 +120,6 @@ class _SplashState extends State<Splash> {
     });
   }
 
-  errorApp() async{
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Error'),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: <Widget>[
-                Text('You may lost the internet connect nor Error server or Server in maintenance'),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            FlatButton(
-              child: Text('Try Again'),
-              onPressed: () {
-                Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(builder: (context) => App()),
-                  ModalRoute.withName('/'),
-                );
-              },
-            ),
-          ],
-        );
-      }
-    );
-  }
-
-  Future <void> startApp(BuildContext context) async{
-    _networkStatus.connectivityResult != ConnectivityResult.none ? startTime() : errorApp();
-  }
-
   getValue() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
@@ -170,33 +135,15 @@ class _SplashState extends State<Splash> {
     super.initState();
 
     setState(() {
+      isInternet();
       getValue();
       internet();
-      startApp(context);
+      startTime();
     });
     initQuickActions();
 
     //Set Language
     setDefaultLang();
-  }
-
-  bool connectionStatus = false;
-
-  Future check() async {
-    try {
-      final result = await InternetAddress.lookup('example.com');
-      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) 
-      connectionStatus = true;
-      print("connected $connectionStatus");
-        }
-      on SocketException catch (_) {
-      connectionStatus = false;
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (_) => CaptivePortalWeb()),
-      );
-    }
   }
 
   final quickActions = QuickActions();
@@ -222,18 +169,58 @@ class _SplashState extends State<Splash> {
     super.dispose();
   }
 
+  Future<bool> isInternet() async {
+    var connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.mobile) {
+      // I am connected to a mobile network, make sure there is actually a net connection.
+      if (await DataConnectionChecker().hasConnection) {
+        // Mobile data detected & internet connection confirmed.
+        print('Mobile data detected & internet connection confirmed.');
+        return true;
+      } else {
+        // Mobile data detected but no internet connection found.
+        print('Mobile data detected but no internet connection found.');
+        return false;
+      }
+    } else if (connectivityResult == ConnectivityResult.wifi) {
+      // I am connected to a WIFI network, make sure there is actually a net connection.
+      print('I am connected to a WIFI network, make sure there is actually a net connection.');
+      if (await DataConnectionChecker().hasConnection) {
+        // Wifi detected & internet connection confirmed.
+        print('Wifi detected & internet connection confirmed.');
+        return true;
+      } else {
+        // Wifi detected but no internet connection found.
+        print('Wifi detected but no internet connection found.');
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) => CaptivePortalWeb()),
+        );
+        return false;
+      }
+    } else {
+      // Neither mobile data or WIFI detected, not internet connection found.
+      print('Neither mobile data or WIFI detected, not internet connection found.');
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) => _networkStatus.restartApp(context)),
+      );
+      return false;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
-      body: _networkStatus.connectivityResult == ConnectivityResult.wifi ? CaptivePortalWeb()
-      :
-      Center(
+      backgroundColor: Color(0xff0caddb),
+      body: Center(
         child: FlareActor( 
-          'assets/animations/koompi.flr', 
+          'assets/animations/koompi_splash_screen.flr', 
           animation: 'Splash_Loop',
         ),
-      ) 
+      ),
     );
   }
 }

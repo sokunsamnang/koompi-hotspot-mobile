@@ -1,56 +1,94 @@
-
 import 'package:koompi_hotspot/all_export.dart';
-import 'package:koompi_hotspot/src/models/model_activity.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Promotion {
   String imageUrl;
-  String city;
-  String country;
+  String title;
+  String category;
   RichText description;
-  List<Activity> activities;
 
   Promotion({
     this.imageUrl,
-    this.city,
-    this.country,
+    this.title,
+    this.category,
     this.description,
-    this.activities,
   });
 }
 
-List<Activity> activities = [
-  Activity(
-    imageUrl: 'assets/images/onboarding0.png',
-    name: 'St. Mark\'s Basilica',
-    type: 'Sightseeing Tour',
-    startTimes: ['9:00 am', '11:00 am'],
-    rating: 5,
-    price: 30,
-  ),
-  Activity(
-    imageUrl: 'assets/images/onboarding1.png',
-    name: 'Walking Tour and Gonadola Ride',
-    type: 'Sightseeing Tour',
-    startTimes: ['11:00 pm', '1:00 pm'],
-    rating: 4,
-    price: 210,
-  ),
-  Activity(
-    imageUrl: 'assets/images/onboarding2.png',
-    name: 'Murano and Burano Tour',
-    type: 'Sightseeing Tour',
-    startTimes: ['12:30 pm', '2:00 pm'],
-    rating: 3,
-    price: 125,
-  ),
-];
-
 List<Promotion> promotions = [
   Promotion(
+    imageUrl: 'assets/images/promotion3.jpg',
+    title: 'Think!Think! x KOOMPI Duo!',
+    category: 'News',
+    description: RichText(
+      text: TextSpan(
+        children: [
+          TextSpan(
+            text: "ដំណឹងល្អ!!! ឥឡូវនេះ​ Think!Think! មាននៅលើកុំព្យូទ័រយួរដៃ KOOMPI E11 ហើយ! សម្រាប់អតិថិជនប្រើប្រាស់ KOOMPI OS អាច install >> pix -i ThinkThink-SchoolEdition \n\nThink!Think! គឺជាកម្មវិធីសិក្សាជាប់ចំណាត់ថ្នាក់លេខ ១ មកពីប្រទេសជប៉ុននិងផ្តល់ជូននូវល្បែងប្រាជ្ញាដ៏រីករាយដែលមានគោលបំណងដើម្បីអភិវឌ្ឍជំនាញការគិតរបស់កុមារនិង non-cognitive skill។ វាពិតជាសប្បាយខ្លាំងសម្រាប់កុមារ​ដោយពុំមានអារម្មណ៍ថាពួកគេកំពុងតែរៀនឡើយ!​ \n\nKOOMPI ផ្តល់ជូននូវកុំព្យូទ័រយួរដៃដែលមានគុណភាពល្អនិងមានតម្លៃសមរម្យសម្រាប់តម្រូវការប្រចាំថ្ងៃរបស់មនុស្សគ្រប់គ្នា! ទទួលយកបទពិសោធន៍ថ្មីឥឡូវនេះ! \n\nGreat news! Think!Think! App is now available on KOOMPI E-11 laptop!!! For KOOMPI OS user can install >>pix -i ThinkThink-SchoolEdition \n\nThink!Think! is Japans No.1 learning app packed with fun educational games that aim to develop childrens thinking skills and non-cognitive skills. It’s too fun for children to know they are actually learning! \n\nKOOMPI offers good quality and affordable laptops for everyone everyday needs!Experience the duo NOW!",
+            style: TextStyle(color: Colors.black, fontSize: 18, fontFamily: 'Medium')
+          ),
+        ]
+      ),
+    ),
+  ),
+  Promotion(
+    imageUrl: 'assets/images/promotion4.png',
+    title: 'KOOMPI Releases New ISO (version 2.6)',
+    category: 'News',
+    description: RichText(
+      text: TextSpan(
+        children: [
+          TextSpan(
+            text: "🤩 Finally, KOOMPI has released new ISO (Version 2.6)! You can check for more detailed on how to install KOOMPI new ISO on KOOMPI telegram channel. ",
+            style: TextStyle(color: Colors.black, fontSize: 18, fontFamily: 'Medium')
+          ),
+          TextSpan(
+            style: TextStyle(color: Colors.blue, fontSize: 18, fontFamily: 'Medium'),
+              text: "https://t.me/koompi",
+              recognizer: TapGestureRecognizer()..onTap =  () async{
+                var url = "https://t.me/koompi";
+                    if (await canLaunch(url)) {
+                      await launch(url);
+                    } else {
+                      throw 'Could not launch $url';
+                    }
+              }
+          ),
+        ]
+      ),
+    ),
+  ),
+  Promotion(
+    imageUrl: 'assets/images/promotion5.jpg',
+    title: 'Come and test, KOOMPI',
+    category: 'News',
+    description: RichText(
+      text: TextSpan(
+        children: [
+          TextSpan(
+            text: "អ្នកទាំងអស់គ្នាអាចមកធ្វើការតេស កុំព្យូទ័រ KOOMPI បាន ទោះបីមិនមានការជាវក៏ដោយ នៅ KOOMPI Boran House 📍",
+            style: TextStyle(color: Colors.black, fontSize: 18, fontFamily: 'Medium')
+          ),
+          TextSpan(
+            style: TextStyle(color: Colors.blue, fontSize: 18, fontFamily: 'Medium'),
+              text: "https://goo.gl/maps/tSiXiHkdQX3SB7RP9",
+              recognizer: TapGestureRecognizer()..onTap =  () async{
+                var url = "https://goo.gl/maps/tSiXiHkdQX3SB7RP9";
+                    if (await canLaunch(url)) {
+                      await launch(url);
+                    } else {
+                      throw 'Could not launch $url';
+                    }
+              }
+          ),
+        ]
+      ),
+    ),
+  ),
+  Promotion(
     imageUrl: 'assets/images/promotion0.jpg',
-    city: 'Tote Bag',
-    country: 'Pre-Order',
+    title: 'Tote Bag',
+    category: 'Pre-Order',
     description: RichText(
       text: TextSpan(
         children: [
@@ -89,12 +127,11 @@ List<Promotion> promotions = [
         ]
       ),
     ),
-    activities: activities,
   ),
   Promotion(
     imageUrl: 'assets/images/promotion1.jpg',
-    city: 'KOOMPI E11',
-    country: 'Upgrade SSD',
+    title: 'KOOMPI E11',
+    category: 'Upgrade SSD',
     description: RichText(
       text: TextSpan(
         children: [
@@ -149,12 +186,11 @@ List<Promotion> promotions = [
         ]
       ),
     ),
-    activities: activities,
   ),
   Promotion(
     imageUrl: 'assets/images/promotion2.png',
-    city: 'KOOMPI E13',
-    country: 'Upgrade SSD',
+    title: 'KOOMPI E13',
+    category: 'Upgrade SSD',
     description: RichText(
       text: TextSpan(
         children: [
@@ -213,6 +249,5 @@ List<Promotion> promotions = [
         ]
       ),
     ),
-    activities: activities,
   ),
 ];

@@ -97,6 +97,10 @@
     "more": "More",
     "complete": "Completed",
     "renew": "Renew",
-    "payment_complete": "Your Transfer is successfully.",
-    "plan_expire": "Hotspot Plan Expired"
+    "payment_complete": "Your transfer is successfully.",
+    "plan_expire": "Hotspot Plan Expired",
+    "selendra_down": "Selendra server is in maintenance",
+    "change_plan": "Change Plan",
+    "login_hotspot": "Login Hotspot",
+    "prmotion": "Promotion"
 }

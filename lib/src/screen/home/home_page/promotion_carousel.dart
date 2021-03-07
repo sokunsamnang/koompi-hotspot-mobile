@@ -8,34 +8,6 @@ class PromotionCarousel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        // Padding(
-        //   padding: EdgeInsets.symmetric(horizontal: 20.0),
-        //   child: Row(
-        //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        //     children: <Widget>[
-        //       Text(
-        //         'Top Destinations',
-        //         style: TextStyle(
-        //           fontSize: 22.0,
-        //           fontWeight: FontWeight.bold,
-        //           letterSpacing: 1.5,
-        //         ),
-        //       ),
-        //       GestureDetector(
-        //         onTap: () => print('See All'),
-        //         child: Text(
-        //           'See All',
-        //           style: TextStyle(
-        //             color: Theme.of(context).primaryColor,
-        //             fontSize: 16.0,
-        //             fontWeight: FontWeight.w600,
-        //             letterSpacing: 1.0,
-        //           ),
-        //         ),
-        //       ),
-        //     ],
-        //   ),
-        // ),
         Container(
           height: 200.0,
           child: ListView.builder(
@@ -58,41 +30,6 @@ class PromotionCarousel extends StatelessWidget {
                   child: Stack(
                     alignment: Alignment.topCenter,
                     children: <Widget>[
-                      // Positioned(
-                      //   bottom: 15.0,
-                      //   child: Container(
-                      //     height: 120.0,
-                      //     width: 200.0,
-                      //     decoration: BoxDecoration(
-                      //       color: Colors.white,
-                      //       borderRadius: BorderRadius.circular(12.0),
-                      //     ),
-                      //     child: Padding(
-                      //       padding: EdgeInsets.all(10.0),
-                      //       child: Column(
-                      //         mainAxisAlignment: MainAxisAlignment.center,
-                      //         crossAxisAlignment: CrossAxisAlignment.start,
-                      //         children: <Widget>[
-                      //           // Text(
-                      //           //   '${promotion.activities.length} activities',
-                      //           //   style: TextStyle(
-                      //           //     fontSize: 22.0,
-                      //           //     fontWeight: FontWeight.w600,
-                      //           //     letterSpacing: 1.2,
-                      //           //   ),
-                      //           // ),
-                      //           Text(
-                      //             promotion.description,
-                      //             overflow: TextOverflow.ellipsis,
-                      //             style: TextStyle(
-                      //               color: Colors.grey,
-                      //             ),
-                      //           ),
-                      //         ],
-                      //       ),
-                      //     ),
-                      //   ),
-                      // ),
                       Container(
                         decoration: BoxDecoration(
                           color: Colors.white,
@@ -126,7 +63,7 @@ class PromotionCarousel extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   Text(
-                                    promotion.city,
+                                    promotion.title,
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontFamily: 'Medium',
@@ -143,7 +80,7 @@ class PromotionCarousel extends StatelessWidget {
                                       ),
                                       SizedBox(width: 5.0),
                                       Text(
-                                        promotion.country,
+                                        promotion.category,
                                         style: TextStyle(
                                           color: Colors.white,
                                         ),

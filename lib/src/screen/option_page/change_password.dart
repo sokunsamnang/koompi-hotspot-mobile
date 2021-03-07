@@ -257,7 +257,7 @@ showChangePasswordDialog(context) async {
             content: SingleChildScrollView(
               child: ListBody(
                 children: <Widget>[
-                  Text('You have changed password Successfully, Please login again.'),
+                  Text('You have changed password successfully, Please login again.'),
                 ],
               ),
             ),
@@ -280,84 +280,6 @@ showChangePasswordDialog(context) async {
         );
       });
 }
-
-  // errorDialog(BuildContext context) async {
-  //   return showDialog(
-  //       context: context,
-  //       barrierDismissible: false,
-  //       builder: (BuildContext context) {
-  //         return AlertDialog(
-  //           title: Text('Error'),
-  //           content: SingleChildScrollView(
-  //             child: ListBody(
-  //               children: <Widget>[
-  //                 Text('Error Services'),
-  //               ],
-  //             ),
-  //           ),
-  //           actions: <Widget>[
-  //             FlatButton(
-  //               child: Text('OK'),
-  //               onPressed: () {
-  //                 Navigator.of(context).pop();
-  //               },
-  //             ),
-  //           ],
-  //         );
-  //       });
-  // }
-
-  // showErrorDialog(BuildContext context) async {
-  //   return showDialog(
-  //     context: context,
-  //     barrierDismissible: false,
-  //     builder: (BuildContext context) {
-  //       return AlertDialog(
-  //         title: Text('Error'),
-  //         content: SingleChildScrollView(
-  //           child: ListBody(
-  //             children: <Widget>[
-  //               Text('Your old password was entered incorrectly, Please enter it again'),
-  //             ],
-  //           ),
-  //         ),
-  //         actions: <Widget>[
-  //           FlatButton(
-  //             child: Text('OK'),
-  //             onPressed: () {
-  //               Navigator.of(context).pop();
-  //             },
-  //           ),
-  //         ],
-  //       );
-  //     });
-  // }
-
-  // showErrorServerDialog(BuildContext context) async {
-  //   return showDialog(
-  //     context: context,
-  //     barrierDismissible: false,
-  //     builder: (BuildContext context) {
-  //       return AlertDialog(
-  //         title: Text('Error'),
-  //         content: SingleChildScrollView(
-  //           child: ListBody(
-  //             children: <Widget>[
-  //               Text('Server May Maintenance'),
-  //             ],
-  //           ),
-  //         ),
-  //         actions: <Widget>[
-  //           FlatButton(
-  //             child: Text('OK'),
-  //             onPressed: () {
-  //               Navigator.of(context).pop();
-  //             },
-  //           ),
-  //         ],
-  //       );
-  //     });
-  // }
 
   @override
   Widget build(BuildContext context) {

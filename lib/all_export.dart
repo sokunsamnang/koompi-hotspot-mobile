@@ -26,7 +26,6 @@ export 'package:pin_code_fields/pin_code_fields.dart';
 export 'package:flutter/gestures.dart';
 export 'package:flare_flutter/flare_actor.dart';
 export 'package:flutter_svg/flutter_svg.dart';
-export 'package:carousel_slider/carousel_slider.dart';
 export 'package:qr_code_scanner/qr_code_scanner.dart';
 export 'package:qr_flutter/qr_flutter.dart';
 export 'package:share/share.dart';

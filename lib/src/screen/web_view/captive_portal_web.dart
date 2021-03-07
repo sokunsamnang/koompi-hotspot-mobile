@@ -44,7 +44,6 @@ class _CaptivePortalWebState extends State<CaptivePortalWeb> {
         }
       }
     });
-    
   }
 
   @override
@@ -55,13 +54,14 @@ class _CaptivePortalWebState extends State<CaptivePortalWeb> {
 
   @override
   Widget build(BuildContext context) {
+    var _lang = AppLocalizeService.of(context);
     return WillPopScope(
       onWillPop: () async{
         dispose();
         return Navigator.canPop(context);
       },
       child: WebviewScaffold(
-        url: selectedUrl,
+        url: selectedUrl ?? "google.com",
         withJavascript: true,
         javascriptChannels: jsChannels,
         userAgent: kAndroidUserAgent,
@@ -72,7 +72,7 @@ class _CaptivePortalWebState extends State<CaptivePortalWeb> {
         appCacheEnabled: true,
         appBar: AppBar(
           backgroundColor: Colors.white,
-          title: Text('Hotspot Login', style: TextStyle(color: Colors.black, fontFamily: 'Medium')),
+          title: Text(_lang.translate('login_hotspot'), style: TextStyle(color: Colors.black, fontFamily: 'Medium')),
           leading: Builder(builder: (BuildContext context) {
             return IconButton(
                 icon: Icon(

@@ -79,21 +79,6 @@ class _MyWalletState extends State<MyWallet> {
                       SizedBox(
                         height: 25,
                       ),
-                      // Row(
-                      //   children: <Widget>[
-                      //     Padding(
-                      //       padding: const EdgeInsets.only(left: 16),
-                      //       child: Text(
-                      //         'Balance',
-                      //         style: TextStyle(
-                      //           color: Colors.black,
-                      //           // color: AllCoustomTheme.getsecoundTextThemeColor(),
-                      //           fontWeight: FontWeight.bold,
-                      //         ),
-                      //       ),
-                      //     ),
-                      //   ],
-                      // ),
                       SizedBox(
                         height: 20,
                       ),

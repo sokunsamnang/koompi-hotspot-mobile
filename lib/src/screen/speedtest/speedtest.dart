@@ -5,7 +5,6 @@ import 'package:koompi_hotspot/src/screen/speedtest/components/errorMsg.dart';
 import 'package:koompi_hotspot/src/screen/speedtest/components/progressBar.dart';
 import 'package:koompi_hotspot/src/screen/speedtest/components/speedLabels.dart';
 import 'package:koompi_hotspot/src/screen/speedtest/constants/alertStyle.dart';
-import 'package:koompi_hotspot/src/screen/speedtest/constants/btnStyle.dart';
 import 'package:koompi_hotspot/src/screen/speedtest/constants/palette.dart';
 import 'package:koompi_hotspot/src/screen/speedtest/constants/testServer.dart';
 import 'package:koompi_hotspot/src/utils/app_localization.dart';

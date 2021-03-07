@@ -111,7 +111,7 @@ class _MorePageState extends State<MorePage>
                     _buildDivider(),
                     ListTile(
                       leading: Icon(Icons.wifi_outlined),
-                      title: Text('Login Hotspot'),
+                      title: Text(_lang.translate('login_hotspot')),
                       trailing: Icon(LineIcons.angle_right),
                       onTap: () async {
                         Navigator.push(

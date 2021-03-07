@@ -2,12 +2,12 @@ import 'package:koompi_hotspot/all_export.dart';
 import 'package:koompi_hotspot/src/reuse_widget/reuse_widget.dart';
 import 'package:provider/provider.dart';
 
-class HotspotPlan extends StatefulWidget {
+class ChangeHotspotPlan extends StatefulWidget {
   @override
-  _HotspotPlanState createState() => _HotspotPlanState();
+  _ChangeHotspotPlanState createState() => _ChangeHotspotPlanState();
 }
 
-class _HotspotPlanState extends State<HotspotPlan> {
+class _ChangeHotspotPlanState extends State<ChangeHotspotPlan> {
   final formKey = GlobalKey<FormState>();
   AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
 
@@ -44,8 +44,7 @@ class _HotspotPlanState extends State<HotspotPlan> {
   Future <void> buyHotspot30days(BuildContext context) async {
     dialogLoading(context);
 
-    var response = await PostRequest().buyHotspotPlan(
-      mData.phone,
+    var response = await PostRequest().changePlanHotspot(
       _passwordController.text,
       '30',
     );
@@ -109,8 +108,7 @@ class _HotspotPlanState extends State<HotspotPlan> {
   Future <void> buyHotspot365days(BuildContext context) async {
      dialogLoading(context);
 
-    var response = await PostRequest().buyHotspotPlan(
-      mData.phone,
+    var response = await PostRequest().changePlanHotspot(
       _passwordController.text,
       '365',
     );
@@ -390,10 +388,22 @@ class _HotspotPlanState extends State<HotspotPlan> {
                       ),
                     ),
                     onTap: () async {
-                      _showDialog30Days(context);
+                      if(mPlan.plan == '30' && mPlan.status == true){
+                        return null;
+                      }
+                      else{
+                        mPlan.status == false ? _showDialog30Days(context) : _showAlreadyBoughtPlanDialog(context);
+                      }
                     },
                     child: Center(
-                      child: Text(
+                      child: mPlan.plan == '30' ? Text(
+                          'In Use', 
+                          style: GoogleFonts.nunito(
+                          textStyle: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w700)
+                          ),
+                        )
+                        :
+                        Text(
                           _lang.translate('subscribe'), 
                           style: GoogleFonts.nunito(
                           textStyle: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w700)
@@ -546,11 +556,23 @@ class _HotspotPlanState extends State<HotspotPlan> {
                       bottomRight: Radius.circular(12),
                     ),
                     onTap: () async {
-                      _showDialog365Days(context);
+                      if(mPlan.plan == '365' && mPlan.status == true){
+                        return null;
+                      }
+                      else{
+                        mPlan.status == false ? _showDialog365Days(context) : _showAlreadyBoughtPlanDialog(context);
+                      }
                     },
                     child: Center(
-                      child: Text(
-                          _lang.translate('subscribe'),
+                      child: mPlan.plan == '365' ? Text(
+                          'In Use', 
+                          style: GoogleFonts.nunito(
+                          textStyle: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w700)
+                          ),
+                        )
+                        :
+                        Text(
+                          _lang.translate('subscribe'), 
                           style: GoogleFonts.nunito(
                           textStyle: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w700)
                           ),
@@ -692,4 +714,37 @@ class _HotspotPlanState extends State<HotspotPlan> {
       },
     );
   }
+
+  _showAlreadyBoughtPlanDialog(context) async {
+  return showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Row(
+            children: [
+              Icon(Icons.warning, color: Colors.yellow),
+              Text('WARNING', style: TextStyle(fontFamily: 'Poppins-Bold'),),
+            ],
+          ),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('Your current plan is not expire yet. Please switch to manually renew plan to change plan before expired.'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      }
+    );
+  }
 }
+

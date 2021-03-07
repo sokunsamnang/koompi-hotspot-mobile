@@ -25,102 +25,111 @@ Widget bodyPage(BuildContext context) {
 }
 
 
-  Widget startGetWallet(context) {
-    return Container(
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 15),
-        child: ClipRRect(
-          borderRadius: BorderRadius.all(Radius.circular(12)),
-          child: Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height * .30,
-            color: Colors.blueGrey[900],
-            child: Stack(
-              fit: StackFit.expand,
-              children: <Widget>[
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    Container(
-                        width: 140,
-                        padding:
-                          EdgeInsets.symmetric(horizontal: 1, vertical: 1),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(12)),
-                          border: Border.all(color: Colors.white, width: 1)),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: <Widget>[
-                            FlatButton(
-                              highlightColor: Colors.transparent,
-                              splashColor: Colors.transparent,
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(builder: (context) => WalletChoice()),
-                                );
-                              },
-                              child: Row(
-                                children: <Widget>[
-                                  Icon(
-                                    Icons.more_vert,
-                                    color: Colors.white,
-                                    size: 20,
-                                  ),
-                                  SizedBox(width: 5),
-                                  Text("Get Wallet",
-                                    style: TextStyle(
-                                      fontFamily: "Medium",
-                                      color: Colors.white),
+Widget startGetWallet(context) {
+  var _lang = AppLocalizeService.of(context);
+  return Container(
+    child: Padding(
+      padding: EdgeInsets.symmetric(horizontal: 15),
+      child: ClipRRect(
+        borderRadius: BorderRadius.all(Radius.circular(12)),
+        child: Container(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height * .30,
+          color: Colors.blueGrey[900],
+          child: Stack(
+            fit: StackFit.expand,
+            children: <Widget>[
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  mBalance.message != null ? Container(
+                      width: 140,
+                      padding:
+                        EdgeInsets.symmetric(horizontal: 1, vertical: 1),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(12)),
+                        border: Border.all(color: Colors.white, width: 1)),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: <Widget>[
+                          FlatButton(
+                            highlightColor: Colors.transparent,
+                            splashColor: Colors.transparent,
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => WalletChoice()),
+                              );
+                            },
+                            child: Row(
+                              children: <Widget>[
+                                Icon(
+                                  Icons.more_vert,
+                                  color: Colors.white,
+                                  size: 20,
                                 ),
-                              ],
-                            ),
+                                SizedBox(width: 5),
+                                Text(_lang.translate('get_wallet'),
+                                  style: TextStyle(
+                                    fontFamily: "Medium",
+                                    color: Colors.white),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-                Positioned(
-                  left: -170,
-                  top: -170,
-                  child: CircleAvatar(
-                    radius: 130,
-                    backgroundColor: Colors.lightBlueAccent[50],
+                  )
+                  :
+                  Text(
+                    _lang.translate('selendra_down'),
+                    style: GoogleFonts.nunito(
+                    textStyle: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w700)
+                    ),
                   ),
+                ],
+              ),
+              Positioned(
+                left: -170,
+                top: -170,
+                child: CircleAvatar(
+                  radius: 130,
+                  backgroundColor: Colors.lightBlueAccent[50],
                 ),
-                Positioned(
-                  left: -160,
-                  top: -190,
-                  child: CircleAvatar(
-                    radius: 130,
-                    backgroundColor: Colors.lightBlue[300],
-                  ),
+              ),
+              Positioned(
+                left: -160,
+                top: -190,
+                child: CircleAvatar(
+                  radius: 130,
+                  backgroundColor: Colors.lightBlue[300],
                 ),
-                Positioned(
-                  right: -170,
-                  bottom: -170,
-                  child: CircleAvatar(
-                    radius: 130,
-                    backgroundColor: Colors.deepOrangeAccent,
-                  ),
+              ),
+              Positioned(
+                right: -170,
+                bottom: -170,
+                child: CircleAvatar(
+                  radius: 130,
+                  backgroundColor: Colors.deepOrangeAccent,
                 ),
-                Positioned(
-                  right: -160,
-                  bottom: -190,
-                  child: CircleAvatar(
-                    radius: 130,
-                    backgroundColor: Colors.orangeAccent,
-                  ),
-                )
-              ],
-            ),
+              ),
+              Positioned(
+                right: -160,
+                bottom: -190,
+                child: CircleAvatar(
+                  radius: 130,
+                  backgroundColor: Colors.orangeAccent,
+                ),
+              )
+            ],
           ),
         ),
       ),
-    );
-  }
+    ),
+  );
+}
+
 
 Widget noPlanView(BuildContext context) {
   var _lang = AppLocalizeService.of(context);
@@ -169,7 +178,7 @@ Widget noPlanView(BuildContext context) {
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => UserPlan()),
+                            MaterialPageRoute(builder: (context) => HotspotPlan()),
                           );
                         },
                         child: Row(
@@ -199,6 +208,7 @@ Widget noPlanView(BuildContext context) {
     ),
   );
 }
+
 
 Widget _planViewButton(context){
   var _lang = AppLocalizeService.of(context);

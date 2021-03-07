@@ -5,10 +5,12 @@ class Balance {
   Balance({
     this.token,
     this.symbol,
+    this.message
   });
 
   double token;
   String symbol;
+  String message;
 
   factory Balance.fromJson(String str) => Balance.fromMap(json.decode(str));
 
@@ -17,11 +19,13 @@ class Balance {
   factory Balance.fromMap(Map<String, dynamic> json) => Balance(
         token: json["token"].toDouble(),
         symbol: json["symbol"],
+        message: json["message"],
       );
 
   Map<String, dynamic> toMap() => {
         "token": token,
         "symbol": symbol,
+        "message": message,
       };
 }
 
