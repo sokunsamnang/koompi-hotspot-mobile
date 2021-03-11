@@ -72,11 +72,12 @@ class _HotspotPlanState extends State<HotspotPlan> {
             context: context,
             barrierDismissible: false,
             builder: (BuildContext context) {
+              var _lang = AppLocalizeService.of(context);
               return AlertDialog(
                 title: Row(
                   children: [
                     Icon(Icons.warning, color: Colors.yellow),
-                    Text('WARNING', style: TextStyle(fontFamily: 'Poppins-Bold'),),
+                    Text(_lang.translate('warning'), style: TextStyle(fontFamily: 'Poppins-Bold'),),
                   ],
                 ),
                 content: SingleChildScrollView(
@@ -88,7 +89,7 @@ class _HotspotPlanState extends State<HotspotPlan> {
                 ),
                 actions: <Widget>[
                   FlatButton(
-                    child: Text('OK'),
+                    child: Text(_lang.translate('ok')),
                     onPressed: () {
                       Navigator.of(context).pop();
                     },
@@ -137,11 +138,12 @@ class _HotspotPlanState extends State<HotspotPlan> {
             context: context,
             barrierDismissible: false,
             builder: (BuildContext context) {
+              var _lang = AppLocalizeService.of(context);
               return AlertDialog(
                 title: Row(
                   children: [
                     Icon(Icons.warning, color: Colors.yellow),
-                    Text('WARNING', style: TextStyle(fontFamily: 'Poppins-Bold'),),
+                    Text(_lang.translate('warning'), style: TextStyle(fontFamily: 'Poppins-Bold'),),
                   ],
                 ),
                 content: SingleChildScrollView(
@@ -153,7 +155,7 @@ class _HotspotPlanState extends State<HotspotPlan> {
                 ),
                 actions: <Widget>[
                   FlatButton(
-                    child: Text('OK'),
+                    child: Text(_lang.translate('ok')),
                     onPressed: () {
                       Navigator.of(context).pop();
                     },
@@ -212,10 +214,8 @@ class _HotspotPlanState extends State<HotspotPlan> {
         centerTitle: true,
         backgroundColor: Colors.white,
         title: Image.asset(
-          "assets/images/logo.png",
-          // height: 100,
-          // width: 100,
-          scale: 4,
+          "assets/images/appbar_logo.png",
+          scale: 2,
         ),
       ),
       body: WillPopScope(
@@ -568,7 +568,8 @@ class _HotspotPlanState extends State<HotspotPlan> {
     );
   }
 
-   Future<String> _showDialog30Days(BuildContext context){
+  Future<String> _showDialog30Days(BuildContext context){
+    var _lang = AppLocalizeService.of(context);
     return showDialog(
       context: context,
       barrierDismissible: false,
@@ -577,13 +578,13 @@ class _HotspotPlanState extends State<HotspotPlan> {
         return WillPopScope(
           onWillPop: () async => false,
           child:AlertDialog(
-            title: new Text("Please enter your password"),
+            title: new Text(_lang.translate('enter_password')),
             content: Form(
               key: formKey,
               child: TextFormField(
                 validator: (val) {
-                  if(val.isEmpty) return 'Password is required';
-                  if(val.length < 8) return 'Password too short';                
+                  if(val.isEmpty) return _lang.translate('password_is_required_validate');
+                  if(val.length < 8) return _lang.translate('password_too_short_validate');                 
                   return null;
                 },
                 autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -593,7 +594,7 @@ class _HotspotPlanState extends State<HotspotPlan> {
                 decoration: InputDecoration(
                   fillColor: Colors.grey[100],
                   filled: true,
-                  hintText: "Password",
+                  hintText: _lang.translate('password_tf'),
                   hintStyle: TextStyle(color: Colors.black, fontSize: 12.0),
                   border: OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.black),
@@ -608,7 +609,7 @@ class _HotspotPlanState extends State<HotspotPlan> {
               Row(
                 children: <Widget>[
                   new FlatButton(
-                    child: new Text("Cancel"),
+                    child: new Text(_lang.translate('cancel'),),
                     onPressed: () {
                       Navigator.of(context).pop();
                       _passwordController.clear(); 
@@ -621,7 +622,7 @@ class _HotspotPlanState extends State<HotspotPlan> {
                         _submitHotspotPlan30Days();
                         Navigator.of(context).pop();
                       },
-                      child: new Text("OK"))
+                      child: new Text(_lang.translate('ok'),))
                 ],
               ),
             ],
@@ -631,7 +632,8 @@ class _HotspotPlanState extends State<HotspotPlan> {
     );
   }
 
-   Future<String> _showDialog365Days(BuildContext context) {
+  Future<String> _showDialog365Days(BuildContext context) {
+    var _lang = AppLocalizeService.of(context);
     return showDialog(
       context: context,
       barrierDismissible: false,
@@ -640,13 +642,13 @@ class _HotspotPlanState extends State<HotspotPlan> {
         return WillPopScope(
           onWillPop: () async => false,
           child:AlertDialog(
-            title: new Text("Please enter your password"),
+            title: new Text(_lang.translate('enter_password'),),
             content: Form(
               key: formKey,
               child: TextFormField(
                 validator: (val) {
-                  if(val.isEmpty) return 'Password is required';
-                  if(val.length < 8) return 'Password too short';                
+                  if(val.isEmpty) return _lang.translate('password_is_required_validate');
+                  if(val.length < 8) return _lang.translate('password_too_short_validate');               
                   return null;
                 },
                 autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -656,7 +658,7 @@ class _HotspotPlanState extends State<HotspotPlan> {
                 decoration: InputDecoration(
                   fillColor: Colors.grey[100],
                   filled: true,
-                  hintText: "Password",
+                  hintText: _lang.translate('password_tf'),
                   hintStyle: TextStyle(color: Colors.black, fontSize: 12.0),
                   border: OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.black),
@@ -671,7 +673,7 @@ class _HotspotPlanState extends State<HotspotPlan> {
               Row(
                 children: <Widget>[
                   new FlatButton(
-                    child: new Text("Cancel"),
+                    child: new Text(_lang.translate('cancel'),),
                     onPressed: () {
                       Navigator.of(context).pop();
                       _passwordController.clear(); 
@@ -683,7 +685,7 @@ class _HotspotPlanState extends State<HotspotPlan> {
                         _submitHotspotPlan365Days();
                         Navigator.of(context).pop();
                       },
-                      child: new Text("OK"))
+                      child: new Text(_lang.translate('ok')))
                 ],
               ),
             ],

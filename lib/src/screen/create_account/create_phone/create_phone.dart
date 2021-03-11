@@ -100,23 +100,24 @@ class _CreatePhoneState extends State<CreatePhone> {
         context: context,
         barrierDismissible: false,
         builder: (BuildContext context) {
+          var _lang = AppLocalizeService.of(context);
           return AlertDialog(
             title: Row(
               children: [
                 Icon(Icons.error, color: Colors.red),
-                Text('ERROR', style: TextStyle(fontFamily: 'Poppins-Bold'),),
+                Text(_lang.translate('error'), style: TextStyle(fontFamily: 'Poppins-Bold'),),
               ],
             ),
             content: SingleChildScrollView(
               child: ListBody(
                 children: <Widget>[
-                  Text('Error Services or Lost internet connection, Please try again!'),
+                  Text(_lang.translate('error_service')),
                 ],
               ),
             ),
             actions: <Widget>[
               FlatButton(
-                child: Text('OK'),
+                child: Text(_lang.translate('ok')),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
@@ -127,6 +128,7 @@ class _CreatePhoneState extends State<CreatePhone> {
   }
 
   showErrorServerDialog(BuildContext context) async {
+    var _lang = AppLocalizeService.of(context);
     return showDialog(
       context: context,
       barrierDismissible: false,
@@ -135,13 +137,13 @@ class _CreatePhoneState extends State<CreatePhone> {
           title: Row(
             children: [
               Icon(Icons.error, color: Colors.red),
-              Text('ERROR', style: TextStyle(fontFamily: 'Poppins-Bold'),),
+              Text(_lang.translate('error') , style: TextStyle(fontFamily: 'Poppins-Bold'),),
             ],
           ),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Text('Error server or Server in maintenance'),
+                Text(_lang.translate('error_server')),
               ],
             ),
           ),
@@ -158,6 +160,7 @@ class _CreatePhoneState extends State<CreatePhone> {
   }
 
   showErrorDialog(BuildContext context) async {
+    var _lang = AppLocalizeService.of(context);
     var response = await PostRequest().signUpWithPhone(
       StorageServices.removeZero(phoneController.text),
       passwordController.text);
@@ -170,7 +173,7 @@ class _CreatePhoneState extends State<CreatePhone> {
           title: Row(
             children: [
               Icon(Icons.warning, color: Colors.yellow),
-              Text('WARNING', style: TextStyle(fontFamily: 'Poppins-Bold'),),
+              Text(_lang.translate('warning'), style: TextStyle(fontFamily: 'Poppins-Bold'),),
             ],
           ),
           content: SingleChildScrollView(
@@ -182,7 +185,7 @@ class _CreatePhoneState extends State<CreatePhone> {
           ),
           actions: <Widget>[
             FlatButton(
-              child: Text('OK'),
+              child: Text(_lang.translate('ok')),
               onPressed: () {
                 Navigator.of(context).pop();
               },

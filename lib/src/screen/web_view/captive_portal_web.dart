@@ -8,7 +8,7 @@ const kAndroidUserAgent =
     'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Mobile Safari/537.36';
 
 String selectedUrl = 'http://connectivitycheck.android.com/generate_204';
-
+String otherUrl = 'https://koompi.com/';
 // ignore: prefer_collection_literals
 final Set<JavascriptChannel> jsChannels = [
   JavascriptChannel(
@@ -33,6 +33,7 @@ class _CaptivePortalWebState extends State<CaptivePortalWeb> {
     _onchanged = flutterWebViewPlugin.onStateChanged.listen((WebViewStateChanged state) {
       if (mounted) {
         if(state.type== WebViewState.finishLoad){ // if the full website page loaded
+          print('web laoded');
           flutterWebViewPlugin.evalJavascript('document.getElementById("user").value="${global.phone}"'); // Replace with the id of username field
           flutterWebViewPlugin.evalJavascript('document.getElementById("password").value="${global.password}"'); // Replace with the id of password field
           flutterWebViewPlugin.evalJavascript('document.getElementById("btnlogin").click()');  // Replace with Submit button id
@@ -61,7 +62,7 @@ class _CaptivePortalWebState extends State<CaptivePortalWeb> {
         return Navigator.canPop(context);
       },
       child: WebviewScaffold(
-        url: selectedUrl ?? "google.com",
+        url: selectedUrl,
         withJavascript: true,
         javascriptChannels: jsChannels,
         userAgent: kAndroidUserAgent,

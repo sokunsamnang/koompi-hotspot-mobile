@@ -123,7 +123,7 @@ class ItemList extends StatelessWidget {
           Expanded(
             child: Padding(
               padding: EdgeInsets.only(left: 5),
-              child: Text(trailing, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 13)),
+              child: Text(trailing, style: TextStyle(fontSize: 13)),
             )
           ),
         ],

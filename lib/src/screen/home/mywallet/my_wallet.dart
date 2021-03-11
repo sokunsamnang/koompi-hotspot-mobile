@@ -109,7 +109,7 @@ class _MyWalletState extends State<MyWallet> {
                                 SizedBox(width: 10),
                                 mBalance.token != null ?
                                 Text(
-                                  '${mBalance.token.toStringAsFixed(2)} SEL',
+                                  '${mBalance.token.toStringAsFixed(4)} SEL',
                                   style: TextStyle(
                                   color: Colors.blueAccent,
                                   fontSize: 30.0,

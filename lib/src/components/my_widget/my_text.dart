@@ -38,9 +38,9 @@ class MyText extends StatelessWidget{
   }
 }
 
-Widget warningTitleDialog() {
-  return Text(
-    'Oops...',
-    style: TextStyle(fontWeight: FontWeight.bold),
-  );
-}
+// Widget warningTitleDialog() {
+//   return Text(
+//     'Oops...',
+//     style: TextStyle(fontWeight: FontWeight.bold),
+//   );
+// }

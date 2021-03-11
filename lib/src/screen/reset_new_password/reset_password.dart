@@ -121,23 +121,24 @@ class _ResetNewPasswordState extends State<ResetNewPassword> {
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {
+        var _lang = AppLocalizeService.of(context);
         return AlertDialog(
           title: Row(
             children: [
               Icon(Icons.error, color: Colors.red),
-              Text('ERROR', style: TextStyle(fontFamily: 'Poppins-Bold'),),
+              Text(_lang.translate('error'), style: TextStyle(fontFamily: 'Poppins-Bold'),),
             ],
           ),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Text('Error server or Server in maintenance'),
+                Text(_lang.translate('error_server')),
               ],
             ),
           ),
           actions: <Widget>[
             FlatButton(
-              child: Text('OK'),
+              child: Text(_lang.translate('ok')),
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -154,11 +155,12 @@ class _ResetNewPasswordState extends State<ResetNewPassword> {
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {
+        var _lang = AppLocalizeService.of(context);
         return AlertDialog(
           title: Row(
             children: [
               Icon(Icons.warning, color: Colors.yellow),
-              Text('WARNING', style: TextStyle(fontFamily: 'Poppins-Bold'),),
+              Text(_lang.translate('warning'), style: TextStyle(fontFamily: 'Poppins-Bold'),),
             ],
           ),
           content: SingleChildScrollView(
@@ -170,7 +172,7 @@ class _ResetNewPasswordState extends State<ResetNewPassword> {
           ),
           actions: <Widget>[
             FlatButton(
-              child: Text('OK'),
+              child: Text(_lang.translate('ok')),
               onPressed: () {
                 Navigator.of(context).pop();
               },

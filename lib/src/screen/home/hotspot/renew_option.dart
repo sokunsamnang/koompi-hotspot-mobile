@@ -51,11 +51,12 @@ class _RenewOptionState extends State<RenewOption>
             context: context,
             barrierDismissible: false,
             builder: (BuildContext context) {
+              var _lang = AppLocalizeService.of(context);
               return AlertDialog(
                 title: Row(
                   children: [
                     Icon(Icons.warning, color: Colors.yellow),
-                    Text('WARNING', style: TextStyle(fontFamily: 'Poppins-Bold'),),
+                    Text(_lang.translate('warning'), style: TextStyle(fontFamily: 'Poppins-Bold'),),
                   ],
                 ),
                 content: SingleChildScrollView(
@@ -67,7 +68,7 @@ class _RenewOptionState extends State<RenewOption>
                 ),
                 actions: <Widget>[
                   FlatButton(
-                    child: Text('OK'),
+                    child: Text(_lang.translate('ok')),
                     onPressed: () {
                       Navigator.of(context).pop();
                     },
@@ -109,11 +110,12 @@ class _RenewOptionState extends State<RenewOption>
             context: context,
             barrierDismissible: false,
             builder: (BuildContext context) {
+              var _lang = AppLocalizeService.of(context);
               return AlertDialog(
                 title: Row(
                   children: [
                     Icon(Icons.warning, color: Colors.yellow),
-                    Text('WARNING', style: TextStyle(fontFamily: 'Poppins-Bold'),),
+                    Text(_lang.translate('warning'), style: TextStyle(fontFamily: 'Poppins-Bold'),),
                   ],
                 ),
                 content: SingleChildScrollView(
@@ -125,7 +127,7 @@ class _RenewOptionState extends State<RenewOption>
                 ),
                 actions: <Widget>[
                   FlatButton(
-                    child: Text('OK'),
+                    child: Text(_lang.translate('ok')),
                     onPressed: () {
                       Navigator.of(context).pop();
                     },
@@ -146,10 +148,11 @@ class _RenewOptionState extends State<RenewOption>
 
   @override
   Widget build(BuildContext context) {
+    var _lang = AppLocalizeService.of(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Text('Renew Option', style: TextStyle(color: Colors.black, fontFamily: 'Medium')),
+        title: Text(_lang.translate('renew_option'), style: TextStyle(color: Colors.black, fontFamily: 'Medium')),
         leading: Builder(builder: (BuildContext context) {
           return IconButton(
               icon: Icon(
@@ -174,7 +177,7 @@ class _RenewOptionState extends State<RenewOption>
                   children: <Widget>[
                     ListTile(
                       leading: Icon(Icons.autorenew),
-                      title: Text('Automatically'),
+                      title: Text(_lang.translate('auto')),
                       trailing: mPlan.automatically == true 
                         ? 
                         Icon(
@@ -205,7 +208,7 @@ class _RenewOptionState extends State<RenewOption>
                           Icons.check_circle,
                           color: Colors.transparent,
                         ),
-                      title: Text('Manually'),
+                      title: Text(_lang.translate('manual')),
                       onTap: () async {
                         await Provider.of<GetPlanProvider>(context, listen: false).fetchHotspotPlan();
                         await renewOptionFalse(context);

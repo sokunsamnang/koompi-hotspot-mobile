@@ -14,7 +14,7 @@ class MyLocationViewState extends State<MyLocationView>
   ///=========================================[Declare]=============================================
   /// Controller for FloatActionButtons
   AnimationController _controller;
-
+  
   /// Icons List For FloatActionButtons
   List<IconData> icons = [
     Icons.gps_fixed,
@@ -39,21 +39,22 @@ class MyLocationViewState extends State<MyLocationView>
 
   /// Show a Alert Dialog
   void _showDialog(String body) {
+    var _lang = AppLocalizeService.of(context);
     showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text("Location Permission"),
+            title: Text(_lang.translate('location_permission')),
             content: Text(body),
             actions: <Widget>[
               FlatButton(
-                child: Text("Close"),
+                child: Text(_lang.translate('cancel')),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
               ),
               FlatButton(
-                child: Text("Settings"),
+                child: Text(_lang.translate('setting')),
                 onPressed: () {
                   AppSettings.openLocationSettings();
 
@@ -110,13 +111,14 @@ class MyLocationViewState extends State<MyLocationView>
     }
     var status = await geolocator.checkGeolocationPermissionStatus();
     bool isGPSOn = await geolocator.isLocationServiceEnabled();
+    var _lang = AppLocalizeService.of(context);
     if (status == GeolocationStatus.granted && isGPSOn) {
       /// Localize Position
       localize();
 
       _moveCamera();
     } else if (isGPSOn == false) {
-      _showDialog("Turn On Your GPS");
+      _showDialog(_lang.translate('turn_on_gps'));
       localize();
       _moveCamera();
     } else if (status != GeolocationStatus.granted) {
@@ -125,7 +127,7 @@ class MyLocationViewState extends State<MyLocationView>
       localize();
       _moveCamera();
     } else {
-      _showDialog("Turn On Your GPS");
+      _showDialog(_lang.translate('turn_on_gps'));
       // await PermissionHandler()
       //     .requestPermissions([PermissionGroup.locationWhenInUse]);
       localize();
@@ -163,6 +165,7 @@ class MyLocationViewState extends State<MyLocationView>
 
   @override
   Widget build(BuildContext context) {
+    var _lang = AppLocalizeService.of(context);
     Widget _loadBuild() {
       ///[Position Found Render Marker]
       if (lat != null && long != null) {
@@ -216,22 +219,7 @@ class MyLocationViewState extends State<MyLocationView>
                       child: InkWell(
                         onTap: () {},
                         child: Image.asset(
-                          'assets/images/koompi_logo_signal.png',
-                        ),
-                      ),
-                    ),
-                  ),
-                  //Sisowath School
-                  Marker(
-                    width: 50,
-                    height: 50,
-                    // anchorPos: AnchorPos.align(AnchorAlign.top),
-                    point: LatLng(11.563913, 104.924599),
-                    builder: (ctx) => Container(
-                      child: InkWell(
-                        onTap: () {},
-                        child: Image.asset(
-                          'assets/images/koompi_logo_signal.png',
+                          'assets/images/KOOMPI-Hotspot-Point.png',
                         ),
                       ),
                     ),
@@ -246,7 +234,7 @@ class MyLocationViewState extends State<MyLocationView>
                       child: InkWell(
                         onTap: () {},
                         child: Image.asset(
-                          'assets/images/koompi_logo_signal.png',
+                          'assets/images/KOOMPI-Hotspot-Point.png',
                         ),
                       ),
                     ),
@@ -316,9 +304,9 @@ class MyLocationViewState extends State<MyLocationView>
                 isMoving = true;
               });
               mapController.move(LatLng(lat, long), _inZoom);
-              _showSnackBar("Camera Lock Enabled!");
+              _showSnackBar(_lang.translate('lock_camera'));
             } else {
-              _showSnackBar("Couldn't get your Position!");
+              _showSnackBar(_lang.translate('no_position'));
             }
           } else {
             setState(() {
@@ -326,7 +314,7 @@ class MyLocationViewState extends State<MyLocationView>
               isMoving = false;
             });
 
-            _showSnackBar("Camera Lock Disabled!");
+            _showSnackBar(_lang.translate('unlock_camera'));
           }
         },
       ),

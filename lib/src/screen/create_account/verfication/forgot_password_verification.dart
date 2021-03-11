@@ -75,8 +75,14 @@ class _ForgotPasswordVerificationState extends State<ForgotPasswordVerification>
             context: context,
             barrierDismissible: false,
             builder: (BuildContext context) {
+              var _lang = AppLocalizeService.of(context);
               return AlertDialog(
-                title: Text('Error'),
+                title: Row(
+                  children: [
+                    Icon(Icons.error, color: Colors.red),
+                    Text(_lang.translate('error') , style: TextStyle(fontFamily: 'Poppins-Bold'),),
+                  ],
+                ),
                 content: SingleChildScrollView(
                   child: ListBody(
                     children: <Widget>[
@@ -86,7 +92,7 @@ class _ForgotPasswordVerificationState extends State<ForgotPasswordVerification>
                 ),
                 actions: <Widget>[
                   FlatButton(
-                    child: Text('OK'),
+                    child: Text(_lang.translate('ok')),
                     onPressed: () {
                       Navigator.of(context).pop();
                     },

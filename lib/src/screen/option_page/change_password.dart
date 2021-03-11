@@ -210,11 +210,12 @@ class _ChangePasswordState extends State<ChangePassword>
           context: context,
           barrierDismissible: false,
           builder: (BuildContext context) {
+            var _lang = AppLocalizeService.of(context);
             return AlertDialog(
               title: Row(
                 children: [
                   Icon(Icons.warning, color: Colors.yellow),
-                  Text('WARNING', style: TextStyle(fontFamily: 'Poppins-Bold'),),
+                  Text(_lang.translate('warning'), style: TextStyle(fontFamily: 'Poppins-Bold'),),
                 ],
               ),
               content: SingleChildScrollView(
@@ -226,7 +227,7 @@ class _ChangePasswordState extends State<ChangePassword>
               ),
               actions: <Widget>[
                 FlatButton(
-                  child: Text('OK'),
+                  child: Text(_lang.translate('ok')),
                   onPressed: () {
                     Navigator.of(context).pop();
                   },

@@ -43,7 +43,14 @@ Widget startGetWallet(context) {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  mBalance.message != null ? Container(
+                  mBalance.message == 'Internal server error!' ? Text(
+                      _lang.translate('selendra_down'),
+                      style: GoogleFonts.nunito(
+                      textStyle: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w700)
+                      ),
+                    )
+                    :
+                    Container(
                       width: 140,
                       padding:
                         EdgeInsets.symmetric(horizontal: 1, vertical: 1),
@@ -81,13 +88,6 @@ Widget startGetWallet(context) {
                       ],
                     ),
                   )
-                  :
-                  Text(
-                    _lang.translate('selendra_down'),
-                    style: GoogleFonts.nunito(
-                    textStyle: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w700)
-                    ),
-                  ),
                 ],
               ),
               Positioned(
@@ -503,7 +503,7 @@ Widget _myWalletButton(context){
                                   Expanded(child: Container()),
                                   mBalance != null ?
                                   Text(
-                                    '${mBalance.token.toStringAsFixed(2)}',
+                                    '${mBalance.token.toStringAsFixed(4)}',
                                     style: GoogleFonts.nunito(
                                     textStyle: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w700)
                                     ),

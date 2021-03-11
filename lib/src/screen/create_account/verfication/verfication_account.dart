@@ -81,6 +81,7 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
   }
 
   showErrorDialog(BuildContext context) async {
+    var _lang = AppLocalizeService.of(context);
     return showDialog(
       context: context,
       barrierDismissible: false,
@@ -89,19 +90,19 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
           title: Row(
             children: [
               Icon(Icons.warning, color: Colors.yellow),
-              Text('WARNING', style: TextStyle(fontFamily: 'Poppins-Bold')),
+              Text(_lang.translate('warning'), style: TextStyle(fontFamily: 'Poppins-Bold')),
             ],
           ),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Text('You may enter incorrect verification code!'),
+                Text(_lang.translate('wrong_code')),
               ],
             ),
           ),
           actions: <Widget>[
             FlatButton(
-              child: Text('OK'),
+              child: Text(_lang.translate('ok')),
               onPressed: () {
                 Navigator.of(context).pop();
               },

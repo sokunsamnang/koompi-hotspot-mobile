@@ -68,7 +68,7 @@ class _SendRequestState extends State<SendRequest> {
             textAlignCenter(text: responseJson['message']),
             warningTitleDialog());
           Navigator.pop(context);
-          // _passwordController.clear();
+          _passwordController.clear();
           // recieveWallet.clear();
           // amount.clear();
           // memo.clear();
@@ -85,6 +85,7 @@ class _SendRequestState extends State<SendRequest> {
      TextEditingController amount,
      TextEditingController memo,
     ) {
+    var _lang = AppLocalizeService.of(context);
     return showDialog(
       context: context,
       barrierDismissible: false,
@@ -93,7 +94,7 @@ class _SendRequestState extends State<SendRequest> {
         return WillPopScope(
           onWillPop: () async => false,
           child:AlertDialog(
-            title: new Text("Please enter your password"),
+            title: new Text(_lang.translate('enter_password')),
             content: TextFormField(
               controller: _passwordController,
               onSaved: (val) => _passwordController.text = val,
@@ -101,7 +102,7 @@ class _SendRequestState extends State<SendRequest> {
               decoration: InputDecoration(
                 fillColor: Colors.grey[100],
                 filled: true,
-                hintText: "Password",
+                hintText: _lang.translate('password_tf'),
                 hintStyle: TextStyle(color: Colors.black, fontSize: 12.0),
                 border: OutlineInputBorder(
                   borderSide: BorderSide(color: Colors.black),
@@ -115,20 +116,20 @@ class _SendRequestState extends State<SendRequest> {
               Row(
                 children: <Widget>[
                   new FlatButton(
-                    child: new Text("Cancel"),
+                    child: new Text(_lang.translate('cancel')),
                     onPressed: () {
                       Navigator.of(context).pop();
                       _passwordController.clear(); 
                     },
                   ),
                   new FlatButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                        dialogLoading(context);
-                        _onSubmit();
-                        Navigator.of(context).pop();
-                      },
-                      child: new Text("OK"))
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                      dialogLoading(context);
+                      _onSubmit();
+                      Navigator.of(context).pop();
+                    },
+                    child: new Text(_lang.translate('ok')))
                 ],
               ),
             ],

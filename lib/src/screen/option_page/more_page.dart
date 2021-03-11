@@ -143,7 +143,7 @@ class _MorePageState extends State<MorePage>
                       },
                     ),
                     _buildDivider(),
-                    Text('Beta Version 0.2.7'),
+                    Text('Beta Version 0.3.10'),
                   ],
                 ),
               ),
@@ -169,29 +169,30 @@ showLogoutDialog(context) async {
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {
+        var _lang = AppLocalizeService.of(context);
         return AlertDialog(
           title: Row(
             children: [
               Icon(Icons.warning, color: Colors.yellow),
-              Text('WARNING', style: TextStyle(fontFamily: 'Poppins-Bold'),),
+              Text(_lang.translate('warning'), style: TextStyle(fontFamily: 'Poppins-Bold'),),
             ],
           ),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Text('Do you want to sign out?'),
+                Text(_lang.translate('sign_out_warn')),
               ],
             ),
           ),
           actions: <Widget>[
             FlatButton(
-              child: Text('No'),
+              child: Text(_lang.translate('cancel')),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
             FlatButton(
-              child: Text('Yes'),
+              child: Text(_lang.translate('ok')),
               onPressed: () async {
                 dialogLoading(context);
                 await StorageServices().clearToken('token');

@@ -17,6 +17,65 @@ class Promotion {
 
 List<Promotion> promotions = [
   Promotion(
+    imageUrl: 'assets/images/promotion6.jpg',
+    title: 'បង់រំលស់ KOOMPI E13',
+    category: 'News',
+    description: RichText(
+      text: TextSpan(
+        children: [
+          TextSpan(
+            text: "ថ្មី!​ ✨បង់រំលស់ KOOMPI E13 ជាមួយការប្រាក់ 0% រយៈពេល​ ​6 ខែ នឹងទទួលបានកាដូរពិសេសពី KOOMPI! 🥰 👉 Buy now: ",
+            style: TextStyle(color: Colors.black, fontSize: 18, fontFamily: 'Medium')
+          ),
+          TextSpan(
+            style: TextStyle(color: Colors.blue, fontSize: 18, fontFamily: 'Medium'),
+              text: "https://koompi.com/koompi/e13/",
+              recognizer: TapGestureRecognizer()..onTap =  () async{
+                var url = "https://koompi.com/koompi/e13/";
+                    if (await canLaunch(url)) {
+                      await launch(url);
+                    } else {
+                      throw 'Could not launch $url';
+                    }
+              }
+          ),
+          TextSpan(
+            text: " 📞 Or Call for more information: ",
+            style: TextStyle(color: Colors.black, fontSize: 18, fontFamily: 'Medium')
+          ),
+          TextSpan(
+            style: TextStyle(color: Colors.blue, fontSize: 18, fontFamily: 'Medium'),
+              text: "077 990 887",
+              recognizer: TapGestureRecognizer()..onTap =  () async{
+                var url = "tel://077 990 887";
+                    if (await canLaunch(url)) {
+                      await launch(url);
+                    } else {
+                      throw 'Could not launch $url';
+                    }
+              }
+          ),
+          TextSpan(
+            text: "/ ",
+            style: TextStyle(color: Colors.black, fontSize: 18, fontFamily: 'Medium')
+          ),
+          TextSpan(
+            style: TextStyle(color: Colors.blue, fontSize: 18, fontFamily: 'Medium'),
+              text: "069 551 651",
+              recognizer: TapGestureRecognizer()..onTap =  () async{
+                var url = "tel://069 551 651";
+                    if (await canLaunch(url)) {
+                      await launch(url);
+                    } else {
+                      throw 'Could not launch $url';
+                    }
+              }
+          ),
+        ]
+      ),
+    ),
+  ),
+  Promotion(
     imageUrl: 'assets/images/promotion3.jpg',
     title: 'Think!Think! x KOOMPI Duo!',
     category: 'News',

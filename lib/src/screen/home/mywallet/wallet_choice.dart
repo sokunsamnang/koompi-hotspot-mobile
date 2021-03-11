@@ -22,12 +22,13 @@ class _WalletChoiceState extends State<WalletChoice> {
 
   @override
   Widget build(BuildContext context) {
+    var _lang = AppLocalizeService.of(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
         // brightness: Brightness.light,
         title: Text(
-          'My Wallet',
+          _lang.translate('my_wallet'),
           style: TextStyle(color: Colors.black, fontFamily: 'Medium'),
         ),
         iconTheme: IconThemeData(
@@ -97,8 +98,14 @@ class _WalletChoiceState extends State<WalletChoice> {
                               context: context,
                               barrierDismissible: false,
                               builder: (BuildContext context) {
+                                var _lang = AppLocalizeService.of(context);
                                 return AlertDialog(
-                                  title: Text('Error'),
+                                  title: Row(
+                                    children: [
+                                      Icon(Icons.error, color: Colors.red),
+                                      Text(_lang.translate('error') , style: TextStyle(fontFamily: 'Poppins-Bold'),),
+                                    ],
+                                  ),
                                   content: SingleChildScrollView(
                                     child: ListBody(
                                       children: <Widget>[
@@ -108,7 +115,7 @@ class _WalletChoiceState extends State<WalletChoice> {
                                   ),
                                   actions: <Widget>[
                                     FlatButton(
-                                      child: Text('OK'),
+                                      child: Text(_lang.translate('ok')),
                                       onPressed: () {
                                         Navigator.of(context).pop();
                                       },
@@ -119,7 +126,7 @@ class _WalletChoiceState extends State<WalletChoice> {
                         }
                       },
                       child: Center(
-                        child: Text("Get Wallet",
+                        child: Text(_lang.translate('get_wallet'),
                             style: TextStyle(
                                 color: Colors.white,
                                 fontFamily: "Poppins-Bold",

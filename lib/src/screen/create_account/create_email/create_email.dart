@@ -121,6 +121,7 @@ class _CreateEmailState extends State<CreateEmail> {
   }
 
   showErrorDialog(BuildContext context) async {
+    var _lang = AppLocalizeService.of(context);
     return showDialog(
       context: context,
       barrierDismissible: false,
@@ -129,7 +130,7 @@ class _CreateEmailState extends State<CreateEmail> {
           title: Row(
             children: [
               Icon(Icons.warning, color: Colors.yellow),
-              Text('WARNING', style: TextStyle(fontFamily: 'Poppins-Bold'),),
+              Text(_lang.translate('warning'), style: TextStyle(fontFamily: 'Poppins-Bold'),),
             ],
           ),
           content: SingleChildScrollView(
@@ -142,7 +143,7 @@ class _CreateEmailState extends State<CreateEmail> {
           ),
           actions: <Widget>[
             FlatButton(
-              child: Text('OK'),
+              child: Text(_lang.translate('ok')),
               onPressed: () {
                 Navigator.of(context).pop();
               },
