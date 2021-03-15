@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:koompi_hotspot/all_export.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:package_info/package_info.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
@@ -46,9 +47,10 @@ _showVersionDialog(context) async {
     context: context,
     barrierDismissible: false,
     builder: (BuildContext context) {
-      String title = "New Update Available";
-      String message = "There is a newer version of app available please update it now.";
-      String btnLabel = "Update Now";
+      var _lang = AppLocalizeService.of(context);
+      String title = _lang.translate('title_update');
+      String message = _lang.translate('msg_update');
+      String btnLabel = _lang.translate('btn_update');
       return WillPopScope(
         child: Platform.isIOS
           ? new CupertinoAlertDialog(

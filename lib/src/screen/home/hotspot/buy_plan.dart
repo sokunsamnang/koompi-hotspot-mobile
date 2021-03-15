@@ -1,5 +1,6 @@
 import 'package:koompi_hotspot/all_export.dart';
 import 'package:koompi_hotspot/src/reuse_widget/reuse_widget.dart';
+import 'package:koompi_hotspot/src/screen/home/hotspot/choose_option.dart';
 import 'package:provider/provider.dart';
 
 class HotspotPlan extends StatefulWidget {
@@ -56,14 +57,13 @@ class _HotspotPlanState extends State<HotspotPlan> {
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
         print('Internet connected');
         if(response.statusCode == 200){    
-          Future.delayed(Duration(seconds: 2), () async{
-            await Provider.of<GetPlanProvider>(context, listen: false).fetchHotspotPlan();
-            Timer(Duration(milliseconds: 500), () => Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (context) => CompletePlan()),
-              ModalRoute.withName('/navbar'),
-            ));
-          });
+          await Provider.of<BalanceProvider>(context, listen: false).fetchPortforlio();
+          await Provider.of<GetPlanProvider>(context, listen: false).fetchHotspotPlan();
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => ChooseOption()),
+            ModalRoute.withName('/navbar'),
+          );
         }
         else{
           _passwordController.clear();
@@ -122,14 +122,13 @@ class _HotspotPlanState extends State<HotspotPlan> {
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
         print('Internet connected');
         if(response.statusCode == 200){    
-          Future.delayed(Duration(seconds: 2), () async{
-            await Provider.of<GetPlanProvider>(context, listen: false).fetchHotspotPlan();
-            Timer(Duration(milliseconds: 500), () => Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (context) => CompletePlan()),
-              ModalRoute.withName('/navbar'),
-            ));
-          });
+          await Provider.of<BalanceProvider>(context, listen: false).fetchPortforlio();
+          await Provider.of<GetPlanProvider>(context, listen: false).fetchHotspotPlan();
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => ChooseOption()),
+            ModalRoute.withName('/navbar'),
+          );
         }
         else{
           _passwordController.clear();

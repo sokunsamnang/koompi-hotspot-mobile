@@ -343,7 +343,7 @@ class _MyAccountState extends State<MyAccount>
                                 child: Row(
                                   children: [
                                     Icon(FontAwesomeIcons.male),
-                                    Text('Male',
+                                    Text(_lang.translate('male'),
                                         style: TextStyle(
                                             fontFamily: "Medium",
                                             color: gender == 'Male'
@@ -374,7 +374,7 @@ class _MyAccountState extends State<MyAccount>
                                 child: Row(
                                   children: [
                                     Icon(FontAwesomeIcons.female),
-                                    Text('Female',
+                                    Text(_lang.translate('female'),
                                         style: TextStyle(
                                             fontFamily: "Medium",
                                             color: gender == 'Female'

@@ -330,7 +330,7 @@ class PostRequest with ChangeNotifier {
     return null;
   }
 
-  Future<http.Response> renewOption(String automatically) async {
+  Future<http.Response> renewOption(bool automatically) async {
 
     await _prefService.read('token').then((value) {
       _backend.token = Map<String, dynamic>.from({'token': value});

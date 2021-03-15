@@ -207,8 +207,10 @@ Widget trxHistory(BuildContext context) {
                             ),
                     ],
                   ),
-                  leading: Image.asset('assets/images/sld.png',
-                      width: 25),
+                  leading: history[i].memo == 'Buy Hotspot Plan' || history[i].memo == 'Automatically top-up for renew plan.' || history[i].memo == 'Renew plan.'
+                    ? Image.asset('assets/images/Koompi-WiFi-Icon.png', width: 25) 
+                    : Image.asset('assets/images/sld.png', width: 25
+                  ),
                   title: Text(
                     userWallet == history[i].destination ? _lang.translate('recieved') : _lang.translate('sent'),
                     style: TextStyle(

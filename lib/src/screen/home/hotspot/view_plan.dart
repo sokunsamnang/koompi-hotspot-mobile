@@ -229,39 +229,42 @@ class _PlanViewState extends State<PlanView> {
         children: <Widget>[
           SizedBox(height: 20),
           SingleChildScrollView(
-            child: Center(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 45),
-                    child: Row(
-                      children: [
-                        Image.asset('assets/images/Koompi-WiFi-Icon.png', width: 25),
-                        SizedBox(width: 10),
-                        Text(
-                          _lang.translate('hotspot_plan'),
-                          style: GoogleFonts.nunito(
-                          textStyle: TextStyle(fontSize: 23, fontWeight: FontWeight.w700)
+            child: Container(
+              width: MediaQuery.of(context).size.width / 0.25,
+              child: Center(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 35, right: 0),
+                      child: Row(
+                        children: [
+                          Image.asset('assets/images/Koompi-WiFi-Icon.png', scale: 50,),
+                          SizedBox(width: 10),
+                          Text(
+                            _lang.translate('hotspot_plan'),
+                            style: GoogleFonts.nunito(
+                            textStyle: TextStyle(fontSize: 25, fontWeight: FontWeight.w700)
+                            ),
                           ),
-                        ),
+                        ],
+                      ),
+                    ),
+                    Row(
+                      children: [
+                        IconButton(
+                          icon: Icon(Icons.more_vert), 
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => RenewOption())
+                            );
+                          }
+                        )
                       ],
                     ),
-                  ),
-                  Row(
-                    children: [
-                      IconButton(
-                        icon: Icon(Icons.more_vert), 
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => RenewOption())
-                          );
-                        }
-                      )
-                    ],
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
@@ -270,7 +273,7 @@ class _PlanViewState extends State<PlanView> {
             child: Text(
               '${mPlan.balance} SEL', 
               style: GoogleFonts.nunito(
-              textStyle: TextStyle(color: Colors.blue[900], fontSize: 25, fontWeight: FontWeight.w700)
+              textStyle: TextStyle(color: Colors.blue[900], fontSize: 23, fontWeight: FontWeight.w700)
               ),
             ),
           ),
@@ -295,7 +298,7 @@ class _PlanViewState extends State<PlanView> {
                 Text(
                   '${mPlan.device} ${_lang.translate('devices')}', 
                   style: GoogleFonts.nunito(
-                  textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
+                  textStyle: TextStyle(color: Colors.black, fontSize: 16)
                   ),
                 ),
               ],
@@ -314,9 +317,9 @@ class _PlanViewState extends State<PlanView> {
                 ),
                 Expanded(child: Container()),
                 Text(
-                  '30 ${_lang.translate('day')}', 
+                  '${mPlan.plan} ${_lang.translate('day')}', 
                   style: GoogleFonts.nunito(
-                  textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
+                  textStyle: TextStyle(color: Colors.black, fontSize: 16, )
                   ),
                 ),
               ],
@@ -337,7 +340,7 @@ class _PlanViewState extends State<PlanView> {
                 Text(
                   '5 ${_lang.translate('mb')}', 
                   style: GoogleFonts.nunito(
-                  textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
+                  textStyle: TextStyle(color: Colors.black, fontSize: 16)
                   ),
                 ),
               ],
@@ -358,7 +361,7 @@ class _PlanViewState extends State<PlanView> {
                 Text(
                   '${mPlan.timeLeft.split(' ').reversed.join(' ')}', 
                   style: GoogleFonts.nunito(
-                  textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
+                  textStyle: TextStyle(color: Colors.black, fontSize: 16)
                   ),
                 ),
               ],

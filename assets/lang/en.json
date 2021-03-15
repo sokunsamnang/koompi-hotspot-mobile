@@ -122,5 +122,11 @@
     "error_server": "Error server or Server is in maintenance",
     "wrong_code": "You may enter an incorrect verification code!",
     "sign_out_warn": "Do you want to sign out?",
-    "error_service": "Error Services or Lost internet connection, Please try again!"
+    "error_service": "Error Services or Lost internet connection, Please try again!",
+    "male": "Male",
+    "female": "Female",
+    "title_update": "New Update Available",
+    "msg_update": "There is a newer version of the app available please update it now.",
+    "btn_update": "Update Now"
+
 }

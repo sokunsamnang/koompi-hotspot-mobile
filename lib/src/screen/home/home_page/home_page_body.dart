@@ -274,7 +274,8 @@ Widget _planViewButton(context){
                                   '${_lang.translate('device')}:',
                                   style: TextStyle(
                                     color: Colors.white,
-                                    fontFamily: 'Medium'
+                                    fontFamily: 'Medium',
+                                    fontWeight: FontWeight.w800,
                                   ),
                                 ),
                                 Expanded(child: Container()),
@@ -282,7 +283,6 @@ Widget _planViewButton(context){
                                   '${mPlan.device} ${_lang.translate('devices')}',
                                   style: TextStyle(
                                     color: Colors.white,
-                                    fontWeight: FontWeight.w800,
                                   ),
                                 ),
                               ],
@@ -300,7 +300,8 @@ Widget _planViewButton(context){
                                   '${_lang.translate('expire')}:',
                                   style: TextStyle(
                                     color: Colors.white,
-                                    fontFamily: 'Medium'
+                                    fontFamily: 'Medium',
+                                    fontWeight: FontWeight.w800,
                                   ),
                                 ),
                                 Expanded(child: Container()),
@@ -308,7 +309,6 @@ Widget _planViewButton(context){
                                   '${mPlan.plan} ${_lang.translate('day')}',
                                   style: TextStyle(
                                     color: Colors.white,
-                                    fontWeight: FontWeight.w800,
                                   ),
                                 ),
                               ],
@@ -326,7 +326,8 @@ Widget _planViewButton(context){
                                   '${_lang.translate('speed')}:',
                                   style: TextStyle(
                                     color: Colors.white,
-                                    fontFamily: 'Medium'
+                                    fontFamily: 'Medium',
+                                    fontWeight: FontWeight.w800,
                                   ),
                                 ),
                                 Expanded(child: Container()),
@@ -334,7 +335,6 @@ Widget _planViewButton(context){
                                   '5 ${_lang.translate('mb')}',
                                   style: TextStyle(
                                     color: Colors.white,
-                                    fontWeight: FontWeight.w800,
                                     ),
                                   ),
                                 ],
@@ -352,7 +352,8 @@ Widget _planViewButton(context){
                                   '${_lang.translate('valid_until')}:',
                                   style: TextStyle(
                                     color: Colors.white,
-                                    fontFamily: 'Medium'
+                                    fontFamily: 'Medium',
+                                    fontWeight: FontWeight.w800,
                                   ),
                                 ),
                                 Expanded(child: Container()),
@@ -360,7 +361,6 @@ Widget _planViewButton(context){
                                   '${mPlan.timeLeft.split(' ').reversed.join(' ')}', 
                                   style: TextStyle(
                                     color: Colors.white,
-                                    fontWeight: FontWeight.w800,
                                     ),
                                   ),
                                 ],

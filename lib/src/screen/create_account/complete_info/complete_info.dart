@@ -221,8 +221,8 @@ class _CompleteInfoState extends State<CompleteInfo>{
                       labelPadding: EdgeInsets.only(left: 35, right: 35),
                       attribute: "gender",
                     options: [
-                        FormBuilderFieldOption(value: 'Male'),
-                        FormBuilderFieldOption(value: 'Female'),
+                        FormBuilderFieldOption(value: 'Male', child: Text(_lang.translate('male'))),
+                        FormBuilderFieldOption(value: 'Female', child: Text(_lang.translate('female')))
                       ],
                       onChanged: (value) {
                         if (value == null) {

@@ -38,15 +38,12 @@ class _ReceiveRequestState extends State<ReceiveRequest> {
       final tempDir = await getTemporaryDirectory();
       final file = await new File("${tempDir.path}/KOOMPI_HOTSPOT.png").create();
       await file.writeAsBytes(pngBytes);
-      ShareExtend.share(
-        file.path, 
-        "image",
-        subject: _wallet,
-      );
-      // Share.file(title, name, bytes, mimeType)
-      // Share.file(title, name, bytes, mimeType)
-      // multi("Zeetomic QR", "image", pngBytes, "My image");
-      // Share.share(text)
+      // ShareExtend.share(
+      //   file.path, 
+      //   "image",
+      //   subject: '_wallet',
+      // );
+      Share.shareFiles(['${file.path}'], text: _wallet);
     } catch (e) {
       print(e.toString()); 
     }

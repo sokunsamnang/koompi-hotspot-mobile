@@ -1,13 +1,11 @@
 import 'package:koompi_hotspot/all_export.dart';
 import 'package:koompi_hotspot/src/reuse_widget/reuse_widget.dart';
-import 'package:provider/provider.dart';
-
-class RenewOption extends StatefulWidget {
+class ChooseOption extends StatefulWidget {
   @override
-  _RenewOptionState createState() => _RenewOptionState();
+  _ChooseOptionState createState() => _ChooseOptionState();
 }
 
-class _RenewOptionState extends State<RenewOption>
+class _ChooseOptionState extends State<ChooseOption>
     with SingleTickerProviderStateMixin {
   AnimationController _controller;
 
@@ -43,12 +41,13 @@ class _RenewOptionState extends State<RenewOption>
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
         print('Internet connected');
         if(response.statusCode == 200){    
-          await Provider.of<GetPlanProvider>(context, listen: false).fetchHotspotPlan();
-          Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(builder: (context) => Navbar()),
-            ModalRoute.withName('/navbar'),
-          );
+          Future.delayed(Duration(seconds: 2), () async {
+            Timer(Duration(milliseconds: 500), () => Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => CompletePlan()),
+              ModalRoute.withName('/navbar'),
+            ));
+          });
         }
         else{
           Navigator.of(context).pop();
@@ -98,16 +97,7 @@ class _RenewOptionState extends State<RenewOption>
       appBar: AppBar(
         backgroundColor: Colors.white,
         title: Text(_lang.translate('renew_option'), style: TextStyle(color: Colors.black, fontFamily: 'Medium')),
-        leading: Builder(builder: (BuildContext context) {
-          return IconButton(
-              icon: Icon(
-                Icons.arrow_back,
-                color: Colors.black,
-              ),
-              onPressed: () {
-                Navigator.pop(context);
-              });
-        }),
+        automaticallyImplyLeading: false,
         actions: <Widget>[
           Padding(
             padding: EdgeInsets.only(right: 5.0),

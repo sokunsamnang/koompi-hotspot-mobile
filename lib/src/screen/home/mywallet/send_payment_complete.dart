@@ -69,16 +69,16 @@ class _CompletePaymentState extends State<CompletePayment> {
                             ),
                             onTap: () async {
                               dialogLoading(context);
+                              await Provider.of<BalanceProvider>(context, listen: false).fetchPortforlio();
                               Future.delayed(Duration(seconds: 3), () async{
-                                await Provider.of<BalanceProvider>(context, listen: false).fetchPortforlio();
                                 Timer(
-                                    Duration(milliseconds: 500),
-                                    () => Navigator.pushAndRemoveUntil(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) => Navbar()),
-                                          ModalRoute.withName('/navbar'),
-                                        ));
+                                  Duration(milliseconds: 500),
+                                  () => Navigator.pushAndRemoveUntil(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => Navbar()),
+                                        ModalRoute.withName('/navbar'),
+                                      ));
                               });
                             },
                             child: Center(
