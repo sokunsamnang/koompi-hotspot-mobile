@@ -5,8 +5,9 @@ import 'package:koompi_hotspot/src/models/model_promotion.dart';
 
 class PromotionScreen extends StatefulWidget {
   final Promotion promotion;
+  final int index;
 
-  PromotionScreen({this.promotion});
+  PromotionScreen({this.promotion, this.index});
 
   @override
   _PromotionScreenState createState() => _PromotionScreenState();
@@ -14,7 +15,11 @@ class PromotionScreen extends StatefulWidget {
 
 class _PromotionScreenState extends State<PromotionScreen> {
 
-
+  @override
+  void dispose(){
+    super.dispose();
+  }
+  
   @override
   Widget build(BuildContext context) {
     var _lang = AppLocalizeService.of(context);
@@ -31,10 +36,13 @@ class _PromotionScreenState extends State<PromotionScreen> {
       ),
       body: SafeArea(
         child: PageView.builder(
+          controller: PageController(
+            initialPage: promotions.indexOf(promotions[widget.index])
+          ),
           scrollDirection: Axis.horizontal,
-            itemCount: promotions.length,
-            itemBuilder: (BuildContext context, int index) {
-            // Promotion promotion = promotions[index];
+          itemCount: promotions.length,
+          itemBuilder: (BuildContext context, int index) {
+          Promotion promotion = promotions[index];
             return SingleChildScrollView(
               physics: BouncingScrollPhysics(),
               child: Column(
@@ -54,11 +62,11 @@ class _PromotionScreenState extends State<PromotionScreen> {
                           ],
                         ),
                         child: Hero(
-                          tag: widget.promotion.imageUrl,
+                          tag: promotion.imageUrl,
                           child: ClipRRect(
                             // borderRadius: BorderRadius.circular(12.0),
                             child: Image(
-                              image: AssetImage(widget.promotion.imageUrl),
+                              image: AssetImage(promotion.imageUrl),
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -73,7 +81,7 @@ class _PromotionScreenState extends State<PromotionScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Text(
-                          widget.promotion.title,
+                          promotion.title,
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: 27.0,
@@ -90,7 +98,7 @@ class _PromotionScreenState extends State<PromotionScreen> {
                             ),
                             SizedBox(width: 5.0),
                             Text(
-                              widget.promotion.category,
+                              promotion.category,
                               style: TextStyle(
                                 color: Colors.black,
                                 fontSize: 20.0,
@@ -104,7 +112,7 @@ class _PromotionScreenState extends State<PromotionScreen> {
                   SizedBox(height: 25),
                   Container(
                     margin: EdgeInsets.symmetric(horizontal: 15),
-                    child: widget.promotion.description,
+                    child: promotion.description,
                   )
                 ],
               ),

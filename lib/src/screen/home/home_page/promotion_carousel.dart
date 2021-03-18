@@ -21,6 +21,7 @@ class PromotionCarousel extends StatelessWidget {
                   MaterialPageRoute(
                     builder: (_) => PromotionScreen(
                       promotion: promotion,
+                      index: index,
                     ),
                   ),
                 ),
