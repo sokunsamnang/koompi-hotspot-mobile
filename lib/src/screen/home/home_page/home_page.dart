@@ -12,16 +12,16 @@ class _HomePageState extends State<HomePage>{
 
   @override
   void initState() {
-    super.initState();
     setState(() {
       fetchWallet();
     });
-    print('run version check');
     versionCheck(context);
+    super.initState();
   }
 
   void fetchWallet() async{
     await Provider.of<BalanceProvider>(context, listen: false).fetchPortforlio();
+    await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
     await Provider.of<GetPlanProvider>(context, listen: false).fetchHotspotPlan();
   }
   
@@ -54,7 +54,7 @@ class _HomePageState extends State<HomePage>{
                   fontSize: 18,
                   letterSpacing: 1.0),
                 children: <TextSpan>[
-                  TextSpan(text: 'Fi-Fi', style: TextStyle(color: Colors.blue,fontWeight: FontWeight.bold)),
+                  TextSpan(text: 'Fi-Fi', style: TextStyle(color: Color(0xff0caddb),fontWeight: FontWeight.bold)),
                 ],
               ),
             ),
@@ -70,7 +70,9 @@ class _HomePageState extends State<HomePage>{
       ),
       body: RefreshIndicator(
         onRefresh: () async{
+          print('refresh');
           await Provider.of<BalanceProvider>(context, listen: false).fetchPortforlio();
+          await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
           await Provider.of<GetPlanProvider>(context, listen: false).fetchHotspotPlan();
         },
         child: Container(

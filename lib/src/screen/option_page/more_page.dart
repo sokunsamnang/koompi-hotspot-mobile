@@ -1,7 +1,6 @@
 import 'package:koompi_hotspot/src/reuse_widget/reuse_widget.dart';
 import 'package:koompi_hotspot/all_export.dart';
 import 'package:koompi_hotspot/src/screen/web_view/captive_portal_web.dart';
-import 'package:koompi_hotspot/src/screen/wifi/wifi.dart';
 import 'package:koompi_hotspot/src/utils/language.dart';
 
 class MorePage extends StatefulWidget {
@@ -143,7 +142,7 @@ class _MorePageState extends State<MorePage>
                       },
                     ),
                     _buildDivider(),
-                    Text('Beta Version 0.3.10'),
+                    Text('Beta Version 0.3.11'),
                   ],
                 ),
               ),

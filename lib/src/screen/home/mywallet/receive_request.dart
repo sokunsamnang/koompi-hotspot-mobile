@@ -3,7 +3,6 @@ import 'dart:ui';
 
 import 'package:koompi_hotspot/all_export.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:share_extend/share_extend.dart';
 
 class ReceiveRequest extends StatefulWidget {
   @override

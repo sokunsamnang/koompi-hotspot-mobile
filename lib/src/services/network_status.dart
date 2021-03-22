@@ -1,4 +1,3 @@
-import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 import 'package:koompi_hotspot/all_export.dart';
 
 class NetworkStatus {

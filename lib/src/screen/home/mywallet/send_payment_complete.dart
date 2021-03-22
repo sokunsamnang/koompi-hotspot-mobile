@@ -69,8 +69,9 @@ class _CompletePaymentState extends State<CompletePayment> {
                             ),
                             onTap: () async {
                               dialogLoading(context);
-                              await Provider.of<BalanceProvider>(context, listen: false).fetchPortforlio();
-                              Future.delayed(Duration(seconds: 3), () async{
+                              Future.delayed(Duration(seconds: 2), () async{
+                                await Provider.of<BalanceProvider>(context, listen: false).fetchPortforlio();
+                                await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
                                 Timer(
                                   Duration(milliseconds: 500),
                                   () => Navigator.pushAndRemoveUntil(

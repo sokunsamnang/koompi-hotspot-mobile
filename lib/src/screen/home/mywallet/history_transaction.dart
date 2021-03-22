@@ -81,13 +81,13 @@ Widget trxHistory(BuildContext context) {
                                 trailing: history[i].fee.toString() + " SEL",
                               ),
                             ),
-                            Padding(
+                            history[i].memo != '' ? Padding(
                               padding: EdgeInsets.only(left: 24.0, right: 24.0),
                               child: ItemList(
                                 title: _lang.translate('memo'),
                                 trailing: history[i].memo,
                               ),
-                            ),
+                            ) : Container(),
                             Divider(
                               thickness: 1.5,
                               color: Colors.grey[300],

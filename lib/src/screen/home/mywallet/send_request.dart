@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:koompi_hotspot/all_export.dart';
 import 'package:koompi_hotspot/src/backend/component.dart';
 import 'package:koompi_hotspot/src/backend/post_request.dart';
 import 'package:koompi_hotspot/src/reuse_widget/reuse_widget.dart';
@@ -10,6 +11,7 @@ import 'package:koompi_hotspot/src/screen/home/mywallet/qr_scanner.dart';
 import 'package:koompi_hotspot/src/screen/home/mywallet/send_payment_complete.dart';
 import 'package:koompi_hotspot/src/screen/home/mywallet/wallet_screen.dart';
 import 'package:koompi_hotspot/src/utils/app_localization.dart';
+import 'package:provider/provider.dart';
 
 class SendRequest extends StatefulWidget {
   final String walletKey;
@@ -52,7 +54,9 @@ class _SendRequestState extends State<SendRequest> {
         _backend.response = await PostRequest().sendPayment(_passwordController.text, recieveWallet.text, amount.text, memo.text);
         var responseJson = json.decode(_backend.response.body);
         if (_backend.response.statusCode == 200) {
-          Future.delayed(Duration(seconds: 2), () {
+          Future.delayed(Duration(seconds: 2), () async{
+            await Provider.of<BalanceProvider>(context, listen: false).fetchPortforlio();
+            await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
             Timer(
                 Duration(milliseconds: 500),
                 () => Navigator.pushAndRemoveUntil(
