@@ -1,18 +1,48 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:koompi_hotspot/all_export.dart';
 import 'package:koompi_hotspot/src/reuse_widget/reuse_widget.dart';
 import 'package:koompi_hotspot/src/utils/app_utils.dart';
 import 'package:provider/provider.dart';
 
 Widget trxHistory(BuildContext context) {
+
+  String prevDay;
+  String today = DateFormat("EEEE, d MMMM, y").format(DateTime.now());
+  String yesterday = DateFormat("EEEE, d MMMM, y").format(DateTime.now().add(Duration(days: -1)));
+
   var _lang = AppLocalizeService.of(context);
   List _buildList(List<TrxHistoryModel> history, BuildContext context, String userWallet) {
     List<Widget> listItems = List();
     print('My History: ${history.length}');
     for (int i = 0; i < history.length; i++) {
+      DateTime date = DateTime.parse(history[i].createdAt);
+      String dateString = DateFormat("EEEE, d MMMM, y").format(date);
+
+      if (today == dateString) {
+        dateString = "Today";
+      } else if (yesterday == dateString) {
+        dateString = "Yesteday";
+      }
+
+      bool showHeader = prevDay != dateString;
+      prevDay = dateString;
+
       listItems.add(
         Column(
           mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            showHeader
+              ? Container(
+                padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                child: Text(
+                  dateString,
+                  style: GoogleFonts.nunito(
+                    textStyle: TextStyle(color: Color(0xff0caddb), fontWeight: FontWeight.w700)
+                    ),
+                  ),
+                )
+              : Offstage(),
             GestureDetector(
               onTap: () async {
                 await showDialog(
@@ -179,15 +209,8 @@ Widget trxHistory(BuildContext context) {
                 child: ListTile(
                   trailing: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Text(
-                        AppUtils.timeStampToDateTime(history[i].createdAt),
-                        style: TextStyle(fontSize: 10.0),
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
                       userWallet == history[i].destination
                           ? Text(
                               '+ ${history[i].amount.toString()} SEL',

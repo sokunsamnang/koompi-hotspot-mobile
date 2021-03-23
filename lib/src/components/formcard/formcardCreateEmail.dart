@@ -80,7 +80,7 @@ Widget formCardEmail(
               TextFormField(
                 validator: (val) {
                   if(val.isEmpty) return 'Password is required';
-                  if(val.length < 8) return 'Password too short';    
+                  if(val.length < 6) return 'Password too short';    
                   if(val != confirmPasswordController.text) return 'Password does not match'; 
                   return null;
                 },

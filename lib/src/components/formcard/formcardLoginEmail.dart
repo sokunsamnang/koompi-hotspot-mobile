@@ -77,7 +77,7 @@ Widget formLogin( BuildContext context,
               controller: passwordController,
               validator: (val) {
                 if(val.isEmpty) return 'Password is required';
-                if(val.length < 8) return 'Password too short';                
+                if(val.length < 6) return 'Password too short';                
                 return null;
               },
               onSaved: (val) => _password = val,

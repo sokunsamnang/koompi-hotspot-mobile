@@ -12,11 +12,11 @@ class _HomePageState extends State<HomePage>{
 
   @override
   void initState() {
-    setState(() {
-      fetchWallet();
-    });
-    versionCheck(context);
     super.initState();
+    // setState(() {
+    //   fetchWallet();
+    // });
+    versionCheck(context);
   }
 
   void fetchWallet() async{
@@ -28,6 +28,7 @@ class _HomePageState extends State<HomePage>{
   void dispose(){
     super.dispose();
   }
+  
   Widget build(BuildContext context){
     return Scaffold(
       appBar: AppBar(

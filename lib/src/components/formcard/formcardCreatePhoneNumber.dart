@@ -82,7 +82,7 @@ Widget formCardPhoneNumbers(
               TextFormField(
                 validator: (val) {
                   if(val.isEmpty) return _lang.translate('password_is_required_validate');
-                  if(val.length < 8) return _lang.translate('password_too_short_validate');   
+                  if(val.length < 6) return _lang.translate('password_too_short_validate');   
                   if(val != confirmPasswordController.text) return _lang.translate('password_does_not_match_validate');
                   return null;
                 },

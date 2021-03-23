@@ -24,6 +24,11 @@ class _MyWalletState extends State<MyWallet> {
     });
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
   void fetchWallet() async{
     await Provider.of<BalanceProvider>(context, listen: false).fetchPortforlio();
     await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
@@ -111,7 +116,7 @@ class _MyWalletState extends State<MyWallet> {
                                 Text(
                                   '${mBalance.token.toStringAsFixed(4)} SEL',
                                   style: TextStyle(
-                                  color: Colors.blueAccent,
+                                  color: Color(0xff0caddb),
                                   fontSize: 30.0,
                                   fontWeight: FontWeight.bold,
                                   ),

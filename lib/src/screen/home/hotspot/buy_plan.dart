@@ -583,7 +583,7 @@ class _HotspotPlanState extends State<HotspotPlan> {
               child: TextFormField(
                 validator: (val) {
                   if(val.isEmpty) return _lang.translate('password_is_required_validate');
-                  if(val.length < 8) return _lang.translate('password_too_short_validate');                 
+                  if(val.length < 6) return _lang.translate('password_too_short_validate');                 
                   return null;
                 },
                 autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -647,7 +647,7 @@ class _HotspotPlanState extends State<HotspotPlan> {
               child: TextFormField(
                 validator: (val) {
                   if(val.isEmpty) return _lang.translate('password_is_required_validate');
-                  if(val.length < 8) return _lang.translate('password_too_short_validate');               
+                  if(val.length < 6) return _lang.translate('password_too_short_validate');               
                   return null;
                 },
                 autovalidateMode: AutovalidateMode.onUserInteraction,

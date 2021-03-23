@@ -64,7 +64,7 @@
     "total_balance": "TOTAL BALANCE",
     "send_money": "Send\nmoney",
     "receive_money": "Receive\nmoney",
-    "transactions": "Transactions",
+    "transactions": "Transaction History",
     "sent": "Sent",
     "recieved": "Recieved",
     "transaction_history": "Transaction History",
@@ -80,6 +80,7 @@
     "receive_address": "Receiver Address",
     "receive_address_validate": "Receive address is required",
     "amount_validate": "Amount is required",
+    "amount_valid_validate": "Please enter a valid amount!", 
     "send": "SEND",
     "copy": "COPY",
     "share": "SHARE",
@@ -127,6 +128,7 @@
     "female": "Female",
     "title_update": "New Update Available",
     "msg_update": "There is a newer version of the app available please update it now.",
-    "btn_update": "Update Now"
-
+    "btn_update": "Update Now",
+    "tf_change_password": "You have has been changed password successfully, Please sign in again with your new password.",
+    "tf_reset_password": "You have has been reset password successfully, Please sign in again with your new password."
 }

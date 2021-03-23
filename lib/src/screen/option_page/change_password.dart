@@ -80,9 +80,9 @@ class _ChangePasswordState extends State<ChangePassword>
 
   void validateAllFieldNotEmpty(){ /* Enable And Disable Button */
     if (
-      _modelChangePassword.controlOldPassword.text.length >= 8 &&
-      _modelChangePassword.controlNewPassword.text.length >= 8 &&
-      _modelChangePassword.controlConfirmPassword.text.length >= 8 
+      _modelChangePassword.controlOldPassword.text.length >= 6 &&
+      _modelChangePassword.controlNewPassword.text.length >= 6 &&
+      _modelChangePassword.controlConfirmPassword.text.length >= 6
     ) validateAllFieldNoError();
     else if (_modelChangePassword.enable == true) enableButton(false);
   }
@@ -98,7 +98,7 @@ class _ChangePasswordState extends State<ChangePassword>
 
   String newPasswordIsmatch(){
     var _lang = AppLocalizeService.of(context);
-    if (_modelChangePassword.controlConfirmPassword.text.length >= 8){
+    if (_modelChangePassword.controlConfirmPassword.text.length >= 6){
       if (_modelChangePassword.controlNewPassword.text == _modelChangePassword.controlConfirmPassword.text){
         enableButton(true);
         _modelChangePassword.responseConfirm = null;
@@ -112,7 +112,7 @@ class _ChangePasswordState extends State<ChangePassword>
 
   String confirmPasswordIsMatch(){
     var _lang = AppLocalizeService.of(context);
-    if (_modelChangePassword.controlNewPassword.text.length >= 8){
+    if (_modelChangePassword.controlNewPassword.text.length >= 6){
       if (_modelChangePassword.controlNewPassword.text == _modelChangePassword.controlConfirmPassword.text){
         enableButton(true);
         _modelChangePassword.responseConfirm = null;
@@ -196,13 +196,12 @@ class _ChangePasswordState extends State<ChangePassword>
 
       var responseJson = json.decode(response.body);
       if (response.statusCode == 200) {
-        print(response.body);
-        Navigator.pop(context);
-        showChangePasswordDialog(context);
         await StorageServices().clearToken('token');
         await StorageServices().clearToken('phone');
         await StorageServices().clearToken('password');
-        
+        print(response.body);
+        Navigator.pop(context);
+        showChangePasswordDialog(context);
       } else {
         Navigator.pop(context);
         print(response.body);
@@ -244,6 +243,7 @@ class _ChangePasswordState extends State<ChangePassword>
 
 
 showChangePasswordDialog(context) async {
+  var _lang = AppLocalizeService.of(context);
   return showDialog(
       context: context,
       barrierDismissible: false,
@@ -252,19 +252,19 @@ showChangePasswordDialog(context) async {
           onWillPop: () async => false,
           child: AlertDialog(
             title: Text(
-              'Completed',
+              _lang.translate('complete'),
               textAlign: TextAlign.center,
             ),
             content: SingleChildScrollView(
               child: ListBody(
                 children: <Widget>[
-                  Text('You have changed password successfully, Please login again.'),
+                  Text(_lang.translate('tf_change_password')),
                 ],
               ),
             ),
             actions: <Widget>[
               FlatButton(
-                child: Text('OK'),
+                child: Text(_lang.translate('ok')),
                 onPressed: () async {
                   dialogLoading(context);
                   Future.delayed(Duration(seconds: 2), () {
@@ -312,7 +312,7 @@ showChangePasswordDialog(context) async {
                   color: _modelChangePassword.enable == true ? Colors.blueAccent : Colors.grey
                 ),
                 onPressed: () async {
-                  _modelChangePassword.enable == false ? null : _resetPassword();
+                  return _modelChangePassword.enable == true ? _resetPassword() : null;
                 },
               ),
             ),

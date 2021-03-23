@@ -21,7 +21,11 @@ class _NavbarState extends State<Navbar> {
   void initState(){
     super.initState();
     internet();
-    
+  }
+
+  @override
+  void dispose(){
+    super.dispose();
   }
 
   void internet() async {

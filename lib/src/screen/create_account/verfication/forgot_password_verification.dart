@@ -45,7 +45,6 @@ class _ForgotPasswordVerificationState extends State<ForgotPasswordVerification>
     super.dispose();
   }
 
-
   Future<void> _submitOtp(String vCode) async {
     dialogLoading(context);
     var responseBody;
