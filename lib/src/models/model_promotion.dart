@@ -17,6 +17,70 @@ class Promotion {
 
 List<Promotion> promotions = [
   Promotion(
+    imageUrl: 'assets/images/promotion7.png',
+    title: 'អ្នកអាចកម៉្មង់ KOOMPI តាមអនឡាញ',
+    category: 'Delivery',
+    description: RichText(
+      text: TextSpan(
+        children: [
+          TextSpan(
+            text: "🌐 អ្នកអាចកម៉្មង់ KOOMPI តាមអនឡាញបាន! ",
+            style: TextStyle(color: Colors.black, fontSize: 18, fontFamily: 'Medium')
+          ),
+          TextSpan(
+            text: "📍 Inbox មកកាន់ផេក ",
+            style: TextStyle(color: Colors.black, fontSize: 18, fontFamily: 'Medium')
+          ),
+          TextSpan(
+            style: TextStyle(color: Colors.blue, fontSize: 18, fontFamily: 'Medium'),
+              text: "https://www.facebook.com/koompi/",
+              recognizer: TapGestureRecognizer()..onTap =  () async{
+                var url = "https://www.facebook.com/koompi/";
+                    if (await canLaunch(url)) {
+                      await launch(url);
+                    } else {
+                      throw 'Could not launch $url';
+                    }
+              }
+          ),
+          TextSpan(
+            text: " 📞 ឬ ទូរស័ព្ទមកលេខ: ",
+            style: TextStyle(color: Colors.black, fontSize: 18, fontFamily: 'Medium')
+          ),
+          TextSpan(
+            style: TextStyle(color: Colors.blue, fontSize: 18, fontFamily: 'Medium'),
+              text: "077 990 887",
+              recognizer: TapGestureRecognizer()..onTap =  () async{
+                var url = "tel://077 990 887";
+                    if (await canLaunch(url)) {
+                      await launch(url);
+                    } else {
+                      throw 'Could not launch $url';
+                    }
+              }
+          ),
+          TextSpan(
+            text: "/ ",
+            style: TextStyle(color: Colors.black, fontSize: 18, fontFamily: 'Medium')
+          ),
+          TextSpan(
+            style: TextStyle(color: Colors.blue, fontSize: 18, fontFamily: 'Medium'),
+              text: "069 551 651",
+              recognizer: TapGestureRecognizer()..onTap =  () async{
+                var url = "tel://069 551 651";
+                    if (await canLaunch(url)) {
+                      await launch(url);
+                    } else {
+                      throw 'Could not launch $url';
+                    }
+              }
+          ),
+        ]
+      ),
+    ),
+  ),
+
+  Promotion(
     imageUrl: 'assets/images/promotion6.jpg',
     title: 'បង់រំលស់ KOOMPI E13',
     category: 'News',
@@ -75,6 +139,7 @@ List<Promotion> promotions = [
       ),
     ),
   ),
+
   Promotion(
     imageUrl: 'assets/images/promotion3.jpg',
     title: 'Think!Think! x KOOMPI Duo!',
@@ -90,6 +155,7 @@ List<Promotion> promotions = [
       ),
     ),
   ),
+
   Promotion(
     imageUrl: 'assets/images/promotion4.png',
     title: 'KOOMPI Releases New ISO (version 2.6)',
@@ -117,6 +183,7 @@ List<Promotion> promotions = [
       ),
     ),
   ),
+
   Promotion(
     imageUrl: 'assets/images/promotion5.jpg',
     title: 'Come and test, KOOMPI',
@@ -144,6 +211,7 @@ List<Promotion> promotions = [
       ),
     ),
   ),
+
   Promotion(
     imageUrl: 'assets/images/promotion0.jpg',
     title: 'Tote Bag',
@@ -187,6 +255,7 @@ List<Promotion> promotions = [
       ),
     ),
   ),
+
   Promotion(
     imageUrl: 'assets/images/promotion1.jpg',
     title: 'KOOMPI E11',
@@ -246,6 +315,7 @@ List<Promotion> promotions = [
       ),
     ),
   ),
+
   Promotion(
     imageUrl: 'assets/images/promotion2.png',
     title: 'KOOMPI E13',

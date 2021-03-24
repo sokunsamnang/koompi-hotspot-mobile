@@ -71,7 +71,6 @@ class _HomePageState extends State<HomePage>{
       ),
       body: RefreshIndicator(
         onRefresh: () async{
-          print('refresh');
           await Provider.of<BalanceProvider>(context, listen: false).fetchPortforlio();
           await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
           await Provider.of<GetPlanProvider>(context, listen: false).fetchHotspotPlan();

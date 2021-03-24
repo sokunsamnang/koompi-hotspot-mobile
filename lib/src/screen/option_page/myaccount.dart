@@ -24,7 +24,8 @@ class _MyAccountState extends State<MyAccount>
         cupertinoOptions: CupertinoOptions(takePhotoIcon: "chat"),
         maxImages: 1,
         materialOptions: MaterialOptions(
-          actionBarColor: '#${Color(0xFF303F9F).value.toRadixString(16)}',
+          statusBarColor: '#${Color(0xff0caddb).value.toRadixString(16)}',
+          actionBarColor: '#${Color(0xff0caddb).value.toRadixString(16)}',
           actionBarTitle: "KOOMPI Hotspot",
           allViewTitle: "All Photos",
           useDetailsView: false,
@@ -267,10 +268,10 @@ class _MyAccountState extends State<MyAccount>
                       child: FlatButton(
                         colorBrightness: Brightness.dark,
                         child: Text(_lang.translate('edit_profile_picture'),
-                            style: TextStyle(
-                                color: Colors.blue,
-                                fontSize: 20.0,
-                                fontFamily: 'Medium')),
+                          style: TextStyle(
+                              color: Colors.blue,
+                              fontSize: 20.0,
+                              fontFamily: 'Medium')),
                         onPressed: () => loadAsset(),
                       ),
                     ),
