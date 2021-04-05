@@ -130,5 +130,6 @@
     "msg_update": "There is a newer version of the app available please update it now.",
     "btn_update": "Update Now",
     "tf_change_password": "You have has been changed password successfully, Please sign in again with your new password.",
-    "tf_reset_password": "You have has been reset password successfully, Please sign in again with your new password."
+    "tf_reset_password": "You have has been reset password successfully, Please sign in again with your new password.",
+    "koompi_web": "KOOMPI Web"
 }

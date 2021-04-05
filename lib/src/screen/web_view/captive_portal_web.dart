@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 import 'package:koompi_hotspot/all_export.dart';
 import 'package:koompi_hotspot/src/utils/constants.dart' as global;
@@ -32,12 +31,12 @@ class _CaptivePortalWebState extends State<CaptivePortalWeb> {
     super.initState();
     _onchanged = flutterWebViewPlugin.onStateChanged.listen((WebViewStateChanged state) {
       if (mounted) {
-        if(state.type== WebViewState.finishLoad){ // if the full website page loaded
+        if(state.type == WebViewState.finishLoad){ // if the full website page loaded
           print('web laoded');
           flutterWebViewPlugin.evalJavascript('document.getElementById("user").value="${global.phone}"'); // Replace with the id of username field
           flutterWebViewPlugin.evalJavascript('document.getElementById("password").value="${global.password}"'); // Replace with the id of password field
           flutterWebViewPlugin.evalJavascript('document.getElementById("btnlogin").click()');  // Replace with Submit button id
-         
+          flutterWebViewPlugin.dispose();
         }else if (state.type== WebViewState.abortLoad){ // if there is a problem with loading the url
           print("there is a problem...");
         } else if(state.type== WebViewState.startLoad){ // if the url started loading
@@ -52,7 +51,7 @@ class _CaptivePortalWebState extends State<CaptivePortalWeb> {
     super.dispose();
     flutterWebViewPlugin.close();
   }
-
+  
   @override
   Widget build(BuildContext context) {
     var _lang = AppLocalizeService.of(context);

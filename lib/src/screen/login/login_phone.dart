@@ -47,6 +47,7 @@ class _LoginPhoneState extends State<LoginPhone> {
   @override
   void dispose() {
     super.dispose();
+    _networkStatus.connectivitySubscription.cancel();
     phoneController.dispose();
     passwordController.dispose();
   }

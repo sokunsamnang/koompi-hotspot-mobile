@@ -26,6 +26,7 @@ class _NavbarState extends State<Navbar> {
   @override
   void dispose(){
     super.dispose();
+    _networkStatus.connectivitySubscription.cancel();
   }
 
   void internet() async {

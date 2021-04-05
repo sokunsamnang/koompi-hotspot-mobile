@@ -49,6 +49,7 @@ class _LoginPageState extends State<LoginPage> {
     super.dispose();
     usernameController.dispose();
     passwordController.dispose();
+    _networkStatus.connectivitySubscription.cancel();
   }
 
   void _submitLogin(){
