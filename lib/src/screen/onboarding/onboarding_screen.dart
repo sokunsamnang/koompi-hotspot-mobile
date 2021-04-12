@@ -1,244 +1,178 @@
-import 'package:koompi_hotspot/all_export.dart';
+import 'package:flutter/material.dart';
+import 'package:intro_slider/dot_animation_enum.dart';
+import 'package:intro_slider/intro_slider.dart';
+import 'package:intro_slider/slide_object.dart';
+import 'package:koompi_hotspot/src/screen/login/login_phone.dart';
+import 'package:koompi_hotspot/src/screen/onboarding/styles.dart';
 
 
-class OnboardingScreen extends StatefulWidget {
+class IntroScreen extends StatefulWidget {
+  IntroScreen({Key key}) : super(key: key);
+
   @override
-  _OnboardingScreenState createState() => _OnboardingScreenState();
+  IntroScreenState createState() => new IntroScreenState();
 }
 
-class _OnboardingScreenState extends State<OnboardingScreen> {
-  final int _numPages = 3;
-  final PageController _pageController = PageController(initialPage: 0);
-  int _currentPage = 0;
+class IntroScreenState extends State<IntroScreen> {
+  List<Slide> slides = new List();
 
-  List<Widget> _buildPageIndicator() {
-    List<Widget> list = [];
-    for (int i = 0; i < _numPages; i++) {
-      list.add(i == _currentPage ? _indicator(true) : _indicator(false));
-    }
-    return list;
-  }
+  Function goToTab;
 
-  Widget _indicator(bool isActive) {
-    return AnimatedContainer(
-      duration: Duration(milliseconds: 150),
-      margin: EdgeInsets.symmetric(horizontal: 8.0),
-      height: 8.0,
-      width: isActive ? 24.0 : 16.0,
-      decoration: BoxDecoration(
-        color: isActive ? Colors.white : Color(0xFF7B51D3),
-        borderRadius: BorderRadius.all(Radius.circular(12)),
+  @override
+  void initState() {
+    super.initState();
+
+    slides.add(
+      new Slide(
+        title: 'Connect people\naround the world',
+        styleTitle: kTitleStyle,
+        description:
+            'KOOMPI Fi-Fi hotspot is accessable and affordable',
+        styleDescription: kSubtitleStyle,
+        pathImage: "assets/images/onboarding0.png",
+      ),
+    );
+    slides.add(
+      new Slide(
+        title: 'Live your life smarter with us!',
+        styleTitle: kTitleStyle,
+        description: 'For everyone and KOOMPI\'s school partner',
+        styleDescription: kSubtitleStyle,
+        pathImage: "assets/images/onboarding1.png",
+      ),
+    );
+    slides.add(
+      new Slide(
+        title: 'Get a new experience of imagination',
+        styleTitle: kTitleStyle,
+        description: 'We all are connected by the internet, like neurons in a giant brain',
+        styleDescription: kSubtitleStyle,
+        pathImage: "assets/images/onboarding2.png",
       ),
     );
   }
 
+  void onDonePress() {
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(builder: (context) => LoginPhone()),
+      ModalRoute.withName('/loginPhone'),
+    );
+  }
+
+  void onTabChangeCompleted(index) {
+    // Index of current tab is focused
+  }
+
+  Widget renderNextBtn() {
+    return Icon(
+      Icons.navigate_next,
+      color: Color(0xFFFFFFFF),
+      size: 35.0,
+    );
+  }
+
+  Widget renderDoneBtn() {
+    return Icon(
+      Icons.done,
+      color: Color(0xFFFFFFFF),
+    );
+  }
+
+  Widget renderSkipBtn() {
+    return Icon(
+      Icons.skip_next,
+      color: Color(0xFFFFFFFF),
+    );
+  }
+
+  List<Widget> renderListCustomTabs() {
+    List<Widget> tabs = new List();
+    for (int i = 0; i < slides.length; i++) {
+      Slide currentSlide = slides[i];
+      tabs.add(Container(
+        width: double.infinity,
+        height: double.infinity,
+        child: Container(
+          margin: EdgeInsets.only(bottom: 60.0, top: 60.0),
+          child: ListView(
+            children: <Widget>[
+              GestureDetector(
+                  child: Image.asset(
+                currentSlide.pathImage,
+                width: 200.0,
+                height: 200.0,
+                fit: BoxFit.contain,
+              )),
+              Container(
+                child: Text(
+                  currentSlide.title,
+                  style: currentSlide.styleTitle,
+                  textAlign: TextAlign.center,
+                ),
+                margin: EdgeInsets.only(top: 20.0),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                child: Container(
+                  child: Text(
+                    currentSlide.description,
+                    style: currentSlide.styleDescription,
+                    textAlign: TextAlign.center,
+                    maxLines: 5,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  margin: EdgeInsets.only(top: 20.0),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ));
+    }
+    return tabs;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: AnnotatedRegion<SystemUiOverlayStyle>(
-        value: SystemUiOverlayStyle.light,
-        child: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              stops: [0.1, 0.4, 0.7, 0.9],
-              colors: [
-                Color(0xFF3594DD),
-                Color(0xFF4563DB),
-                Color(0xFF5036D5),
-                Color(0xFF5B16D0),
-              ],
-            ),
-          ),
-          child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 40.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                Container(
-                  alignment: Alignment.centerRight,
-                  child: FlatButton(
-                    onPressed: () => {
-                      Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(builder: (context) => LoginPhone()),
-                        ModalRoute.withName('/loginPhone'),
-                      ),
-                    },
-                    child: Text(
-                      'Skip',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20.0,
-                      ),
-                    ),
-                  ),
-                ),
-                Container(
-                  height: 600.0,
-                  child: PageView(
-                    physics: ClampingScrollPhysics(),
-                    controller: _pageController,
-                    onPageChanged: (int page) {
-                      setState(() {
-                        _currentPage = page;
-                      });
-                    },
-                    children: <Widget>[
-                      Padding(
-                        padding: EdgeInsets.all(40.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Center(
-                              child: Image(
-                                image: AssetImage(
-                                  'assets/images/onboarding0.png',
-                                ),
-                                height: 300.0,
-                                width: 300.0,
-                              ),
-                            ),
-                            SizedBox(height: 30.0),
-                            Text(
-                              'Connect people\naround the world',
-                              style: kTitleStyle,
-                            ),
-                            SizedBox(height: 15.0),
-                            Text(
-                              'KOOMPI Wi-Fi hotspot is accessable and affordable',
-                              style: kSubtitleStyle,
-                            ),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(40.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Center(
-                              child: Image(
-                                image: AssetImage(
-                                  'assets/images/onboarding1.png',
-                                ),
-                                height: 300.0,
-                                width: 300.0,
-                              ),
-                            ),
-                            SizedBox(height: 30.0),
-                            Text(
-                              'Live your life smarter\nwith us!',
-                              style: kTitleStyle,
-                            ),
-                            SizedBox(height: 15.0),
-                            Text(
-                              'For everyone and KOOMPI\'s school partner',
-                              style: kSubtitleStyle,
-                            ),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(40.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Center(
-                              child: Image(
-                                image: AssetImage(
-                                  'assets/images/onboarding2.png',
-                                ),
-                                height: 300.0,
-                                width: 300.0,
-                              ),
-                            ),
-                            SizedBox(height: 30.0),
-                            Text(
-                              'Get a new experience\nof imagination',
-                              style: kTitleStyle,
-                            ),
-                            SizedBox(height: 15.0),
-                            Text(
-                              'We all are connected by the internet, like neurons in a giant brain',
-                              style: kSubtitleStyle,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: _buildPageIndicator(),
-                ),
-                _currentPage != _numPages - 1
-                    ? Expanded(
-                  child: Align(
-                    alignment: FractionalOffset.bottomRight,
-                    child: FlatButton(
-                      onPressed: () {
-                        _pageController.nextPage(
-                          duration: Duration(milliseconds: 500),
-                          curve: Curves.ease,
-                        );
-                      },
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                          Text(
-                            'Next',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 22.0,
-                            ),
-                          ),
-                          SizedBox(width: 10.0),
-                          Icon(
-                            Icons.arrow_forward,
-                            color: Colors.white,
-                            size: 30.0,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                )
-                : Text(''),
-              ],
-            ),
-          ),
-        ),
-      ),
-      bottomSheet: _currentPage == _numPages - 1
-          ? Container(
-        height: 75 ,
-        width: double.infinity,
-        color: Colors.white,
-        child: GestureDetector(
-          onTap: () => {
-            Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (context) => LoginPhone()),
-              ModalRoute.withName('/loginPhone'),
-            ),
-          },
-          child: Center(
-            child: Text(
-              'Get started',
-              style: TextStyle(
-                color: Color(0xFF5B16D0),
-                fontSize: 20.0,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-        ),
-      )
-          : Text(''),
+    return new IntroSlider(
+      // List slides
+      // slides: this.slides,
+
+      // Skip button
+      renderSkipBtn: this.renderSkipBtn(),
+      colorSkipBtn: Color(0xFF4563DB),
+      highlightColorSkipBtn: Color(0xFF5036D5),
+
+      // Next button
+      renderNextBtn: this.renderNextBtn(),
+
+      // Done button
+      renderDoneBtn: this.renderDoneBtn(),
+      onDonePress: this.onDonePress,
+      colorDoneBtn: Color(0xFF4563DB),
+      highlightColorDoneBtn: Color(0xFF5036D5),
+
+      // Dot indicator
+      colorDot: Color(0xFFFFFFFF),
+      sizeDot: 13.0,
+      typeDotAnimation: dotSliderAnimation.SIZE_TRANSITION,
+
+      // Tabs
+      listCustomTabs: this.renderListCustomTabs(),
+      backgroundColorAllSlides: Color(0xFF5036D5),
+      refFuncGoToTab: (refFunc) {
+        this.goToTab = refFunc;
+      },
+
+      // Behavior
+      scrollPhysics: BouncingScrollPhysics(),
+
+      // Show or hide status bar
+      shouldHideStatusBar: false,
+
+      // On tab change completed
+      onTabChangeCompleted: this.onTabChangeCompleted,
     );
   }
 }

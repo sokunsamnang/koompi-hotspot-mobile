@@ -100,7 +100,7 @@ class _SplashState extends State<Splash> {
 
   void navigationOnboardingScreen() {
     Navigator.pushReplacement(context,
-      MaterialPageRoute(builder: (context) => OnboardingScreen())
+      MaterialPageRoute(builder: (context) => IntroScreen())
     ); 
   }
 

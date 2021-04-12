@@ -138,7 +138,7 @@ class _MyWalletState extends State<MyWallet> {
                       ),
                       Container(
                         height: 80.0,
-                        margin: EdgeInsets.symmetric(horizontal: 16.0, vertical: 15.0),
+                        margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 15.0),
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: <Widget>[
@@ -159,7 +159,7 @@ class _MyWalletState extends State<MyWallet> {
                                       Image.asset('assets/images/ico_send_money.png'),
                                       Padding(
                                         padding:
-                                            const EdgeInsets.symmetric(horizontal: 8.0),
+                                            const EdgeInsets.symmetric(horizontal: 4.0),
                                         child: Text(_lang.translate('send_money'),
                                           style: TextStyle(fontWeight: FontWeight.w700),),
                                       )
@@ -168,7 +168,7 @@ class _MyWalletState extends State<MyWallet> {
                                 ),
                               ),
                             ),
-                            SizedBox(width: 25),
+                            SizedBox(width: 10),
                             Expanded(
                               child: RaisedButton(
                                 color: Colors.white,
@@ -186,7 +186,7 @@ class _MyWalletState extends State<MyWallet> {
                                       Image.asset('assets/images/ico_receive_money.png'),
                                       Padding(
                                         padding:
-                                            const EdgeInsets.symmetric(horizontal: 8.0),
+                                            const EdgeInsets.symmetric(horizontal: 4.0),
                                         child: Text(_lang.translate('receive_money'),
                                           style: TextStyle(fontWeight: FontWeight.w700),),
                                       )

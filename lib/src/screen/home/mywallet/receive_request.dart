@@ -70,162 +70,165 @@ class _ReceiveRequestState extends State<ReceiveRequest> {
         ),
       ),
       body: mBalance.token != null
-          ? Container(
-              height: MediaQuery.of(context).size.height * 0.74,
-              margin: const EdgeInsets.symmetric(
-                horizontal: 25.0, vertical: 40
-              ),
-              child: Card(
-                elevation: 2,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
+          ? SingleChildScrollView(
+              physics: BouncingScrollPhysics(),
+              child: Container(
+                // height: MediaQuery.of(context).size.height * 0.74,
+                margin: const EdgeInsets.symmetric(
+                  horizontal: 25.0, vertical: 40
                 ),
-                color: Colors.white,
-                child: Container(
-                  // height: MediaQuery.of(context).size.height,
-                  // width: MediaQuery.of(context).size.width,
-                  padding: const EdgeInsets.all(20.0),
-                  child: Column(
-                    children: [
-                      Container(
-                        child: RepaintBoundary(
-                          key: _keyQrShare,
-                          child: Container(
-                            color: Colors.white,
-                            child: Column(
-                              children: [
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Text(
-                                  'SELENDRA (SEL)', 
-                                  style: GoogleFonts.nunito(
-                                  textStyle: TextStyle(color: Colors.blue, fontSize: 25, fontWeight: FontWeight.w700)
+                child: Card(
+                  elevation: 2,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  color: Colors.white,
+                  child: Container(
+                    // height: MediaQuery.of(context).size.height,
+                    // width: MediaQuery.of(context).size.width,
+                    padding: const EdgeInsets.all(20.0),
+                    child: Column(
+                      children: [
+                        Container(
+                          child: RepaintBoundary(
+                            key: _keyQrShare,
+                            child: Container(
+                              color: Colors.white,
+                              child: Column(
+                                children: [
+                                  SizedBox(
+                                    height: 10,
                                   ),
-                                ),
-                                SizedBox(
-                                  height: 20,
-                                ),
-                                QrImage(
-                                  data: mData.wallet ?? '',
-                                  version: QrVersions.auto,
-                                  embeddedImage: AssetImage('assets/images/SelendraQr.png'),
-                                  size: 225.0,
-                                  embeddedImageStyle: QrEmbeddedImageStyle(
-                                    size: Size(50, 50),
+                                  Text(
+                                    'SELENDRA (SEL)', 
+                                    style: GoogleFonts.nunito(
+                                    textStyle: TextStyle(color: Colors.blue, fontSize: 25, fontWeight: FontWeight.w700)
+                                    ),
                                   ),
-                                ),
-                                SizedBox(
-                                  height: 20.0,
-                                ),
-                                Text(
-                                  mData.fullname ?? '', 
-                                  style: GoogleFonts.nunito(
-                                  textStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.w700)
+                                  SizedBox(
+                                    height: 20,
                                   ),
-                                ),
-                                SizedBox(
-                                  height: 10.0,
-                                ),
-                                Text(
-                                  mData.wallet ?? '',
-                                  textAlign: TextAlign.center,
-                                ),
-                                SizedBox(
-                                  height: 20.0,
-                                ),
-                              ],
+                                  QrImage(
+                                    data: mData.wallet ?? '',
+                                    version: QrVersions.auto,
+                                    embeddedImage: AssetImage('assets/images/SelendraQr.png'),
+                                    size: 225.0,
+                                    embeddedImageStyle: QrEmbeddedImageStyle(
+                                      size: Size(50, 50),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 20.0,
+                                  ),
+                                  Text(
+                                    mData.fullname ?? '', 
+                                    style: GoogleFonts.nunito(
+                                    textStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.w700)
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 10.0,
+                                  ),
+                                  Text(
+                                    mData.wallet ?? '',
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  SizedBox(
+                                    height: 20.0,
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      Center(
-                        child: InkWell(
-                          child: Container(
-                            width: MediaQuery.of(context).size.width,
-                            height: 50,
-                            decoration: BoxDecoration(
-                                gradient: LinearGradient(colors: [
-                                  Color(0xFF17ead9),
-                                  Color(0xFF6078ea)
-                                ]),
-                                borderRadius: BorderRadius.circular(12),
-                                boxShadow: [
-                                  BoxShadow(
-                                      color: Color(0xFF6078ea)
-                                          .withOpacity(.3),
-                                      offset: Offset(0.0, 8.0),
-                                      blurRadius: 8.0)
-                                ]),
-                            child: Material(
-                              color: Colors.transparent,
-                              child: InkWell(
-                                customBorder: RoundedRectangleBorder(
+                        Center(
+                          child: InkWell(
+                            child: Container(
+                              width: MediaQuery.of(context).size.width,
+                              height: 50,
+                              decoration: BoxDecoration(
+                                  gradient: LinearGradient(colors: [
+                                    Color(0xFF17ead9),
+                                    Color(0xFF6078ea)
+                                  ]),
                                   borderRadius: BorderRadius.circular(12),
-                                ),
-                                onTap: () async {
-                                  copyWallet(mData.wallet);
-                                  showSnackBar();
-                                },
-                                child: Center(
-                                  child: Text(_lang.translate('copy'),
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontFamily: "Poppins-Bold",
-                                          fontSize: 18,)),
+                                  boxShadow: [
+                                    BoxShadow(
+                                        color: Color(0xFF6078ea)
+                                            .withOpacity(.3),
+                                        offset: Offset(0.0, 8.0),
+                                        blurRadius: 8.0)
+                                  ]),
+                              child: Material(
+                                color: Colors.transparent,
+                                child: InkWell(
+                                  customBorder: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  onTap: () async {
+                                    copyWallet(mData.wallet);
+                                    showSnackBar();
+                                  },
+                                  child: Center(
+                                    child: Text(_lang.translate('copy'),
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontFamily: "Poppins-Bold",
+                                            fontSize: 18,)),
+                                  ),
                                 ),
                               ),
                             ),
                           ),
                         ),
-                      ),
-                      SizedBox(
-                        height: 20.0,
-                      ),
-                      Center(
-                        child: InkWell(
-                          child: Container(
-                            width: MediaQuery.of(context).size.width,
-                            height: 50,
-                            decoration: BoxDecoration(
-                                gradient: LinearGradient(colors: [
-                                  Color(0xFF17ead9),
-                                  Color(0xFF6078ea)
-                                ]),
-                                borderRadius: BorderRadius.circular(12),
-                                boxShadow: [
-                                  BoxShadow(
-                                      color: Color(0xFF6078ea)
-                                          .withOpacity(.3),
-                                      offset: Offset(0.0, 8.0),
-                                      blurRadius: 8.0)
-                                ]),
-                            child: Material(
-                              color: Colors.transparent,
-                              child: InkWell(
-                                customBorder: RoundedRectangleBorder(
+                        SizedBox(
+                          height: 20.0,
+                        ),
+                        Center(
+                          child: InkWell(
+                            child: Container(
+                              width: MediaQuery.of(context).size.width,
+                              height: 50,
+                              decoration: BoxDecoration(
+                                  gradient: LinearGradient(colors: [
+                                    Color(0xFF17ead9),
+                                    Color(0xFF6078ea)
+                                  ]),
                                   borderRadius: BorderRadius.circular(12),
-                                ),
-                                onTap: () async {
-                                  qrShare(_keyQrShare, mData.wallet);
-                                },
-                                child: Center(
-                                  child: Text(_lang.translate('share'),
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontFamily: "Poppins-Bold",
-                                          fontSize: 18,)),
+                                  boxShadow: [
+                                    BoxShadow(
+                                        color: Color(0xFF6078ea)
+                                            .withOpacity(.3),
+                                        offset: Offset(0.0, 8.0),
+                                        blurRadius: 8.0)
+                                  ]),
+                              child: Material(
+                                color: Colors.transparent,
+                                child: InkWell(
+                                  customBorder: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  onTap: () async {
+                                    qrShare(_keyQrShare, mData.wallet);
+                                  },
+                                  child: Center(
+                                    child: Text(_lang.translate('share'),
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontFamily: "Poppins-Bold",
+                                            fontSize: 18,)),
+                                  ),
                                 ),
                               ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
-            )
+          )
           : Center(
               child: Text('No Data'),
             ),

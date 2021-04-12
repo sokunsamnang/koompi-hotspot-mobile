@@ -233,7 +233,7 @@ class _MyAccountState extends State<MyAccount>
             child: SingleChildScrollView(
               physics: BouncingScrollPhysics(),
               child: Padding(
-                padding: EdgeInsets.only(left: 28.0, right: 28.0),
+                padding: EdgeInsets.only(left: 28.0, right: 28.0, bottom: 30.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[

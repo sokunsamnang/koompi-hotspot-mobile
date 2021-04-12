@@ -222,11 +222,10 @@ class _ChangeHotspotPlanState extends State<ChangeHotspotPlan> {
           child: SingleChildScrollView(
             physics: BouncingScrollPhysics(),
               child: Padding(
-                padding: EdgeInsets.only(left: 28.0, right: 28.0),
+                padding: EdgeInsets.only(left: 28.0, right: 28.0, top: 38.0, bottom: 38.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    SizedBox(height: 20.0),
                     Center(
                       child: Text(
                         _lang.translate('choose_plan'),

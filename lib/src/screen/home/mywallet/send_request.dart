@@ -195,14 +195,14 @@ class _SendRequestState extends State<SendRequest> {
             FocusScope.of(context).requestFocus(FocusNode());
           },
           child: Container(
-            height: MediaQuery.of(context).size.height * 2,
+            height: MediaQuery.of(context).size.height,
             child: Form(
               key: formKey,
               autovalidateMode: AutovalidateMode.onUserInteraction,
               child: SingleChildScrollView(
                 physics: BouncingScrollPhysics(),
                 child: Padding(
-                  padding: EdgeInsets.only(left: 28.0, right: 28.0),
+                  padding: EdgeInsets.only(left: 28.0, right: 28.0, bottom: 30.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[

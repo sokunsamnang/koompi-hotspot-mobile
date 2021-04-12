@@ -41,6 +41,7 @@ dependencies:
   flutter_absolute_path: ^1.0.6
   font_awesome_flutter: ^8.10.0
   geolocator: ^5.1.5
+  get: ^3.11.0
   google_fonts: ^1.1.0
   google_nav_bar: ^2.0.0
   http: ^0.12.1
@@ -49,6 +50,8 @@ dependencies:
   jwt_decoder: ^1.0.3
   line_icons: ^0.2.0
   location: ^2.5.4
+  lottie: ^0.4.1
+  smooth_page_indicator: ^0.1.5
   line_awesome_icons: ^1.0.4+2
   multi_image_picker: ^4.7.14
   package_info: ^0.4.3+2
@@ -67,6 +70,7 @@ dependencies:
   flutter_webview_plugin: ^0.3.11
   path_provider: ^1.6.27
   wifi_iot: ^0.2.2
+  intro_slider: ^2.3.4
   
 
 flutter_icons:

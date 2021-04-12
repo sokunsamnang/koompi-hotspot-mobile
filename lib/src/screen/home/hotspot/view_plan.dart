@@ -125,18 +125,12 @@ class _PlanViewState extends State<PlanView> {
         child: SingleChildScrollView(
           physics: BouncingScrollPhysics(),
             child: Padding(
-              padding: EdgeInsets.only(left: 38.0, right: 38.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  SizedBox(height: 50.0),
-                  myPlan(context),
-              ],
-            ),
+              padding: EdgeInsets.only(top: 38.0 ,left: 38.0, right: 38.0, bottom: 38.0),
+              child: myPlan(context),
           ),
         ),
       ),
-      bottomSheet: Container(
+      bottomNavigationBar: Container(
         decoration: BoxDecoration(
           color: Colors.white,
           // borderRadius: BorderRadius.only(
