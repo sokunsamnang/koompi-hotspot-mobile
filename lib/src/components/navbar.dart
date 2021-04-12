@@ -1,32 +1,125 @@
+import 'package:data_connection_checker/data_connection_checker.dart';
+import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 import 'package:koompi_hotspot/all_export.dart';
+import 'package:koompi_hotspot/src/screen/web_view/captive_portal_web.dart';
+import 'package:koompi_hotspot/src/screen/wifi/wifi.dart';
+import 'package:koompi_hotspot/src/utils/data_connectiviy_service.dart';
+import 'package:koompi_hotspot/src/utils/constants.dart' as global;
 
 class Navbar extends StatefulWidget {
+  
+  Navbar({Key key}) : super(key: key);
   @override
   _NavbarState createState() => _NavbarState();
 }
 
-class _NavbarState extends State<Navbar> {
+class _NavbarState extends State<Navbar> with WidgetsBindingObserver {
   int _selectedIndex = 0;
 
   final List<Widget> _widgetOptions = <Widget>[
     HomePage(),
     MyLocationView(),
-    SpeedTestNet(),
+    WifiConnect(),
     MorePage(),
   ];
 
   NetworkStatus _networkStatus = NetworkStatus();
   
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+    switch(state) {
+      case AppLifecycleState.resumed:
+        break;
+      case AppLifecycleState.paused:
+          DataConnectivityService()
+            .connectivityStreamController
+            .stream
+            .listen((event) {
+          print(event);
+          if (event == DataConnectionStatus.connected) {
+            // _paused();
+          } 
+          else if(event == DataConnectionStatus.disconnected){
+            _paused();
+          }
+          else {
+            return null;
+          }
+        });
+        break;
+      case AppLifecycleState.inactive:
+        break;
+      default:
+        break;
+    }
+  }
+
+  Future _paused() async {
+    print('paused');
+    return inputWeb();
+  }
+
+
+  final flutterWebViewPlugin = FlutterWebviewPlugin();
+  StreamSubscription<WebViewStateChanged> _onchanged; 
+
+  Future inputWeb() async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      global.phone = prefs.getString('phone');
+      global.password = prefs.getString('password');
+    });
+
+    print('Run web portal');
+    flutterWebViewPlugin.close();
+    flutterWebViewPlugin.launch(selectedUrl, hidden: true, withJavascript: true, ignoreSSLErrors: true);
+    _onchanged = flutterWebViewPlugin.onStateChanged.listen((WebViewStateChanged state) {
+      if (mounted) {
+        if(state.type== WebViewState.finishLoad){ // if the full website page loaded
+          print('web laoded');
+          flutterWebViewPlugin.evalJavascript('document.getElementById("user").value="${global.phone}"'); // Replace with the id of username field
+          flutterWebViewPlugin.evalJavascript('document.getElementById("password").value="${global.password}"'); // Replace with the id of password field
+          flutterWebViewPlugin.evalJavascript('document.getElementById("btnlogin").click()');  // Replace with Submit button id
+
+        }else if (state.type== WebViewState.abortLoad){ // if there is a problem with loading the url
+          print("there is a problem...");
+        } else if(state.type== WebViewState.startLoad){ // if the url started loading
+          print("start loading...");
+        }
+      }
+    });
+  }
+
+
   @override
   void initState(){
     super.initState();
     internet();
+    WidgetsBinding.instance.addObserver(this);
+    DataConnectivityService()
+        .connectivityStreamController
+        .stream
+        .listen((event) {
+      print(event);
+      if (event == DataConnectionStatus.connected) {
+        // _paused();
+      } 
+      else if(event == DataConnectionStatus.disconnected){
+        _paused();
+      }
+      else {
+        return null;
+      }
+    });
   }
 
   @override
   void dispose(){
     super.dispose();
     _networkStatus.connectivitySubscription.cancel();
+    WidgetsBinding.instance.removeObserver(this);
   }
 
   void internet() async {
@@ -72,7 +165,8 @@ class _NavbarState extends State<Navbar> {
                   ),
                   GButton(
                     icon: Icons.wifi_outlined,
-                    text: _lang.translate('speed_test'),
+                    // text: _lang.translate('speed_test'),
+                    text: 'Wi-Fi',
                   ),
                   GButton(
                     icon: LineIcons.bars,
