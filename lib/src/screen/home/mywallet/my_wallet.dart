@@ -168,7 +168,7 @@ class _MyWalletState extends State<MyWallet> {
                                 ),
                               ),
                             ),
-                            SizedBox(width: 10),
+                            SizedBox(width: 20),
                             Expanded(
                               child: RaisedButton(
                                 color: Colors.white,

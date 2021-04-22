@@ -9,7 +9,7 @@ Widget bodyPage(BuildContext context) {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(height: 20),
-        mPlan.username == null ? noPlanView(context) : _planViewButton(context),
+        mPlan.username == null ? noPlanView(context) :  _planViewButton(context),
         SizedBox(height: 20),
         mBalance.token == null ? startGetWallet(context) : _myWalletButton(context),
         SizedBox(height: 20),
@@ -34,7 +34,7 @@ Widget startGetWallet(context) {
         borderRadius: BorderRadius.all(Radius.circular(12)),
         child: Container(
           width: MediaQuery.of(context).size.width,
-          // height: MediaQuery.of(context).size.height * .15,
+          height: MediaQuery.of(context).size.height * 0.30,
           color: Colors.blueGrey[900],
           child: Stack(
             children: <Widget>[
@@ -53,7 +53,7 @@ Widget startGetWallet(context) {
                         )
                         :
                         Container(
-                          width: 140,
+                          width: 150,
                           padding: EdgeInsets.symmetric(horizontal: 1, vertical: 1),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.all(Radius.circular(12)),
@@ -148,7 +148,7 @@ Widget noPlanView(BuildContext context) {
         children: <Widget>[
           Container(
             width: MediaQuery.of(context).size.width,
-            // height: MediaQuery.of(context).size.height,
+            height: MediaQuery.of(context).size.height * .30,
             padding: EdgeInsets.all(16),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.all(
@@ -170,13 +170,13 @@ Widget noPlanView(BuildContext context) {
                 ),
                 SizedBox(height: 20),
                 Container(
-                  width: 137,
+                  width: 145,
                   padding: EdgeInsets.symmetric(horizontal: 1, vertical: 1),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(12)),
                     border: Border.all(color: Colors.white, width: 1)),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       FlatButton(
                         highlightColor: Colors.transparent,
@@ -218,7 +218,7 @@ Widget noPlanView(BuildContext context) {
 
 Widget _planViewButton(context){
   var _lang = AppLocalizeService.of(context);
-  return Container(
+  return mPlan.status == true ? Container(
     child: Padding(
       padding: EdgeInsets.symmetric(horizontal: 15),
       child: Center(
@@ -247,7 +247,7 @@ Widget _planViewButton(context){
               },
               child: Padding(
                 padding: EdgeInsets.symmetric(vertical: 20),
-                child: mPlan.status == true ?  Column(
+                child: Column(
                   children: [
                     Column(
                       children: [
@@ -375,8 +375,48 @@ Widget _planViewButton(context){
                       ),
                     ],
                   )
-                  :
-                  Column(
+                ),
+              ),
+            ),
+          ),
+        )
+      ),
+    ),
+  )
+  :
+  _planExpire(context);
+}
+
+Widget _planExpire(context){
+  var _lang = AppLocalizeService.of(context);
+  return Container(
+    child: Padding(
+      padding: EdgeInsets.symmetric(horizontal: 15),
+      child: Center(
+        child: InkWell(
+          child: Container(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height * .30,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12.0),
+              color: Colors.grey[900],
+            ),
+          child: Material(
+            color: Colors.transparent,
+            child: InkWell(
+              customBorder: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              // highlightColor: Colors.transparent,
+              // splashColor: Colors.transparent,
+              onTap: () async {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => PlanView()));
+              },
+              child: Padding(
+                padding: EdgeInsets.symmetric(vertical: 20),
+                child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -402,7 +442,7 @@ Widget _planViewButton(context){
                               onPressed: () {
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => WalletScreen()),
+                                  MaterialPageRoute(builder: (context) => PlanView()),
                                 );
                               },
                               child: Row(

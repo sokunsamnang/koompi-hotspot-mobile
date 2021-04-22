@@ -61,6 +61,7 @@ dependencies:
   provider: ^4.3.2+2
   qr_code_scanner: ^0.2.1
   qr_flutter: ^3.2.0
+  responsive_framework: ^0.0.15
   rflutter_alert: ^1.1.0
   shared_preferences: ^0.5.7+3
   share: ^0.6.5+4
@@ -71,6 +72,7 @@ dependencies:
   path_provider: ^1.6.27
   wifi_iot: ^0.2.2
   intro_slider: ^2.3.4
+  wifi_configuration: ^1.2.1
   
 
 flutter_icons:

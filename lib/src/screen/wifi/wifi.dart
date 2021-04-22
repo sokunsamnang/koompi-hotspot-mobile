@@ -1,5 +1,6 @@
 import 'package:geolocator/geolocator.dart';
 import 'package:koompi_hotspot/all_export.dart';
+import 'package:wifi_configuration/wifi_configuration.dart';
 import 'package:wifi_iot/wifi_iot.dart';
 
 class WifiConnect extends StatefulWidget {
@@ -82,12 +83,17 @@ class _WifiConnectState extends State<WifiConnect> {
                     onPressed: () async {
                       print(ssid);
                       print(_passwordController.text);
-                      WiFiForIoTPlugin.connect(
+                      // WiFiForIoTPlugin.connect(
+                      //   ssid,
+                      //   password: _passwordController.text,
+                      //   joinOnce: false,
+                      //   withInternet: false,
+                      //   security: NetworkSecurity.WPA
+                      // );
+                      WifiConfiguration.connectToWifi(
                         ssid,
-                        password: _passwordController.text,
-                        joinOnce: false,
-                        withInternet: false,
-                        security: NetworkSecurity.WPA
+                        _passwordController.text.toString(),
+                        "com.koompi.hotspot"
                       );
                       Navigator.of(context).pop();
                       _passwordController.clear();
@@ -256,11 +262,16 @@ class _WifiConnectState extends State<WifiConnect> {
                           ?                    
                           _displayTextInputDialog(context, wifi.ssid)
                           :
-                          WiFiForIoTPlugin.connect(
+                          // WiFiForIoTPlugin.connect(
+                          //   wifi.ssid,
+                          //   joinOnce: false,
+                          //   withInternet: false,
+                          //   security: NetworkSecurity.NONE
+                          // );
+                          WifiConfiguration.connectToWifi(
                             wifi.ssid,
-                            joinOnce: false,
-                            withInternet: false,
-                            security: NetworkSecurity.NONE
+                            "",
+                            "com.koompi.hotspot"
                           );
                         },
                       );

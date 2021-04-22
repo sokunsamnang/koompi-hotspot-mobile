@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:quick_actions/quick_actions.dart';
 import 'package:koompi_hotspot/src/screen/web_view/captive_portal_web.dart';
 import 'package:koompi_hotspot/src/utils/constants.dart' as global;
+import 'package:responsive_framework/responsive_framework.dart';
 
 class App extends StatefulWidget{
   @override
@@ -13,8 +14,6 @@ class App extends StatefulWidget{
 }
 
 class _AppState extends State<App> {
-
-
   
   Widget build (context){
     SystemChrome.setPreferredOrientations([
@@ -38,12 +37,23 @@ class _AppState extends State<App> {
       ],
       child: Consumer<LangProvider>(
         builder: (context, value, child) => MaterialApp(
-          builder: (context, child) => ScrollConfiguration(
-            behavior: ScrollBehavior()
-              ..buildViewportChrome(context, child, AxisDirection.down),
-            child: child,
+          // builder: (context, child) => ScrollConfiguration(
+          //   behavior: ScrollBehavior()
+          //     ..buildViewportChrome(context, child, AxisDirection.down),
+          //   child: child,
+          // ),
+          builder: (context, widget) => ResponsiveWrapper.builder(
+            BouncingScrollWrapper.builder(context, widget),
+            maxWidth: 2460,
+            minWidth: 425,
+            defaultScale: true,
+            breakpoints: [
+              ResponsiveBreakpoint.autoScale(425, name: MOBILE),
+              ResponsiveBreakpoint.autoScale(800, name: TABLET),
+              ResponsiveBreakpoint.autoScale(1000, name: DESKTOP),
+              ResponsiveBreakpoint.autoScale(2460, name: '4K'),
+            ],
           ),
-
           locale: value.manualLocale,
           supportedLocales: [
               const Locale('en', 'US'),

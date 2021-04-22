@@ -167,6 +167,11 @@ class _PlanViewState extends State<PlanView> {
             child: Material(
               color: Colors.transparent,
               child: InkWell(
+                customBorder: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(12),
+                  ),
+                ),
                 onTap: () async {
                   Navigator.push(
                     context,
