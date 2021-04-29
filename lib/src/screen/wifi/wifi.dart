@@ -1,6 +1,6 @@
 import 'package:geolocator/geolocator.dart';
 import 'package:koompi_hotspot/all_export.dart';
-import 'package:wifi_configuration/wifi_configuration.dart';
+import 'package:wifi_connector/wifi_connector.dart';
 import 'package:wifi_iot/wifi_iot.dart';
 
 class WifiConnect extends StatefulWidget {
@@ -90,10 +90,10 @@ class _WifiConnectState extends State<WifiConnect> {
                       //   withInternet: false,
                       //   security: NetworkSecurity.WPA
                       // );
-                      WifiConfiguration.connectToWifi(
-                        ssid,
-                        _passwordController.text.toString(),
-                        "com.koompi.hotspot"
+                      WifiConnector.connectToWifi(
+                        ssid: ssid, 
+                        password: _passwordController.text, 
+                        // isWEP: true
                       );
                       Navigator.of(context).pop();
                       _passwordController.clear();
@@ -268,11 +268,7 @@ class _WifiConnectState extends State<WifiConnect> {
                           //   withInternet: false,
                           //   security: NetworkSecurity.NONE
                           // );
-                          WifiConfiguration.connectToWifi(
-                            wifi.ssid,
-                            "",
-                            "com.koompi.hotspot"
-                          );
+                          await WifiConnector.connectToWifi(ssid: wifi.ssid);
                         },
                       );
                   });

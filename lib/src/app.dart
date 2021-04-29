@@ -70,9 +70,9 @@ class _AppState extends State<App> {
           routes: {
             '/navbar': (context) => Navbar(),
             '/plan': (context) => HotspotPlan(),
-            '/loginEmail':(context) => LoginPage(),
+            // '/loginEmail':(context) => LoginPage(),
             '/loginPhone': (context) => LoginPhone(),
-            '/welcome': (context) => WelcomeScreen(),
+            // '/welcome': (context) => WelcomeScreen(),
             '/walletScreen': (context) => WalletScreen(),
           },
           title: 'Koompi Hotspot',
