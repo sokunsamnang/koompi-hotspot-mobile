@@ -248,7 +248,7 @@ class _LoginPhoneState extends State<LoginPhone> {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      resizeToAvoidBottomPadding: true,
+      resizeToAvoidBottomInset: true,
       body: GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTap: () {

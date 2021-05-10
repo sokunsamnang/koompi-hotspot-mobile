@@ -1,6 +1,7 @@
 import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:koompi_hotspot/all_export.dart';
 import 'package:koompi_hotspot/core/models/lang.dart';
+import 'package:koompi_hotspot/core/models/model_notification.dart';
 import 'package:koompi_hotspot/ui/utils/shortcut.dart';
 import 'package:provider/provider.dart';
 import 'package:quick_actions/quick_actions.dart';
@@ -33,6 +34,9 @@ class _AppState extends State<App> {
         ),
         ChangeNotifierProvider<GetPlanProvider>(
           create: (context) => GetPlanProvider(),
+        ),
+        ChangeNotifierProvider<NotificationProvider>(
+          create: (context) => NotificationProvider(),
         ),
       ],
       child: Consumer<LangProvider>(

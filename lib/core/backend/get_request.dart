@@ -55,4 +55,16 @@ class GetRequest with ChangeNotifier{
     return null;
   }
 
+  Future<http.Response> getNotification() async {
+    /* Expired Token In Welcome Screen */
+    await _prefService.read('token').then((value) {
+      _backend.token = Map<String, dynamic>.from({"token": value});
+    });
+    if (_backend.token != null) {
+      _backend.response = await http.get("${ApiService.url}/dashboard/notification",
+      headers: _backend.conceteHeader("authorization", "Bearer ${_backend.token['token']}"));
+      return _backend.response;
+    }
+    return null;
+  }
 }

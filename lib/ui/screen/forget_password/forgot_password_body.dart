@@ -15,7 +15,7 @@ import 'package:koompi_hotspot/all_export.dart';
     var _lang = AppLocalizeService.of(context);
     return new Scaffold(
       backgroundColor: Colors.white,
-      resizeToAvoidBottomPadding: true,
+      resizeToAvoidBottomInset: true,
       body: Stack(
         fit: StackFit.expand,
         children: <Widget>[

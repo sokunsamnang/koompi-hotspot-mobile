@@ -1,5 +1,6 @@
 import 'package:geolocator/geolocator.dart';
 import 'package:koompi_hotspot/all_export.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:wifi_connector/wifi_connector.dart';
 import 'package:wifi_iot/wifi_iot.dart';
 
@@ -9,16 +10,11 @@ class WifiConnect extends StatefulWidget {
 }
 class _WifiConnectState extends State<WifiConnect> {
 
-  bool _isEnabled = false;
-  bool _isConnected = false;
-  List<WifiNetwork> _htResultNetwork;
   final geolocator = Geolocator()..forceAndroidLocationManager = true;
 
   void initState(){
     super.initState();
-    setState(() {
-      _checkGPS();
-    });
+    _checkGPS();
   }
 
   void dispose(){
@@ -26,6 +22,73 @@ class _WifiConnectState extends State<WifiConnect> {
     _passwordController.clear();
   }
   TextEditingController _passwordController = TextEditingController();
+
+
+  _onAlertWithCustomContentPressed(BuildContext context, String getSSID) {
+    void clearTextPopDialog(){
+      Navigator.pop(context);
+      _passwordController.clear();
+    }
+    // Initially password is obscure
+    bool _obscureText = true;
+
+    void _togglePasswordVisibility() {
+      setState(() {
+        _obscureText = !_obscureText;
+      });
+    }
+
+    Alert(
+      onWillPopActive: true,
+      closeFunction: clearTextPopDialog,
+      context: context,
+      title: '$getSSID',
+      content: Column(
+        children: <Widget>[
+          TextFormField(
+            controller: _passwordController,
+            obscureText: _obscureText,
+            decoration: InputDecoration(
+              icon: Icon(Icons.lock),
+              labelText: 'Password',
+              suffixIcon: GestureDetector(
+                onTap: _togglePasswordVisibility,
+                child: _obscureText
+                    ? Icon(Icons.visibility_off)
+                    : Icon(Icons.visibility),
+              ),
+            ),
+            
+          ),
+        ],
+      ),
+      buttons: [
+        DialogButton(
+          onPressed: () async {
+            print(_passwordController.text);
+            // WiFiForIoTPlugin.connect(
+            //   ssid,
+            //   password: _passwordController.text,
+            //   joinOnce: false,
+            //   withInternet: false,
+            //   security: NetworkSecurity.WPA
+            // );
+            WifiConnector.connectToWifi(
+              ssid: getSSID, 
+              password: _passwordController.text, 
+              // isWEP: true
+            );
+            Navigator.of(context).pop();
+            _passwordController.clear();
+          },
+          child: Text(
+            "CONNECT",
+            style: TextStyle(color: Colors.white, fontSize: 20),
+          ),
+        )
+      ]).show();
+  }
+
 
   Future<void> _displayTextInputDialog(BuildContext context, String ssid) async {
     // Initially password is obscure
@@ -166,6 +229,7 @@ class _WifiConnectState extends State<WifiConnect> {
         });
   }
 
+
   Widget isConnected() {
     return FutureBuilder(
       future: WiFiForIoTPlugin.getSSID(),
@@ -175,9 +239,9 @@ class _WifiConnectState extends State<WifiConnect> {
           Column(
             children: [
               ListTile(
-                leading: Icon(Icons.signal_wifi_4_bar_sharp),
+                leading: Icon(Icons.signal_wifi_4_bar_sharp, color: Colors.green),
                 title: Text('${ssid.data}',),
-                trailing: Text('Connected'),
+                trailing: Text('Connected', style: TextStyle(color: Colors.green),),
               ),
               Divider(
                 thickness: 1.5,
@@ -209,6 +273,7 @@ class _WifiConnectState extends State<WifiConnect> {
               onPressed: () async{
                 // _htResultNetwork = await loadWifiList();
                 setState(() {
+                  WiFiForIoTPlugin.getSSID();
                   _checkGPS();
                 });
               },
@@ -261,6 +326,7 @@ class _WifiConnectState extends State<WifiConnect> {
                           wifi.capabilities.contains('PSK') 
                           ?                    
                           _displayTextInputDialog(context, wifi.ssid)
+                          // _onAlertWithCustomContentPressed(context, wifi.ssid)
                           :
                           // WiFiForIoTPlugin.connect(
                           //   wifi.ssid,

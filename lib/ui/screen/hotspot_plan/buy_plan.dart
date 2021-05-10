@@ -171,18 +171,6 @@ class _HotspotPlanState extends State<HotspotPlan> {
     }
   }
 
-
-  // Initially password is obscure
-  bool _obscureText = true;
-
-  // Toggles the password show status
-  void toggle() {
-    setState(() {
-      _obscureText = !_obscureText;
-    });
-  }
-
-
   @override
   void initState() {
     super.initState();
@@ -598,7 +586,7 @@ class _HotspotPlanState extends State<HotspotPlan> {
                     borderRadius: BorderRadius.all(Radius.circular(12.0))
                   ),
                 ),
-                obscureText: _obscureText,
+                obscureText: true,
               ),
             ),
             actions: <Widget>[

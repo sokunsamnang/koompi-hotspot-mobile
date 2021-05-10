@@ -18,7 +18,7 @@ Widget resetNewPasswordBody(
       ScreenUtil(width: 750, height: 1334, allowFontScaling: true);
   return new Scaffold(
     backgroundColor: Colors.white,
-    resizeToAvoidBottomPadding: true,
+    resizeToAvoidBottomInset: true,
     body: Stack(
       fit: StackFit.expand,
       children: <Widget>[

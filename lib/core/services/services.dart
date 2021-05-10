@@ -1,4 +1,5 @@
 import 'package:koompi_hotspot/all_export.dart';
+import 'package:koompi_hotspot/core/models/model_notification.dart';
 import 'package:koompi_hotspot/core/services/jtw_decoder.dart';
 import 'package:provider/provider.dart';
 
@@ -39,14 +40,18 @@ class StorageServices{
         try{
           await Provider.of<BalanceProvider>(context, listen: false).fetchPortforlio();
           await Provider.of<GetPlanProvider>(context, listen: false).fetchHotspotPlan();
+          await Provider.of<NotificationProvider>(context, listen: false).fetchNotification();
         }
         catch (e){
           print(e.toString());
         }
       });
        
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => Navbar()));
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => Navbar()),
+        ModalRoute.withName('/navbar'),
+      );
     }
     else{
       Navigator.pushAndRemoveUntil(

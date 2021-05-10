@@ -19,7 +19,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
+  flutter_localizations:
+    sdk: flutter
   # Icons & Fonts
   cupertino_icons: ^0.1.2
   flutter_launcher_icons: ^0.7.5
@@ -43,7 +44,7 @@ dependencies:
   connectivity: ^2.0.2
   data_connection_checker: ^0.3.4
   wifi_connector: ^1.0.2
-  wifi_iot: ^0.2.2
+  wifi_iot: ^0.3.1
 
   # Format
   date_format: ^1.0.9
@@ -72,7 +73,8 @@ dependencies:
   pin_code_fields: ^5.0.1
   rflutter_alert: ^1.1.0
   syncfusion_flutter_gauges: ^18.4.31
-
+  groovin_widgets: ^2.0.0
+  
   # Responsive
   flutter_screenutil: ^0.4.2
   responsive_framework: ^0.0.15
@@ -114,7 +116,8 @@ dependencies:
   # On Boarding
   intro_slider: ^2.3.4
   
-  
+  # Transition Route
+  page_transition: ^2.0.2
 
 flutter_icons:
   image_path: "assets/images/Koompi-WiFi-Icon.png"
@@ -126,6 +129,9 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
+dependency_overrides:
+  intl: ^0.17.0-nullsafety.2
+  country_pickers: ^2.0.0
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 # The following section is specific to Flutter.

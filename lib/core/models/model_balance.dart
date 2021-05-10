@@ -60,6 +60,7 @@ class BalanceProvider with ChangeNotifier {
         } else {
           mBalance = Balance();
           alertText = response.body;
+          print('Error portfolio status: ${response.statusCode}');
         }
       });
     } catch (e) {

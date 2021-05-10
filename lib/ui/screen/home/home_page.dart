@@ -1,5 +1,7 @@
 import 'package:koompi_hotspot/all_export.dart';
 import 'package:koompi_hotspot/ui/reuse_widget/reuse_widget.dart';
+import 'package:koompi_hotspot/ui/screen/notification/notification_screen.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget{
@@ -13,22 +15,14 @@ class _HomePageState extends State<HomePage>{
   @override
   void initState() {
     super.initState();
-    // setState(() {
-    //   fetchWallet();
-    // });
     versionCheck(context);
   }
 
-  void fetchWallet() async{
-    await Provider.of<BalanceProvider>(context, listen: false).fetchPortforlio();
-    await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
-    await Provider.of<GetPlanProvider>(context, listen: false).fetchHotspotPlan();
-  }
-  
+
   void dispose(){
     super.dispose();
   }
-  
+
   Widget build(BuildContext context){
     return Scaffold(
       appBar: AppBar(
@@ -63,7 +57,14 @@ class _HomePageState extends State<HomePage>{
               icon: Icon(Icons.notifications), 
               color: Colors.grey,
               onPressed: (){
-                snackBar(context);
+                Navigator.push(
+                  context, 
+                  PageTransition(type: PageTransitionType.rightToLeftWithFade, 
+                    child: NotificationScreen()));
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(builder: (context) => NotificationScreen())
+                // );
               })
           ],
         ),
