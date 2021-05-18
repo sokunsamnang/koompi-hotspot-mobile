@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:koompi_hotspot/all_export.dart';
 import 'package:koompi_hotspot/core/models/model_notification.dart';
-import 'package:provider/provider.dart';
 
 class NotificationDetail extends StatefulWidget {
   final List<NotificationModel> notification;
@@ -49,33 +48,6 @@ class _NotificationDetailState extends State<NotificationDetail> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Image.asset('assets/images/promotion7.png'),
-                // Stack(
-                //   children: <Widget>[
-                //     Container(
-                //       height: MediaQuery.of(context).size.width,
-                //       decoration: BoxDecoration(
-                //         borderRadius: BorderRadius.circular(12.0),
-                //         boxShadow: [
-                //           BoxShadow(
-                //             color: Colors.black26,
-                //             offset: Offset(0.0, 2.0),
-                //             blurRadius: 6.0,
-                //           ),
-                //         ],
-                //       ),
-                //       child: Hero(
-                //         tag: promotion.imageUrl,
-                //         child: ClipRRect(
-                //           // borderRadius: BorderRadius.circular(12.0),
-                //           child: Image(
-                //             image: AssetImage(promotion.imageUrl),
-                //             fit: BoxFit.cover,
-                //           ),
-                //         ),
-                //       ),
-                //     ),
-                //   ],
-                // ),
                 SizedBox(height: 10),
                 Container(
                   margin: EdgeInsets.symmetric(horizontal: 15),
@@ -98,9 +70,10 @@ class _NotificationDetailState extends State<NotificationDetail> {
                   child: Text(
                     widget.notification[widget.index].title,
                     style: TextStyle(
-                      fontWeight: FontWeight.w900,
                       color: Colors.black,
                       fontSize: 20.0,
+                      fontWeight: FontWeight.w900,
+                      letterSpacing: 1.2,
                     ),
                   ),
                 ),
@@ -128,10 +101,7 @@ class _NotificationDetailState extends State<NotificationDetail> {
                   margin: EdgeInsets.symmetric(horizontal: 15),
                   child: Text(
                     widget.notification[widget.index].description,
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 16.0,
-                    ),
+                    style: TextStyle(color: Colors.black, fontSize: 18, fontFamily: 'Medium')
                   ),
                 )
               ],

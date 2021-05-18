@@ -59,7 +59,7 @@ Widget notificationList(BuildContext context) {
                   child: Align(
                     alignment: Alignment.center,
                     child: SvgPicture.asset(
-                      'assets/images/undraw_wallet.svg',
+                      'assets/images/no_notification.svg',
                       height: MediaQuery.of(context).size.height * 0.2,
                       width: MediaQuery.of(context).size.height * 0.2,
                       placeholderBuilder: (context) => Center(),
@@ -72,10 +72,24 @@ Widget notificationList(BuildContext context) {
 
         // Display Loading
         : notification.notificationList.length == 0
-            ? Center(
-                child: Text('No notication'),
-              )
-            // Display History List
+            ? SafeArea(
+              child: Column(
+                children: [
+                  Expanded(
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: SvgPicture.asset(
+                        'assets/images/no_notification.svg',
+                        height: MediaQuery.of(context).size.height * 0.2,
+                        width: MediaQuery.of(context).size.height * 0.2,
+                        placeholderBuilder: (context) => Center(),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            )
+            // Display notification list
             : SafeArea(
                 child: CustomScrollView(
                   slivers: [

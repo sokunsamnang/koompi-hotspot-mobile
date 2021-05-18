@@ -11,83 +11,89 @@ class WifiConnect extends StatefulWidget {
 class _WifiConnectState extends State<WifiConnect> {
 
   final geolocator = Geolocator()..forceAndroidLocationManager = true;
-
+  TextEditingController _passwordController = TextEditingController();
+  Timer timer;
   void initState(){
     super.initState();
-    _checkGPS();
+    timer = Timer.periodic(Duration(seconds: 1), (Timer t) => setState((){
+      WiFiForIoTPlugin.getSSID();
+      _checkGPS();
+    }));
+    // _checkGPS();
   }
 
   void dispose(){
-    super.dispose();
+    timer?.cancel();
     _passwordController.clear();
+    super.dispose();
   }
-  TextEditingController _passwordController = TextEditingController();
+  
 
 
-  _onAlertWithCustomContentPressed(BuildContext context, String getSSID) {
-    void clearTextPopDialog(){
-      Navigator.pop(context);
-      _passwordController.clear();
-    }
-    // Initially password is obscure
-    bool _obscureText = true;
+  // _onAlertWithCustomContentPressed(BuildContext context, String getSSID) {
+  //   void clearTextPopDialog(){
+  //     Navigator.pop(context);
+  //     _passwordController.clear();
+  //   }
+  //   // Initially password is obscure
+  //   bool _obscureText = true;
 
-    void _togglePasswordVisibility() {
-      setState(() {
-        _obscureText = !_obscureText;
-      });
-    }
+  //   void _togglePasswordVisibility() {
+  //     setState(() {
+  //       _obscureText = !_obscureText;
+  //     });
+  //   }
 
-    Alert(
-      onWillPopActive: true,
-      closeFunction: clearTextPopDialog,
-      context: context,
-      title: '$getSSID',
-      content: Column(
-        children: <Widget>[
-          TextFormField(
-            controller: _passwordController,
-            obscureText: _obscureText,
-            decoration: InputDecoration(
-              icon: Icon(Icons.lock),
-              labelText: 'Password',
-              suffixIcon: GestureDetector(
-                onTap: _togglePasswordVisibility,
-                child: _obscureText
-                    ? Icon(Icons.visibility_off)
-                    : Icon(Icons.visibility),
-              ),
-            ),
+  //   Alert(
+  //     onWillPopActive: true,
+  //     closeFunction: clearTextPopDialog,
+  //     context: context,
+  //     title: '$getSSID',
+  //     content: Column(
+  //       children: <Widget>[
+  //         TextFormField(
+  //           controller: _passwordController,
+  //           obscureText: _obscureText,
+  //           decoration: InputDecoration(
+  //             icon: Icon(Icons.lock),
+  //             labelText: 'Password',
+  //             suffixIcon: GestureDetector(
+  //               onTap: _togglePasswordVisibility,
+  //               child: _obscureText
+  //                   ? Icon(Icons.visibility_off)
+  //                   : Icon(Icons.visibility),
+  //             ),
+  //           ),
             
-          ),
-        ],
-      ),
-      buttons: [
-        DialogButton(
-          onPressed: () async {
-            print(_passwordController.text);
-            // WiFiForIoTPlugin.connect(
-            //   ssid,
-            //   password: _passwordController.text,
-            //   joinOnce: false,
-            //   withInternet: false,
-            //   security: NetworkSecurity.WPA
-            // );
-            WifiConnector.connectToWifi(
-              ssid: getSSID, 
-              password: _passwordController.text, 
-              // isWEP: true
-            );
-            Navigator.of(context).pop();
-            _passwordController.clear();
-          },
-          child: Text(
-            "CONNECT",
-            style: TextStyle(color: Colors.white, fontSize: 20),
-          ),
-        )
-      ]).show();
-  }
+  //         ),
+  //       ],
+  //     ),
+  //     buttons: [
+  //       DialogButton(
+  //         onPressed: () async {
+  //           print(_passwordController.text);
+  //           // WiFiForIoTPlugin.connect(
+  //           //   ssid,
+  //           //   password: _passwordController.text,
+  //           //   joinOnce: false,
+  //           //   withInternet: false,
+  //           //   security: NetworkSecurity.WPA
+  //           // );
+  //           WifiConnector.connectToWifi(
+  //             ssid: getSSID, 
+  //             password: _passwordController.text, 
+  //             // isWEP: true
+  //           );
+  //           Navigator.of(context).pop();
+  //           _passwordController.clear();
+  //         },
+  //         child: Text(
+  //           "CONNECT",
+  //           style: TextStyle(color: Colors.white, fontSize: 20),
+  //         ),
+  //       )
+  //     ]).show();
+  // }
 
 
   Future<void> _displayTextInputDialog(BuildContext context, String ssid) async {
@@ -182,7 +188,7 @@ class _WifiConnectState extends State<WifiConnect> {
     return htResultNetwork;
   }
 
-  _checkGPS() async {
+  void _checkGPS() async {
 
     var status = await geolocator.checkGeolocationPermissionStatus();
     bool isGPSOn = await geolocator.isLocationServiceEnabled();
@@ -294,12 +300,6 @@ class _WifiConnectState extends State<WifiConnect> {
               child: FutureBuilder<List<WifiNetwork>>(
               future: loadWifiList(),
               builder: (context, snapshot) {
-                if(snapshot.connectionState != ConnectionState.done) {
-                  // return: show loading widget
-                }
-                if(snapshot.hasError) {
-                  // return: show error widget
-                }
                 List<WifiNetwork> wifiNetwork = snapshot.data ?? [];
                   print(wifiNetwork.length);
                   return ListView.builder(

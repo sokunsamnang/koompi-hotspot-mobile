@@ -57,40 +57,6 @@ class PromotionCarousel extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            Positioned(
-                              left: 10.0,
-                              bottom: 10.0,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Text(
-                                    promotion.title,
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontFamily: 'Medium',
-                                      fontSize: 24.0,
-                                      letterSpacing: 1.2,
-                                    ),
-                                  ),
-                                  Row(
-                                    children: <Widget>[
-                                      Icon(
-                                        FontAwesomeIcons.info,
-                                        size: 10.0,
-                                        color: Colors.white,
-                                      ),
-                                      SizedBox(width: 5.0),
-                                      Text(
-                                        promotion.category,
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
                           ],
                         ),
                       )

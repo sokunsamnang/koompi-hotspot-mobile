@@ -44,7 +44,7 @@ dependencies:
   connectivity: ^2.0.2
   data_connection_checker: ^0.3.4
   wifi_connector: ^1.0.2
-  wifi_iot: ^0.3.1
+  wifi_iot: ^0.3.3
 
   # Format
   date_format: ^1.0.9
