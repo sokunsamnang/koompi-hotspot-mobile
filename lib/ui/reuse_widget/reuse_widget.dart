@@ -97,7 +97,74 @@ class Components {
         });
     return result;
   }
+
+    static Future dialogOption(BuildContext context, var text, var title,
+      {FlatButton action, Color bgColor}) async {
+    var result = await showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            backgroundColor: bgColor,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12.0)),
+            title: Align(
+              alignment: Alignment.center,
+              child: title,
+            ),
+            content: Padding(
+              padding: EdgeInsets.only(top: 15.0, bottom: 5.0),
+              child: text,
+            ),
+            actions: <Widget>[
+              FlatButton(
+                child: Text('CLOSE', style: GoogleFonts.nunito(
+                  textStyle: TextStyle(color: Colors.blue, fontSize: 14, fontWeight: FontWeight.w700)
+                  ),
+                ),
+                onPressed: () => Navigator.of(context).pop(text),
+              ),
+              action
+            ],
+          );
+        });
+    return result;
+  }
+
+    static Future dialogNonOption(BuildContext context, var text, var title,
+      {FlatButton action, Color bgColor}) async {
+    var result = await showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            backgroundColor: bgColor,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12.0)),
+            title: Align(
+              alignment: Alignment.center,
+              child: title,
+            ),
+            content: Padding(
+              padding: EdgeInsets.only(top: 15.0, bottom: 5.0),
+              child: text,
+            ),
+            actions: <Widget>[
+              FlatButton(
+                child: Text('CLOSE', style: GoogleFonts.nunito(
+                  textStyle: TextStyle(color: Colors.blue, fontSize: 14, fontWeight: FontWeight.w700)
+                  ),
+                ),
+                onPressed: () => Navigator.of(context).pop(text),
+              ),
+              action
+            ],
+          );
+        });
+    return result;
+  }
+
 }
+
+
 
 class ItemList extends StatelessWidget {
 

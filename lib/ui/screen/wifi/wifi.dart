@@ -15,11 +15,10 @@ class _WifiConnectState extends State<WifiConnect> {
   Timer timer;
   void initState(){
     super.initState();
+    _checkGPS();
     timer = Timer.periodic(Duration(seconds: 1), (Timer t) => setState((){
       WiFiForIoTPlugin.getSSID();
-      _checkGPS();
     }));
-    // _checkGPS();
   }
 
   void dispose(){
@@ -277,9 +276,7 @@ class _WifiConnectState extends State<WifiConnect> {
             ),
             FlatButton.icon(
               onPressed: () async{
-                // _htResultNetwork = await loadWifiList();
                 setState(() {
-                  WiFiForIoTPlugin.getSSID();
                   _checkGPS();
                 });
               },

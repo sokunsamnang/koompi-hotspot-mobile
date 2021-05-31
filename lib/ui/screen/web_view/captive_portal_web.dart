@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 import 'package:koompi_hotspot/all_export.dart';
-import 'package:koompi_hotspot/ui/utils/auto_login_fi-fi_constants.dart' as global;
+import 'package:koompi_hotspot/ui/utils/auto_login_hotspot_constants.dart' as global;
 
 const kAndroidUserAgent =
     'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Mobile Safari/537.36';

@@ -30,7 +30,7 @@ class _MyWalletState extends State<MyWallet> {
   }
 
   void fetchWallet() async{
-    await Provider.of<BalanceProvider>(context, listen: false).fetchPortforlio();
+    await Provider.of<BalanceProvider>(context, listen: false).fetchPortforlio(context);
     await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
   }
 
@@ -72,7 +72,7 @@ class _MyWalletState extends State<MyWallet> {
             // backgroundColor: AllCoustomTheme.getThemeData().primaryColor,
             body: RefreshIndicator(
               onRefresh: () async{
-                await Provider.of<BalanceProvider>(context, listen: false).fetchPortforlio();
+                await Provider.of<BalanceProvider>(context, listen: false).fetchPortforlio(context);
                 await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
               },
               child: SingleChildScrollView(

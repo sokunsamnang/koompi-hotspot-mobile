@@ -1,5 +1,4 @@
 import 'package:koompi_hotspot/all_export.dart';
-import 'package:koompi_hotspot/ui/reuse_widget/reuse_widget.dart';
 import 'package:koompi_hotspot/ui/screen/notification/notification_screen.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
@@ -72,9 +71,9 @@ class _HomePageState extends State<HomePage>{
       ),
       body: RefreshIndicator(
         onRefresh: () async{
-          await Provider.of<BalanceProvider>(context, listen: false).fetchPortforlio();
-          await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
           await Provider.of<GetPlanProvider>(context, listen: false).fetchHotspotPlan();
+          await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
+          await Provider.of<BalanceProvider>(context, listen: false).fetchPortforlio(context);
         },
         child: Container(
           height: MediaQuery.of(context).size.height,

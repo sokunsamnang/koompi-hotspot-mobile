@@ -38,9 +38,9 @@ class StorageServices{
       print('token not expire');
       await GetRequest().getUserProfile(token).then((value) async{
         try{
-          await Provider.of<BalanceProvider>(context, listen: false).fetchPortforlio();
           await Provider.of<GetPlanProvider>(context, listen: false).fetchHotspotPlan();
           await Provider.of<NotificationProvider>(context, listen: false).fetchNotification();
+          await Provider.of<BalanceProvider>(context, listen: false).fetchPortforlio(context); 
         }
         catch (e){
           print(e.toString());

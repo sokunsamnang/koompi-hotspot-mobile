@@ -101,7 +101,7 @@ dependencies:
   qr_flutter: ^3.2.0
   
   # Storage
-  shared_preferences: ^0.5.7+3
+  shared_preferences: ^0.5.12+4
   
   # Share to other platform
   share: ^0.6.5+4
