@@ -1,3 +1,4 @@
+import 'package:groovin_widgets/groovin_widgets.dart';
 import 'package:koompi_hotspot/all_export.dart';
 
 
@@ -7,11 +8,43 @@ Widget bodyPage(BuildContext context) {
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(height: 20),
+        // ===========Hotspot Plan Widget===========
+        SizedBox(height: 10),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 15),
+          child: Text(
+            'MY PLAN',
+            style: GoogleFonts.nunito(
+            textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
+            ),
+          ),
+        ),
         mPlan.username == null ? noPlanView(context) :  _planViewButton(context),
+        
+        // ===========Account Balance Widget===========
         SizedBox(height: 20),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 15),
+          child: Text(
+            'ACCOUNT BALANCE',
+            style: GoogleFonts.nunito(
+            textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
+            ),
+          ),
+        ),
         mBalance.token == null ? startGetWallet(context) : _myWalletButton(context),
+        
+        // ===========Promotion Widget===========
         SizedBox(height: 20),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 15),
+          child: Text(
+            'PROMOTIONS',
+            style: GoogleFonts.nunito(
+            textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
+            ),
+          ),
+        ),
         PromotionCarousel(),
       ],
     ),
@@ -29,7 +62,15 @@ Widget startGetWallet(context) {
         child: Container(
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height * 0.30,
-          color: Colors.blueGrey[900],
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12.0),
+            // color: Colors.grey[900],
+            gradient: LinearGradient(
+              begin: Alignment.centerLeft,
+              end: Alignment.centerRight,
+              colors: [HexColor('0F4471'), HexColor('083358')]
+            )
+          ),
           child: Stack(
             children: <Widget>[
               Padding(
@@ -148,7 +189,7 @@ Widget noPlanView(BuildContext context) {
               borderRadius: BorderRadius.all(
                 Radius.circular(12.0),
               ),
-              color: Colors.blueGrey[900],
+              color: HexColor('083C5A'),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -224,7 +265,7 @@ Widget _planViewButton(context){
             // height: ScreenUtil.getInstance().setHeight(100),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12.0),
-              color: Colors.grey[900],
+              color: HexColor('083C5A'),
             ),
           child: Material(
             color: Colors.transparent,
@@ -297,7 +338,7 @@ Widget _planViewButton(context){
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    '${_lang.translate('expire')}:',
+                                    '${_lang.translate('speed')}:',
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontFamily: 'Medium',
@@ -305,7 +346,7 @@ Widget _planViewButton(context){
                                     ),
                                   ),
                                   Text(
-                                    '${mPlan.plan} ${_lang.translate('day')}',
+                                    '5 ${_lang.translate('mb')}',
                                     style: TextStyle(
                                       color: Colors.white,
                                     ),
@@ -322,7 +363,7 @@ Widget _planViewButton(context){
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    '${_lang.translate('speed')}:',
+                                    '${_lang.translate('expire')}:',
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontFamily: 'Medium',
@@ -330,11 +371,11 @@ Widget _planViewButton(context){
                                     ),
                                   ),
                                   Text(
-                                    '5 ${_lang.translate('mb')}',
+                                    '${mPlan.plan} ${_lang.translate('day')}',
                                     style: TextStyle(
                                       color: Colors.white,
-                                      ),
                                     ),
+                                  ),
                                   ],
                                 ),
                               ),
@@ -393,7 +434,7 @@ Widget _planExpire(context){
             height: MediaQuery.of(context).size.height * .30,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12.0),
-              color: Colors.grey[900],
+              color: HexColor('083C5A'),
             ),
           child: Material(
             color: Colors.transparent,
@@ -505,7 +546,15 @@ Widget _myWalletButton(context){
                   child: Container(
                     width: MediaQuery.of(context).size.width,
                     // height: MediaQuery.of(context).size.height * .35,
-                    color: Colors.blueGrey[900],
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12.0),
+                      // color: Colors.grey[900],
+                      gradient: LinearGradient(
+                        begin: Alignment.centerLeft,
+                        end: Alignment.centerRight,
+                        colors: [HexColor('0F4471'), HexColor('083358')]
+                      )
+                    ),
                     child: Stack(
                       // fit: StackFit,
                       children: <Widget>[

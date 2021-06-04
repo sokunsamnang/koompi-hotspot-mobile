@@ -16,9 +16,9 @@ class AppUtils {
         .toLocal(); /* Parse Time Stamp String to DateTime Format */
     return formatDate(parse, [
       dd,
-      '/',
+      ' ',
       M,
-      '/',
+      ', ',
       yyyy,
       ' ',
       hh,
@@ -32,11 +32,40 @@ class AppUtils {
   }
 
   static String timeStampToDate(String timeStamp) {
+    /* Convert Time Stamp To Date time ( Format yyyy-MM-ddTHH:mm:ssZ ) to ( Format dd-M-yyyyTHH:mm:ssZ ) */
     DateTime parse = DateTime.parse(timeStamp)
         .toLocal(); /* Parse Time Stamp String to DateTime Format */
-    return formatDate(
-        parse, [yyyy, '/', mm, '/', dd]); /* Return Real Date Time */
+    return formatDate(parse, [
+      dd,
+      ' ',
+      M,
+      ', ',
+      yyyy,
+      ' ',
+    ]); /* Return Real Date Time */
   }
+
+  static String timeStampToTime(String timeStamp) {
+    /* Convert Time Stamp To Date time ( Format yyyy-MM-ddTHH:mm:ssZ ) to ( Format dd-M-yyyyTHH:mm:ssZ ) */
+    DateTime parse = DateTime.parse(timeStamp)
+        .toLocal(); /* Parse Time Stamp String to DateTime Format */
+    return formatDate(parse, [
+      hh,
+      ':',
+      nn,
+      ':',
+      ss,
+      ' ',
+      am
+    ]); /* Return Real Date Time */
+  }
+
+  // static String timeStampToDate(String timeStamp) {
+  //   DateTime parse = DateTime.parse(timeStamp)
+  //       .toLocal(); /* Parse Time Stamp String to DateTime Format */
+  //   return formatDate(
+  //       parse, [yyyy, '/', mm, '/', dd]); /* Return Real Date Time */
+  // }
 
   static int convertHexaColor(String colorhexcode) {
     /* Convert Hexa Color */

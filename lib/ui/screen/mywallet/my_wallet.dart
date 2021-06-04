@@ -1,3 +1,4 @@
+import 'package:groovin_widgets/groovin_widgets.dart';
 import 'package:koompi_hotspot/all_export.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/cupertino.dart';
@@ -82,49 +83,14 @@ class _MyWalletState extends State<MyWallet> {
                   child: Column(
                     children: <Widget>[
                       SizedBox(
-                        height: 25,
-                      ),
-                      SizedBox(
                         height: 20,
                       ),
                       Padding(
                         padding: const EdgeInsets.only(
-                          right: 16,
-                          left: 16,
+                          right: 10,
+                          left: 10,
                         ),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            Image.asset(
-                              'assets/images/sld.png',
-                              // height: 30,
-                              width: 35,
-                            ),
-                            SizedBox(width: 10),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  _lang.translate('total_balance'),
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                SizedBox(width: 10),
-                                mBalance.token != null ?
-                                Text(
-                                  '${mBalance.token.toStringAsFixed(4)} SEL',
-                                  style: TextStyle(
-                                  color: Color(0xff0caddb),
-                                  fontSize: 30.0,
-                                  fontWeight: FontWeight.bold,
-                                  ),
-                                ) : CircularProgressIndicator(),
-                              ],
-                            ),
-                          ],
-                        ),
+                        child: getTotalBalance(),
                       ),
                       SizedBox(
                         height: 6,
@@ -134,7 +100,7 @@ class _MyWalletState extends State<MyWallet> {
                         color: Colors.black,
                       ),
                       SizedBox(
-                        height: 16,
+                        height: 6,
                       ),
                       Container(
                         height: 80.0,
@@ -144,7 +110,10 @@ class _MyWalletState extends State<MyWallet> {
                           children: <Widget>[
                             Expanded(
                               child: RaisedButton(
-                                color: Colors.white,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12.0),
+                                ),
+                                color: HexColor('94FAD5'),
                                 onPressed: () {
                                   Navigator.push(
                                     context,
@@ -153,15 +122,12 @@ class _MyWalletState extends State<MyWallet> {
                                 },
                                 elevation: 5,
                                 child: Padding(
-                                  padding: const EdgeInsets.all(2.0),
-                                  child: Row(
+                                  padding: const EdgeInsets.all(5.0),
+                                  child: Column(
                                     children: <Widget>[
                                       Image.asset('assets/images/ico_send_money.png'),
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.symmetric(horizontal: 4.0),
-                                        child: Text(_lang.translate('send_money'),
-                                          style: TextStyle(fontWeight: FontWeight.w700),),
+                                      Text(_lang.translate('send_money'),
+                                        style: TextStyle(fontWeight: FontWeight.w700),
                                       )
                                     ],
                                   ),
@@ -171,7 +137,10 @@ class _MyWalletState extends State<MyWallet> {
                             SizedBox(width: 20),
                             Expanded(
                               child: RaisedButton(
-                                color: Colors.white,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12.0),
+                                ),
+                                color: HexColor('7CDBFA'),
                                 onPressed: () {
                                   Navigator.push(
                                     context,
@@ -180,16 +149,12 @@ class _MyWalletState extends State<MyWallet> {
                                 },
                                 elevation: 5,
                                 child: Padding(
-                                  padding: const EdgeInsets.all(2.0),
-                                  child: Row(
+                                  padding: const EdgeInsets.all(5.0),
+                                  child: Column(
                                     children: <Widget>[
                                       Image.asset('assets/images/ico_receive_money.png'),
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.symmetric(horizontal: 4.0),
-                                        child: Text(_lang.translate('receive_money'),
-                                          style: TextStyle(fontWeight: FontWeight.w700),),
-                                      )
+                                      Text(_lang.translate('receive_money'),
+                                        style: TextStyle(fontWeight: FontWeight.w700),)
                                     ],
                                   ),
                                 ),
@@ -199,7 +164,7 @@ class _MyWalletState extends State<MyWallet> {
                         ),
                       ),
                       SizedBox(
-                        height: 30,
+                        height: 20,
                       ),
                       Row(
                         children: <Widget>[
@@ -227,6 +192,59 @@ class _MyWalletState extends State<MyWallet> {
               ),
             ),
           )
+        ],
+      ),
+    );
+  }
+
+  Widget getTotalBalance(){
+    var _lang = AppLocalizeService.of(context);
+    return Container(
+      padding: const EdgeInsets.only(
+        right: 16,
+        left: 16,
+        top: 22,
+        bottom: 22
+      ),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(12.0),
+        // color: Colors.grey[900],
+        gradient: LinearGradient(
+          begin: Alignment.centerLeft,
+          end: Alignment.centerRight,
+          colors: [HexColor('0F4471'), HexColor('083358')]
+        )
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          Image.asset(
+            'assets/images/sld.png',
+            // height: 30,
+            width: 35,
+          ),
+          SizedBox(width: 10),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                _lang.translate('total_balance'),
+                style: GoogleFonts.nunito(
+                textStyle: TextStyle(color: Colors.white, fontWeight: FontWeight.w700)
+                ),
+              ),
+              SizedBox(width: 10),
+              mBalance.token != null ?
+              Text(
+                '${mBalance.token.toStringAsFixed(4)} SEL',
+                style: GoogleFonts.inter(
+                fontSize: 25.0,
+                textStyle: TextStyle(color: Colors.white, fontWeight: FontWeight.w700)
+                ),
+              )
+              : CircularProgressIndicator(),
+            ],
+          ),
         ],
       ),
     );

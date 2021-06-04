@@ -25,6 +25,11 @@ class _BodyState extends State<Body> {
   }
 
   @override
+  void dispose(){
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return mBalance == null ? WalletChoice() : MyWallet(resetState: resetState);
   }
