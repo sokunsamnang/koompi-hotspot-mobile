@@ -38,7 +38,7 @@ import 'package:koompi_hotspot/all_export.dart';
               padding: EdgeInsets.only(left: 28.0, right: 28.0, top: 35.0),
               child: Column(
                 children: <Widget>[
-                  SizedBox(height: ScreenUtil().setHeight(200)),
+                  SizedBox(height: ScreenUtil().setHeight(180)),
                   formCardPhoneNumbers(
                     context, 
                     phoneController, 

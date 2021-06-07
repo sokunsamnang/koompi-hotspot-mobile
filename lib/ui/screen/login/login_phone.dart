@@ -278,10 +278,9 @@ class _LoginPhoneState extends State<LoginPhone> {
                         child: Icon(Icons.language, color: Colors.black),
                         onPressed: () {
                           Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) => LanguageView()),
-                          );
+                            context, 
+                            PageTransition(type: PageTransitionType.rightToLeftWithFade, 
+                              child: LanguageView()));
                         },
                       ),
                     ),

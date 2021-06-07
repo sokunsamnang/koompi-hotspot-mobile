@@ -1,6 +1,5 @@
 import 'package:koompi_hotspot/all_export.dart';
 import 'package:koompi_hotspot/ui/screen/notification/notification_screen.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget{

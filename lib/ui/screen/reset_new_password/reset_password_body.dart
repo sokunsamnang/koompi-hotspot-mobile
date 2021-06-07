@@ -42,7 +42,7 @@ Widget resetNewPasswordBody(
                   children: <Widget>[
                     Padding(
                       padding: EdgeInsets.only(top: 20.0),
-                      child: Image.asset("assets/images/password.jpg"),
+                      child: Image.asset("assets/images/security.png"),
                     ),
                     SizedBox(
                       height: ScreenUtil.getInstance().setHeight(30),
@@ -51,9 +51,9 @@ Widget resetNewPasswordBody(
                       child: Text(
                         _lang.translate('new_password_tx'),
                         style: TextStyle(
-                            color: Colors.deepOrangeAccent[400],
+                            color: primaryColor,
                             fontFamily: 'Medium',
-                            fontSize: 20),
+                            fontSize: 19),
                       ),
                     ),
                   ],

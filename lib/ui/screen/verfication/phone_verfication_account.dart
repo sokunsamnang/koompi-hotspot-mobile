@@ -140,7 +140,7 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: Text(
                   _lang.translate('phone_number_verification'),
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22, color: primaryColor),
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -173,7 +173,7 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
                     child: PinCodeTextField(
                       appContext: context,
                       pastedTextStyle: TextStyle(
-                        color: Colors.green.shade600,
+                        color: primaryColor,
                         fontWeight: FontWeight.bold,
                       ),
                       length: 6,

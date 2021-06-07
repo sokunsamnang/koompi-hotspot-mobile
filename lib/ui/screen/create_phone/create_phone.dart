@@ -70,10 +70,13 @@ class _CreatePhoneState extends State<CreatePhone> {
           StorageServices.removeZero(phoneController.text),
           passwordController.text);
         if (response.statusCode == 200) {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => PinCodeVerificationScreen("+855${StorageServices.removeZero(phoneController.text)}", passwordController.text)));
-        } 
+          Navigator.pushReplacement(
+            context, 
+            PageTransition(type: PageTransitionType.rightToLeftWithFade, 
+              child: PinCodeVerificationScreen("+855${StorageServices.removeZero(phoneController.text)}", passwordController.text)
+            )
+          );
+        }
         else if (response.statusCode == 401){
           Navigator.pop(context);
           return showErrorDialog(context);

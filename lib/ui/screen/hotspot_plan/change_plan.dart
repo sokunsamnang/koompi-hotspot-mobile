@@ -221,7 +221,7 @@ class _ChangeHotspotPlanState extends State<ChangeHotspotPlan> {
           child: SingleChildScrollView(
             physics: BouncingScrollPhysics(),
               child: Padding(
-                padding: EdgeInsets.only(left: 28.0, right: 28.0, top: 38.0, bottom: 38.0),
+                padding: EdgeInsets.only(left: 28.0, right: 28.0, top: 20.0, bottom: 38.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
@@ -229,7 +229,7 @@ class _ChangeHotspotPlanState extends State<ChangeHotspotPlan> {
                       child: Text(
                         _lang.translate('choose_plan'),
                         style: GoogleFonts.nunito(
-                        textStyle: TextStyle(color: Colors.black, fontSize: 30, fontWeight: FontWeight.w700)
+                        textStyle: TextStyle(color: primaryColor, fontSize: 30, fontWeight: FontWeight.w700)
                         ),
                       ),
                     ),
@@ -254,9 +254,6 @@ class _ChangeHotspotPlanState extends State<ChangeHotspotPlan> {
   Widget plan30DaysButton(BuildContext context){
     var _lang = AppLocalizeService.of(context);
     return Container(
-      // width: MediaQuery.of(context).size.width,
-      // height: MediaQuery.of(context).size.height * .27, 
-      // padding: EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.white,
         boxShadow: [
@@ -284,7 +281,7 @@ class _ChangeHotspotPlanState extends State<ChangeHotspotPlan> {
               child: Text(
                 '50 SEL', 
                 style: GoogleFonts.nunito(
-                textStyle: TextStyle(color: Colors.blue[900], fontSize: 30, fontWeight: FontWeight.w700)
+                textStyle: TextStyle(color: primaryColor, fontSize: 30, fontWeight: FontWeight.w700)
                 ),
               ),
             ),
@@ -309,28 +306,7 @@ class _ChangeHotspotPlanState extends State<ChangeHotspotPlan> {
                   Text(
                     '2 ${_lang.translate('devices')}', 
                     style: GoogleFonts.nunito(
-                    textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(height: 10),
-            Padding(
-              padding: EdgeInsets.only(right: 25, left:25),
-              child: Row(
-                children: [
-                  Text(
-                    '${_lang.translate('expire')}:', 
-                    style: GoogleFonts.nunito(
-                    textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
-                    ),
-                  ),
-                  Expanded(child: Container()),
-                  Text(
-                    '30 ${_lang.translate('day')}', 
-                    style: GoogleFonts.nunito(
-                    textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
+                    textStyle: TextStyle(color: Colors.black, fontSize: 16)
                     ),
                   ),
                 ],
@@ -351,7 +327,28 @@ class _ChangeHotspotPlanState extends State<ChangeHotspotPlan> {
                   Text(
                     '5 ${_lang.translate('mb')}', 
                     style: GoogleFonts.nunito(
+                    textStyle: TextStyle(color: Colors.black, fontSize: 16,)
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 10),
+            Padding(
+              padding: EdgeInsets.only(right: 25, left:25),
+              child: Row(
+                children: [
+                  Text(
+                    '${_lang.translate('expire')}:', 
+                    style: GoogleFonts.nunito(
                     textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
+                    ),
+                  ),
+                  Expanded(child: Container()),
+                  Text(
+                    '30 ${_lang.translate('day')}', 
+                    style: GoogleFonts.nunito(
+                    textStyle: TextStyle(color: Colors.black, fontSize: 16,)
                     ),
                   ),
                 ],
@@ -453,7 +450,7 @@ class _ChangeHotspotPlanState extends State<ChangeHotspotPlan> {
               child: Text(
                 '600 SEL', 
                 style: GoogleFonts.nunito(
-                textStyle: TextStyle(color: Colors.blue[900], fontSize: 30, fontWeight: FontWeight.w700)
+                textStyle: TextStyle(color: primaryColor, fontSize: 30, fontWeight: FontWeight.w700)
                 ),
               ),
             ),
@@ -478,28 +475,7 @@ class _ChangeHotspotPlanState extends State<ChangeHotspotPlan> {
                   Text(
                     '2 ${_lang.translate('devices')}', 
                     style: GoogleFonts.nunito(
-                    textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(height: 10),
-            Padding(
-              padding: EdgeInsets.only(right: 25, left:25),
-              child: Row(
-                children: [
-                  Text(
-                    '${_lang.translate('expire')}:', 
-                    style: GoogleFonts.nunito(
-                    textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
-                    ),
-                  ),
-                  Expanded(child: Container()),
-                  Text(
-                    '365 ${_lang.translate('day')}', 
-                    style: GoogleFonts.nunito(
-                    textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
+                    textStyle: TextStyle(color: Colors.black, fontSize: 16,)
                     ),
                   ),
                 ],
@@ -520,7 +496,28 @@ class _ChangeHotspotPlanState extends State<ChangeHotspotPlan> {
                   Text(
                     '5 ${_lang.translate('mb')}', 
                     style: GoogleFonts.nunito(
+                    textStyle: TextStyle(color: Colors.black, fontSize: 16,)
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 10),
+            Padding(
+              padding: EdgeInsets.only(right: 25, left:25),
+              child: Row(
+                children: [
+                  Text(
+                    '${_lang.translate('expire')}:', 
+                    style: GoogleFonts.nunito(
                     textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
+                    ),
+                  ),
+                  Expanded(child: Container()),
+                  Text(
+                    '365 ${_lang.translate('day')}', 
+                    style: GoogleFonts.nunito(
+                    textStyle: TextStyle(color: Colors.black, fontSize: 16,)
                     ),
                   ),
                 ],

@@ -79,9 +79,29 @@ Widget formLoginPhone( BuildContext context,
                 filled: true,
                 hintText: _lang.translate('phone_number_tf'),
                 hintStyle: TextStyle(color: Colors.black, fontSize: 12.0),
-                border: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.black),
-                  borderRadius: BorderRadius.all(Radius.circular(12.0))
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12.0),
+                  borderSide: BorderSide(
+                    color: primaryColor,
+                  ),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12.0),
+                  borderSide: BorderSide(
+                    color: primaryColor,
+                  ),
+                ),
+                errorBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12.0),
+                  borderSide: BorderSide(
+                    color: Colors.red
+                  ),
+                ),
+                focusedErrorBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12.0),
+                  borderSide: BorderSide(
+                    color: Colors.red
+                  ),
                 ),
               ),
               onSaved: (PhoneNumber number) {
@@ -106,17 +126,38 @@ Widget formLoginPhone( BuildContext context,
                 filled: true,
                 hintText: _lang.translate('password_tf'),
                 hintStyle: TextStyle(color: Colors.black, fontSize: 12.0),
+                prefixIcon: Icon(Icons.vpn_key_sharp, color: primaryColor),
                 suffixIcon: GestureDetector(
                   onTap: () {
                     _toggle();
                   },
                   child: Icon(
-                    _obscureText ? Icons.visibility_off : Icons.visibility,
+                    _obscureText ? Icons.visibility_off : Icons.visibility, color: primaryColor,
                   ),
                 ),
-                border: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.black),
-                  borderRadius: BorderRadius.all(Radius.circular(12.0))
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12.0),
+                  borderSide: BorderSide(
+                    color: primaryColor,
+                  ),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12.0),
+                  borderSide: BorderSide(
+                    color: primaryColor,
+                  ),
+                ),
+                errorBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12.0),
+                  borderSide: BorderSide(
+                    color: Colors.red
+                  ),
+                ),
+                focusedErrorBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12.0),
+                  borderSide: BorderSide(
+                    color: Colors.red
+                  ),
                 ),
               ),
               obscureText: _obscureText,
@@ -130,12 +171,14 @@ Widget formLoginPhone( BuildContext context,
                 InkWell(
                   onTap: () {
                     Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => ForgotPassword())).then((value) {
-                              phoneController.clear();
-                              passwordController.clear();
-                            }
+                      context, 
+                      PageTransition(type: PageTransitionType.bottomToTop, 
+                        child: ForgotPassword()
+                      )
+                    ).then((value) {
+                      phoneController.clear();
+                      passwordController.clear();
+                      }
                     );
                   },
                   child: Text(
@@ -204,12 +247,15 @@ Widget formLoginPhone( BuildContext context,
                   highlightColor: Colors.transparent,
                   onTap: () {
                     Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => CreatePhone())).then((value) {
-                              phoneController.clear();
-                              passwordController.clear();
-                            });
+                      context, 
+                      PageTransition(type: PageTransitionType.bottomToTop, 
+                        child: CreatePhone()
+                      )
+                    ).then((value) {
+                      phoneController.clear();
+                      passwordController.clear();
+                      }
+                    );
                   },
                   child: Text(_lang.translate('sign_up_bt'),
                       style: TextStyle(

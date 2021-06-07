@@ -1,3 +1,4 @@
+import 'package:groovin_widgets/groovin_widgets.dart';
 import 'package:koompi_hotspot/all_export.dart';
 import 'package:provider/provider.dart';
 
@@ -240,7 +241,7 @@ class _PlanViewState extends State<PlanView> {
                           Text(
                             _lang.translate('hotspot_plan'),
                             style: GoogleFonts.nunito(
-                            textStyle: TextStyle(fontSize: 25, fontWeight: FontWeight.w700)
+                            textStyle: TextStyle(color: primaryColor,fontSize: 25, fontWeight: FontWeight.w700)
                             ),
                           ),
                         ],
@@ -269,7 +270,7 @@ class _PlanViewState extends State<PlanView> {
             child: Text(
               '${mPlan.balance} SEL', 
               style: GoogleFonts.nunito(
-              textStyle: TextStyle(color: Colors.blue[900], fontSize: 23, fontWeight: FontWeight.w700)
+              textStyle: TextStyle(color: primaryColor, fontSize: 23, fontWeight: FontWeight.w700)
               ),
             ),
           ),
@@ -306,16 +307,16 @@ class _PlanViewState extends State<PlanView> {
             child: Row(
               children: [
                 Text(
-                  '${_lang.translate('expire')}:',
+                  '${_lang.translate('speed')}:',
                   style: GoogleFonts.nunito(
                   textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
                   ),
                 ),
                 Expanded(child: Container()),
                 Text(
-                  '${mPlan.plan} ${_lang.translate('day')}', 
+                  '5 ${_lang.translate('mb')}', 
                   style: GoogleFonts.nunito(
-                  textStyle: TextStyle(color: Colors.black, fontSize: 16, )
+                  textStyle: TextStyle(color: Colors.black, fontSize: 16)
                   ),
                 ),
               ],
@@ -327,16 +328,16 @@ class _PlanViewState extends State<PlanView> {
             child: Row(
               children: [
                 Text(
-                  '${_lang.translate('speed')}:',
+                  '${_lang.translate('expire')}:',
                   style: GoogleFonts.nunito(
                   textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
                   ),
                 ),
                 Expanded(child: Container()),
                 Text(
-                  '5 ${_lang.translate('mb')}', 
+                  '${mPlan.plan} ${_lang.translate('day')}', 
                   style: GoogleFonts.nunito(
-                  textStyle: TextStyle(color: Colors.black, fontSize: 16)
+                  textStyle: TextStyle(color: Colors.black, fontSize: 16, )
                   ),
                 ),
               ],

@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 import 'dart:ui';
 
+import 'package:groovin_widgets/groovin_widgets.dart';
 import 'package:koompi_hotspot/all_export.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -102,7 +103,7 @@ class _ReceiveRequestState extends State<ReceiveRequest> {
                                   Text(
                                     'SELENDRA (SEL)', 
                                     style: GoogleFonts.nunito(
-                                    textStyle: TextStyle(color: Colors.blue, fontSize: 25, fontWeight: FontWeight.w700)
+                                    textStyle: TextStyle(color: primaryColor, fontSize: 25, fontWeight: FontWeight.w700)
                                     ),
                                   ),
                                   SizedBox(
@@ -123,7 +124,7 @@ class _ReceiveRequestState extends State<ReceiveRequest> {
                                   Text(
                                     mData.fullname ?? '', 
                                     style: GoogleFonts.nunito(
-                                    textStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.w700)
+                                    textStyle: TextStyle(color: primaryColor, fontSize: 18, fontWeight: FontWeight.w700)
                                     ),
                                   ),
                                   SizedBox(
@@ -170,11 +171,16 @@ class _ReceiveRequestState extends State<ReceiveRequest> {
                                     showSnackBar();
                                   },
                                   child: Center(
-                                    child: Text(_lang.translate('copy'),
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontFamily: "Poppins-Bold",
-                                            fontSize: 18,)),
+                                    child: Text(
+                                      _lang.translate('copy'),
+                                      style: GoogleFonts.nunito(
+                                        textStyle: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w700,
+                                          fontSize: 18,
+                                        )
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ),
@@ -184,40 +190,27 @@ class _ReceiveRequestState extends State<ReceiveRequest> {
                         SizedBox(
                           height: 20.0,
                         ),
-                        Center(
-                          child: InkWell(
-                            child: Container(
-                              width: MediaQuery.of(context).size.width,
-                              height: 50,
-                              decoration: BoxDecoration(
-                                  gradient: LinearGradient(colors: [
-                                    Color(0xFF17ead9),
-                                    Color(0xFF6078ea)
-                                  ]),
-                                  borderRadius: BorderRadius.circular(12),
-                                  boxShadow: [
-                                    BoxShadow(
-                                        color: Color(0xFF6078ea)
-                                            .withOpacity(.3),
-                                        offset: Offset(0.0, 8.0),
-                                        blurRadius: 8.0)
-                                  ]),
-                              child: Material(
-                                color: Colors.transparent,
-                                child: InkWell(
-                                  customBorder: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
-                                  onTap: () async {
-                                    qrShare(_keyQrShare, mData.wallet);
-                                  },
-                                  child: Center(
-                                    child: Text(_lang.translate('share'),
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontFamily: "Poppins-Bold",
-                                            fontSize: 18,)),
-                                  ),
+                        Container(
+                          width: MediaQuery.of(context).size.width,
+                          child: RaisedButton(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12.0),
+                              side: BorderSide(color: HexColor('0CACDA'), width: 2)
+                            ),
+                            color: Colors.white,
+                            onPressed: () {
+                              qrShare(_keyQrShare, mData.wallet);
+                            },
+                            elevation: 2.5,
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+                              child: Text(
+                                _lang.translate('share'),
+                                style: GoogleFonts.nunito(
+                                  textStyle: TextStyle(
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 18,
+                                  )
                                 ),
                               ),
                             ),

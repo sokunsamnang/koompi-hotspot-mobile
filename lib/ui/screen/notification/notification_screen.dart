@@ -12,7 +12,6 @@ class _NotificationScreenState extends State<NotificationScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        // brightness: Brightness.light,
         title: Text(
           'Notification',
           style: TextStyle(color: Colors.black, fontFamily: 'Medium'),

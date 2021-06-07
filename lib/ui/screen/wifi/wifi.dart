@@ -1,5 +1,6 @@
 import 'package:geolocator/geolocator.dart';
 import 'package:koompi_hotspot/all_export.dart';
+import 'package:location/location.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:wifi_connector/wifi_connector.dart';
 import 'package:wifi_iot/wifi_iot.dart';
@@ -196,7 +197,6 @@ class _WifiConnectState extends State<WifiConnect> {
       loadWifiList();
     } else if (isGPSOn == false) {
       _showDialog(_lang.translate('turn_on_gps'));
-
     } else if (status != GeolocationStatus.granted) {
       loadWifiList();
     } else {

@@ -39,14 +39,14 @@ import 'package:koompi_hotspot/all_export.dart';
                     children: <Widget>[
                       Padding(
                         padding: EdgeInsets.only(top: 20.0),
-                        child: Image.asset("assets/images/password.jpg"),
+                        child: Image.asset("assets/images/security.png"),
                       ),
                       SizedBox(
                         height: ScreenUtil.getInstance().setHeight(30),
                       ),
                       Center(
                         child: Text(_lang.translate('forgot_password'),
-                          style: TextStyle(color: Colors.deepOrangeAccent[400], fontFamily: 'Medium', fontSize: 23),
+                          style: TextStyle(color: primaryColor, fontFamily: 'Medium', fontSize: 23),
                         ),
                       ),
                       Center(

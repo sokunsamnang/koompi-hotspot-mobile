@@ -208,23 +208,33 @@ class _SendRequestState extends State<SendRequest> {
                       maxLength: null,
                       controller: recieveWallet ?? widget.walletKey,
                       decoration: InputDecoration(
-                          prefixIcon: IconButton(
-                            color: Colors.blueAccent,
-                            icon: Icon(Icons.qr_code),
-                            onPressed: () async {
-                              await Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => QrScanner(
-                                            portList: [],
-                                          )));
-                            }),
-                          hintText: _lang.translate('receive_address'),
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.black),
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(12.0)),
-                          )),
+                        prefixIcon: Icon(Icons.contact_page_outlined, color: HexColor('0CACDA')),
+                        hintText: _lang.translate('receive_address'),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                          borderSide: BorderSide(
+                            color: primaryColor,
+                          ),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                          borderSide: BorderSide(
+                            color: primaryColor,
+                          ),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                          borderSide: BorderSide(
+                            color: Colors.red
+                          ),
+                        ),
+                        focusedErrorBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                          borderSide: BorderSide(
+                            color: Colors.red
+                          ),
+                        ),
+                      ),
                     ),
                     SizedBox(height: 16.0),
                     Text(_lang.translate('asset')),
@@ -233,13 +243,33 @@ class _SendRequestState extends State<SendRequest> {
                       controller: asset,
                       readOnly: true,
                       decoration: InputDecoration(
-                          prefixIcon: Icon(Icons.account_balance_wallet),
-                          hintText: 'Wallet',
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.black),
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(12.0)),
-                          )),
+                        prefixIcon: Icon(Icons.account_balance_wallet_outlined, color: HexColor('0CACDA')),
+                        hintText: 'Wallet',
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                          borderSide: BorderSide(
+                            color: primaryColor,
+                          ),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                          borderSide: BorderSide(
+                            color: primaryColor,
+                          ),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                          borderSide: BorderSide(
+                            color: Colors.red
+                          ),
+                        ),
+                        focusedErrorBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                          borderSide: BorderSide(
+                            color: Colors.red
+                          ),
+                        ),
+                      ),
                     ),
                     SizedBox(height: 16.0),
                     Text(_lang.translate('amount')),
@@ -255,13 +285,33 @@ class _SendRequestState extends State<SendRequest> {
                       ],
                       controller: amount,
                       decoration: InputDecoration(
-                          prefixIcon: Icon(Icons.attach_money),
-                          hintText: _lang.translate('amount'),
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.black),
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(12.0)),
-                          )),
+                        prefixIcon: Image.asset('assets/images/sld_fit.png', scale: 40,),
+                        hintText: _lang.translate('amount'),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                          borderSide: BorderSide(
+                            color: primaryColor,
+                          ),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                          borderSide: BorderSide(
+                            color: primaryColor,
+                          ),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                          borderSide: BorderSide(
+                            color: Colors.red
+                          ),
+                        ),
+                        focusedErrorBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                          borderSide: BorderSide(
+                            color: Colors.red
+                          ),
+                        ),
+                      ),
                     ),
                     SizedBox(height: 16.0),
                     Text('Memo'),
@@ -269,13 +319,33 @@ class _SendRequestState extends State<SendRequest> {
                     TextFormField(
                       controller: memo,
                       decoration: InputDecoration(
-                          prefixIcon: Icon(Icons.my_library_books),
-                          hintText: 'Memo',
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.black),
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(12.0)),
-                          )),
+                        prefixIcon: Icon(Icons.my_library_books_outlined, color: HexColor('0CACDA')),
+                        hintText: 'Memo (Optional)',
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                          borderSide: BorderSide(
+                            color: primaryColor,
+                          ),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                          borderSide: BorderSide(
+                            color: primaryColor,
+                          ),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                          borderSide: BorderSide(
+                            color: Colors.red
+                          ),
+                        ),
+                        focusedErrorBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                          borderSide: BorderSide(
+                            color: Colors.red
+                          ),
+                        ),
+                      ),
                     ),
                     SizedBox(height: 50.0),
                     Center(

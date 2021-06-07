@@ -1,5 +1,6 @@
 import 'package:groovin_widgets/groovin_widgets.dart';
 import 'package:koompi_hotspot/all_export.dart';
+import 'package:line_awesome_icons/line_awesome_icons.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -115,10 +116,7 @@ class _MyWalletState extends State<MyWallet> {
                                 ),
                                 color: HexColor('94FAD5'),
                                 onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(builder: (context) => SendRequest(widget.walletKey, "")),
-                                  );
+                                  _sendWalletBottomSheet(context, widget.walletKey);
                                 },
                                 elevation: 5,
                                 child: Padding(
@@ -249,4 +247,83 @@ class _MyWalletState extends State<MyWallet> {
       ),
     );
   }
+}
+
+void _sendWalletBottomSheet(context, String walletKey){
+  showModalBottomSheet(
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.only(topLeft: Radius.circular(12), topRight: Radius.circular(12)),
+    ),
+    isScrollControlled: true,
+    context: context,
+    builder: (BuildContext context){
+      return Container(
+        height: 153,
+        decoration: BoxDecoration(
+          color: HexColor('0CACDA'),
+          borderRadius: BorderRadius.only(topLeft: Radius.circular(12), topRight: Radius.circular(12)),
+        ),
+        child: new Column(
+          children: <Widget>[
+            Align(
+              alignment: Alignment.center,
+              child: MyText(
+                top: 20,
+                bottom: 20,
+                text: "Transaction options",
+              ),
+            ),
+
+            Row(
+              children: [
+                Expanded(
+                  child: GestureDetector(
+                    onTap: () async{
+                      await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => QrScanner(portList: [])
+                        )        
+                      );
+                    },
+                    child: Column(
+                      children: [
+                        Icon(Icons.qr_code_scanner_outlined, size: 35),
+                        MyText(
+                          top: 6,
+                          text: 'Scan Wallet',
+                          fontSize: 12,
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+
+                Expanded(
+                  child: GestureDetector(
+                    onTap: () async{
+                      await Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => SendRequest(walletKey, "")),
+                      );
+                    },
+                    child: Column(
+                      children: [
+                        Icon(Icons.description_outlined, size: 35),
+                        MyText(
+                          top: 6,
+                          text: 'Fill Wallet',
+                          fontSize: 12,
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      );
+    }
+  );
 }

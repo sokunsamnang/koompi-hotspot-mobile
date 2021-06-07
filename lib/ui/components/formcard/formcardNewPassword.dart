@@ -13,7 +13,7 @@ Widget formCardNewPassword(
   GlobalKey<FormState> formKey, 
   bool _autoValidate) {
 
-    var _lang = AppLocalizeService.of(context);
+  var _lang = AppLocalizeService.of(context);
   return new Container(
     width: double.infinity,
 //      height: ScreenUtil.getInstance().setHeight(500),
@@ -25,10 +25,6 @@ Widget formCardNewPassword(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text(_lang.translate('new_password_tf'),
-                  style: TextStyle(
-                      fontFamily: "Poppins-Medium",
-                      fontSize: ScreenUtil().setSp(26))),
               TextFormField(
                 validator: (val) {
                   if(val.isEmpty) return _lang.translate('password_is_required_validate');
@@ -44,27 +40,44 @@ Widget formCardNewPassword(
                 decoration: InputDecoration(
                   fillColor: Colors.grey[100],
                   filled: true,
+                  prefixIcon: Icon(Icons.vpn_key_sharp, color: primaryColor,),
                   suffixIcon: GestureDetector(
                     onTap: () {
                       _toggle();
                     },
                     child: Icon(
-                      _obscureText ? Icons.visibility_off : Icons.visibility,
+                      _obscureText ? Icons.visibility_off : Icons.visibility, color: primaryColor
                     ),
                   ),
                   hintText: _lang.translate('new_password_tf'),
-                  hintStyle: TextStyle(color: Colors.grey, fontSize: 12.0),
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.black),
-                    borderRadius: BorderRadius.all(Radius.circular(12.0))
+                  hintStyle: TextStyle(color: Colors.black, fontSize: 12.0),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12.0),
+                    borderSide: BorderSide(
+                      color: primaryColor,
+                    ),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12.0),
+                    borderSide: BorderSide(
+                      color: primaryColor,
+                    ),
+                  ),
+                  errorBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12.0),
+                    borderSide: BorderSide(
+                      color: Colors.red
+                    ),
+                  ),
+                  focusedErrorBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12.0),
+                    borderSide: BorderSide(
+                      color: Colors.red
+                    ),
                   ),
                 ),
               ),
               SizedBox(height: 20),
-              Text(_lang.translate('new_confirm_password_tf'),
-                  style: TextStyle(
-                      fontFamily: "Poppins-Medium",
-                      fontSize: ScreenUtil().setSp(26))),
               TextFormField(
                 validator: (val) {
                   if(val.isEmpty) return _lang.translate('password_is_required_validate');
@@ -80,19 +93,40 @@ Widget formCardNewPassword(
                 decoration: InputDecoration(
                   fillColor: Colors.grey[100],
                   filled: true,
+                  prefixIcon: Icon(Icons.vpn_key_sharp, color: primaryColor),
                   suffixIcon: GestureDetector(
                     onTap: () {
                       _toggle2();
                     },
                     child: Icon(
-                      _obscureText2 ? Icons.visibility_off : Icons.visibility,
+                      _obscureText2 ? Icons.visibility_off : Icons.visibility, color: primaryColor
                     ),
                   ),
-                  hintText: _lang.translate('new_password_tf'),
-                  hintStyle: TextStyle(color: Colors.grey, fontSize: 12.0),
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.black),
-                    borderRadius: BorderRadius.all(Radius.circular(12.0))
+                  hintText: _lang.translate('new_confirm_password_tf'),
+                  hintStyle: TextStyle(color: Colors.black, fontSize: 12.0),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12.0),
+                    borderSide: BorderSide(
+                      color: primaryColor,
+                    ),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12.0),
+                    borderSide: BorderSide(
+                      color: primaryColor,
+                    ),
+                  ),
+                  errorBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12.0),
+                    borderSide: BorderSide(
+                      color: Colors.red
+                    ),
+                  ),
+                  focusedErrorBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12.0),
+                    borderSide: BorderSide(
+                      color: Colors.red
+                    ),
                   ),
                 ),
               ),

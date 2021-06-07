@@ -329,6 +329,7 @@ Widget trxHistory(BuildContext context) {
             // Display History List
             : SafeArea(
                 child: CustomScrollView(
+                  shrinkWrap: true,
                   slivers: [
                     SliverList(
                       delegate: SliverChildListDelegate(

@@ -57,6 +57,7 @@ class _NotificationDetailState extends State<NotificationDetail> {
                       Text(
                         AppUtils.timeStampToDateTime(widget.notification[widget.index].date),
                         style: TextStyle(
+                          fontSize: 11,
                           color: Colors.black,
                           letterSpacing: 1.2,
                         ),
@@ -64,15 +65,15 @@ class _NotificationDetailState extends State<NotificationDetail> {
                     ],
                   ),
                 ),
-                SizedBox(height: 25),
+                SizedBox(height: 15),
                 Container(
                   margin: EdgeInsets.symmetric(horizontal: 15),
                   child: Text(
                     widget.notification[widget.index].title,
                     style: TextStyle(
                       color: Colors.black,
-                      fontSize: 20.0,
-                      fontWeight: FontWeight.w900,
+                      fontSize: 19.0,
+                      fontWeight: FontWeight.w700,
                       letterSpacing: 1.2,
                     ),
                   ),
@@ -101,7 +102,7 @@ class _NotificationDetailState extends State<NotificationDetail> {
                   margin: EdgeInsets.symmetric(horizontal: 15),
                   child: Text(
                     widget.notification[widget.index].description,
-                    style: TextStyle(color: Colors.black, fontSize: 18, fontFamily: 'Medium')
+                    style: TextStyle(color: Colors.black, fontSize: 16, fontFamily: 'Poppins-Regular')
                   ),
                 )
               ],

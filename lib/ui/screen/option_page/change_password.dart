@@ -346,22 +346,41 @@ showChangePasswordDialog(context) async {
                           onChanged: onChanged, 
                           keyboardType: TextInputType.visiblePassword,
                           decoration: InputDecoration(
-                            prefixIcon: Icon(LineIcons.unlock),
+                            prefixIcon: Icon(LineIcons.unlock, color: primaryColor,),
                             suffixIcon: GestureDetector(
                               onTap: () {
                                 _toggle();
                               },
                               child: Icon(
-                                _obscureText ? Icons.visibility_off : Icons.visibility,
+                                _obscureText ? Icons.visibility_off : Icons.visibility, color: primaryColor,
                               ),
                             ),
                             hintText: _lang.translate('current_password'),
-                            border: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.black),
-                              borderRadius: BorderRadius.all(Radius.circular(12.0))
-                            )
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12.0),
+                              borderSide: BorderSide(
+                                color: primaryColor,
+                              ),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12.0),
+                              borderSide: BorderSide(
+                                color: primaryColor,
+                              ),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12.0),
+                              borderSide: BorderSide(
+                                color: Colors.red
+                              ),
+                            ),
+                            focusedErrorBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12.0),
+                              borderSide: BorderSide(
+                                color: Colors.red
+                              ),
+                            ),
                           ),
-                          
                         ),
                         SizedBox(height: 16.0),
                         Text(_lang.translate('new_password_tf')),
@@ -374,20 +393,40 @@ showChangePasswordDialog(context) async {
                           validator: validateNewPass, 
                           onChanged: onChanged,
                           decoration: InputDecoration(
-                            prefixIcon: Icon(LineIcons.unlock_alt),
+                            prefixIcon: Icon(LineIcons.unlock_alt, color: primaryColor),
                             suffixIcon: GestureDetector(
                               onTap: () {
                                 _toggle2();
                               },
                               child: Icon(
-                                _obscureText2 ? Icons.visibility_off : Icons.visibility,
+                                _obscureText2 ? Icons.visibility_off : Icons.visibility, color: primaryColor,
                               ),
                             ),
                             hintText: _lang.translate('new_password_tf'),
-                            border: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.black),
-                              borderRadius: BorderRadius.all(Radius.circular(12.0))
-                            )
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12.0),
+                              borderSide: BorderSide(
+                                color: primaryColor,
+                              ),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12.0),
+                              borderSide: BorderSide(
+                                color: primaryColor,
+                              ),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12.0),
+                              borderSide: BorderSide(
+                                color: Colors.red
+                              ),
+                            ),
+                            focusedErrorBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12.0),
+                              borderSide: BorderSide(
+                                color: Colors.red
+                              ),
+                            ),
                           ),
                         ),
                         SizedBox(height: 16.0),
@@ -401,20 +440,40 @@ showChangePasswordDialog(context) async {
                           validator: validateConfirmPass, 
                           onChanged: onChanged,
                           decoration: InputDecoration(
-                            prefixIcon: Icon(LineIcons.unlock_alt),
+                            prefixIcon: Icon(LineIcons.unlock_alt, color: primaryColor),
                             suffixIcon: GestureDetector(
                               onTap: () {
                                 _toggle3();
                               },
                               child: Icon(
-                                _obscureText3 ? Icons.visibility_off : Icons.visibility,
+                                _obscureText3 ? Icons.visibility_off : Icons.visibility, color: primaryColor,
                               ),
                             ),
                             hintText: _lang.translate('new_confirm_password_tf'),
-                            border: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.black),
-                              borderRadius: BorderRadius.all(Radius.circular(12.0))
-                        )
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12.0),
+                              borderSide: BorderSide(
+                                color: primaryColor,
+                              ),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12.0),
+                              borderSide: BorderSide(
+                                color: primaryColor,
+                              ),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12.0),
+                              borderSide: BorderSide(
+                                color: Colors.red
+                              ),
+                            ),
+                            focusedErrorBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12.0),
+                              borderSide: BorderSide(
+                                color: Colors.red
+                              ),
+                            ),
                       ),
                     ),
                   ],

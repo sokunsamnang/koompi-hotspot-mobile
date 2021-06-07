@@ -260,9 +260,6 @@ Widget _planViewButton(context){
         child: InkWell(
           child: Container(
             width: MediaQuery.of(context).size.width,
-            // height: MediaQuery.of(context).size.height * .30,
-            // width: ScreenUtil.getInstance().setWidth(330),
-            // height: ScreenUtil.getInstance().setHeight(100),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12.0),
               color: HexColor('083C5A'),
@@ -273,8 +270,6 @@ Widget _planViewButton(context){
               customBorder: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
               ),
-              // highlightColor: Colors.transparent,
-              // splashColor: Colors.transparent,
               onTap: () async {
                 Navigator.push(
                   context,
@@ -294,7 +289,7 @@ Widget _planViewButton(context){
                             Text(
                               _lang.translate('hotspot_plan'),
                               style: GoogleFonts.nunito(
-                              textStyle: TextStyle(color: Colors.white, fontSize: 25, fontWeight: FontWeight.w700)
+                              textStyle: TextStyle(color: HexColor('0CACDA'), fontSize: 25, fontWeight: FontWeight.w800)
                               ),
                             ),
                           ],
@@ -317,7 +312,7 @@ Widget _planViewButton(context){
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontFamily: 'Medium',
-                                      fontWeight: FontWeight.w800,
+                                      fontWeight: FontWeight.w700,
                                     ),
                                   ),
                                   Text(
@@ -342,7 +337,7 @@ Widget _planViewButton(context){
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontFamily: 'Medium',
-                                      fontWeight: FontWeight.w800,
+                                      fontWeight: FontWeight.w700,
                                     ),
                                   ),
                                   Text(
@@ -367,7 +362,7 @@ Widget _planViewButton(context){
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontFamily: 'Medium',
-                                      fontWeight: FontWeight.w800,
+                                      fontWeight: FontWeight.w700,
                                     ),
                                   ),
                                   Text(
@@ -392,7 +387,7 @@ Widget _planViewButton(context){
                                       style: TextStyle(
                                         color: Colors.white,
                                         fontFamily: 'Medium',
-                                        fontWeight: FontWeight.w800,
+                                        fontWeight: FontWeight.w700,
                                       ),
                                     ),
                                     Text(
@@ -574,7 +569,7 @@ Widget _myWalletButton(context){
                                       Text(
                                         'SELENDRA', 
                                         style: GoogleFonts.nunito(
-                                        textStyle: TextStyle(color: Colors.white, fontSize: 25, fontWeight: FontWeight.w700)
+                                        textStyle: TextStyle(color: Colors.white, fontSize: 25, fontWeight: FontWeight.w800)
                                         ),
                                       ),
                                     ],
@@ -592,7 +587,7 @@ Widget _myWalletButton(context){
                                         _lang.translate('asset'),
                                         style: TextStyle(
                                           color: Colors.white,
-                                          fontWeight: FontWeight.w800,
+                                          fontWeight: FontWeight.w700,
                                         ),
                                       ),
                                       // Expanded(child: Container()),
@@ -600,7 +595,7 @@ Widget _myWalletButton(context){
                                         _lang.translate('total'),
                                         style: TextStyle(
                                           color: Colors.white,
-                                          fontWeight: FontWeight.w800,
+                                          fontWeight: FontWeight.w700,
                                         ),
                                       ),
                                     ],

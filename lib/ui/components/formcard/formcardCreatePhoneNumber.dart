@@ -67,9 +67,29 @@ Widget formCardPhoneNumbers(
                   filled: true,
                   hintText: _lang.translate('phone_number_tf'),
                   hintStyle: TextStyle(color: Colors.black, fontSize: 12.0),
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.black),
-                    borderRadius: BorderRadius.all(Radius.circular(12.0))
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12.0),
+                    borderSide: BorderSide(
+                      color: primaryColor,
+                    ),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12.0),
+                    borderSide: BorderSide(
+                      color: primaryColor,
+                    ),
+                  ),
+                  errorBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12.0),
+                    borderSide: BorderSide(
+                      color: Colors.red
+                    ),
+                  ),
+                  focusedErrorBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12.0),
+                    borderSide: BorderSide(
+                      color: Colors.red
+                    ),
                   ),
                 ),
                 onSaved: (PhoneNumber number) {
@@ -94,17 +114,38 @@ Widget formCardPhoneNumbers(
                 decoration: InputDecoration(
                   fillColor: Colors.grey[100],
                   filled: true,
+                  prefixIcon: Icon(Icons.vpn_key_sharp, color: primaryColor),
                   suffixIcon: GestureDetector(
                     onTap: () {
                       _toggle();
                     },
                     child: Icon(
-                      _obscureText ? Icons.visibility_off : Icons.visibility,
+                      _obscureText ? Icons.visibility_off : Icons.visibility, color: primaryColor,
                     ),
                   ),
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.black),
-                    borderRadius: BorderRadius.all(Radius.circular(12.0))
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12.0),
+                    borderSide: BorderSide(
+                      color: primaryColor,
+                    ),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12.0),
+                    borderSide: BorderSide(
+                      color: primaryColor,
+                    ),
+                  ),
+                  errorBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12.0),
+                    borderSide: BorderSide(
+                      color: Colors.red
+                    ),
+                  ),
+                  focusedErrorBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12.0),
+                    borderSide: BorderSide(
+                      color: Colors.red
+                    ),
                   ),
                   hintText: _lang.translate('password_tf'),
                   hintStyle: TextStyle(color: Colors.black, fontSize: 12.0),
@@ -131,17 +172,38 @@ Widget formCardPhoneNumbers(
                 decoration: InputDecoration(
                   fillColor: Colors.grey[100],
                   filled: true,
+                  prefixIcon: Icon(Icons.vpn_key_sharp, color: primaryColor),
                   suffixIcon: GestureDetector(
                     onTap: () {
                       _toggle2();
                     },
                     child: Icon(
-                      _obscureText2 ? Icons.visibility_off : Icons.visibility,
+                      _obscureText2 ? Icons.visibility_off : Icons.visibility, color: primaryColor,
                     ),
                   ),
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.black),
-                    borderRadius: BorderRadius.all(Radius.circular(12.0))
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12.0),
+                    borderSide: BorderSide(
+                      color: primaryColor,
+                    ),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12.0),
+                    borderSide: BorderSide(
+                      color: primaryColor,
+                    ),
+                  ),
+                  errorBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12.0),
+                    borderSide: BorderSide(
+                      color: Colors.red
+                    ),
+                  ),
+                  focusedErrorBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12.0),
+                    borderSide: BorderSide(
+                      color: Colors.red
+                    ),
                   ),
                   hintText: _lang.translate('confirm_password_tf'),
                   hintStyle: TextStyle(color: Colors.black, fontSize: 12.0),
@@ -210,11 +272,17 @@ Widget formCardPhoneNumbers(
                     InkWell(
                       onTap: () {
                         Navigator.pushAndRemoveUntil(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => LoginPhone()),
-                            ModalRoute.withName('/loginPhone')  
-                          );
+                          context, 
+                          PageTransition(type: PageTransitionType.bottomToTop, 
+                            child: LoginPhone()
+                          ),
+                          ModalRoute.withName('/loginPhone') 
+                        ).then((value) {
+                          phoneController.clear();
+                          passwordController.clear();
+                          confirmPasswordController.clear();
+                          }
+                        );
                       },
                       splashColor: Colors.transparent,
                       highlightColor: Colors.transparent,

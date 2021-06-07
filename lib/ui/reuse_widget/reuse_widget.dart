@@ -1,4 +1,8 @@
+import 'package:groovin_widgets/groovin_widgets.dart';
 import 'package:koompi_hotspot/all_export.dart';
+
+final primaryColor = HexColor('0CACDA');
+
 
 Widget textAlignCenter({String text: ""}) {
   return Text(text, textAlign: TextAlign.center);

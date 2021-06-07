@@ -27,7 +27,7 @@ Widget notificationList(BuildContext context) {
                 height: 60.0,
                 color: Colors.white,
                 child: ListTile(
-                  leading: Icon(Icons.mail),
+                  leading: Image.asset('assets/images/promotion7.png'),
                   title: Text(
                     '${notification[i].title}',
                     style: GoogleFonts.nunito(
@@ -51,28 +51,29 @@ Widget notificationList(BuildContext context) {
   var notification = Provider.of<NotificationProvider>(context);
   return Scaffold(
     // Have No History
+    backgroundColor: Colors.grey[200],
     body: notification.notificationList == null
-        ? SafeArea(
-            child: Column(
-              children: [
-                Expanded(
-                  child: Align(
-                    alignment: Alignment.center,
-                    child: SvgPicture.asset(
-                      'assets/images/no_notification.svg',
-                      height: MediaQuery.of(context).size.height * 0.2,
-                      width: MediaQuery.of(context).size.height * 0.2,
-                      placeholderBuilder: (context) => Center(),
-                    ),
+        ? Container(
+          child: Column(
+            children: [
+              Expanded(
+                child: Align(
+                  alignment: Alignment.center,
+                  child: SvgPicture.asset(
+                    'assets/images/no_notification.svg',
+                    height: MediaQuery.of(context).size.height * 0.25,
+                    width: MediaQuery.of(context).size.width * 0.25,
+                    placeholderBuilder: (context) => Center(),
                   ),
                 ),
-              ],
-            ),
-          )
+              ),
+            ],
+          ),
+        )
 
         // Display Loading
         : notification.notificationList.length == 0
-            ? SafeArea(
+            ? Container(
               child: Column(
                 children: [
                   Expanded(
@@ -80,8 +81,8 @@ Widget notificationList(BuildContext context) {
                       alignment: Alignment.center,
                       child: SvgPicture.asset(
                         'assets/images/no_notification.svg',
-                        height: MediaQuery.of(context).size.height * 0.2,
-                        width: MediaQuery.of(context).size.height * 0.2,
+                        height: MediaQuery.of(context).size.height * 0.25,
+                        width: MediaQuery.of(context).size.width * 0.25,
                         placeholderBuilder: (context) => Center(),
                       ),
                     ),
@@ -90,16 +91,68 @@ Widget notificationList(BuildContext context) {
               ),
             )
             // Display notification list
-            : SafeArea(
-                child: CustomScrollView(
-                  slivers: [
-                    SliverList(
-                      delegate: SliverChildListDelegate(
-                        _buildList(notification.notificationList, context,),
+            : Container(
+              child: ListView.builder(
+                shrinkWrap: true,
+                itemCount: notification.notificationList.length,
+                itemBuilder: (context, index){
+                  return Container(
+                    margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(12),
                       ),
-                    ),
-                  ],
-                ),
+                      child: ListTile(
+                        onTap: (){
+                          Navigator.push(
+                            context, 
+                            PageTransition(type: PageTransitionType.rightToLeftWithFade, 
+                              child: NotificationDetail(notification: notification.notificationList, index: index,)));
+                        },
+                        trailing: Icon(Icons.arrow_forward_ios_outlined),
+                        leading: ClipRRect(
+                          borderRadius: BorderRadius.all(Radius.circular(12.0)),
+                          child: Image.asset('assets/images/promotion7.png')
+                        ),
+                        title: Text(
+                          notification.notificationList[index].title,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                          style: TextStyle(fontSize: 14.0, color: HexColor('0CACDA'), fontWeight: FontWeight.w700),
+                        ),
+                        subtitle: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text(
+                              notification.notificationList[index].description,
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                              style: TextStyle(fontSize: 12.0, color: Colors.black, fontFamily: 'Poppins-Regular'),
+                            ),
+                            SizedBox(height: 5),
+                            Row(
+                              children: [
+                                Text(
+                                  notification.notificationList[index].category,
+                                  style: TextStyle(fontSize: 10.0),
+                                ),
+                                Container(
+                                  height: 12.5, 
+                                  child: VerticalDivider(color: Colors.black)
+                                ),
+                                Text(
+                                  AppUtils.timeStampToDateTime(notification.notificationList[index].date),
+                                  style: TextStyle(fontSize: 10.0),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                  );
+                }
               ),
+            ),
   );
 }

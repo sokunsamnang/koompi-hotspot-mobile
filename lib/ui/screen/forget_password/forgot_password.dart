@@ -36,9 +36,12 @@ class _ForgotPasswordState extends State<ForgotPassword> {
           StorageServices.removeZero(_phoneController.text),);
         if (response.statusCode == 200) {
           Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => ForgotPasswordVerification("+855${StorageServices.removeZero(_phoneController.text)}")));
-        } 
+            context, 
+            PageTransition(type: PageTransitionType.rightToLeftWithFade, 
+              child: ForgotPasswordVerification("+855${StorageServices.removeZero(_phoneController.text)}")
+            )
+          );
+        }
         else if (response.statusCode == 401){
           Navigator.pop(context);
           return showErrorDialog(context);
