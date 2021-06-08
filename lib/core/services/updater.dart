@@ -18,6 +18,8 @@ versionCheck(context) async {
 
   //Get Latest version info from firebase config
   final RemoteConfig remoteConfig = await RemoteConfig.instance;
+  
+  var _lang = AppLocalizeService.of(context);
 
   try {
     // Using default duration to force fetching from remote server.
@@ -30,7 +32,12 @@ versionCheck(context) async {
         .replaceAll(".", ""));
     if (newVersion > currentVersion) {
       print('New version available');
-      _showVersionDialog(context);
+      await Components.dialogUpdateApp(
+        context,
+        Text(_lang.translate('msg_update'), textAlign: TextAlign.center),
+        Text(_lang.translate('title_update'), style: TextStyle(fontFamily: 'Poppins-Bold'),),
+        callbackAction: Platform.isIOS ? _launchURL(APP_STORE_URL) : _launchURL(PLAY_STORE_URL),
+      );
     }
   } on FetchThrottledException catch (exception) {
     // Fetch throttled.
@@ -42,42 +49,42 @@ versionCheck(context) async {
   }
 }
 
-_showVersionDialog(context) async {
-  await showDialog<String>(
-    context: context,
-    barrierDismissible: false,
-    builder: (BuildContext context) {
-      var _lang = AppLocalizeService.of(context);
-      String title = _lang.translate('title_update');
-      String message = _lang.translate('msg_update');
-      String btnLabel = _lang.translate('btn_update');
-      return WillPopScope(
-        child: Platform.isIOS
-          ? new CupertinoAlertDialog(
-            title: Text(title),
-            content: Text(message),
-            actions: <Widget>[
-              FlatButton(
-                child: Text(btnLabel),
-                onPressed: () => _launchURL(APP_STORE_URL),
-              ),
-            ],
-          )
-          : new AlertDialog(
-              title: Text(title),
-              content: Text(message),
-              actions: <Widget>[
-                FlatButton(
-                  child: Text(btnLabel),
-                  onPressed: () => _launchURL(PLAY_STORE_URL),
-                ),
-              ],
-            ), 
-        onWillPop: () async => false,
-      );
-    },
-  );
-}
+// _showVersionDialog(context) async {
+//   await showDialog<String>(
+//     context: context,
+//     barrierDismissible: false,
+//     builder: (BuildContext context) {
+//       var _lang = AppLocalizeService.of(context);
+//       String title = _lang.translate('title_update');
+//       String message = _lang.translate('msg_update');
+//       String btnLabel = _lang.translate('btn_update');
+//       return WillPopScope(
+//         child: Platform.isIOS
+//           ? new CupertinoAlertDialog(
+//             title: Text(title),
+//             content: Text(message),
+//             actions: <Widget>[
+//               FlatButton(
+//                 child: Text(btnLabel),
+//                 onPressed: () => _launchURL(APP_STORE_URL),
+//               ),
+//             ],
+//           )
+//           : new AlertDialog(
+//               title: Text(title),
+//               content: Text(message),
+//               actions: <Widget>[
+//                 FlatButton(
+//                   child: Text(btnLabel),
+//                   onPressed: () => _launchURL(PLAY_STORE_URL),
+//                 ),
+//               ],
+//             ), 
+//         onWillPop: () async => false,
+//       );
+//     },
+//   );
+// }
 
 _launchURL(String url) async {
   if (await canLaunch(url)) {

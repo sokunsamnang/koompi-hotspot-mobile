@@ -23,7 +23,6 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
 
   StreamController<ErrorAnimationType> errorController;
   
-  String alertText;
   bool isLoading = false;
   bool hasError = false;
   String currentText = "";
@@ -49,7 +48,6 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
 
   Future<void> _submitOtp(String vCode) async {
     dialogLoading(context);
-    var responseBody;
     try {
       String apiUrl = '${ApiService.url}/auth/confirm-phone';
       setState(() {
@@ -64,53 +62,59 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
           "phone": widget.phone,
           "vCode": vCode,
         }));
+
+      var responseJson = json.decode(response.body);
+
         if (response.statusCode == 200 && response.body != "Incorrect Code!") {
           print(response.body);
           await Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => CompleteInfo(widget.phone)));
         } else {
+          await Components.dialog(
+            context,
+            textAlignCenter(text: responseJson['message']),
+            warningTitleDialog()
+          );
           Navigator.pop(context);
-          showErrorDialog(context);
           print(response.body);
       }
     } catch (e) {
       Navigator.pop(context);
-      alertText = responseBody['message'];
     }
     
   }
 
-  showErrorDialog(BuildContext context) async {
-    var _lang = AppLocalizeService.of(context);
-    return showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Row(
-            children: [
-              Icon(Icons.warning, color: Colors.yellow),
-              Text(_lang.translate('warning'), style: TextStyle(fontFamily: 'Poppins-Bold')),
-            ],
-          ),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: <Widget>[
-                Text(_lang.translate('wrong_code')),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            FlatButton(
-              child: Text(_lang.translate('ok')),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      });
-  }
+  // showErrorDialog(BuildContext context) async {
+  //   var _lang = AppLocalizeService.of(context);
+  //   return showDialog(
+  //     context: context,
+  //     barrierDismissible: false,
+  //     builder: (BuildContext context) {
+  //       return AlertDialog(
+  //         title: Row(
+  //           children: [
+  //             Icon(Icons.warning, color: Colors.yellow),
+  //             Text(_lang.translate('warning'), style: TextStyle(fontFamily: 'Poppins-Bold')),
+  //           ],
+  //         ),
+  //         content: SingleChildScrollView(
+  //           child: ListBody(
+  //             children: <Widget>[
+  //               Text(_lang.translate('wrong_code')),
+  //             ],
+  //           ),
+  //         ),
+  //         actions: <Widget>[
+  //           FlatButton(
+  //             child: Text(_lang.translate('ok')),
+  //             onPressed: () {
+  //               Navigator.of(context).pop();
+  //             },
+  //           ),
+  //         ],
+  //       );
+  //     });
+  // }
 
   @override
   Widget build(BuildContext context) {

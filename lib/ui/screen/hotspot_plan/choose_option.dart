@@ -49,37 +49,12 @@ class _ChooseOptionState extends State<ChooseOption>
           });
         }
         else{
-          Navigator.of(context).pop();
-          return showDialog(
-            context: context,
-            barrierDismissible: false,
-            builder: (BuildContext context) {
-              var _lang = AppLocalizeService.of(context);
-              return AlertDialog(
-                title: Row(
-                  children: [
-                    Icon(Icons.warning, color: Colors.yellow),
-                    Text(_lang.translate('warning'), style: TextStyle(fontFamily: 'Poppins-Bold'),),
-                  ],
-                ),
-                content: SingleChildScrollView(
-                  child: ListBody(
-                    children: <Widget>[
-                      Text(responseJson['message']),
-                    ],
-                  ),
-                ),
-                actions: <Widget>[
-                  FlatButton(
-                    child: Text(_lang.translate('ok')),
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                ],
-              );
-            }
+          await Components.dialog(
+            context,
+            textAlignCenter(text: responseJson['message']),
+            warningTitleDialog()
           );
+          Navigator.pop(context);
         }
       
       }

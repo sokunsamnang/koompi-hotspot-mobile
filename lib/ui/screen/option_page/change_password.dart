@@ -173,6 +173,7 @@ class _ChangePasswordState extends State<ChangePassword>
   bool isLoading = false;
 
   Future <void> _resetPassword() async {
+    var _lang = AppLocalizeService.of(context);
     dialogLoading(context);
     SharedPreferences pref = await SharedPreferences.getInstance();
     String _token = pref.getString('token');
@@ -198,41 +199,20 @@ class _ChangePasswordState extends State<ChangePassword>
         await StorageServices().clearToken('token');
         await StorageServices().clearToken('phone');
         await StorageServices().clearToken('password');
-        print(response.body);
+        await Components.dialogResetPw(
+          context,
+          Text(_lang.translate('tf_change_password'), textAlign: TextAlign.center),
+          Text(_lang.translate('complete'), style: TextStyle(fontFamily: 'Poppins-Bold'),),
+        );
         Navigator.pop(context);
-        showChangePasswordDialog(context);
       } else {
+        await Components.dialog(
+          context,
+          textAlignCenter(text: responseJson['message']),
+          warningTitleDialog()
+        );
         Navigator.pop(context);
         print(response.body);
-        return showDialog(
-          context: context,
-          barrierDismissible: false,
-          builder: (BuildContext context) {
-            var _lang = AppLocalizeService.of(context);
-            return AlertDialog(
-              title: Row(
-                children: [
-                  Icon(Icons.warning, color: Colors.yellow),
-                  Text(_lang.translate('warning'), style: TextStyle(fontFamily: 'Poppins-Bold'),),
-                ],
-              ),
-              content: SingleChildScrollView(
-                child: ListBody(
-                  children: <Widget>[
-                    Text(responseJson['message']),
-                  ],
-                ),
-              ),
-              actions: <Widget>[
-                FlatButton(
-                  child: Text(_lang.translate('ok')),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                ),
-              ],
-            );
-          });
       }
     } catch (e) {
       Navigator.pop(context);
@@ -241,45 +221,45 @@ class _ChangePasswordState extends State<ChangePassword>
   }
 
 
-showChangePasswordDialog(context) async {
-  var _lang = AppLocalizeService.of(context);
-  return showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return WillPopScope(
-          onWillPop: () async => false,
-          child: AlertDialog(
-            title: Text(
-              _lang.translate('complete'),
-              textAlign: TextAlign.center,
-            ),
-            content: SingleChildScrollView(
-              child: ListBody(
-                children: <Widget>[
-                  Text(_lang.translate('tf_change_password')),
-                ],
-              ),
-            ),
-            actions: <Widget>[
-              FlatButton(
-                child: Text(_lang.translate('ok')),
-                onPressed: () async {
-                  dialogLoading(context);
-                  Future.delayed(Duration(seconds: 2), () {
-                    Timer(Duration(milliseconds: 500), () => Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(builder: (context) => LoginPhone()),
-                      ModalRoute.withName('/loginPhone'),
-                    ));
-                  });
-                },
-              ),
-            ],
-          ),
-        );
-      });
-}
+// showChangePasswordDialog(context) async {
+//   var _lang = AppLocalizeService.of(context);
+//   return showDialog(
+//       context: context,
+//       barrierDismissible: false,
+//       builder: (BuildContext context) {
+//         return WillPopScope(
+//           onWillPop: () async => false,
+//           child: AlertDialog(
+//             title: Text(
+//               _lang.translate('complete'),
+//               textAlign: TextAlign.center,
+//             ),
+//             content: SingleChildScrollView(
+//               child: ListBody(
+//                 children: <Widget>[
+//                   Text(_lang.translate('tf_change_password')),
+//                 ],
+//               ),
+//             ),
+//             actions: <Widget>[
+//               FlatButton(
+//                 child: Text(_lang.translate('ok')),
+//                 onPressed: () async {
+//                   dialogLoading(context);
+//                   Future.delayed(Duration(seconds: 2), () {
+//                     Timer(Duration(milliseconds: 500), () => Navigator.pushAndRemoveUntil(
+//                       context,
+//                       MaterialPageRoute(builder: (context) => LoginPhone()),
+//                       ModalRoute.withName('/loginPhone'),
+//                     ));
+//                   });
+//                 },
+//               ),
+//             ],
+//           ),
+//         );
+//       });
+// }
 
   @override
   Widget build(BuildContext context) {

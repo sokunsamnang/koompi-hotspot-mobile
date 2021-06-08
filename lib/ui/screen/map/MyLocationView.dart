@@ -37,34 +37,35 @@ class MyLocationViewState extends State<MyLocationView>
   /// Is camera Position Lock is enabled default false
   bool isMoving = false;
 
-  /// Show a Alert Dialog
-  void _showDialog(String body) {
-    var _lang = AppLocalizeService.of(context);
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text(_lang.translate('location_permission')),
-            content: Text(body),
-            actions: <Widget>[
-              FlatButton(
-                child: Text(_lang.translate('cancel')),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-              FlatButton(
-                child: Text(_lang.translate('setting')),
-                onPressed: () {
-                  AppSettings.openLocationSettings();
+  // /// Show a Alert Dialog
+  // void _showDialog() async{
+  //   var _lang = AppLocalizeService.of(context);
 
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
-          );
-        });
-  }
+  //   showDialog(
+  //       context: context,
+  //       builder: (BuildContext context) {
+  //         return AlertDialog(
+  //           title: Text(_lang.translate('location_permission')),
+  //           content: Text(body),
+  //           actions: <Widget>[
+  //             FlatButton(
+  //               child: Text(_lang.translate('cancel')),
+  //               onPressed: () {
+  //                 Navigator.of(context).pop();
+  //               },
+  //             ),
+  //             FlatButton(
+  //               child: Text(_lang.translate('setting')),
+  //               onPressed: () {
+  //                 AppSettings.openLocationSettings();
+
+  //                 Navigator.of(context).pop();
+  //               },
+  //             ),
+  //           ],
+  //         );
+  //       });
+  // }
 
   ///=========================================[initState]=============================================
 
@@ -118,7 +119,12 @@ class MyLocationViewState extends State<MyLocationView>
 
       _moveCamera();
     } else if (isGPSOn == false) {
-      _showDialog(_lang.translate('turn_on_gps'));
+      await Components.dialogGPS(
+        context,
+        Text(_lang.translate('turn_on_gps'), textAlign: TextAlign.center),
+        Text(_lang.translate('location_permission'), textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.bold)),
+      );
+
       localize();
       _moveCamera();
     } else if (status != GeolocationStatus.granted) {
@@ -127,7 +133,11 @@ class MyLocationViewState extends State<MyLocationView>
       localize();
       _moveCamera();
     } else {
-      _showDialog(_lang.translate('turn_on_gps'));
+      await Components.dialogGPS(
+        context,
+        Text(_lang.translate('turn_on_gps'), textAlign: TextAlign.center),
+        Text(_lang.translate('location_permission'), textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.bold)),
+      );
       // await PermissionHandler()
       //     .requestPermissions([PermissionGroup.locationWhenInUse]);
       localize();

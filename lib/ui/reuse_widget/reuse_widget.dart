@@ -32,137 +32,407 @@ void snackBar(BuildContext context){
     Scaffold.of(context).showSnackBar(snackBar);
 }
 class Components {
-  static void dialogLoading({BuildContext context, String contents}) {
-    showDialog(
-        barrierDismissible: false,
-        context: context,
-        builder: (context) {
-          return WillPopScope(
-            onWillPop: () => Future(() => false),
-            child: Material(
-              color: Colors.transparent,
-              child: Stack(
-                alignment: Alignment.center,
-                children: <Widget>[
-                  Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      CircularProgressIndicator(
-                        backgroundColor: Colors.transparent,
-                        // valueColor: AlwaysStoppedAnimation(hexaCodeToColor(AppColors.lightBlueSky))
+  // static void dialogLoading({BuildContext context, String contents}) {
+  //   showDialog(
+  //       barrierDismissible: false,
+  //       context: context,
+  //       builder: (context) {
+  //         return WillPopScope(
+  //           onWillPop: () => Future(() => false),
+  //           child: Material(
+  //             color: Colors.transparent,
+  //             child: Stack(
+  //               alignment: Alignment.center,
+  //               children: <Widget>[
+  //                 Column(
+  //                   mainAxisSize: MainAxisSize.min,
+  //                   children: <Widget>[
+  //                     CircularProgressIndicator(
+  //                       backgroundColor: Colors.transparent,
+  //                       // valueColor: AlwaysStoppedAnimation(hexaCodeToColor(AppColors.lightBlueSky))
+  //                     ),
+  //                     contents == null
+  //                         ? Container()
+  //                         : Padding(
+  //                             child: Text(
+  //                               contents,
+  //                               style: TextStyle(color: Color(0xffFFFFFF)),
+  //                             ),
+  //                             padding:
+  //                                 EdgeInsets.only(bottom: 10.0, top: 10.0)),
+  //                   ],
+  //                 )
+  //               ],
+  //             ),
+  //           ),
+  //         );
+  //       });
+  // }
+
+ /* Dialog of response from server */
+  static Future dialog(
+    BuildContext context, 
+    var text, 
+    var title, 
+    {
+      Widget action, 
+      String firsTxtBtn = "OK", 
+      Color bgColor = Colors.white, 
+      Color barrierColor, 
+      bool removeBtn: false,
+      double pLeft: 10,
+      double pRight: 10,
+      double pTop: 15.0,
+      double pBottom: 5
+    }
+  ) async {
+    var result = await showDialog(
+      context: context,
+      barrierColor: barrierColor ?? Colors.white.withOpacity(0),
+      builder: (BuildContext context) {
+        return StatefulBuilder(builder: (context2, setState){
+          return AlertDialog(
+            backgroundColor: bgColor,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+            contentPadding: EdgeInsets.only(left: pLeft, top: pTop, right: pRight, bottom: pBottom),
+            title: title != null ? Align(
+              alignment: Alignment.center,
+              child: title,
+            ) : null,
+            content: text,
+            actions: !removeBtn ? <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  TextButton(
+                    style: ButtonStyle(
+                      foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                      backgroundColor: MaterialStateProperty.all<Color>(HexColor('0CACDA')),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        )
                       ),
-                      contents == null
-                          ? Container()
-                          : Padding(
-                              child: Text(
-                                contents,
-                                style: TextStyle(color: Color(0xffFFFFFF)),
-                              ),
-                              padding:
-                                  EdgeInsets.only(bottom: 10.0, top: 10.0)),
-                    ],
-                  )
+                      padding: MaterialStateProperty.all(
+                        EdgeInsets.symmetric(vertical: 10, horizontal: 50)
+                      ),
+                    ),
+                    child: Text(firsTxtBtn),
+                    onPressed: () => Navigator.of(context).pop(text),
+                  ),
                 ],
               ),
-            ),
+              action ?? Container()
+            ] : null,
           );
         });
-  }
-
-  /* Dialog of response from server */
-  static Future dialog(BuildContext context, var text, var title,
-      {FlatButton action, Color bgColor}) async {
-    var result = await showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            backgroundColor: bgColor,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12.0)),
-            title: Align(
-              alignment: Alignment.center,
-              child: title,
-            ),
-            content: Padding(
-              padding: EdgeInsets.only(top: 15.0, bottom: 5.0),
-              child: text,
-            ),
-            actions: <Widget>[
-              FlatButton(
-                child: Text('CLOSE', style: GoogleFonts.nunito(
-                  textStyle: TextStyle(color: Colors.blue, fontSize: 14, fontWeight: FontWeight.w700)
-                  ),
-                ),
-                onPressed: () => Navigator.of(context).pop(text),
-              ),
-              action
-            ],
-          );
-        });
+      }
+    );
     return result;
   }
 
-    static Future dialogOption(BuildContext context, var text, var title,
-      {FlatButton action, Color bgColor}) async {
+  static Future dialogSignOut(
+    BuildContext context, 
+    var text, 
+    var title, 
+    {
+      Widget action, 
+      String firsTxtBtn = "OK",
+      String secTxtBtn = "CANCEL",  
+      Color bgColor = Colors.white, 
+      Color barrierColor, 
+      bool removeBtn: false,
+      double pLeft: 10,
+      double pRight: 10,
+      double pTop: 15.0,
+      double pBottom: 5
+    }
+  ) async {
     var result = await showDialog(
-        context: context,
-        builder: (BuildContext context) {
+      context: context,
+      barrierColor: barrierColor ?? Colors.white.withOpacity(0),
+      builder: (BuildContext context) {
+        return StatefulBuilder(builder: (context2, setState){
           return AlertDialog(
             backgroundColor: bgColor,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12.0)),
-            title: Align(
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+            contentPadding: EdgeInsets.only(left: pLeft, top: pTop, right: pRight, bottom: pBottom),
+            title: title != null ? Align(
               alignment: Alignment.center,
               child: title,
-            ),
-            content: Padding(
-              padding: EdgeInsets.only(top: 15.0, bottom: 5.0),
-              child: text,
-            ),
-            actions: <Widget>[
-              FlatButton(
-                child: Text('CLOSE', style: GoogleFonts.nunito(
-                  textStyle: TextStyle(color: Colors.blue, fontSize: 14, fontWeight: FontWeight.w700)
+            ) : null,
+            content: text,
+            actions: !removeBtn ? <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  TextButton(
+                    style: ButtonStyle(
+                      foregroundColor: MaterialStateProperty.all<Color>(HexColor('0CACDA')),
+                      backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                      padding: MaterialStateProperty.all(
+                        EdgeInsets.symmetric(vertical: 10, horizontal: 35)
+                      ),
+                    ),
+                    child: Text(secTxtBtn),
+                    onPressed: () => Navigator.of(context).pop(text),
                   ),
-                ),
-                onPressed: () => Navigator.of(context).pop(text),
+
+                  TextButton(
+                    style: ButtonStyle(
+                      foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                      backgroundColor: MaterialStateProperty.all<Color>(HexColor('0CACDA')),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        )
+                      ),
+                      padding: MaterialStateProperty.all(
+                        EdgeInsets.symmetric(vertical: 10, horizontal: 50)
+                      ),
+                    ),
+                    child: Text(firsTxtBtn),
+                    onPressed: () async{
+                      dialogLoading(context);
+                      await StorageServices().clearToken('token');
+                      await StorageServices().clearToken('phone');
+                      await StorageServices().clearToken('password');
+                      Future.delayed(Duration(seconds: 2), () {
+                        Timer(Duration(milliseconds: 500), () => Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(builder: (context) => LoginPhone()),
+                          ModalRoute.withName('/loginPhone'),
+                        ));
+                      });
+                    }
+                  ),
+                ],
               ),
-              action
-            ],
+              action ?? Container()
+            ] : null,
           );
         });
+      }
+    );
     return result;
   }
 
-    static Future dialogNonOption(BuildContext context, var text, var title,
-      {FlatButton action, Color bgColor}) async {
+  static Future dialogResetPw(
+    BuildContext context, 
+    var text, 
+    var title, 
+    {
+      Widget action, 
+      String firsTxtBtn = "OK",
+      Color bgColor = Colors.white, 
+      Color barrierColor, 
+      bool removeBtn: false,
+      double pLeft: 10,
+      double pRight: 10,
+      double pTop: 15.0,
+      double pBottom: 5
+    }
+  ) async {
     var result = await showDialog(
-        context: context,
-        builder: (BuildContext context) {
+      context: context,
+      barrierDismissible: false,
+      barrierColor: barrierColor ?? Colors.white.withOpacity(0),
+      builder: (BuildContext context) {
+        return StatefulBuilder(builder: (context2, setState){
           return AlertDialog(
             backgroundColor: bgColor,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12.0)),
-            title: Align(
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+            contentPadding: EdgeInsets.only(left: pLeft, top: pTop, right: pRight, bottom: pBottom),
+            title: title != null ? Align(
               alignment: Alignment.center,
               child: title,
-            ),
-            content: Padding(
-              padding: EdgeInsets.only(top: 15.0, bottom: 5.0),
-              child: text,
-            ),
-            actions: <Widget>[
-              FlatButton(
-                child: Text('CLOSE', style: GoogleFonts.nunito(
-                  textStyle: TextStyle(color: Colors.blue, fontSize: 14, fontWeight: FontWeight.w700)
+            ) : null,
+            content: text,
+            actions: !removeBtn ? <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+
+                  TextButton(
+                    style: ButtonStyle(
+                      foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                      backgroundColor: MaterialStateProperty.all<Color>(HexColor('0CACDA')),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        )
+                      ),
+                      padding: MaterialStateProperty.all(
+                        EdgeInsets.symmetric(vertical: 10, horizontal: 50)
+                      ),
+                    ),
+                    child: Text(firsTxtBtn),
+                    onPressed: () async{
+                      dialogLoading(context);
+                      Future.delayed(Duration(seconds: 2), () {
+                        Timer(Duration(milliseconds: 500), () => Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(builder: (context) => LoginPhone()),
+                          ModalRoute.withName('/loginPhone'),
+                        ));
+                      });
+                    }
                   ),
-                ),
-                onPressed: () => Navigator.of(context).pop(text),
+                ],
               ),
-              action
-            ],
+              action ?? Container()
+            ] : null,
           );
         });
+      }
+    );
+    return result;
+  }
+
+  static Future dialogUpdateApp(
+    BuildContext context, 
+    var text, 
+    var title, 
+    {
+      Widget action, 
+      String firsTxtBtn, 
+      Color bgColor = Colors.white, 
+      Color barrierColor, 
+      bool removeBtn: false,
+      double pLeft: 10,
+      double pRight: 10,
+      double pTop: 15.0,
+      double pBottom: 5,
+      CallbackAction callbackAction
+    }
+  ) async {
+    var _lang = AppLocalizeService.of(context);
+    var result = await showDialog(
+      context: context,
+      barrierDismissible: false,
+      barrierColor: barrierColor ?? Colors.white.withOpacity(0),
+      builder: (BuildContext context) {
+        return StatefulBuilder(builder: (context2, setState){
+          return WillPopScope(
+            onWillPop: () async => false,
+            child: AlertDialog(
+              backgroundColor: bgColor,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+              contentPadding: EdgeInsets.only(left: pLeft, top: pTop, right: pRight, bottom: pBottom),
+              title: title != null ? Align(
+                alignment: Alignment.center,
+                child: title,
+              ) : null,
+              content: text,
+              actions: !removeBtn ? <Widget>[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    TextButton(
+                      style: ButtonStyle(
+                        foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                        backgroundColor: MaterialStateProperty.all<Color>(HexColor('0CACDA')),
+                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          )
+                        ),
+                        padding: MaterialStateProperty.all(
+                          EdgeInsets.symmetric(vertical: 10, horizontal: 50)
+                        ),
+                      ),
+                      child: Text(_lang.translate('btn_update')),
+                      onPressed: () => {
+                        callbackAction
+                      }
+                    ),
+                  ],
+                ),
+                action ?? Container()
+              ] : null,
+            ),
+          );
+        });
+      }
+    );
+    return result;
+  }
+
+  static Future dialogGPS(
+    BuildContext context, 
+    var text, 
+    var title, 
+    {
+      Widget action, 
+      String firsTxtBtn = "OK",
+      String secTxtBtn = "CANCEL",  
+      Color bgColor = Colors.white, 
+      Color barrierColor, 
+      bool removeBtn: false,
+      double pLeft: 10,
+      double pRight: 10,
+      double pTop: 15.0,
+      double pBottom: 5,
+    }
+  ) async {
+    var result = await showDialog(
+      context: context,
+      barrierColor: barrierColor ?? Colors.white.withOpacity(0),
+      builder: (BuildContext context) {
+        return StatefulBuilder(builder: (context2, setState){
+          return AlertDialog(
+            backgroundColor: bgColor,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+            contentPadding: EdgeInsets.only(left: pLeft, top: pTop, right: pRight, bottom: pBottom),
+            title: title != null ? Align(
+              alignment: Alignment.center,
+              child: title,
+            ) : null,
+            content: text,
+            actions: !removeBtn ? <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  TextButton(
+                    style: ButtonStyle(
+                      foregroundColor: MaterialStateProperty.all<Color>(HexColor('0CACDA')),
+                      backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                      padding: MaterialStateProperty.all(
+                        EdgeInsets.symmetric(vertical: 10, horizontal: 35)
+                      ),
+                    ),
+                    child: Text(secTxtBtn),
+                    onPressed: () => Navigator.of(context).pop(text),
+                  ),
+
+                  TextButton(
+                    style: ButtonStyle(
+                      foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                      backgroundColor: MaterialStateProperty.all<Color>(HexColor('0CACDA')),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        )
+                      ),
+                      padding: MaterialStateProperty.all(
+                        EdgeInsets.symmetric(vertical: 10, horizontal: 50)
+                      ),
+                    ),
+                    child: Text(firsTxtBtn),
+                    onPressed: () => {
+                      AppSettings.openLocationSettings(),
+
+                      Navigator.of(context).pop(),
+                    }
+                  ),
+                ],
+              ),
+              action ?? Container()
+            ] : null,
+          );
+        });
+      }
+    );
     return result;
   }
 
@@ -205,15 +475,15 @@ class ItemList extends StatelessWidget {
 }
 
 
-/* Loading Progress */
-Widget loading() {
-  return Center(
-    child: CircularProgressIndicator(
-      backgroundColor: Colors.transparent,
-      valueColor: AlwaysStoppedAnimation(Colors.blueAccent)
-    ),
-  );
-}
+// /* Loading Progress */
+// Widget loading() {
+//   return Center(
+//     child: CircularProgressIndicator(
+//       backgroundColor: Colors.transparent,
+//       valueColor: AlwaysStoppedAnimation(Colors.blueAccent)
+//     ),
+//   );
+// }
 
 /* Progress */
 Widget progress({String content}) {

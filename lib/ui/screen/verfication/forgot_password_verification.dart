@@ -21,7 +21,6 @@ class _ForgotPasswordVerificationState extends State<ForgotPasswordVerification>
 
   StreamController<ErrorAnimationType> errorController;
   
-  String alertText;
   bool isLoading = false;
   bool hasError = false;
   String currentText = "";
@@ -47,7 +46,6 @@ class _ForgotPasswordVerificationState extends State<ForgotPasswordVerification>
 
   Future<void> _submitOtp(String vCode) async {
     dialogLoading(context);
-    var responseBody;
     try {
       String apiUrl = '${ApiService.url}/auth/confirm-phone';
       setState(() {
@@ -67,41 +65,17 @@ class _ForgotPasswordVerificationState extends State<ForgotPasswordVerification>
           print(response.body);
           Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => ResetNewPassword(widget.phone)));
-        } else {
+        } 
+        else {
+          await Components.dialog(
+            context,
+            textAlignCenter(text: responseJson['message']),
+            warningTitleDialog()
+          );
           Navigator.pop(context);
-          print(response.body);
-          return showDialog(
-            context: context,
-            barrierDismissible: false,
-            builder: (BuildContext context) {
-              var _lang = AppLocalizeService.of(context);
-              return AlertDialog(
-                title: Row(
-                  children: [
-                    Icon(Icons.error, color: Colors.red),
-                    Text(_lang.translate('error') , style: TextStyle(fontFamily: 'Poppins-Bold'),),
-                  ],
-                ),
-                content: SingleChildScrollView(
-                  child: ListBody(
-                    children: <Widget>[
-                      Text(responseJson['message']),
-                    ],
-                  ),
-                ),
-                actions: <Widget>[
-                  FlatButton(
-                    child: Text(_lang.translate('ok')),
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                ],
-              );
-            });
       }
     } catch (e) {
-      alertText = responseBody['message'];
+      Navigator.pop(context);
     }
     
   }

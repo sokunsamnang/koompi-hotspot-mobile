@@ -11,7 +11,6 @@ class ResetNewPassword extends StatefulWidget {
 class _ResetNewPasswordState extends State<ResetNewPassword> {
 
   bool isLoading = false;
-  String alertText;
   // Initially password is obscure
   bool _obscureText = true;
   bool _obscureText2 = true;
@@ -50,51 +49,50 @@ class _ResetNewPasswordState extends State<ResetNewPassword> {
     }
   }
 
-  showChangePasswordDialog(context) async {
-    var _lang = AppLocalizeService.of(context);
-    return showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return WillPopScope(
-          onWillPop: () async => false,
-          child: AlertDialog(
-            title: Text(
-              _lang.translate('complete'),
-              textAlign: TextAlign.center,
-            ),
-            content: SingleChildScrollView(
-              child: ListBody(
-                children: <Widget>[
-                  Text(_lang.translate('tf_reset_password')),
-                ],
-              ),
-            ),
-            actions: <Widget>[
-              FlatButton(
-                child: Text(_lang.translate('ok')),
-                onPressed: () async {
-                  dialogLoading(context);
-                  Future.delayed(Duration(seconds: 2), () {
-                    Timer(Duration(milliseconds: 500), () => Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(builder: (context) => LoginPhone()),
-                      ModalRoute.withName('/loginPhone'),
-                    ));
-                  });
-                },
-              ),
-            ],
-          ),
-        );
-      }
-    );
-  }
+  // showChangePasswordDialog(context) async {
+  //   var _lang = AppLocalizeService.of(context);
+  //   return showDialog(
+  //     context: context,
+  //     barrierDismissible: false,
+  //     builder: (BuildContext context) {
+  //       return WillPopScope(
+  //         onWillPop: () async => false,
+  //         child: AlertDialog(
+  //           title: Text(
+  //             _lang.translate('complete'),
+  //             textAlign: TextAlign.center,
+  //           ),
+  //           content: SingleChildScrollView(
+  //             child: ListBody(
+  //               children: <Widget>[
+  //                 Text(_lang.translate('tf_reset_password')),
+  //               ],
+  //             ),
+  //           ),
+  //           actions: <Widget>[
+  //             FlatButton(
+  //               child: Text(_lang.translate('ok')),
+  //               onPressed: () async {
+  //                 dialogLoading(context);
+  //                 Future.delayed(Duration(seconds: 2), () {
+  //                   Timer(Duration(milliseconds: 500), () => Navigator.pushAndRemoveUntil(
+  //                     context,
+  //                     MaterialPageRoute(builder: (context) => LoginPhone()),
+  //                     ModalRoute.withName('/loginPhone'),
+  //                   ));
+  //                 });
+  //               },
+  //             ),
+  //           ],
+  //         ),
+  //       );
+  //     }
+  //   );
+  // }
   
   Future <void> _resetPassword() async {
     dialogLoading(context);
-
-    var responseBody;
+    var _lang = AppLocalizeService.of(context);
     try {
       String apiUrl = '${ApiService.url}/reset-password-phone';
       setState(() {
@@ -109,86 +107,95 @@ class _ResetNewPasswordState extends State<ResetNewPassword> {
           "phone": widget.phone,
           "new_password": _confirmPasswordController.text,
         }));
+
+      var responseJson = json.decode(response.body);
+
       if (response.statusCode == 200) {
         await StorageServices().clearToken('token');
         await StorageServices().clearToken('phone');
         await StorageServices().clearToken('password');
+        await Components.dialogResetPw(
+          context,
+          Text(_lang.translate('tf_reset_password'), textAlign: TextAlign.center),
+          Text(_lang.translate('complete'), style: TextStyle(fontFamily: 'Poppins-Bold'),),
+        );
         Navigator.pop(context);
-        showChangePasswordDialog(context);
       } else {
+        await Components.dialog(
+          context,
+          textAlignCenter(text: responseJson['message']),
+          warningTitleDialog()
+        );
         Navigator.pop(context);
-        showErrorDialog(context);
-        print(response.body);
       }
     } catch (e) {
       Navigator.pop(context);
-      alertText = responseBody['message'];
     }
   }
 
-  showErrorServerDialog(BuildContext context) async {
-    return showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        var _lang = AppLocalizeService.of(context);
-        return AlertDialog(
-          title: Row(
-            children: [
-              Icon(Icons.error, color: Colors.red),
-              Text(_lang.translate('error'), style: TextStyle(fontFamily: 'Poppins-Bold'),),
-            ],
-          ),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: <Widget>[
-                Text(_lang.translate('error_server')),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            FlatButton(
-              child: Text(_lang.translate('ok')),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      });
-  }
+  // showErrorServerDialog(BuildContext context) async {
+  //   return showDialog(
+  //     context: context,
+  //     barrierDismissible: false,
+  //     builder: (BuildContext context) {
+  //       var _lang = AppLocalizeService.of(context);
+  //       return AlertDialog(
+  //         title: Row(
+  //           children: [
+  //             Icon(Icons.error, color: Colors.red),
+  //             Text(_lang.translate('error'), style: TextStyle(fontFamily: 'Poppins-Bold'),),
+  //           ],
+  //         ),
+  //         content: SingleChildScrollView(
+  //           child: ListBody(
+  //             children: <Widget>[
+  //               Text(_lang.translate('error_server')),
+  //             ],
+  //           ),
+  //         ),
+  //         actions: <Widget>[
+  //           FlatButton(
+  //             child: Text(_lang.translate('ok')),
+  //             onPressed: () {
+  //               Navigator.of(context).pop();
+  //             },
+  //           ),
+  //         ],
+  //       );
+  //     });
+  // }
 
-  showErrorDialog(BuildContext context) async {
-    return showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        var _lang = AppLocalizeService.of(context);
-        return AlertDialog(
-          title: Row(
-            children: [
-              Icon(Icons.warning, color: Colors.yellow),
-              Text(_lang.translate('warning'), style: TextStyle(fontFamily: 'Poppins-Bold'),),
-            ],
-          ),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: <Widget>[
-                Text('Something went wrong, Please try again.'),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            FlatButton(
-              child: Text(_lang.translate('ok')),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      });
-  }
+  // showErrorDialog(BuildContext context) async {
+  //   return showDialog(
+  //     context: context,
+  //     barrierDismissible: false,
+  //     builder: (BuildContext context) {
+  //       var _lang = AppLocalizeService.of(context);
+  //       return AlertDialog(
+  //         title: Row(
+  //           children: [
+  //             Icon(Icons.warning, color: Colors.yellow),
+  //             Text(_lang.translate('warning'), style: TextStyle(fontFamily: 'Poppins-Bold'),),
+  //           ],
+  //         ),
+  //         content: SingleChildScrollView(
+  //           child: ListBody(
+  //             children: <Widget>[
+  //               Text('Something went wrong, Please try again.'),
+  //             ],
+  //           ),
+  //         ),
+  //         actions: <Widget>[
+  //           FlatButton(
+  //             child: Text(_lang.translate('ok')),
+  //             onPressed: () {
+  //               Navigator.of(context).pop();
+  //             },
+  //           ),
+  //         ],
+  //       );
+  //     });
+  // }
 
 
 

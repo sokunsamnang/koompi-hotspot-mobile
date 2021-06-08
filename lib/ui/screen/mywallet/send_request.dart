@@ -63,12 +63,10 @@ class _SendRequestState extends State<SendRequest> {
           await Components.dialog(
             context,
             textAlignCenter(text: responseJson['message']),
-            warningTitleDialog());
+            warningTitleDialog()
+          );
           Navigator.pop(context);
           _passwordController.clear();
-          // recieveWallet.clear();
-          // amount.clear();
-          // memo.clear();
         }
       }
     } on SocketException catch (_) {

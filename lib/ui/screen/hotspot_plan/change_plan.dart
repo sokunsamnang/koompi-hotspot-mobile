@@ -65,37 +65,12 @@ class _ChangeHotspotPlanState extends State<ChangeHotspotPlan> {
         }
         else{
           _passwordController.clear();
-          Navigator.of(context).pop();
-          return showDialog(
-            context: context,
-            barrierDismissible: false,
-            builder: (BuildContext context) {
-              var _lang = AppLocalizeService.of(context);
-              return AlertDialog(
-                title: Row(
-                  children: [
-                    Icon(Icons.warning, color: Colors.yellow),
-                    Text(_lang.translate('warning'), style: TextStyle(fontFamily: 'Poppins-Bold'),),
-                  ],
-                ),
-                content: SingleChildScrollView(
-                  child: ListBody(
-                    children: <Widget>[
-                      Text(responseJson['message']),
-                    ],
-                  ),
-                ),
-                actions: <Widget>[
-                  FlatButton(
-                    child: Text(_lang.translate('ok')),
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                ],
-              );
-            }
+          await Components.dialog(
+            context,
+            textAlignCenter(text: responseJson['message']),
+            warningTitleDialog()
           );
+          Navigator.pop(context);
         }
       
       }
@@ -130,39 +105,13 @@ class _ChangeHotspotPlanState extends State<ChangeHotspotPlan> {
         }
         else{
           _passwordController.clear();
-          Navigator.of(context).pop();
-          return showDialog(
-            context: context,
-            barrierDismissible: false,
-            builder: (BuildContext context) {
-              var _lang = AppLocalizeService.of(context);
-              return AlertDialog(
-                title: Row(
-                  children: [
-                    Icon(Icons.warning, color: Colors.yellow),
-                    Text(_lang.translate('warning'), style: TextStyle(fontFamily: 'Poppins-Bold'),),
-                  ],
-                ),
-                content: SingleChildScrollView(
-                  child: ListBody(
-                    children: <Widget>[
-                      Text(responseJson['message']),
-                    ],
-                  ),
-                ),
-                actions: <Widget>[
-                  FlatButton(
-                    child: Text(_lang.translate('ok')),
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                ],
-              );
-            }
+          await Components.dialog(
+            context,
+            textAlignCenter(text: responseJson['message']),
+            warningTitleDialog()
           );
+          Navigator.pop(context);
         }
-      
       }
     } on SocketException catch (_) {
       Navigator.pop(context);
@@ -387,7 +336,15 @@ class _ChangeHotspotPlanState extends State<ChangeHotspotPlan> {
                         return null;
                       }
                       else{
-                        mPlan.status == false ? _showDialog30Days(context) : _showAlreadyBoughtPlanDialog(context);
+                        mPlan.status == false 
+                        ? 
+                        _showDialog30Days(context) 
+                        : 
+                        await Components.dialog(
+                          context,
+                          textAlignCenter(text: _lang.translate('in_use_plan')),
+                          warningTitleDialog()
+                        );
                       }
                     },
                     child: Center(
@@ -555,7 +512,15 @@ class _ChangeHotspotPlanState extends State<ChangeHotspotPlan> {
                         return null;
                       }
                       else{
-                        mPlan.status == false ? _showDialog365Days(context) : _showAlreadyBoughtPlanDialog(context);
+                        mPlan.status == false 
+                        ? 
+                        _showDialog365Days(context) 
+                        : 
+                        await Components.dialog(
+                          context,
+                          textAlignCenter(text: _lang.translate('in_use_plan')),
+                          warningTitleDialog()
+                        );
                       }
                     },
                     child: Center(
@@ -712,37 +677,37 @@ class _ChangeHotspotPlanState extends State<ChangeHotspotPlan> {
     );
   }
 
-  _showAlreadyBoughtPlanDialog(context) async {
-    var _lang = AppLocalizeService.of(context);
-    return showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Row(
-            children: [
-              Icon(Icons.warning, color: Colors.yellow),
-              Text(_lang.translate('warning'), style: TextStyle(fontFamily: 'Poppins-Bold'),),
-            ],
-          ),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: <Widget>[
-                Text(_lang.translate('in_use_plan')),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            FlatButton(
-              child: Text(_lang.translate('ok')),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      }
-    );
-  }
+  // _showAlreadyBoughtPlanDialog(context) async {
+  //   var _lang = AppLocalizeService.of(context);
+  //   return showDialog(
+  //     context: context,
+  //     barrierDismissible: false,
+  //     builder: (BuildContext context) {
+  //       return AlertDialog(
+  //         title: Row(
+  //           children: [
+  //             Icon(Icons.warning, color: Colors.yellow),
+  //             Text(_lang.translate('warning'), style: TextStyle(fontFamily: 'Poppins-Bold'),),
+  //           ],
+  //         ),
+  //         content: SingleChildScrollView(
+  //           child: ListBody(
+  //             children: <Widget>[
+  //               Text(_lang.translate('in_use_plan')),
+  //             ],
+  //           ),
+  //         ),
+  //         actions: <Widget>[
+  //           FlatButton(
+  //             child: Text(_lang.translate('ok')),
+  //             onPressed: () {
+  //               Navigator.of(context).pop();
+  //             },
+  //           ),
+  //         ],
+  //       );
+  //     }
+  //   );
+  // }
 }
 

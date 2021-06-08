@@ -93,35 +93,12 @@ class _WalletChoiceState extends State<WalletChoice> {
                             MaterialPageRoute(builder: (context) => MyWallet()),
                           );
                         } else {
-                          return showDialog(
-                              context: context,
-                              barrierDismissible: false,
-                              builder: (BuildContext context) {
-                                var _lang = AppLocalizeService.of(context);
-                                return AlertDialog(
-                                  title: Row(
-                                    children: [
-                                      Icon(Icons.error, color: Colors.red),
-                                      Text(_lang.translate('error') , style: TextStyle(fontFamily: 'Poppins-Bold'),),
-                                    ],
-                                  ),
-                                  content: SingleChildScrollView(
-                                    child: ListBody(
-                                      children: <Widget>[
-                                        Text(responseJson['message']),
-                                      ],
-                                    ),
-                                  ),
-                                  actions: <Widget>[
-                                    FlatButton(
-                                      child: Text(_lang.translate('ok')),
-                                      onPressed: () {
-                                        Navigator.of(context).pop();
-                                      },
-                                    ),
-                                  ],
-                                );
-                              });
+                          await Components.dialog(
+                            context,
+                            textAlignCenter(text: responseJson['message']),
+                            warningTitleDialog()
+                          );
+                          Navigator.pop(context);
                         }
                         Navigator.of(context).pop();
                       },

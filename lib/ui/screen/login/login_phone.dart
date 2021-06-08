@@ -67,6 +67,7 @@ class _LoginPhoneState extends State<LoginPhone> {
 
   //check connection and login
   Future <void> login() async {
+    var _lang = AppLocalizeService.of(context);
     dialogLoading(context);
     try {
       final result = await InternetAddress.lookup('google.com');
@@ -75,8 +76,10 @@ class _LoginPhoneState extends State<LoginPhone> {
         var response = await PostRequest().userLogInPhone(
           StorageServices.removeZero(phoneController.text),
           passwordController.text);
+          
+        var responseJson = json.decode(response.body);
+
         if (response.statusCode == 200) {
-          var responseJson = json.decode(response.body);
           token = responseJson['token'];
             await GetRequest().getUserProfile(token)
               .then((values) {
@@ -108,18 +111,32 @@ class _LoginPhoneState extends State<LoginPhone> {
           }
         } 
         else if (response.statusCode == 401){
+          
+          await Components.dialog(
+            context,
+            textAlignCenter(text: responseJson['message']),
+            warningTitleDialog()
+          );
           Navigator.pop(context);
-          return showErrorDialog(context);
         }
         else if (response.statusCode >= 500 && response.statusCode < 600){
+
+          await Components.dialog(
+            context,
+            textAlignCenter(text: responseJson['message']),
+            warningTitleDialog()
+          );
           Navigator.pop(context);
-          return showErrorServerDialog(context);
         }
       }
     } on SocketException catch (_) {
-      Navigator.pop(context);
       print('not connected');
-      errorDialog(context);
+      await Components.dialog(
+        context,
+        Text(_lang.translate('error_service')),
+        Text(_lang.translate('error')),
+      );
+      Navigator.pop(context);
     }
   }
 
@@ -133,114 +150,114 @@ class _LoginPhoneState extends State<LoginPhone> {
     });
   }
 
-  errorDialog(BuildContext context) async {
-    return showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext context) {
-          var _lang = AppLocalizeService.of(context);
-          return AlertDialog(
-            title: Row(
-              children: [
-                Icon(Icons.error, color: Colors.red),
-                Text(_lang.translate('error'), style: TextStyle(fontFamily: 'Poppins-Bold'),),
-              ],
-            ),
-            content: SingleChildScrollView(
-              child: ListBody(
-                children: <Widget>[
-                  Text(_lang.translate('error_service')),
-                ],
-              ),
-            ),
-            actions: <Widget>[
-              FlatButton(
-                child: Text(_lang.translate('ok')),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
-          );
-        });
-  }
+  // errorDialog(BuildContext context) async {
+  //   return showDialog(
+  //       context: context,
+  //       barrierDismissible: false,
+  //       builder: (BuildContext context) {
+  //         var _lang = AppLocalizeService.of(context);
+  //         return AlertDialog(
+  //           title: Row(
+  //             children: [
+  //               Icon(Icons.error, color: Colors.red),
+  //               Text(_lang.translate('error'), style: TextStyle(fontFamily: 'Poppins-Bold'),),
+  //             ],
+  //           ),
+  //           content: SingleChildScrollView(
+  //             child: ListBody(
+  //               children: <Widget>[
+  //                 Text(_lang.translate('error_service')),
+  //               ],
+  //             ),
+  //           ),
+  //           actions: <Widget>[
+  //             FlatButton(
+  //               child: Text(_lang.translate('ok')),
+  //               onPressed: () {
+  //                 Navigator.of(context).pop();
+  //               },
+  //             ),
+  //           ],
+  //         );
+  //       });
+  // }
 
-  showErrorDialog(BuildContext context) async {
-    var response = await PostRequest().userLogInPhone(
-          StorageServices.removeZero(phoneController.text),
-          passwordController.text);
-    var responseJson = json.decode(response.body);
-    return showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        var _lang = AppLocalizeService.of(context);
-        return AlertDialog(
-          title: Row(
-            children: [
-              Icon(Icons.warning, color: Colors.yellow),
-              Text(_lang.translate('warning'), style: TextStyle(fontFamily: 'Poppins-Bold'),),
-            ],
-          ),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: <Widget>[
-                Text(responseJson['message']),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            FlatButton(
-              child: Text('OK'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      });
-  }
+  // showErrorDialog(BuildContext context) async {
+  //   var response = await PostRequest().userLogInPhone(
+  //         StorageServices.removeZero(phoneController.text),
+  //         passwordController.text);
+  //   var responseJson = json.decode(response.body);
+  //   return showDialog(
+  //     context: context,
+  //     barrierDismissible: false,
+  //     builder: (BuildContext context) {
+  //       var _lang = AppLocalizeService.of(context);
+  //       return AlertDialog(
+  //         title: Row(
+  //           children: [
+  //             Icon(Icons.warning, color: Colors.yellow),
+  //             Text(_lang.translate('warning'), style: TextStyle(fontFamily: 'Poppins-Bold'),),
+  //           ],
+  //         ),
+  //         content: SingleChildScrollView(
+  //           child: ListBody(
+  //             children: <Widget>[
+  //               Text(responseJson['message']),
+  //             ],
+  //           ),
+  //         ),
+  //         actions: <Widget>[
+  //           FlatButton(
+  //             child: Text('OK'),
+  //             onPressed: () {
+  //               Navigator.of(context).pop();
+  //             },
+  //           ),
+  //         ],
+  //       );
+  //     });
+  // }
 
-  showErrorServerDialog(BuildContext context) async {
-    return showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        var _lang = AppLocalizeService.of(context);
-        return AlertDialog(
-          title: Row(
-            children: [
-              Icon(Icons.error, color: Colors.red),
-              Text(_lang.translate('error'), style: TextStyle(fontFamily: 'Poppins-Bold'),),
-            ],
-          ),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: <Widget>[
-                Text(_lang.translate('error_server')),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            FlatButton(
-              child: Text(_lang.translate('ok')),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      });
-  }
+  // showErrorServerDialog(BuildContext context) async {
+  //   return showDialog(
+  //     context: context,
+  //     barrierDismissible: false,
+  //     builder: (BuildContext context) {
+  //       var _lang = AppLocalizeService.of(context);
+  //       return AlertDialog(
+  //         title: Row(
+  //           children: [
+  //             Icon(Icons.error, color: Colors.red),
+  //             Text(_lang.translate('error'), style: TextStyle(fontFamily: 'Poppins-Bold'),),
+  //           ],
+  //         ),
+  //         content: SingleChildScrollView(
+  //           child: ListBody(
+  //             children: <Widget>[
+  //               Text(_lang.translate('error_server')),
+  //             ],
+  //           ),
+  //         ),
+  //         actions: <Widget>[
+  //           FlatButton(
+  //             child: Text(_lang.translate('ok')),
+  //             onPressed: () {
+  //               Navigator.of(context).pop();
+  //             },
+  //           ),
+  //         ],
+  //       );
+  //     });
+  // }
 
-  Widget horizontalLine() => Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16.0),
-        child: Container(
-          width: ScreenUtil.getInstance().setWidth(120),
-          height: 1.0,
-          color: Colors.black26.withOpacity(.2),
-        ),
-      );
+  // Widget horizontalLine() => Padding(
+  //   padding: EdgeInsets.symmetric(horizontal: 16.0),
+  //   child: Container(
+  //     width: ScreenUtil.getInstance().setWidth(120),
+  //     height: 1.0,
+  //     color: Colors.black26.withOpacity(.2),
+  //   ),
+  // );
 
   
   @override

@@ -34,6 +34,9 @@ class _ForgotPasswordState extends State<ForgotPassword> {
         print('Internet connected');
         var response = await PostRequest().forgotPasswordByPhone(
           StorageServices.removeZero(_phoneController.text),);
+
+        var responseJson = json.decode(response.body);
+        
         if (response.statusCode == 200) {
           Navigator.pushReplacement(
             context, 
@@ -43,12 +46,20 @@ class _ForgotPasswordState extends State<ForgotPassword> {
           );
         }
         else if (response.statusCode == 401){
+          await Components.dialog(
+            context,
+            textAlignCenter(text: responseJson['message']),
+            warningTitleDialog()
+          );
           Navigator.pop(context);
-          return showErrorDialog(context);
         }
         else if (response.statusCode >= 500 && response.statusCode <600){
+          await Components.dialog(
+            context,
+            textAlignCenter(text: responseJson['message']),
+            warningTitleDialog()
+          );
           Navigator.pop(context);
-          return showErrorServerDialog(context);
         }
       }
     } on SocketException catch (_) {
@@ -57,71 +68,71 @@ class _ForgotPasswordState extends State<ForgotPassword> {
     }
   }
 
-  showErrorServerDialog(BuildContext context) async {
-    return showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        var _lang = AppLocalizeService.of(context);
-        return AlertDialog(
-          title: Row(
-            children: [
-              Icon(Icons.error, color: Colors.red),
-              Text(_lang.translate('error'), style: TextStyle(fontFamily: 'Poppins-Bold'),),
-            ],
-          ),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: <Widget>[
-                Text(_lang.translate('error_server')),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            FlatButton(
-              child: Text(_lang.translate('ok')),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      });
-  }
+  // showErrorServerDialog(BuildContext context) async {
+  //   return showDialog(
+  //     context: context,
+  //     barrierDismissible: false,
+  //     builder: (BuildContext context) {
+  //       var _lang = AppLocalizeService.of(context);
+  //       return AlertDialog(
+  //         title: Row(
+  //           children: [
+  //             Icon(Icons.error, color: Colors.red),
+  //             Text(_lang.translate('error'), style: TextStyle(fontFamily: 'Poppins-Bold'),),
+  //           ],
+  //         ),
+  //         content: SingleChildScrollView(
+  //           child: ListBody(
+  //             children: <Widget>[
+  //               Text(_lang.translate('error_server')),
+  //             ],
+  //           ),
+  //         ),
+  //         actions: <Widget>[
+  //           FlatButton(
+  //             child: Text(_lang.translate('ok')),
+  //             onPressed: () {
+  //               Navigator.of(context).pop();
+  //             },
+  //           ),
+  //         ],
+  //       );
+  //     });
+  // }
 
-  showErrorDialog(BuildContext context) async {
-    var response = await PostRequest().forgotPasswordByPhone(_phoneController.text);
-    var responseJson = json.decode(response.body);
-    return showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        var _lang = AppLocalizeService.of(context);
-        return AlertDialog(
-          title: Row(
-            children: [
-              Icon(Icons.warning, color: Colors.yellow),
-              Text(_lang.translate('warning'), style: TextStyle(fontFamily: 'Poppins-Bold'),),
-            ],
-          ),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: <Widget>[
-                Text(responseJson['message']),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            FlatButton(
-              child: Text(_lang.translate('ok')),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      });
-  }
+  // showErrorDialog(BuildContext context) async {
+  //   var response = await PostRequest().forgotPasswordByPhone(_phoneController.text);
+  //   var responseJson = json.decode(response.body);
+  //   return showDialog(
+  //     context: context,
+  //     barrierDismissible: false,
+  //     builder: (BuildContext context) {
+  //       var _lang = AppLocalizeService.of(context);
+  //       return AlertDialog(
+  //         title: Row(
+  //           children: [
+  //             Icon(Icons.warning, color: Colors.yellow),
+  //             Text(_lang.translate('warning'), style: TextStyle(fontFamily: 'Poppins-Bold'),),
+  //           ],
+  //         ),
+  //         content: SingleChildScrollView(
+  //           child: ListBody(
+  //             children: <Widget>[
+  //               Text(responseJson['message']),
+  //             ],
+  //           ),
+  //         ),
+  //         actions: <Widget>[
+  //           FlatButton(
+  //             child: Text(_lang.translate('ok')),
+  //             onPressed: () {
+  //               Navigator.of(context).pop();
+  //             },
+  //           ),
+  //         ],
+  //       );
+  //     });
+  // }
 
   Widget build(BuildContext context) {
     return Scaffold(

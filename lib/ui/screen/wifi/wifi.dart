@@ -196,42 +196,21 @@ class _WifiConnectState extends State<WifiConnect> {
     if (status == GeolocationStatus.granted && isGPSOn) {
       loadWifiList();
     } else if (isGPSOn == false) {
-      _showDialog(_lang.translate('turn_on_gps'));
+      await Components.dialogGPS(
+        context,
+        Text(_lang.translate('turn_on_gps'), textAlign: TextAlign.center),
+        Text(_lang.translate('location_permission'), textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.bold)),
+      );
     } else if (status != GeolocationStatus.granted) {
       loadWifiList();
     } else {
-      _showDialog(_lang.translate('turn_on_gps'));
+      await Components.dialogGPS(
+        context,
+        Text(_lang.translate('turn_on_gps'), textAlign: TextAlign.center),
+        Text(_lang.translate('location_permission'), textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.bold)),
+      );
 
     }
-  }
-
- /// Show a Alert Dialog
-  void _showDialog(String body) {
-    var _lang = AppLocalizeService.of(context);
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text(_lang.translate('location_permission')),
-            content: Text(body),
-            actions: <Widget>[
-              FlatButton(
-                child: Text(_lang.translate('cancel')),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-              FlatButton(
-                child: Text(_lang.translate('setting')),
-                onPressed: () {
-                  AppSettings.openLocationSettings();
-
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
-          );
-        });
   }
 
 

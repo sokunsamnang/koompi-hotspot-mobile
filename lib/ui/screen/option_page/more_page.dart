@@ -135,7 +135,11 @@ class _MorePageState extends State<MorePage>
                       leading: Icon(LineIcons.sign_out),
                       title: Text(_lang.translate('sign_out')),
                       onTap: () async {
-                        showLogoutDialog(context);
+                        await Components.dialogSignOut(
+                          context,
+                          Text(_lang.translate('sign_out_warn'), textAlign: TextAlign.center),
+                          Text(_lang.translate('warning'), style: TextStyle(fontFamily: 'Poppins-Bold'),),
+                        );
                       },
                     ),
                     _buildDivider(),
@@ -160,50 +164,50 @@ class _MorePageState extends State<MorePage>
   }
 }
 
-showLogoutDialog(context) async {
-  return showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        var _lang = AppLocalizeService.of(context);
-        return AlertDialog(
-          title: Row(
-            children: [
-              Icon(Icons.warning, color: Colors.yellow),
-              Text(_lang.translate('warning'), style: TextStyle(fontFamily: 'Poppins-Bold'),),
-            ],
-          ),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: <Widget>[
-                Text(_lang.translate('sign_out_warn')),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            FlatButton(
-              child: Text(_lang.translate('cancel')),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-            FlatButton(
-              child: Text(_lang.translate('ok')),
-              onPressed: () async {
-                dialogLoading(context);
-                await StorageServices().clearToken('token');
-                await StorageServices().clearToken('phone');
-                await StorageServices().clearToken('password');
-                Future.delayed(Duration(seconds: 2), () {
-                  Timer(Duration(milliseconds: 500), () => Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(builder: (context) => LoginPhone()),
-                    ModalRoute.withName('/loginPhone'),
-                  ));
-                });
-              },
-            ),
-          ],
-        );
-      });
-}
+// showLogoutDialog(context) async {
+//   return showDialog(
+//       context: context,
+//       barrierDismissible: false,
+//       builder: (BuildContext context) {
+//         var _lang = AppLocalizeService.of(context);
+//         return AlertDialog(
+//           title: Row(
+//             children: [
+//               Icon(Icons.warning, color: Colors.yellow),
+//               Text(_lang.translate('warning'), style: TextStyle(fontFamily: 'Poppins-Bold'),),
+//             ],
+//           ),
+//           content: SingleChildScrollView(
+//             child: ListBody(
+//               children: <Widget>[
+//                 Text(_lang.translate('sign_out_warn')),
+//               ],
+//             ),
+//           ),
+//           actions: <Widget>[
+//             FlatButton(
+//               child: Text(_lang.translate('cancel')),
+//               onPressed: () {
+//                 Navigator.of(context).pop();
+//               },
+//             ),
+//             FlatButton(
+//               child: Text(_lang.translate('ok')),
+//               onPressed: () async {
+//                 dialogLoading(context);
+//                 await StorageServices().clearToken('token');
+//                 await StorageServices().clearToken('phone');
+//                 await StorageServices().clearToken('password');
+//                 Future.delayed(Duration(seconds: 2), () {
+//                   Timer(Duration(milliseconds: 500), () => Navigator.pushAndRemoveUntil(
+//                     context,
+//                     MaterialPageRoute(builder: (context) => LoginPhone()),
+//                     ModalRoute.withName('/loginPhone'),
+//                   ));
+//                 });
+//               },
+//             ),
+//           ],
+//         );
+//       });
+// }

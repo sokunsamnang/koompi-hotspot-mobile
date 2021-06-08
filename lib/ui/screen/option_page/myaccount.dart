@@ -91,7 +91,12 @@ class _MyAccountState extends State<MyAccount>
         } else {
           Navigator.pop(context);
           print('update info not Successful');
-          showErrorServerDialog(context);
+          await Components.dialog(
+            context,
+            textAlignCenter(text: 'Update info not successfully'),
+            warningTitleDialog()
+          );
+          Navigator.pop(context);
         }
       }
     } on SocketException catch (_) {
@@ -99,32 +104,32 @@ class _MyAccountState extends State<MyAccount>
     }
   }
 
-  showErrorServerDialog(BuildContext context) async {
+  // showErrorServerDialog(BuildContext context) async {
     
-    return showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text('Error'),
-            content: SingleChildScrollView(
-              child: ListBody(
-                children: <Widget>[
-                  Text('Update info not successfully'),
-                ],
-              ),
-            ),
-            actions: <Widget>[
-              FlatButton(
-                child: Text('OK'),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
-          );
-        });
-  }
+  //   return showDialog(
+  //       context: context,
+  //       barrierDismissible: false,
+  //       builder: (BuildContext context) {
+  //         return AlertDialog(
+  //           title: Text('Error'),
+  //           content: SingleChildScrollView(
+  //             child: ListBody(
+  //               children: <Widget>[
+  //                 Text('Update info not successfully'),
+  //               ],
+  //             ),
+  //           ),
+  //           actions: <Widget>[
+  //             FlatButton(
+  //               child: Text('OK'),
+  //               onPressed: () {
+  //                 Navigator.of(context).pop();
+  //               },
+  //             ),
+  //           ],
+  //         );
+  //       });
+  // }
 
   @override
   void initState() {
