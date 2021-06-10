@@ -95,7 +95,6 @@ class _WifiConnectState extends State<WifiConnect> {
   //     ]).show();
   // }
 
-
   Future<void> _displayTextInputDialog(BuildContext context, String ssid) async {
     // Initially password is obscure
     bool _obscureText = true;
@@ -106,52 +105,92 @@ class _WifiConnectState extends State<WifiConnect> {
         _obscureText = !_obscureText;
       });
     }
+    var _lang = AppLocalizeService.of(context);
     return showDialog(
       context: context,
+      barrierDismissible: false,
       builder: (BuildContext context) {
         // return object of type Dialog
         return WillPopScope(
           onWillPop: () async => false,
           child:AlertDialog(
-            title: new Text('Enter password $ssid'),
+            // backgroundColor: Col,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+            contentPadding: EdgeInsets.only(left: 10, top: 15, right: 10, bottom: 5),
+            title: new Text('Enter password $ssid', textAlign: TextAlign.center,),
             content: TextFormField(
-              obscureText: _obscureText,
               controller: _passwordController,
               onSaved: (val) => _passwordController.text = val,
               keyboardType: TextInputType.visiblePassword,
               decoration: InputDecoration(
                 fillColor: Colors.grey[100],
                 filled: true,
-                hintText: 'Password',
+                hintText: _lang.translate('password_tf'),
                 hintStyle: TextStyle(color: Colors.black, fontSize: 12.0),
-                border: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.black),
-                  borderRadius: BorderRadius.all(Radius.circular(12.0))
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12.0),
+                  borderSide: BorderSide(
+                    color: primaryColor,
+                  ),
                 ),
-                suffixIcon: GestureDetector(
-                  onTap: () {
-                    _toggle();
-                  },
-                  child: Icon(
-                    _obscureText ? Icons.visibility_off : Icons.visibility,
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12.0),
+                  borderSide: BorderSide(
+                    color: primaryColor,
+                  ),
+                ),
+                errorBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12.0),
+                  borderSide: BorderSide(
+                    color: Colors.red
+                  ),
+                ),
+                focusedErrorBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12.0),
+                  borderSide: BorderSide(
+                    color: Colors.red
                   ),
                 ),
               ),
+              obscureText: true,
             ),
             actions: <Widget>[
+              // usually buttons at the bottom of the dialog
               Row(
-                children: <Widget>[
-                  new FlatButton(
-                    child: new Text('CANCEL'),
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                      _passwordController.clear(); 
-                    },
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  TextButton(
+                    style: ButtonStyle(
+                      foregroundColor: MaterialStateProperty.all<Color>(HexColor('0CACDA')),
+                      backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                      padding: MaterialStateProperty.all(
+                        EdgeInsets.symmetric(vertical: 10, horizontal: 35)
+                      ),
+                    ),
+                    child: Text('CANCEL'),
+                    onPressed: () => {
+                      Navigator.of(context).pop(),
+                      _passwordController.clear(),
+                    }
                   ),
-                  new FlatButton(
-                    onPressed: () async {
-                      print(ssid);
-                      print(_passwordController.text);
+
+                  TextButton(
+                    style: ButtonStyle(
+                      foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                      backgroundColor: MaterialStateProperty.all<Color>(HexColor('0CACDA')),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        )
+                      ),
+                      padding: MaterialStateProperty.all(
+                        EdgeInsets.symmetric(vertical: 10, horizontal: 50)
+                      ),
+                    ),
+                    child: Text('OK'),
+                    onPressed: () => {
+                      print(ssid),
+                      print(_passwordController.text),
                       // WiFiForIoTPlugin.connect(
                       //   ssid,
                       //   password: _passwordController.text,
@@ -163,11 +202,11 @@ class _WifiConnectState extends State<WifiConnect> {
                         ssid: ssid, 
                         password: _passwordController.text, 
                         // isWEP: true
-                      );
-                      Navigator.of(context).pop();
-                      _passwordController.clear();
-                    },
-                    child: new Text('CONNECT'))
+                      ),
+                      Navigator.of(context).pop(),
+                      _passwordController.clear(),
+                    }
+                  ),
                 ],
               ),
             ],
@@ -176,6 +215,88 @@ class _WifiConnectState extends State<WifiConnect> {
       },
     );
   }
+
+
+  // Future<void> _displayTextInputDialog(BuildContext context, String ssid) async {
+  //   // Initially password is obscure
+  //   bool _obscureText = true;
+
+  //   // Toggles the password show status
+  //   void _toggle() {
+  //     setState(() {
+  //       _obscureText = !_obscureText;
+  //     });
+  //   }
+  //   return showDialog(
+  //     context: context,
+  //     builder: (BuildContext context) {
+  //       // return object of type Dialog
+  //       return WillPopScope(
+  //         onWillPop: () async => false,
+  //         child:AlertDialog(
+  //           title: new Text('Enter password $ssid'),
+  //           content: TextFormField(
+  //             obscureText: _obscureText,
+  //             controller: _passwordController,
+  //             onSaved: (val) => _passwordController.text = val,
+  //             keyboardType: TextInputType.visiblePassword,
+  //             decoration: InputDecoration(
+  //               fillColor: Colors.grey[100],
+  //               filled: true,
+  //               hintText: 'Password',
+  //               hintStyle: TextStyle(color: Colors.black, fontSize: 12.0),
+  //               border: OutlineInputBorder(
+  //                 borderSide: BorderSide(color: Colors.black),
+  //                 borderRadius: BorderRadius.all(Radius.circular(12.0))
+  //               ),
+  //               suffixIcon: GestureDetector(
+  //                 onTap: () {
+  //                   _toggle();
+  //                 },
+  //                 child: Icon(
+  //                   _obscureText ? Icons.visibility_off : Icons.visibility,
+  //                 ),
+  //               ),
+  //             ),
+  //           ),
+  //           actions: <Widget>[
+  //             Row(
+  //               children: <Widget>[
+  //                 new FlatButton(
+  //                   child: new Text('CANCEL'),
+  //                   onPressed: () {
+  //                     Navigator.of(context).pop();
+  //                     _passwordController.clear(); 
+  //                   },
+  //                 ),
+  //                 new FlatButton(
+  //                   onPressed: () async {
+  //                     print(ssid);
+  //                     print(_passwordController.text);
+  //                     // WiFiForIoTPlugin.connect(
+  //                     //   ssid,
+  //                     //   password: _passwordController.text,
+  //                     //   joinOnce: false,
+  //                     //   withInternet: false,
+  //                     //   security: NetworkSecurity.WPA
+  //                     // );
+  //                     WifiConnector.connectToWifi(
+  //                       ssid: ssid, 
+  //                       password: _passwordController.text, 
+  //                       // isWEP: true
+  //                     );
+  //                     Navigator.of(context).pop();
+  //                     _passwordController.clear();
+  //                   },
+  //                   child: new Text('CONNECT'))
+  //               ],
+  //             ),
+  //           ],
+  //         ),
+  //       );
+  //     },
+  //   );
+  // }
 
   Future<List<WifiNetwork>> loadWifiList() async {
     List<WifiNetwork> htResultNetwork;

@@ -60,10 +60,22 @@ class _CompleteInfoState extends State<CompleteInfo>{
   
   Future <void> _selectDate(BuildContext context) async {
     final DateTime picked = await showDatePicker(
-        context: context,
-        initialDate: selectedDate,
-        firstDate: DateTime(1770, 1),
-        lastDate: DateTime(2101));
+      context: context,
+      initialDate: selectedDate,
+      firstDate: DateTime(1770, 1),
+      lastDate: DateTime(2101),
+      builder: (context, child) {
+        return Theme(
+          data: ThemeData.light().copyWith(
+            colorScheme: ColorScheme.light(primary: primaryColor),
+            buttonTheme: ButtonThemeData(
+              textTheme: ButtonTextTheme.primary
+            ),
+          ),
+          child: child,
+        );
+      },
+    );
     if (picked != null && picked != selectedDate)
       setState(() {
         selectedDate = picked;
@@ -170,11 +182,31 @@ class _CompleteInfoState extends State<CompleteInfo>{
                       onSaved: (val) => _usernameController.text = val,
                       autovalidateMode: AutovalidateMode.always,
                       decoration: InputDecoration(
-                        prefixIcon: Icon(LineIcons.user),
+                        prefixIcon: Icon(LineIcons.user, color: primaryColor),
                         hintText: _lang.translate('fullname'),
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.black),
-                          borderRadius: BorderRadius.all(Radius.circular(12.0))
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                          borderSide: BorderSide(
+                            color: primaryColor,
+                          ),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                          borderSide: BorderSide(
+                            color: primaryColor,
+                          ),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                          borderSide: BorderSide(
+                            color: Colors.red
+                          ),
+                        ),
+                        focusedErrorBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                          borderSide: BorderSide(
+                            color: Colors.red
+                          ),
                         )
                       ),
                     ),
@@ -186,9 +218,30 @@ class _CompleteInfoState extends State<CompleteInfo>{
                       readOnly: true,
                       decoration: InputDecoration(
                         hintText: _lang.translate('phone_number_tf'),
-                        prefixIcon: Icon(Icons.phone),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(12.0))
+                        prefixIcon: Icon(Icons.phone, color: primaryColor),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                          borderSide: BorderSide(
+                            color: primaryColor,
+                          ),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                          borderSide: BorderSide(
+                            color: primaryColor,
+                          ),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                          borderSide: BorderSide(
+                            color: Colors.red
+                          ),
+                        ),
+                        focusedErrorBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                          borderSide: BorderSide(
+                            color: Colors.red
+                          ),
                         )
                       ),
                     ),
@@ -214,13 +267,13 @@ class _CompleteInfoState extends State<CompleteInfo>{
                         fontSize: 18,
                         fontFamily: "Medium"
                       ),
-                      selectedColor: Colors.cyan,
+                      selectedColor: primaryColor,
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
                       elevation: 2,
                       alignment: WrapAlignment.spaceBetween,
                       labelPadding: EdgeInsets.only(left: 35, right: 35),
                       attribute: "gender",
-                    options: [
+                      options: [
                         FormBuilderFieldOption(value: 'Male', child: Text(_lang.translate('male'))),
                         FormBuilderFieldOption(value: 'Female', child: Text(_lang.translate('female')))
                       ],
@@ -298,9 +351,29 @@ class _DateDropdown extends StatelessWidget {
       onTap: onPressed,
       child: new InputDecorator(
         decoration: new InputDecoration(
-          border: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.black),
-            borderRadius: BorderRadius.all(Radius.circular(12.0))
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12.0),
+            borderSide: BorderSide(
+              color: primaryColor,
+            ),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12.0),
+            borderSide: BorderSide(
+              color: primaryColor,
+            ),
+          ),
+          errorBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12.0),
+            borderSide: BorderSide(
+              color: Colors.red
+            ),
+          ),
+          focusedErrorBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12.0),
+            borderSide: BorderSide(
+              color: Colors.red
+            ),
           ),
           hoverColor: Colors.black,
           labelText: labelText,
@@ -311,9 +384,7 @@ class _DateDropdown extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             new Icon(Icons.date_range_outlined,
-                color: Theme.of(context).brightness == Brightness.light
-                    ? Colors.grey.shade700
-                    : Colors.white70),
+                color: primaryColor),
             SizedBox(width: 10),
             new Text(valueText, style: valueStyle),
             
@@ -349,9 +420,29 @@ class _LocationDropdown extends StatelessWidget {
       onTap: onPressed,
       child: new InputDecorator(
         decoration: new InputDecoration(
-          border: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.black),
-            borderRadius: BorderRadius.all(Radius.circular(12.0))
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12.0),
+            borderSide: BorderSide(
+              color: primaryColor,
+            ),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12.0),
+            borderSide: BorderSide(
+              color: primaryColor,
+            ),
+          ),
+          errorBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12.0),
+            borderSide: BorderSide(
+              color: Colors.red
+            ),
+          ),
+          focusedErrorBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12.0),
+            borderSide: BorderSide(
+              color: Colors.red
+            ),
           ),
           hoverColor: Colors.black,
           labelText: labelText,
@@ -362,9 +453,7 @@ class _LocationDropdown extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             new Icon(Icons.location_city_outlined,
-                color: Theme.of(context).brightness == Brightness.light
-                    ? Colors.grey.shade700
-                    : Colors.white70),
+                color: primaryColor),
             SizedBox(width: 10),
             new Text(valueText, style: valueStyle),
           ],

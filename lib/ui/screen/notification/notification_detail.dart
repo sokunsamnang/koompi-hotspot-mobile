@@ -47,7 +47,14 @@ class _NotificationDetailState extends State<NotificationDetail> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Image.asset('assets/images/promotion7.png'),
+                Center(
+                  child: Image(
+                    fit: BoxFit.contain,
+                    image: NetworkImage(
+                      "${ApiService.notiImage}/${widget.notification[widget.index].image}"
+                    )
+                  ),
+                ),
                 SizedBox(height: 10),
                 Container(
                   margin: EdgeInsets.symmetric(horizontal: 15),

@@ -174,14 +174,27 @@ class _MyAccountState extends State<MyAccount>
   //DOB Picker
   DateTime selectedDate = DateTime.now();
 
-  final dateFormart = new DateFormat('dd-MMM-yyyy');
+  var dateFormart = new DateFormat('dd-MMM-yyyy');
+
 
   Future<Null> _selectDate(BuildContext context) async {
     final DateTime picked = await showDatePicker(
-        context: context,
-        initialDate: selectedDate,
-        firstDate: DateTime(1770, 1),
-        lastDate: DateTime(2101));
+      context: context,
+      initialDate: dateFormart.parse(birthdate),
+      firstDate: DateTime(1770, 1),
+      lastDate: DateTime(2101),
+      builder: (context, child) {
+        return Theme(
+          data: ThemeData.light().copyWith(
+            colorScheme: ColorScheme.light(primary: primaryColor),
+            buttonTheme: ButtonThemeData(
+              textTheme: ButtonTextTheme.primary
+            ),
+          ),
+          child: child,
+        );
+      },
+    );
     if (picked != null && picked != selectedDate)
       setState(() {
         selectedDate = picked;
@@ -260,11 +273,11 @@ class _MyAccountState extends State<MyAccount>
                                     fit: BoxFit.cover,
                                   )
                                 : CircleAvatar(
-                                    backgroundImage: mData.image == null
-                                        ? AssetImage('assets/images/avatar.png')
-                                        : NetworkImage(
-                                            "${ApiService.avatar}/${mData.image}"),
-                                  ),
+                                  backgroundImage: mData.image == null
+                                      ? AssetImage('assets/images/avatar.png')
+                                      : NetworkImage(
+                                          "${ApiService.avatar}/${mData.image}"),
+                                ),
                           ),
                         ),
                       ),

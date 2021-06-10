@@ -89,7 +89,10 @@ class _SendRequestState extends State<SendRequest> {
         return WillPopScope(
           onWillPop: () async => false,
           child:AlertDialog(
-            title: new Text(_lang.translate('enter_password')),
+            // backgroundColor: Col,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+            contentPadding: EdgeInsets.only(left: 10, top: 15, right: 10, bottom: 5),
+            title: new Text('Enter Password', textAlign: TextAlign.center,),
             content: TextFormField(
               controller: _passwordController,
               onSaved: (val) => _passwordController.text = val,
@@ -99,9 +102,29 @@ class _SendRequestState extends State<SendRequest> {
                 filled: true,
                 hintText: _lang.translate('password_tf'),
                 hintStyle: TextStyle(color: Colors.black, fontSize: 12.0),
-                border: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.black),
-                  borderRadius: BorderRadius.all(Radius.circular(12.0))
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12.0),
+                  borderSide: BorderSide(
+                    color: primaryColor,
+                  ),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12.0),
+                  borderSide: BorderSide(
+                    color: primaryColor,
+                  ),
+                ),
+                errorBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12.0),
+                  borderSide: BorderSide(
+                    color: Colors.red
+                  ),
+                ),
+                focusedErrorBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12.0),
+                  borderSide: BorderSide(
+                    color: Colors.red
+                  ),
                 ),
               ),
               obscureText: true,
@@ -109,22 +132,44 @@ class _SendRequestState extends State<SendRequest> {
             actions: <Widget>[
               // usually buttons at the bottom of the dialog
               Row(
-                children: <Widget>[
-                  new FlatButton(
-                    child: new Text(_lang.translate('cancel')),
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                      _passwordController.clear(); 
-                    },
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  TextButton(
+                    style: ButtonStyle(
+                      foregroundColor: MaterialStateProperty.all<Color>(HexColor('0CACDA')),
+                      backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                      padding: MaterialStateProperty.all(
+                        EdgeInsets.symmetric(vertical: 10, horizontal: 35)
+                      ),
+                    ),
+                    child: Text('CANCEL'),
+                    onPressed: () => {
+                      Navigator.of(context).pop(),
+                      _passwordController.clear(),
+                    }
                   ),
-                  new FlatButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                      dialogLoading(context);
-                      _onSubmit();
-                      Navigator.of(context).pop();
-                    },
-                    child: new Text(_lang.translate('ok')))
+
+                  TextButton(
+                    style: ButtonStyle(
+                      foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                      backgroundColor: MaterialStateProperty.all<Color>(HexColor('0CACDA')),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        )
+                      ),
+                      padding: MaterialStateProperty.all(
+                        EdgeInsets.symmetric(vertical: 10, horizontal: 50)
+                      ),
+                    ),
+                    child: Text('OK'),
+                    onPressed: () => {
+                      Navigator.of(context).pop(),
+                      dialogLoading(context),
+                      _onSubmit(),
+                      Navigator.of(context).pop(),
+                    }
+                  ),
                 ],
               ),
             ],

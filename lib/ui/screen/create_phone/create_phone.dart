@@ -76,7 +76,7 @@ class _CreatePhoneState extends State<CreatePhone> {
         if (response.statusCode == 200) {
           Navigator.pushReplacement(
             context, 
-            PageTransition(type: PageTransitionType.rightToLeftWithFade, 
+            PageTransition(type: PageTransitionType.rightToLeft, 
               child: PinCodeVerificationScreen("+855${StorageServices.removeZero(phoneController.text)}", passwordController.text)
             )
           );

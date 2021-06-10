@@ -46,8 +46,11 @@ Widget trxHistory(BuildContext context) {
             GestureDetector(
               onTap: () async {
                 Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => TransactionDetail(history: history, index: i,)));
+                  context, 
+                  PageTransition(type: PageTransitionType.bottomToTop,
+                    child: TransactionDetail(history: history, index: i,)
+                  )
+                );
                 // await showDialog(
                 //   context: context,
                 //   builder: (BuildContext context) {

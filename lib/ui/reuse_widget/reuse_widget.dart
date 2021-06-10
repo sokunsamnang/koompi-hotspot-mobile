@@ -436,6 +436,91 @@ class Components {
     return result;
   }
 
+  static Future<String> dialogPassword(
+    BuildContext context, 
+    var text, 
+    var title, 
+    {
+      Widget action, 
+      String firsTxtBtn = "OK",
+      String secTxtBtn = "CANCEL",  
+      Color bgColor = Colors.white, 
+      Color barrierColor, 
+      bool removeBtn: false,
+      double pLeft: 10,
+      double pRight: 10,
+      double pTop: 15.0,
+      double pBottom: 5,
+      var actionFirstBtn,
+      var actionSecBtn,
+    }
+  ) async {
+    var result = await showDialog(
+      context: context,
+      barrierDismissible: false,
+      barrierColor: barrierColor ?? Colors.white.withOpacity(0),
+      builder: (BuildContext context) {
+        return StatefulBuilder(builder: (context2, setState){
+          return AlertDialog(
+            backgroundColor: bgColor,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+            contentPadding: EdgeInsets.only(left: pLeft, top: pTop, right: pRight, bottom: pBottom),
+            title: title != null ? Align(
+              alignment: Alignment.center,
+              child: title,
+            ) : null,
+            content: text,
+            actions: !removeBtn ? <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  TextButton(
+                    style: ButtonStyle(
+                      foregroundColor: MaterialStateProperty.all<Color>(HexColor('0CACDA')),
+                      backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                      padding: MaterialStateProperty.all(
+                        EdgeInsets.symmetric(vertical: 10, horizontal: 35)
+                      ),
+                    ),
+                    child: Text(secTxtBtn),
+                    onPressed: () => {
+                      actionSecBtn,
+                      Navigator.of(context).pop(text),
+                    }
+                  ),
+
+                  TextButton(
+                    style: ButtonStyle(
+                      foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                      backgroundColor: MaterialStateProperty.all<Color>(HexColor('0CACDA')),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        )
+                      ),
+                      padding: MaterialStateProperty.all(
+                        EdgeInsets.symmetric(vertical: 10, horizontal: 50)
+                      ),
+                    ),
+                    child: Text(firsTxtBtn),
+                    onPressed: () => {
+                      actionFirstBtn,
+                      Navigator.of(context).pop(),
+                      Navigator.pop(context),
+                    }
+                  ),
+                ],
+              ),
+              action ?? Container()
+            ] : null,
+          );
+        });
+      }
+    );
+    return result;
+  }
+
+
 }
 
 

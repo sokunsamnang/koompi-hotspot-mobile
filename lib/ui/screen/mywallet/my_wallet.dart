@@ -141,8 +141,10 @@ class _MyWalletState extends State<MyWallet> {
                                 color: HexColor('7CDBFA'),
                                 onPressed: () {
                                   Navigator.push(
-                                    context,
-                                    MaterialPageRoute(builder: (context) => ReceiveRequest()),
+                                    context, 
+                                    PageTransition(type: PageTransitionType.rightToLeft,
+                                      child: ReceiveRequest()
+                                    )
                                   );
                                 },
                                 elevation: 5,
@@ -280,10 +282,10 @@ void _sendWalletBottomSheet(context, String walletKey){
                   child: GestureDetector(
                     onTap: () async{
                       await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => QrScanner(portList: [])
-                        )        
+                        context, 
+                        PageTransition(type: PageTransitionType.bottomToTop,
+                          child: QrScanner(portList: [])
+                        )
                       );
                     },
                     child: Column(
@@ -303,8 +305,10 @@ void _sendWalletBottomSheet(context, String walletKey){
                   child: GestureDetector(
                     onTap: () async{
                       await Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => SendRequest(walletKey, "")),
+                        context, 
+                        PageTransition(type: PageTransitionType.bottomToTop,
+                          child: SendRequest(walletKey, "")
+                        )
                       );
                     },
                     child: Column(

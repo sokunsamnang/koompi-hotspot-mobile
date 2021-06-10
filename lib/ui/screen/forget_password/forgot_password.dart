@@ -40,7 +40,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
         if (response.statusCode == 200) {
           Navigator.pushReplacement(
             context, 
-            PageTransition(type: PageTransitionType.rightToLeftWithFade, 
+            PageTransition(type: PageTransitionType.rightToLeft, 
               child: ForgotPasswordVerification("+855${StorageServices.removeZero(_phoneController.text)}")
             )
           );

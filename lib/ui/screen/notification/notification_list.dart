@@ -20,7 +20,7 @@ Widget notificationList(BuildContext context) {
               onTap: () async {
                 Navigator.push(
                   context, 
-                  PageTransition(type: PageTransitionType.rightToLeftWithFade, 
+                  PageTransition(type: PageTransitionType.rightToLeft, 
                     child: NotificationDetail(notification: notification, index: i,)));
               },
               child: Container(
@@ -106,13 +106,21 @@ Widget notificationList(BuildContext context) {
                         onTap: (){
                           Navigator.push(
                             context, 
-                            PageTransition(type: PageTransitionType.rightToLeftWithFade, 
+                            PageTransition(type: PageTransitionType.rightToLeft, 
                               child: NotificationDetail(notification: notification.notificationList, index: index,)));
                         },
                         trailing: Icon(Icons.arrow_forward_ios_outlined),
-                        leading: ClipRRect(
-                          borderRadius: BorderRadius.all(Radius.circular(12.0)),
-                          child: Image.asset('assets/images/promotion7.png')
+                        leading: SizedBox(
+                          height: 50,
+                          width: 50,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.all(Radius.circular(12.0)),
+                            child: Image(
+                              image: NetworkImage(
+                                "${ApiService.notiImage}/${notification.notificationList[index].image}"
+                              )
+                            ),
+                          ),
                         ),
                         title: Text(
                           notification.notificationList[index].title,

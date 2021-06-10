@@ -57,12 +57,8 @@ class _HomePageState extends State<HomePage>{
               onPressed: (){
                 Navigator.push(
                   context, 
-                  PageTransition(type: PageTransitionType.rightToLeftWithFade, 
+                  PageTransition(type: PageTransitionType.rightToLeft, 
                     child: NotificationScreen()));
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(builder: (context) => NotificationScreen())
-                // );
               })
           ],
         ),

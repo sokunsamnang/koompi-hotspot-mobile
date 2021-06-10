@@ -296,8 +296,10 @@ class _LoginPhoneState extends State<LoginPhone> {
                         onPressed: () {
                           Navigator.push(
                             context, 
-                            PageTransition(type: PageTransitionType.rightToLeftWithFade, 
-                              child: LanguageView()));
+                            PageTransition(type: PageTransitionType.rightToLeft, 
+                              child: LanguageView()
+                            )
+                          );
                         },
                       ),
                     ),
