@@ -45,7 +45,9 @@ class _MyWalletState extends State<MyWallet> {
     return WillPopScope(
       onWillPop: () => Navigator.pushAndRemoveUntil(
         context,
-        MaterialPageRoute(builder: (context) => Navbar()),
+        PageTransition(type: PageTransitionType.leftToRight, 
+          child: Navbar(),
+        ),
         ModalRoute.withName('/navbar'),
       ),
       child: Stack(
@@ -63,7 +65,9 @@ class _MyWalletState extends State<MyWallet> {
                 onPressed: (){
                   Navigator.pushAndRemoveUntil(
                     context,
-                    MaterialPageRoute(builder: (context) => Navbar()),
+                    PageTransition(type: PageTransitionType.leftToRight, 
+                      child: Navbar(),
+                    ),
                     ModalRoute.withName('/navbar'),
                   );
                 }
@@ -92,13 +96,6 @@ class _MyWalletState extends State<MyWallet> {
                           left: 10,
                         ),
                         child: getTotalBalance(),
-                      ),
-                      SizedBox(
-                        height: 6,
-                      ),
-                      Divider(
-                        thickness: 0.5,
-                        color: Colors.black,
                       ),
                       SizedBox(
                         height: 6,
@@ -163,13 +160,20 @@ class _MyWalletState extends State<MyWallet> {
                           ],
                         ),
                       ),
+                      Divider(
+                        thickness: 0.5,
+                        color: Colors.black,
+                      ),
                       SizedBox(
                         height: 20,
                       ),
                       Row(
                         children: <Widget>[
                           Padding(
-                            padding: const EdgeInsets.only(left: 16),
+                            padding: const EdgeInsets.only(
+                              right: 10,
+                              left: 10,
+                            ),
                             child: Text(
                               _lang.translate('transactions'),
                               style: TextStyle(
@@ -183,7 +187,7 @@ class _MyWalletState extends State<MyWallet> {
                         ],
                       ),
                       SizedBox(
-                        height: 20,
+                        height: 10,
                       ),
                       Expanded(child: trxHistory(context),)
                     ],
@@ -262,7 +266,7 @@ void _sendWalletBottomSheet(context, String walletKey){
       return Container(
         height: 153,
         decoration: BoxDecoration(
-          color: HexColor('0CACDA'),
+          color: Colors.white,
           borderRadius: BorderRadius.only(topLeft: Radius.circular(12), topRight: Radius.circular(12)),
         ),
         child: new Column(
@@ -273,6 +277,7 @@ void _sendWalletBottomSheet(context, String walletKey){
                 top: 20,
                 bottom: 20,
                 text: "Transaction options",
+                color: '#000000',
               ),
             ),
 
@@ -290,11 +295,12 @@ void _sendWalletBottomSheet(context, String walletKey){
                     },
                     child: Column(
                       children: [
-                        Icon(Icons.qr_code_scanner_outlined, size: 35),
+                        Icon(Icons.qr_code_scanner_outlined, size: 35, color: primaryColor),
                         MyText(
                           top: 6,
                           text: 'Scan Wallet',
                           fontSize: 12,
+                          color: '#000000',
                         )
                       ],
                     ),
@@ -313,11 +319,12 @@ void _sendWalletBottomSheet(context, String walletKey){
                     },
                     child: Column(
                       children: [
-                        Icon(Icons.description_outlined, size: 35),
+                        Icon(Icons.description_outlined, size: 35, color: primaryColor),
                         MyText(
                           top: 6,
                           text: 'Fill Wallet',
                           fontSize: 12,
+                          color: '#000000'
                         )
                       ],
                     ),

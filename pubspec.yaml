@@ -46,6 +46,10 @@ dependencies:
   wifi_connector: ^1.0.2
   wifi_iot: ^0.3.3
 
+  # Notification
+  flutter_local_notifications: ^4.0.1+2
+  awesome_notifications: ^0.0.6+9
+
   # Format
   date_format: ^1.0.9
 

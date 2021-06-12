@@ -34,11 +34,11 @@ Widget trxHistory(BuildContext context) {
           children: [
             showHeader
               ? Container(
-                padding: EdgeInsets.symmetric(horizontal: 15, vertical: 7),
+                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 7),
                 child: Text(
                   dateString,
                   style: GoogleFonts.nunito(
-                    textStyle: TextStyle(color: Color(0xff0caddb), fontWeight: FontWeight.w700)
+                    textStyle: TextStyle(color: Colors.black, fontWeight: FontWeight.w700)
                     ),
                   ),
                 )
@@ -177,14 +177,14 @@ Widget trxHistory(BuildContext context) {
                 // );
               },
               child: Container(
-                margin: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 0.0),
+                margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 0.0),
                 height: 80.0,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12.0),
                   color: HexColor('00336A'),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(10.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -292,9 +292,10 @@ Widget trxHistory(BuildContext context) {
                 // ),
               ),
             ),
-            Divider(
-              height: 4.0,
-            ),
+            // Divider(
+            //   height: 4.0,
+            // ),
+            SizedBox(height: 5),
           ],
         ),
       );

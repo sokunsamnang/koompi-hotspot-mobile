@@ -9,38 +9,38 @@ class HotspotPlan extends StatefulWidget {
 }
 
 class _HotspotPlanState extends State<HotspotPlan> {
-  // final formKey = GlobalKey<FormState>();
-  // AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
+  final formKey = GlobalKey<FormState>();
+  AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
 
   final TextEditingController _passwordController = new TextEditingController();
 
-  // void _submitHotspotPlan30Days(){
-  //   final form = formKey.currentState;
+  void _submitHotspotPlan30Days(){
+    final form = formKey.currentState;
 
-  //   if(form.validate()){
-  //     form.save();
-  //     buyHotspot30days(context);
-  //   }
-  //   else{
-  //     setState(() {
-  //       autovalidateMode = AutovalidateMode.always;
-  //     });
-  //   }
-  // }
+    if(form.validate()){
+      form.save();
+      buyHotspot30days(context);
+    }
+    else{
+      setState(() {
+        autovalidateMode = AutovalidateMode.always;
+      });
+    }
+  }
 
-  // void _submitHotspotPlan365Days(){
-  //   final form = formKey.currentState;
+  void _submitHotspotPlan365Days(){
+    final form = formKey.currentState;
 
-  //   if(form.validate()){
-  //     form.save();
-  //     buyHotspot365days(context);
-  //   }
-  //   else{
-  //     setState(() {
-  //       autovalidateMode = AutovalidateMode.always;
-  //     });
-  //   }
-  // }
+    if(form.validate()){
+      form.save();
+      buyHotspot365days(context);
+    }
+    else{
+      setState(() {
+        autovalidateMode = AutovalidateMode.always;
+      });
+    }
+  }
 
   Future <void> buyHotspot30days(BuildContext context) async {
     dialogLoading(context);
@@ -61,7 +61,9 @@ class _HotspotPlanState extends State<HotspotPlan> {
           await Provider.of<GetPlanProvider>(context, listen: false).fetchHotspotPlan();
           Navigator.pushAndRemoveUntil(
             context,
-            MaterialPageRoute(builder: (context) => ChooseOption()),
+            PageTransition(type: PageTransitionType.rightToLeft, 
+              child: ChooseOption(),
+            ),
             ModalRoute.withName('/navbar'),
           );
         }
@@ -101,7 +103,9 @@ class _HotspotPlanState extends State<HotspotPlan> {
           await Provider.of<GetPlanProvider>(context, listen: false).fetchHotspotPlan();
           Navigator.pushAndRemoveUntil(
             context,
-            MaterialPageRoute(builder: (context) => ChooseOption()),
+            PageTransition(type: PageTransitionType.rightToLeft, 
+              child: ChooseOption(),
+            ),
             ModalRoute.withName('/navbar'),
           );
         }
@@ -142,18 +146,21 @@ class _HotspotPlanState extends State<HotspotPlan> {
           onPressed: (){
             Navigator.pushAndRemoveUntil(
               context,
-              MaterialPageRoute(builder: (context) => Navbar()),
+              PageTransition(type: PageTransitionType.rightToLeft, 
+                child: Navbar(),
+              ),
               ModalRoute.withName('/navbar'),
             );
           }
         ),
-        // automaticallyImplyLeading: false,
-        centerTitle: true,
+        automaticallyImplyLeading: false,
+        // centerTitle: true,
         backgroundColor: Colors.white,
-        title: Image.asset(
-          "assets/images/appbar_logo.png",
-          scale: 2,
-        ),
+        // title: Image.asset(
+        //   "assets/images/appbar_logo.png",
+        //   scale: 2,
+        // ),
+        title: Text('Choose a Plan', style: TextStyle(color: Colors.black, fontFamily: 'Medium')),
       ),
       body: WillPopScope(
         child: Container(
@@ -165,14 +172,14 @@ class _HotspotPlanState extends State<HotspotPlan> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Center(
-                      child: Text(
-                        _lang.translate('choose_plan'),
-                        style: GoogleFonts.nunito(
-                        textStyle: TextStyle(color: HexColor('0CACDA'), fontSize: 30, fontWeight: FontWeight.w700)
-                        ),
-                      ),
-                    ),
+                    // Center(
+                    //   child: Text(
+                    //     _lang.translate('choose_plan'),
+                    //     style: GoogleFonts.nunito(
+                    //     textStyle: TextStyle(color: HexColor('0CACDA'), fontSize: 30, fontWeight: FontWeight.w700)
+                    //     ),
+                    //   ),
+                    // ),
                     SizedBox(height: 25.0),
                     plan30DaysButton(context),
                     SizedBox(height: 50.0),
@@ -184,7 +191,9 @@ class _HotspotPlanState extends State<HotspotPlan> {
           ),
         onWillPop: () => Navigator.pushAndRemoveUntil(
           context,
-          MaterialPageRoute(builder: (context) => Navbar()),
+          PageTransition(type: PageTransitionType.rightToLeft, 
+            child: Navbar(),
+          ),
           ModalRoute.withName('/navbar'),
         ),
       )
@@ -299,49 +308,51 @@ class _HotspotPlanState extends State<HotspotPlan> {
               ),
             ),
 
-            SizedBox(height: 20),
-            Center(
-              child: InkWell(
-                child: Container(
-                  // width: ScreenUtil.getInstance().setWidth(330),
-                  height: 50,
-                  decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                          colors: [Color(0xFF17ead9), Color(0xFF6078ea)]),
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(12), 
-                        bottomRight: Radius.circular(12),
+            // SizedBox(height: 20),
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Center(
+                child: InkWell(
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    // width: ScreenUtil.getInstance().setWidth(330),
+                    height: 50,
+                    decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                            colors: [Color(0xFF17ead9), Color(0xFF6078ea)]),
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(12),
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                              color: Color(0xFF6078ea).withOpacity(.3),
+                              offset: Offset(0.0, 8.0),
+                              blurRadius: 8.0)
+                        ]),
+                  child: Material(
+                    color: Colors.transparent,
+                    child: InkWell(
+                      customBorder: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(12),
+                        ),
                       ),
-                      boxShadow: [
-                        BoxShadow(
-                            color: Color(0xFF6078ea).withOpacity(.3),
-                            offset: Offset(0.0, 8.0),
-                            blurRadius: 8.0)
-                      ]),
-                child: Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                    customBorder: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(12), 
-                        bottomRight: Radius.circular(12),
-                      ),
-                    ),
-                    onTap: () async {
-                      _showDialog30Days(context);
-                    },
-                    child: Center(
-                      child: Text(
-                          _lang.translate('subscribe'), 
-                          style: GoogleFonts.nunito(
-                          textStyle: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w700)
+                      onTap: () async {
+                        _showDialog30Days(context);
+                      },
+                      child: Center(
+                        child: Text(
+                            _lang.translate('subscribe'), 
+                            style: GoogleFonts.nunito(
+                            textStyle: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w700)
+                            ),
                           ),
                         ),
                       ),
                     ),
                   ),
-                ),
-              )
+                )
+              ),
             ),
           ],
         ),
@@ -458,48 +469,49 @@ class _HotspotPlanState extends State<HotspotPlan> {
               ),
             ),
 
-            SizedBox(height: 20),
-            Center(
-              child: InkWell(
-                child: Container(
-                  // width: ScreenUtil.getInstance().setWidth(330),
-                  height: 50,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(12), 
-                      bottomRight: Radius.circular(12),
-                    ),
-                    gradient: LinearGradient(
-                        colors: [Color(0xFF17ead9), Color(0xFF6078ea)]),
-                    // borderRadius: BorderRadius.circular(12),
-                    boxShadow: [
-                      BoxShadow(
-                          color: Color(0xFF6078ea).withOpacity(.3),
-                          offset: Offset(0.0, 8.0),
-                          blurRadius: 8.0)
-                    ]),
-                child: Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(12), 
-                      bottomRight: Radius.circular(12),
-                    ),
-                    onTap: () async {
-                      _showDialog365Days(context);
-                    },
-                    child: Center(
-                      child: Text(
-                          _lang.translate('subscribe'),
-                          style: GoogleFonts.nunito(
-                          textStyle: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w700)
+            // SizedBox(height: 20),
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Center(
+                child: InkWell(
+                  child: Container(
+                    // width: ScreenUtil.getInstance().setWidth(330),
+                    height: 50,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(12),
+                      ),
+                      gradient: LinearGradient(
+                          colors: [Color(0xFF17ead9), Color(0xFF6078ea)]),
+                      // borderRadius: BorderRadius.circular(12),
+                      boxShadow: [
+                        BoxShadow(
+                            color: Color(0xFF6078ea).withOpacity(.3),
+                            offset: Offset(0.0, 8.0),
+                            blurRadius: 8.0)
+                      ]),
+                  child: Material(
+                    color: Colors.transparent,
+                    child: InkWell(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(12),
+                      ),
+                      onTap: () async {
+                        _showDialog365Days(context);
+                      },
+                      child: Center(
+                        child: Text(
+                            _lang.translate('subscribe'),
+                            style: GoogleFonts.nunito(
+                            textStyle: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w700)
+                            ),
                           ),
                         ),
                       ),
                     ),
                   ),
-                ),
-              )
+                )
+              ),
             ),
           ],
         ),
@@ -586,41 +598,51 @@ class _HotspotPlanState extends State<HotspotPlan> {
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
             contentPadding: EdgeInsets.only(left: 10, top: 15, right: 10, bottom: 5),
             title: new Text('Enter password', textAlign: TextAlign.center,),
-            content: TextFormField(
-              controller: _passwordController,
-              onSaved: (val) => _passwordController.text = val,
-              keyboardType: TextInputType.visiblePassword,
-              decoration: InputDecoration(
-                fillColor: Colors.grey[100],
-                filled: true,
-                hintText: _lang.translate('password_tf'),
-                hintStyle: TextStyle(color: Colors.black, fontSize: 12.0),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12.0),
-                  borderSide: BorderSide(
-                    color: primaryColor,
+            content: Form(
+              key: formKey,
+              child: TextFormField(
+                controller: _passwordController,
+                validator: (val) {
+                  if(val.isEmpty) return _lang.translate('password_is_required_validate');
+                  // if(val.length < 6) return _lang.translate('password_too_short_validate');           
+                  if(val.length < 6) return _lang.translate('password_is_required_validate');  
+                  return null;
+                },
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                onSaved: (val) => _passwordController.text = val,
+                keyboardType: TextInputType.visiblePassword,
+                decoration: InputDecoration(
+                  fillColor: Colors.grey[100],
+                  filled: true,
+                  hintText: _lang.translate('password_tf'),
+                  hintStyle: TextStyle(color: Colors.black, fontSize: 12.0),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12.0),
+                    borderSide: BorderSide(
+                      color: primaryColor,
+                    ),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12.0),
+                    borderSide: BorderSide(
+                      color: primaryColor,
+                    ),
+                  ),
+                  errorBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12.0),
+                    borderSide: BorderSide(
+                      color: Colors.red
+                    ),
+                  ),
+                  focusedErrorBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12.0),
+                    borderSide: BorderSide(
+                      color: Colors.red
+                    ),
                   ),
                 ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12.0),
-                  borderSide: BorderSide(
-                    color: primaryColor,
-                  ),
-                ),
-                errorBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12.0),
-                  borderSide: BorderSide(
-                    color: Colors.red
-                  ),
-                ),
-                focusedErrorBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12.0),
-                  borderSide: BorderSide(
-                    color: Colors.red
-                  ),
-                ),
+                obscureText: true,
               ),
-              obscureText: true,
             ),
             actions: <Widget>[
               // usually buttons at the bottom of the dialog
@@ -658,7 +680,7 @@ class _HotspotPlanState extends State<HotspotPlan> {
                     child: Text('OK'),
                     onPressed: () => {
                       dialogLoading(context),
-                      buyHotspot30days(context),
+                      _submitHotspotPlan30Days(),
                       Navigator.of(context).pop(),
                     }
                   ),
@@ -685,41 +707,51 @@ class _HotspotPlanState extends State<HotspotPlan> {
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
             contentPadding: EdgeInsets.only(left: 10, top: 15, right: 10, bottom: 5),
             title: new Text('Enter password', textAlign: TextAlign.center,),
-            content: TextFormField(
-              controller: _passwordController,
-              onSaved: (val) => _passwordController.text = val,
-              keyboardType: TextInputType.visiblePassword,
-              decoration: InputDecoration(
-                fillColor: Colors.grey[100],
-                filled: true,
-                hintText: _lang.translate('password_tf'),
-                hintStyle: TextStyle(color: Colors.black, fontSize: 12.0),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12.0),
-                  borderSide: BorderSide(
-                    color: primaryColor,
+            content: Form(
+              key: formKey,
+              child: TextFormField(
+                controller: _passwordController,
+                validator: (val) {
+                  if(val.isEmpty) return _lang.translate('password_is_required_validate');
+                  // if(val.length < 6) return _lang.translate('password_too_short_validate');           
+                  if(val.length < 6) return _lang.translate('password_is_required_validate');  
+                  return null;
+                },
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                onSaved: (val) => _passwordController.text = val,
+                keyboardType: TextInputType.visiblePassword,
+                decoration: InputDecoration(
+                  fillColor: Colors.grey[100],
+                  filled: true,
+                  hintText: _lang.translate('password_tf'),
+                  hintStyle: TextStyle(color: Colors.black, fontSize: 12.0),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12.0),
+                    borderSide: BorderSide(
+                      color: primaryColor,
+                    ),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12.0),
+                    borderSide: BorderSide(
+                      color: primaryColor,
+                    ),
+                  ),
+                  errorBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12.0),
+                    borderSide: BorderSide(
+                      color: Colors.red
+                    ),
+                  ),
+                  focusedErrorBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12.0),
+                    borderSide: BorderSide(
+                      color: Colors.red
+                    ),
                   ),
                 ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12.0),
-                  borderSide: BorderSide(
-                    color: primaryColor,
-                  ),
-                ),
-                errorBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12.0),
-                  borderSide: BorderSide(
-                    color: Colors.red
-                  ),
-                ),
-                focusedErrorBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12.0),
-                  borderSide: BorderSide(
-                    color: Colors.red
-                  ),
-                ),
+                obscureText: true,
               ),
-              obscureText: true,
             ),
             actions: <Widget>[
               // usually buttons at the bottom of the dialog
@@ -757,7 +789,7 @@ class _HotspotPlanState extends State<HotspotPlan> {
                     child: Text('OK'),
                     onPressed: () => {
                       dialogLoading(context),
-                      buyHotspot365days(context),
+                      _submitHotspotPlan365Days(),
                       Navigator.of(context).pop(),
                     }
                   ),

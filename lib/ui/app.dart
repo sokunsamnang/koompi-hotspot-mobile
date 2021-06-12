@@ -112,10 +112,19 @@ class _SplashState extends State<Splash> {
     }
   }
 
+
   void navigationOnboardingScreen() {
-    Navigator.pushReplacement(context,
-      MaterialPageRoute(builder: (context) => IntroScreen())
-    ); 
+
+    Navigator.pushReplacement(
+      context, 
+      PageTransition(type: PageTransitionType.rightToLeft, 
+        child: IntroScreen(),
+      ),
+    );
+
+    // Navigator.pushReplacement(context,
+    //   MaterialPageRoute(builder: (context) => IntroScreen())
+    // ); 
   }
 
   void isLoggedIn() async{
@@ -167,10 +176,17 @@ class _SplashState extends State<Splash> {
 
       if (type == ShortcutItems.actionCaptivePortal.type) {
         Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (_) => CaptivePortalWeb()),
+          context, 
+          PageTransition(type: PageTransitionType.bottomToTop, 
+            child: CaptivePortalWeb(),
+          ),
         );
+
+        // Navigator.push(
+        //   context,
+        //   MaterialPageRoute(
+        //     builder: (_) => CaptivePortalWeb()),
+        // );
       }
     });
 
@@ -205,21 +221,29 @@ class _SplashState extends State<Splash> {
       } else {
         // Wifi detected but no internet connection found.
         print('Wifi detected but no internet connection found.');
+
         Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (_) => CaptivePortalWeb()),
+          context, 
+          PageTransition(type: PageTransitionType.rightToLeft, 
+            child: CaptivePortalWeb(),
+          ),
         );
+
+        // Navigator.push(
+        //   context,
+        //   MaterialPageRoute(
+        //     builder: (_) => CaptivePortalWeb()),
+        // );
         return false;
       }
     } else {
       // Neither mobile data or WIFI detected, not internet connection found.
       print('Neither mobile data or WIFI detected, not internet connection found.');
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (_) => _networkStatus.restartApp(context)),
-      );
+      // Navigator.push(
+      //   context,
+      //   MaterialPageRoute(
+      //     builder: (_) => _networkStatus.restartApp(context)),
+      // );
       return false;
     }
   }

@@ -43,7 +43,9 @@ class _ChooseOptionState extends State<ChooseOption>
           Future.delayed(Duration(seconds: 2), () async {
             Timer(Duration(milliseconds: 500), () => Navigator.pushAndRemoveUntil(
               context,
-              MaterialPageRoute(builder: (context) => CompletePlan()),
+              PageTransition(type: PageTransitionType.rightToLeft, 
+                child: CompletePlan()
+              ),
               ModalRoute.withName('/navbar'),
             ));
           });

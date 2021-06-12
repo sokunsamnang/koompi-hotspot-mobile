@@ -68,7 +68,11 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
         if (response.statusCode == 200 && response.body != "Incorrect Code!") {
           print(response.body);
           await Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => CompleteInfo(widget.phone)));
+            context, 
+            PageTransition(type: PageTransitionType.rightToLeft, 
+              child: CompleteInfo(widget.phone),
+            ),
+          );
         } else {
           await Components.dialog(
             context,

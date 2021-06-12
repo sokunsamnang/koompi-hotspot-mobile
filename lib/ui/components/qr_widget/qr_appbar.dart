@@ -35,7 +35,7 @@ class MyAppBar extends StatelessWidget{
             onPressed: onPressed,
           ),
           MyText(
-            color: "#FFFFFF",
+            color: "#000000",
             text: title,
             left: 15,
             fontSize: 22,

@@ -115,7 +115,9 @@ class _CompleteInfoState extends State<CompleteInfo>{
           Future.delayed(Duration(seconds: 2), () {
             Timer(Duration(milliseconds: 500), () => Navigator.pushAndRemoveUntil(
               context,
-              MaterialPageRoute(builder: (context) => LoginPhone()),
+              PageTransition(type: PageTransitionType.rightToLeft, 
+                child: LoginPhone(),
+              ),
               ModalRoute.withName('/loginPhone'),
             ));
           });

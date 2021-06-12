@@ -28,7 +28,8 @@ class MyText extends StatelessWidget{
           style: TextStyle(
             fontFamily: 'Medium',
             // fontWeight: this.fontWeight,
-            color: Colors.black,//Color(AppUtils.convertHexaColor(this.color)),
+            color: Color(AppUtils.convertHexaColor(this.color)),
+            // color: Colors.black,//
             fontSize: this.fontSize
           ),
           textAlign: this.textAlign,

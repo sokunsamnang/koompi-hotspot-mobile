@@ -29,10 +29,18 @@ class StorageServices{
       print('token expired');
       clearToken('token'); 
       Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(builder: (context) => LoginPhone()),
+        context, 
+        PageTransition(type: PageTransitionType.bottomToTop, 
+          child: LoginPhone(),
+        ),
         ModalRoute.withName('/loginPhone'),
       );
+
+      // Navigator.pushAndRemoveUntil(
+      //   context,
+      //   MaterialPageRoute(builder: (context) => LoginPhone()),
+      //   ModalRoute.withName('/loginPhone'),
+      // );
     }
     else if (JwtDecoder.isExpired(token) == false ) {
       print('token not expire');
@@ -46,19 +54,35 @@ class StorageServices{
           print(e.toString());
         }
       });
-       
+      
       Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(builder: (context) => Navbar()),
+        context, 
+        PageTransition(type: PageTransitionType.rightToLeft, 
+          child: Navbar(),
+        ),
         ModalRoute.withName('/navbar'),
       );
+
+      // Navigator.pushAndRemoveUntil(
+      //   context,
+      //   MaterialPageRoute(builder: (context) => Navbar()),
+      //   ModalRoute.withName('/navbar'),
+      // );
     }
     else{
       Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(builder: (context) => LoginPhone()),
+        context, 
+        PageTransition(type: PageTransitionType.bottomToTop, 
+          child: LoginPhone(),
+        ),
         ModalRoute.withName('/loginPhone'),
       );
+      
+      // Navigator.pushAndRemoveUntil(
+      //   context,
+      //   MaterialPageRoute(builder: (context) => LoginPhone()),
+      //   ModalRoute.withName('/loginPhone'),
+      // );
     }
   }
 
@@ -69,11 +93,20 @@ class StorageServices{
         String _token = value;
         if (_token != null) {
           await GetRequest().getUserProfile(_token);
+          
           Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(builder: (context) => Navbar()),
+            context, 
+            PageTransition(type: PageTransitionType.bottomToTop, 
+              child: Navbar(),
+            ),
             ModalRoute.withName('/navbar'),
           );
+
+          // Navigator.pushAndRemoveUntil(
+          //   context,
+          //   MaterialPageRoute(builder: (context) => Navbar()),
+          //   ModalRoute.withName('/navbar'),
+          // );
         }
       },
     );

@@ -45,7 +45,9 @@ class _RenewOptionState extends State<RenewOption>
           await Provider.of<GetPlanProvider>(context, listen: false).fetchHotspotPlan();
           Navigator.pushAndRemoveUntil(
             context,
-            MaterialPageRoute(builder: (context) => Navbar()),
+            PageTransition(type: PageTransitionType.bottomToTop, 
+              child: Navbar(),
+            ),
             ModalRoute.withName('/navbar'),
           );
         }

@@ -102,8 +102,7 @@ class PostRequest with ChangeNotifier {
   }
 
   //Hotspot Plan
-  Future<http.Response> buyHotspotPlan(
-      String phone, String password, String value) async {
+  Future<http.Response> buyHotspotPlan(String phone, String password, String value) async {
     await _prefService.read('token').then((value) {
       _backend.token = Map<String, dynamic>.from({'token': value});
     });

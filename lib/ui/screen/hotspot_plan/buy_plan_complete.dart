@@ -71,7 +71,9 @@ class _CompletePlanState extends State<CompletePlan> {
                             Future.delayed(Duration(seconds: 3), () async {
                               Timer(Duration(milliseconds: 500), () => Navigator.pushAndRemoveUntil(
                                 context,
-                                MaterialPageRoute(builder: (context) => Navbar()),
+                                PageTransition(type: PageTransitionType.bottomToTop, 
+                                  child: Navbar(),
+                                ),
                                 ModalRoute.withName('/navbar'),
                               ));
                             });
@@ -96,7 +98,9 @@ class _CompletePlanState extends State<CompletePlan> {
         ),
         onWillPop: () => Navigator.pushAndRemoveUntil(
           context,
-          MaterialPageRoute(builder: (context) => Navbar()),
+          PageTransition(type: PageTransitionType.bottomToTop, 
+            child: Navbar(),
+          ),
           ModalRoute.withName('/navbar'),
         ),
       ),

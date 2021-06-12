@@ -90,7 +90,9 @@ class _WalletChoiceState extends State<WalletChoice> {
                             titleDialog());
                           Navigator.pushReplacement(
                             context,
-                            MaterialPageRoute(builder: (context) => MyWallet()),
+                            PageTransition(type: PageTransitionType.rightToLeft, 
+                              child: MyWallet(),
+                            ),
                           );
                         } else {
                           await Components.dialog(

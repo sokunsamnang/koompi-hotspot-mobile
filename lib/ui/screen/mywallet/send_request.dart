@@ -54,8 +54,9 @@ class _SendRequestState extends State<SendRequest> {
                 Duration(milliseconds: 500),
                 () => Navigator.pushAndRemoveUntil(
                       context,
-                      MaterialPageRoute(
-                          builder: (context) => CompletePayment()),
+                      PageTransition(type: PageTransitionType.bottomToTop, 
+                        child: CompletePayment(),
+                      ),
                       ModalRoute.withName('/navbar'),
                     ));
           });

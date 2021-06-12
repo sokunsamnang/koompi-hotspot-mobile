@@ -97,7 +97,9 @@ class _LoginPhoneState extends State<LoginPhone> {
             await Provider.of<NotificationProvider>(context, listen: false).fetchNotification();
             Navigator.pushAndRemoveUntil(
               context,
-              MaterialPageRoute(builder: (context) => Navbar()),
+              PageTransition(type: PageTransitionType.rightToLeft, 
+                child: Navbar(),
+              ),
               ModalRoute.withName('/navbar'),
             );
           }

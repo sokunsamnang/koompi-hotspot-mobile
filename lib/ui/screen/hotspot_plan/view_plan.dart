@@ -44,7 +44,9 @@ class _PlanViewState extends State<PlanView> {
           await Provider.of<GetPlanProvider>(context, listen: false).fetchHotspotPlan();
           Navigator.pushAndRemoveUntil(
             context,
-            MaterialPageRoute(builder: (context) => CompletePlan()),
+            PageTransition(type: PageTransitionType.rightToLeft, 
+              child: CompletePlan(),
+            ),
             ModalRoute.withName('/navbar'),
           );
         }
@@ -148,7 +150,9 @@ class _PlanViewState extends State<PlanView> {
                 onTap: () async {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => ChangeHotspotPlan()),
+                    PageTransition(type: PageTransitionType.bottomToTop, 
+                      child: ChangeHotspotPlan(),
+                    ),
                   );
                 },
                 child: Center(
@@ -174,7 +178,9 @@ class _PlanViewState extends State<PlanView> {
       onTap: (){
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => RenewOption())
+          PageTransition(type: PageTransitionType.rightToLeft, 
+            child: RenewOption(),
+          ),
         );
       },
       child: Container(
@@ -229,7 +235,9 @@ class _PlanViewState extends State<PlanView> {
                           onPressed: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => RenewOption())
+                              PageTransition(type: PageTransitionType.rightToLeft, 
+                                child: RenewOption(),
+                              ),
                             );
                           }
                         )
@@ -578,10 +586,10 @@ class _PlanViewState extends State<PlanView> {
   //                 ),
   //                 new FlatButton(
   //                     onPressed: () {
-  //                       // Navigator.of(context).pop();
-                        // dialogLoading(context);
-                        // _submitRenewPlan();
-                        // Navigator.of(context).pop();
+  //                        // Navigator.of(context).pop();
+                            // dialogLoading(context);
+                            // _submitRenewPlan();
+                            // Navigator.of(context).pop();
   //                     },
   //                     child: new Text(_lang.translate('ok'),))
   //               ],

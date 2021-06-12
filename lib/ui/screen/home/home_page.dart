@@ -31,8 +31,12 @@ class _HomePageState extends State<HomePage>{
           children: <Widget>[
             InkWell(
               onTap: () async{
-                Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => MyAccount()));
+                Navigator.push(
+                  context, 
+                  PageTransition(type: PageTransitionType.bottomToTop, 
+                    child: MyAccount(),
+                  )
+                );
               },
               child: CircleAvatar(
                 backgroundImage: mData.image == null ? AssetImage('assets/images/avatar.png') : NetworkImage("${ApiService.avatar}/${mData.image}"),

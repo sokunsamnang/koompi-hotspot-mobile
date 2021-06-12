@@ -282,7 +282,9 @@ class _TransactionDetailState extends State<TransactionDetail> {
                                 onPressed: () {
                                   Navigator.push(
                                     context,
-                                    MaterialPageRoute(builder: (context) => SendRequest(history[i].sender, history[i].amount.toString())),
+                                    PageTransition(type: PageTransitionType.bottomToTop, 
+                                      child: SendRequest(history[i].sender, history[i].amount.toString()),
+                                    ),
                                   );
                                 },
                                 elevation: 2.5,
@@ -308,7 +310,9 @@ class _TransactionDetailState extends State<TransactionDetail> {
                                 onPressed: () {
                                   Navigator.push(
                                     context,
-                                    MaterialPageRoute(builder: (context) => SendRequest(history[i].destination, history[i].amount.toString())),
+                                    PageTransition(type: PageTransitionType.bottomToTop, 
+                                      child: SendRequest(history[i].destination, history[i].amount.toString()),
+                                    ),
                                   );
                                 },
                                 elevation: 2.5,

@@ -64,7 +64,11 @@ class _ForgotPasswordVerificationState extends State<ForgotPasswordVerification>
         if (response.statusCode == 200 && response.body != "Incorrect Code!") {
           print(response.body);
           Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => ResetNewPassword(widget.phone)));
+            context, 
+            PageTransition(type: PageTransitionType.rightToLeft, 
+              child: ResetNewPassword(widget.phone),
+            ),
+          );
         } 
         else {
           await Components.dialog(

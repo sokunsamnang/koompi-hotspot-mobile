@@ -200,7 +200,9 @@ class Components {
                       Future.delayed(Duration(seconds: 2), () {
                         Timer(Duration(milliseconds: 500), () => Navigator.pushAndRemoveUntil(
                           context,
-                          MaterialPageRoute(builder: (context) => LoginPhone()),
+                          PageTransition(type: PageTransitionType.bottomToTop, 
+                            child: LoginPhone(),
+                          ),
                           ModalRoute.withName('/loginPhone'),
                         ));
                       });
@@ -272,7 +274,9 @@ class Components {
                       Future.delayed(Duration(seconds: 2), () {
                         Timer(Duration(milliseconds: 500), () => Navigator.pushAndRemoveUntil(
                           context,
-                          MaterialPageRoute(builder: (context) => LoginPhone()),
+                          PageTransition(type: PageTransitionType.bottomToTop, 
+                            child: LoginPhone(),
+                          ),
                           ModalRoute.withName('/loginPhone'),
                         ));
                       });

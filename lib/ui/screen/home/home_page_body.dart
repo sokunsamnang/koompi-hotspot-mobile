@@ -102,8 +102,10 @@ Widget startGetWallet(context) {
                                 splashColor: Colors.transparent,
                                 onPressed: () {
                                   Navigator.push(
-                                    context,
-                                    MaterialPageRoute(builder: (context) => WalletChoice()),
+                                    context, 
+                                    PageTransition(type: PageTransitionType.rightToLeft, 
+                                      child: WalletChoice(),
+                                    )
                                   );
                                 },
                                 child: Row(
@@ -218,8 +220,10 @@ Widget noPlanView(BuildContext context) {
                         splashColor: Colors.transparent,
                         onPressed: () {
                           Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => HotspotPlan()),
+                            context, 
+                            PageTransition(type: PageTransitionType.rightToLeft, 
+                              child: HotspotPlan(),
+                            )
                           );
                         },
                         child: Row(
@@ -272,8 +276,11 @@ Widget _planViewButton(context){
               ),
               onTap: () async {
                 Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => PlanView()));
+                  context, 
+                  PageTransition(type: PageTransitionType.rightToLeft, 
+                    child: PlanView(),
+                  )
+                );
               },
               child: Padding(
                 padding: EdgeInsets.symmetric(vertical: 20),
@@ -441,8 +448,11 @@ Widget _planExpire(context){
               // splashColor: Colors.transparent,
               onTap: () async {
                 Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => PlanView()));
+                  context, 
+                  PageTransition(type: PageTransitionType.rightToLeft, 
+                    child: PlanView(),
+                  )
+                );
               },
               child: Padding(
                 padding: EdgeInsets.symmetric(vertical: 20),
@@ -471,8 +481,10 @@ Widget _planExpire(context){
                               splashColor: Colors.transparent,
                               onPressed: () {
                                 Navigator.push(
-                                  context,
-                                  MaterialPageRoute(builder: (context) => PlanView()),
+                                  context, 
+                                  PageTransition(type: PageTransitionType.rightToLeft, 
+                                    child: PlanView(),
+                                  )
                                 );
                               },
                               child: Row(
@@ -532,8 +544,10 @@ Widget _myWalletButton(context){
                 // splashColor: Colors.transparent,
                 onTap: () async {
                   Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => WalletScreen()),
+                    context, 
+                    PageTransition(type: PageTransitionType.rightToLeft, 
+                      child: WalletScreen(),
+                    )
                   );
                 },
                 child: ClipRRect(
@@ -650,8 +664,10 @@ Widget _myWalletButton(context){
                                       splashColor: Colors.transparent,
                                       onPressed: () {
                                         Navigator.push(
-                                          context,
-                                          MaterialPageRoute(builder: (context) => WalletScreen()),
+                                          context, 
+                                          PageTransition(type: PageTransitionType.rightToLeft, 
+                                            child: WalletScreen(),
+                                          )
                                         );
                                       },
                                       child: Row(

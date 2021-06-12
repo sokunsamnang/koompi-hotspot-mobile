@@ -1,4 +1,5 @@
 import 'package:koompi_hotspot/all_export.dart';
+import 'package:package_info/package_info.dart';
 
 class MorePage extends StatefulWidget {
   @override
@@ -10,11 +11,39 @@ class _MorePageState extends State<MorePage>
   AnimationController _controller;
 
   String name = mData.fullname;
+
+  PackageInfo _packageInfo = PackageInfo(
+    appName: '',
+    packageName: '',
+    version: '',
+    buildNumber: '',
+  );
+
+  Future<void> _initPackageInfo() async {
+    final PackageInfo info = await PackageInfo.fromPlatform();
+    setState(() {
+      _packageInfo = info;
+    });
+  }
   
+  Widget _infoApp(String title, String subtitle) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Text(title),
+        // SizedBox(width: 5),
+        // Text(subtitle.isNotEmpty ? subtitle : 'Not set'),
+        Text(subtitle),
+      ],
+    );
+  }
+
   @override
   void initState() {
     super.initState();
     _controller = AnimationController(vsync: this);
+    _initPackageInfo();
   }
 
   @override
@@ -44,7 +73,10 @@ class _MorePageState extends State<MorePage>
                 child: ListTile(
                   onTap: () async {
                     Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => MyAccount()));
+                      PageTransition(type: PageTransitionType.rightToLeft, 
+                        child: MyAccount(),
+                      ),
+                    );
                   },
                   title: Text(
                     name ?? 'KOOMPI',
@@ -73,9 +105,9 @@ class _MorePageState extends State<MorePage>
                       onTap: () async {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(
-                              builder: (context) => ChangePassword()
-                          )  
+                          PageTransition(type: PageTransitionType.rightToLeft, 
+                            child: ChangePassword(),
+                          ),
                         );
                       }
                     ),
@@ -99,8 +131,9 @@ class _MorePageState extends State<MorePage>
                       onTap: () async {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(
-                            builder: (_) => LanguageView()),
+                          PageTransition(type: PageTransitionType.rightToLeft, 
+                            child: LanguageView(),
+                          ),
                         );
                       },
                     ),
@@ -112,8 +145,9 @@ class _MorePageState extends State<MorePage>
                       onTap: () async {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(
-                            builder: (_) => CaptivePortalWeb()),
+                          PageTransition(type: PageTransitionType.rightToLeft, 
+                            child: CaptivePortalWeb()
+                          ),
                         );
                       },
                     ),
@@ -143,7 +177,7 @@ class _MorePageState extends State<MorePage>
                       },
                     ),
                     _buildDivider(),
-                    Text('Beta Version 0.4.3'),
+                    Center(child: _infoApp('${_packageInfo.appName}: ', _packageInfo.version)),
                   ],
                 ),
               ),

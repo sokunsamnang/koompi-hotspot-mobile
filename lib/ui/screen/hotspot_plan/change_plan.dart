@@ -58,7 +58,9 @@ class _ChangeHotspotPlanState extends State<ChangeHotspotPlan> {
             await Provider.of<GetPlanProvider>(context, listen: false).fetchHotspotPlan();
             Timer(Duration(milliseconds: 500), () => Navigator.pushAndRemoveUntil(
               context,
-              MaterialPageRoute(builder: (context) => CompletePlan()),
+              PageTransition(type: PageTransitionType.rightToLeft, 
+                child: CompletePlan(),
+              ),
               ModalRoute.withName('/navbar'),
             ));
           });
@@ -98,7 +100,9 @@ class _ChangeHotspotPlanState extends State<ChangeHotspotPlan> {
             await Provider.of<GetPlanProvider>(context, listen: false).fetchHotspotPlan();
             Timer(Duration(milliseconds: 500), () => Navigator.pushAndRemoveUntil(
               context,
-              MaterialPageRoute(builder: (context) => CompletePlan()),
+              PageTransition(type: PageTransitionType.rightToLeft, 
+                child: CompletePlan(),
+              ),
               ModalRoute.withName('/navbar'),
             ));
           });
@@ -149,54 +153,44 @@ class _ChangeHotspotPlanState extends State<ChangeHotspotPlan> {
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.black), 
           onPressed: (){
-            Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (context) => Navbar()),
-              ModalRoute.withName('/navbar'),
-            );
+            Navigator.of(context).pop();
           }
         ),
-        // automaticallyImplyLeading: false,
-        centerTitle: true,
+        automaticallyImplyLeading: false,
+        // centerTitle: true,
         backgroundColor: Colors.white,
-        title: Image.asset(
-          "assets/images/appbar_logo.png",
-          scale: 2,
-        ),
+        // title: Image.asset(
+        //   "assets/images/appbar_logo.png",
+        //   scale: 2,
+        // ),
+        title: Text('Choose a Plan', style: TextStyle(color: Colors.black, fontFamily: 'Medium')),
       ),
-      body: WillPopScope(
-        child: Container(
-          height: MediaQuery.of(context).size.height * 2,
-          child: SingleChildScrollView(
-            physics: BouncingScrollPhysics(),
-              child: Padding(
-                padding: EdgeInsets.only(left: 28.0, right: 28.0, top: 20.0, bottom: 38.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Center(
-                      child: Text(
-                        _lang.translate('choose_plan'),
-                        style: GoogleFonts.nunito(
-                        textStyle: TextStyle(color: primaryColor, fontSize: 30, fontWeight: FontWeight.w700)
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 25.0),
-                    plan30DaysButton(context),
-                    SizedBox(height: 50.0),
-                    plan365DaysButton(context),
-                  ],
-                ),
+      body: Container(
+        height: MediaQuery.of(context).size.height * 2,
+        child: SingleChildScrollView(
+          physics: BouncingScrollPhysics(),
+            child: Padding(
+              padding: EdgeInsets.only(left: 28.0, right: 28.0, top: 20.0, bottom: 38.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  // Center(
+                  //   child: Text(
+                  //     _lang.translate('choose_plan'),
+                  //     style: GoogleFonts.nunito(
+                  //     textStyle: TextStyle(color: primaryColor, fontSize: 30, fontWeight: FontWeight.w700)
+                  //     ),
+                  //   ),
+                  // ),
+                  SizedBox(height: 25.0),
+                  plan30DaysButton(context),
+                  SizedBox(height: 50.0),
+                  plan365DaysButton(context),
+                ],
               ),
             ),
           ),
-        onWillPop: () => Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(builder: (context) => Navbar()),
-          ModalRoute.withName('/navbar'),
-        ),
-      )
+        )
     );
   }
 
@@ -303,69 +297,70 @@ class _ChangeHotspotPlanState extends State<ChangeHotspotPlan> {
                 ],
               ),
             ),
-            SizedBox(height: 20),
-            Center(
-              child: InkWell(
-                child: Container(
-                  // width: ScreenUtil.getInstance().setWidth(330),
-                  height: 50,
-                  decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                          colors: [Color(0xFF17ead9), Color(0xFF6078ea)]),
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(12), 
-                        bottomRight: Radius.circular(12),
+            // SizedBox(height: 20),
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Center(
+                child: InkWell(
+                  child: Container(
+                    // width: ScreenUtil.getInstance().setWidth(330),
+                    height: 50,
+                    decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                            colors: [Color(0xFF17ead9), Color(0xFF6078ea)]),
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(12),
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                              color: Color(0xFF6078ea).withOpacity(.3),
+                              offset: Offset(0.0, 8.0),
+                              blurRadius: 8.0)
+                        ]),
+                  child: Material(
+                    color: Colors.transparent,
+                    child: InkWell(
+                      customBorder: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(12),
+                        ),
                       ),
-                      boxShadow: [
-                        BoxShadow(
-                            color: Color(0xFF6078ea).withOpacity(.3),
-                            offset: Offset(0.0, 8.0),
-                            blurRadius: 8.0)
-                      ]),
-                child: Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                    customBorder: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(12), 
-                        bottomRight: Radius.circular(12),
-                      ),
-                    ),
-                    onTap: () async {
-                      if(mPlan.plan == '30'){
-                        return null;
-                      }
-                      else{
-                        mPlan.status == false 
-                        ? 
-                        _showDialog30Days(context) 
-                        : 
-                        await Components.dialog(
-                          context,
-                          textAlignCenter(text: _lang.translate('in_use_plan')),
-                          warningTitleDialog()
-                        );
-                      }
-                    },
-                    child: Center(
-                      child: mPlan.plan == '30' ? Text(
-                          _lang.translate('in_use'), 
-                          style: GoogleFonts.nunito(
-                          textStyle: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w700)
-                          ),
-                        )
-                        :
-                        Text(
-                          _lang.translate('subscribe'), 
-                          style: GoogleFonts.nunito(
-                          textStyle: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w700)
+                      onTap: () async {
+                        if(mPlan.plan == '30'){
+                          return null;
+                        }
+                        else{
+                          mPlan.status == false 
+                          ? 
+                          _showDialog30Days(context) 
+                          : 
+                          await Components.dialog(
+                            context,
+                            textAlignCenter(text: _lang.translate('in_use_plan')),
+                            warningTitleDialog()
+                          );
+                        }
+                      },
+                      child: Center(
+                        child: mPlan.plan == '30' ? Text(
+                            _lang.translate('in_use'), 
+                            style: GoogleFonts.nunito(
+                            textStyle: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w700)
+                            ),
+                          )
+                          :
+                          Text(
+                            _lang.translate('subscribe'), 
+                            style: GoogleFonts.nunito(
+                            textStyle: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w700)
+                            ),
                           ),
                         ),
                       ),
                     ),
                   ),
-                ),
-              )
+                )
+              ),
             ),
           ],
         ),
@@ -480,68 +475,69 @@ class _ChangeHotspotPlanState extends State<ChangeHotspotPlan> {
                 ],
               ),
             ),
-            SizedBox(height: 20),
-            Center(
-              child: InkWell(
-                child: Container(
-                  // width: ScreenUtil.getInstance().setWidth(330),
-                  height: 50,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(12), 
-                      bottomRight: Radius.circular(12),
-                    ),
-                    gradient: LinearGradient(
-                        colors: [Color(0xFF17ead9), Color(0xFF6078ea)]),
-                    // borderRadius: BorderRadius.circular(12),
-                    boxShadow: [
-                      BoxShadow(
-                          color: Color(0xFF6078ea).withOpacity(.3),
-                          offset: Offset(0.0, 8.0),
-                          blurRadius: 8.0)
-                    ]),
-                child: Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(12), 
-                      bottomRight: Radius.circular(12),
-                    ),
-                    onTap: () async {
-                      if(mPlan.plan == '365'){
-                        return null;
-                      }
-                      else{
-                        mPlan.status == false 
-                        ? 
-                        _showDialog365Days(context) 
-                        : 
-                        await Components.dialog(
-                          context,
-                          textAlignCenter(text: _lang.translate('in_use_plan')),
-                          warningTitleDialog()
-                        );
-                      }
-                    },
-                    child: Center(
-                      child: mPlan.plan == '365' ? Text(
-                          _lang.translate('in_use'), 
-                          style: GoogleFonts.nunito(
-                          textStyle: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w700)
-                          ),
-                        )
-                        :
-                        Text(
-                          _lang.translate('subscribe'), 
-                          style: GoogleFonts.nunito(
-                          textStyle: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w700)
+            // SizedBox(height: 20),
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Center(
+                child: InkWell(
+                  child: Container(
+                    // width: ScreenUtil.getInstance().setWidth(330),
+                    height: 50,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(12),
+                      ),
+                      gradient: LinearGradient(
+                          colors: [Color(0xFF17ead9), Color(0xFF6078ea)]),
+                      // borderRadius: BorderRadius.circular(12),
+                      boxShadow: [
+                        BoxShadow(
+                            color: Color(0xFF6078ea).withOpacity(.3),
+                            offset: Offset(0.0, 8.0),
+                            blurRadius: 8.0)
+                      ]),
+                  child: Material(
+                    color: Colors.transparent,
+                    child: InkWell(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(12),
+                      ),
+                      onTap: () async {
+                        if(mPlan.plan == '365'){
+                          return null;
+                        }
+                        else{
+                          mPlan.status == false 
+                          ? 
+                          _showDialog365Days(context) 
+                          : 
+                          await Components.dialog(
+                            context,
+                            textAlignCenter(text: _lang.translate('in_use_plan')),
+                            warningTitleDialog()
+                          );
+                        }
+                      },
+                      child: Center(
+                        child: mPlan.plan == '365' ? Text(
+                            _lang.translate('in_use'), 
+                            style: GoogleFonts.nunito(
+                            textStyle: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w700)
+                            ),
+                          )
+                          :
+                          Text(
+                            _lang.translate('subscribe'), 
+                            style: GoogleFonts.nunito(
+                            textStyle: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w700)
+                            ),
                           ),
                         ),
                       ),
                     ),
                   ),
-                ),
-              )
+                )
+              ),
             ),
           ],
         ),
