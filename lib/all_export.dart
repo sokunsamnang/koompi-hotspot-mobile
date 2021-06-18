@@ -33,8 +33,6 @@ export 'package:http_parser/http_parser.dart';
 export 'package:connectivity/connectivity.dart';
  
 
-// Social Media
-export 'package:flutter_facebook_login/flutter_facebook_login.dart';
 
 // Widget
 export 'package:pin_code_fields/pin_code_fields.dart';
@@ -46,7 +44,7 @@ export 'package:intl_phone_number_input/intl_phone_number_input.dart';
 // Image and File
 export 'package:flutter_svg/flutter_svg.dart';
 export 'package:flutter_image_compress/flutter_image_compress.dart';
-export 'package:multi_image_picker/multi_image_picker.dart';
+export 'package:multi_image_picker2/multi_image_picker2.dart';
 export 'package:flutter_absolute_path/flutter_absolute_path.dart';
 
 // Animation
@@ -63,7 +61,7 @@ export 'package:share/share.dart';
 export 'package:flutter_localizations/flutter_localizations.dart';
 export 'package:flutter_map/flutter_map.dart';
 
-// App Permission
+// App Setting
 export 'package:app_settings/app_settings.dart';
 
 // Icons and Font

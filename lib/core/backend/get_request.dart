@@ -16,7 +16,7 @@ class GetRequest with ChangeNotifier{
 
 
   Future<http.Response> getUserProfile(String _token) async {
-    var response = await http.get("${ApiService.url}/dashboard", 
+    var response = await http.get(Uri.parse("${ApiService.url}/dashboard"), 
         headers: <String, String>{
         "accept": "application/json",
         "authorization": "Bearer " + _token,
@@ -35,7 +35,7 @@ class GetRequest with ChangeNotifier{
       _backend.token = Map<String, dynamic>.from({"token": value});
     });
     if (_backend.token != null) {
-      _backend.response = await http.get("${ApiService.url}/selendra/get-wallet",
+      _backend.response = await http.get(Uri.parse("${ApiService.url}/selendra/get-wallet"),
       headers: _backend.conceteHeader("authorization", "Bearer ${_backend.token['token']}"));
       return _backend.response;
     }
@@ -48,7 +48,7 @@ class GetRequest with ChangeNotifier{
       _backend.token = Map<String, dynamic>.from({"token": value});
     });
     if (_backend.token != null) {
-      _backend.response = await http.get("${ApiService.url}/selendra/history",
+      _backend.response = await http.get(Uri.parse("${ApiService.url}/selendra/history"),
       headers: _backend.conceteHeader("authorization", "Bearer ${_backend.token['token']}"));
       return _backend.response;
     }
@@ -61,7 +61,7 @@ class GetRequest with ChangeNotifier{
       _backend.token = Map<String, dynamic>.from({"token": value});
     });
     if (_backend.token != null) {
-      _backend.response = await http.get("${ApiService.url}/dashboard/notification",
+      _backend.response = await http.get(Uri.parse("${ApiService.url}/dashboard/notification"),
       headers: _backend.conceteHeader("authorization", "Bearer ${_backend.token['token']}"));
       return _backend.response;
     }

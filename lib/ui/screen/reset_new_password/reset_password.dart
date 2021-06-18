@@ -98,7 +98,7 @@ class _ResetNewPasswordState extends State<ResetNewPassword> {
       setState(() {
         isLoading = true;
       });
-      var response = await http.put(apiUrl,
+      var response = await http.put(Uri.parse(apiUrl),
         headers: <String, String>{
           "accept": "application/json",
           "Content-Type": "application/json"

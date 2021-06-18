@@ -18,7 +18,7 @@ class PostRequest with ChangeNotifier {
       "password": password
     });
 
-    _backend.response = await http.post('${ApiService.url}/auth/login-phone',
+    _backend.response = await http.post(Uri.parse('${ApiService.url}/auth/login-phone'),
         headers: _backend.conceteHeader(null, null), body: _backend.bodyEncode);
 
     print(_backend.response.body);
@@ -37,7 +37,7 @@ class PostRequest with ChangeNotifier {
       "birthdate": birthdate,
       "address": address
     });
-    _backend.response = await http.put('${ApiService.url}/auth/complete-info',
+    _backend.response = await http.put(Uri.parse('${ApiService.url}/auth/complete-info'),
         headers: _backend.conceteHeader(null, null), body: _backend.bodyEncode);
     return _backend.response;
   }
@@ -54,7 +54,7 @@ class PostRequest with ChangeNotifier {
       "birthdate": birthdate,
       "address": address
     });
-    _backend.response = await http.put('${ApiService.url}/auth/complete-info',
+    _backend.response = await http.put(Uri.parse('${ApiService.url}/auth/complete-info'),
         headers: _backend.conceteHeader(null, null), body: _backend.bodyEncode);
     return _backend.response;
   }
@@ -68,7 +68,7 @@ class PostRequest with ChangeNotifier {
       "password": password
     });
 
-    _backend.response = await http.post('${ApiService.url}/auth/register-phone',
+    _backend.response = await http.post(Uri.parse('${ApiService.url}/auth/register-phone'),
         headers: _backend.conceteHeader(null, null), body: _backend.bodyEncode);
 
     print(_backend.response.body);
@@ -80,7 +80,7 @@ class PostRequest with ChangeNotifier {
   Future<http.Response> confirmAccountPhone(String phone, String vCode) async {
     _backend.bodyEncode = json.encode({"phone": "+855$phone", "vCode": vCode});
     _backend.response = await http.post(
-      '${ApiService.url}/auth/confirm-phone',
+      Uri.parse('${ApiService.url}/auth/confirm-phone'),
       headers: _backend.conceteHeader(null, null),
     );
     print(_backend.response.body);
@@ -94,7 +94,7 @@ class PostRequest with ChangeNotifier {
       "phone": "+855$phone",
     });
 
-    _backend.response = await http.post('${ApiService.url}/forgot-password-phone',
+    _backend.response = await http.post(Uri.parse('${ApiService.url}/forgot-password-phone'),
         headers: _backend.conceteHeader(null, null), body: _backend.bodyEncode);
 
     print(_backend.response.body);
@@ -118,7 +118,7 @@ class PostRequest with ChangeNotifier {
         "memo": "Buy Hotspot Plan"
       });
 
-      _backend.response = await http.post('${ApiService.url}/hotspot/set-plan',
+      _backend.response = await http.post(Uri.parse('${ApiService.url}/hotspot/set-plan'),
           headers: _backend.conceteHeader(
               "authorization", "Bearer ${_backend.token['token']}"),
           body: _backend.bodyEncode);
@@ -138,7 +138,7 @@ class PostRequest with ChangeNotifier {
       "value": value,
     });
 
-    _backend.response = await http.put('${ApiService.url}/hotspot/reset-plan',
+    _backend.response = await http.put(Uri.parse('${ApiService.url}/hotspot/reset-plan'),
         headers: _backend.conceteHeader(null, null), body: _backend.bodyEncode);
 
     print(_backend.response.body);
@@ -160,7 +160,7 @@ class PostRequest with ChangeNotifier {
         "memo": memo
       });
 
-      _backend.response = await http.post('${ApiService.url}/selendra/transfer',
+      _backend.response = await http.post(Uri.parse('${ApiService.url}/selendra/transfer'),
           headers: _backend.conceteHeader(
               "authorization", "Bearer ${_backend.token['token']}"),
           body: _backend.bodyEncode);
@@ -184,7 +184,7 @@ class PostRequest with ChangeNotifier {
         "value": value
       });
 
-      _backend.response = await http.put('${ApiService.url}/hotspot/change-plan',
+      _backend.response = await http.put(Uri.parse('${ApiService.url}/hotspot/change-plan'),
           headers: _backend.conceteHeader("authorization", "Bearer ${_backend.token['token']}"),
           body: _backend.bodyEncode);
 
@@ -206,7 +206,7 @@ class PostRequest with ChangeNotifier {
         "password": password,
       });
 
-      _backend.response = await http.put('${ApiService.url}/hotspot/renew',
+      _backend.response = await http.put(Uri.parse('${ApiService.url}/hotspot/renew'),
         headers: _backend.conceteHeader("authorization", "Bearer ${_backend.token['token']}"),
         body: _backend.bodyEncode);
 
@@ -228,7 +228,7 @@ class PostRequest with ChangeNotifier {
         "automatically": automatically,
       });
 
-      _backend.response = await http.put('${ApiService.url}/hotspot/auto',
+      _backend.response = await http.put(Uri.parse('${ApiService.url}/hotspot/auto'),
           headers: _backend.conceteHeader("authorization", "Bearer ${_backend.token['token']}"),
           body: _backend.bodyEncode);
 
@@ -251,7 +251,7 @@ class PostRequest with ChangeNotifier {
         "memo": 'Buy Hotspot'
       });
 
-      _backend.response = await http.post('${ApiService.url}/selendra/payment',
+      _backend.response = await http.post(Uri.parse('${ApiService.url}/selendra/payment'),
           headers: _backend.conceteHeader(
               "authorization", "Bearer ${_backend.token['token']}"),
           body: _backend.bodyEncode);

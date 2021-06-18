@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_launcher_icons/custom_exceptions.dart';
 import 'package:koompi_hotspot/all_export.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:package_info/package_info.dart';
@@ -23,8 +24,8 @@ versionCheck(context) async {
 
   try {
     // Using default duration to force fetching from remote server.
-    await remoteConfig.fetch(expiration: const Duration(seconds: 0));
-    await remoteConfig.activateFetched();
+    await remoteConfig.fetch();
+    await remoteConfig.activate();
     remoteConfig.getString('force_update_current_version');
     double newVersion = double.parse(remoteConfig
         .getString('force_update_current_version')
@@ -39,7 +40,7 @@ versionCheck(context) async {
         callbackAction: Platform.isIOS ? _launchURL(APP_STORE_URL) : _launchURL(PLAY_STORE_URL),
       );
     }
-  } on FetchThrottledException catch (exception) {
+  } on NoConfigFoundException catch (exception) {
     // Fetch throttled.
     print('new version not found');
     print(exception);

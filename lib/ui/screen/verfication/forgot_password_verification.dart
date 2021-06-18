@@ -51,7 +51,7 @@ class _ForgotPasswordVerificationState extends State<ForgotPasswordVerification>
       setState(() {
         isLoading = true;
       });
-      var response = await http.post(apiUrl,
+      var response = await http.post(Uri.parse(apiUrl),
         headers: <String, String>{
           "accept": "application/json",
           "Content-Type": "application/json"

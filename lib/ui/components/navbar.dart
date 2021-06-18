@@ -141,9 +141,12 @@ class _NavbarState extends State<Navbar> with WidgetsBindingObserver {
         ),
       ),
       bottomNavigationBar: _networkStatus.connectivityResult != ConnectivityResult.none ? Container(
-        decoration: BoxDecoration(color: Colors.white, boxShadow: [
-          BoxShadow(blurRadius: 20, color: Colors.black.withOpacity(.1))
-        ]),
+        decoration: BoxDecoration(
+          color: Colors.white, 
+          boxShadow: [
+            BoxShadow(blurRadius: 20, color: Colors.black.withOpacity(.1))
+          ],
+        ),
         child: SafeArea(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
@@ -153,7 +156,7 @@ class _NavbarState extends State<Navbar> with WidgetsBindingObserver {
                 iconSize: 24,
                 padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                 duration: Duration(milliseconds: 800),
-                tabBackgroundColor: Colors.grey[800],
+                tabBackgroundColor: primaryColor,
                 tabs: [
                   GButton(
                     icon: LineIcons.home,

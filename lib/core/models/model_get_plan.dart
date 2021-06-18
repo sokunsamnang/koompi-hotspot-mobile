@@ -57,7 +57,7 @@ class GetPlanProvider with ChangeNotifier {
     try {
       await _prefService.read('token').then((onValue) async {
         http.Response response = await http.get(
-            '${ApiService.url}/hotspot/get-plan',
+            Uri.parse('${ApiService.url}/hotspot/get-plan'),
             headers: <String, String>{
               "accept": "application/json",
               "authorization": "Bearer " + onValue,

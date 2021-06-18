@@ -84,7 +84,7 @@ class _MorePageState extends State<MorePage>
                         color: Colors.black, fontFamily: "Poppins-Bold"),
                   ),
                   leading: CircleAvatar(
-                    backgroundImage: mData.image == null ? AssetImage('assets/images/avatar.png') : NetworkImage("${ApiService.avatar}/${mData.image}"),
+                    backgroundImage: mData.image == null ? AssetImage('assets/images/avatar.png') : NetworkImage("${ApiService.getAvatar}/${mData.image}"),
                   ),
                   trailing: Icon(LineIcons.edit),
                 ),
@@ -99,9 +99,9 @@ class _MorePageState extends State<MorePage>
                 child: Column(
                   children: <Widget>[
                     ListTile(
-                      leading: Icon(LineIcons.key),
+                      leading: Icon(LineIcons.key, color: primaryColor),
                       title: Text(_lang.translate('change_password')),
-                      trailing: Icon(LineIcons.angle_right),
+                      trailing: Icon(LineIcons.angleRight),
                       onTap: () async {
                         Navigator.push(
                           context,
@@ -111,23 +111,11 @@ class _MorePageState extends State<MorePage>
                         );
                       }
                     ),
-                    // _buildDivider(),
-                    // ListTile(
-                    //   leading: Icon(LineIcons.money),
-                    //   title: Text("Quick Top Up"),
-                    //   trailing: Icon(LineIcons.angle_right),
-                    //   onTap: () async {
-                    //     Navigator.push(
-                    //       context,
-                    //       MaterialPageRoute(builder: (context) => ReceiveRequest()),
-                    //     );
-                    //   },
-                    // ),
                     _buildDivider(),
                     ListTile(
-                      leading: Icon(LineIcons.language),
+                      leading: Icon(LineIcons.language, color: primaryColor),
                       title: Text(_lang.translate('language')),
-                      trailing: Icon(LineIcons.angle_right),
+                      trailing: Icon(LineIcons.angleRight),
                       onTap: () async {
                         Navigator.push(
                           context,
@@ -139,9 +127,9 @@ class _MorePageState extends State<MorePage>
                     ),
                     _buildDivider(),
                     ListTile(
-                      leading: Icon(Icons.wifi_outlined),
+                      leading: Icon(LineIcons.wifi, color: primaryColor),
                       title: Text(_lang.translate('login_hotspot')),
-                      trailing: Icon(LineIcons.angle_right),
+                      trailing: Icon(LineIcons.angleRight),
                       onTap: () async {
                         Navigator.push(
                           context,
@@ -166,7 +154,7 @@ class _MorePageState extends State<MorePage>
                     // ),
                     _buildDivider(),
                     ListTile(
-                      leading: Icon(LineIcons.sign_out),
+                      leading: Icon(LineIcons.alternateSignOut, color: Colors.red),
                       title: Text(_lang.translate('sign_out')),
                       onTap: () async {
                         await Components.dialogSignOut(

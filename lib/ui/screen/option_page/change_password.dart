@@ -183,7 +183,7 @@ class _ChangePasswordState extends State<ChangePassword>
       setState(() {
         isLoading = true;
       });
-      var response = await http.put(apiUrl,
+      var response = await http.put(Uri.parse(apiUrl),
         headers: <String, String>{
           "accept": "application/json",
           "content-type": "application/json",
@@ -373,7 +373,7 @@ class _ChangePasswordState extends State<ChangePassword>
                           validator: validateNewPass, 
                           onChanged: onChanged,
                           decoration: InputDecoration(
-                            prefixIcon: Icon(LineIcons.unlock_alt, color: primaryColor),
+                            prefixIcon: Icon(LineIcons.alternateUnlock, color: primaryColor),
                             suffixIcon: GestureDetector(
                               onTap: () {
                                 _toggle2();
@@ -420,7 +420,7 @@ class _ChangePasswordState extends State<ChangePassword>
                           validator: validateConfirmPass, 
                           onChanged: onChanged,
                           decoration: InputDecoration(
-                            prefixIcon: Icon(LineIcons.unlock_alt, color: primaryColor),
+                            prefixIcon: Icon(LineIcons.alternateUnlock, color: primaryColor),
                             suffixIcon: GestureDetector(
                               onTap: () {
                                 _toggle3();

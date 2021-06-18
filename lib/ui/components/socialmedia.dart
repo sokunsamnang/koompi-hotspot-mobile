@@ -1,14 +1,5 @@
 import 'package:koompi_hotspot/all_export.dart';
-import 'package:http/http.dart' as http;
 
-void _signInFacebook() async {
-  FacebookLogin facebookLogin = FacebookLogin();
-  final result = await facebookLogin.logIn(['email']);
-  final token = result.accessToken.token;
-  final graphResponse = await http.get(
-      'https://graph.facebook.com/v2.12/me?fields=name,first_name,last_name,email,gender,birthday&access_token=$token');
-  print(graphResponse.body);
-}
 
 Widget onPressFB(BuildContext context) {
   return Container(
@@ -36,7 +27,7 @@ Widget onPressFB(BuildContext context) {
                 size: 20,
               ),
               onPressed: () async {
-                _signInFacebook();
+
               }),
         ),
       ),
@@ -67,7 +58,7 @@ Widget onPressGoogle(BuildContext context) {
                 size: 20,
               ),
               onPressed: () {
-                print('Google Button');
+                
               }),
         ),
       ),

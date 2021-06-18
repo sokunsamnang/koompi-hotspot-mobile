@@ -1,6 +1,11 @@
+// import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:koompi_hotspot/all_export.dart';
+import 'package:koompi_hotspot/main.dart';
 import 'package:koompi_hotspot/ui/screen/notification/notification_screen.dart';
 import 'package:provider/provider.dart';
+import 'package:badges/badges.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 
 class HomePage extends StatefulWidget{
 
@@ -10,10 +15,66 @@ class HomePage extends StatefulWidget{
 
 class _HomePageState extends State<HomePage>{
 
+  void configOneSignal() async {
+    OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
+
+    OneSignal.shared.setAppId("05805743-ce69-4224-9afb-b2f36bf6c1db");
+    // The promptForPushNotificationsWithUserResponse function will show the iOS push notification prompt. We recommend removing the following code and instead using an In-App Message to prompt for notification permission
+    OneSignal.shared.promptUserForPushNotificationPermission().then((accepted) {
+        print("Accepted permission: $accepted");
+    });
+  }
+
   @override
   void initState() {
     super.initState();
     versionCheck(context);
+    configOneSignal();
+    // FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+    //     RemoteNotification notification = message.notification;
+    //     AndroidNotification android = message.notification?.android;
+    //     if (notification != null && android != null) {
+    //       flutterLocalNotificationsPlugin.show(
+    //           notification.hashCode,
+    //           notification.title,
+    //           notification.body,
+    //           NotificationDetails(
+    //             android: AndroidNotificationDetails(
+    //               channel.id,
+    //               channel.name,
+    //               channel.description,
+    //               color: Colors.blue,
+    //               playSound: true,
+    //               icon: '@mipmap/ic_launcher',
+    //               // priority: Priority.high,
+    //               importance: Importance.high,
+    //               // showWhen: false
+    //             ),
+    //           ));
+    //     }
+    //   });
+
+      // FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      //   print('A new onMessageOpenedApp event was published!');
+      //   RemoteNotification notification = message.notification;
+      //   AndroidNotification android = message.notification?.android;
+      //   if (notification != null && android != null) {
+      //     showDialog(
+      //         context: context,
+      //         builder: (_) {
+      //           return AlertDialog(
+      //             title: Text(notification.title),
+      //             content: SingleChildScrollView(
+      //               child: Column(
+      //                 crossAxisAlignment: CrossAxisAlignment.start,
+      //                 children: [Text(notification.body)],
+      //               ),
+      //             ),
+      //           );
+      //         });
+      //   }
+      // });
+
   }
 
 
@@ -39,7 +100,7 @@ class _HomePageState extends State<HomePage>{
                 );
               },
               child: CircleAvatar(
-                backgroundImage: mData.image == null ? AssetImage('assets/images/avatar.png') : NetworkImage("${ApiService.avatar}/${mData.image}"),
+                backgroundImage: mData.image == null ? AssetImage('assets/images/avatar.png') : NetworkImage("${ApiService.getAvatar}/${mData.image}"),
               ),
             ),
             RichText(
@@ -55,15 +116,56 @@ class _HomePageState extends State<HomePage>{
                 ],
               ),
             ),
-            IconButton(
-              icon: Icon(Icons.notifications), 
-              color: Colors.grey,
-              onPressed: (){
-                Navigator.push(
-                  context, 
-                  PageTransition(type: PageTransitionType.rightToLeft, 
-                    child: NotificationScreen()));
-              })
+            // Badge(
+            //   position: BadgePosition.topEnd(top: 10, end: 10),
+            //   badgeContent: null,
+            //   child: IconButton(
+            //     icon: Icon(Icons.menu),
+            //     onPressed: () {},
+            //   ),
+            // ),
+            Badge(
+              elevation: 0,
+              badgeColor: Colors.transparent,
+              toAnimate: false,
+              position: BadgePosition.topEnd(top: 0, end: -2.5),
+              // animationDuration: Duration(milliseconds: 300),
+              // animationType: BadgeAnimationType.slide,
+              badgeContent: Container(
+                height: 20,
+                width: 20,
+                child: FlareActor( 
+                  'assets/animations/notification_badge.flr', 
+                  animation: 'hasNotification',
+                ),
+              ),
+              child: IconButton(
+                icon: Icon(Icons.notifications), 
+                color: Colors.grey,
+                onPressed: (){
+                  Navigator.push(
+                    context, 
+                    PageTransition(type: PageTransitionType.rightToLeft, 
+                      child: NotificationScreen()));
+                }
+              ),
+            ),
+            // Badge(
+              // badgeContent: FlareActor( 
+              //   'assets/animations/notification_badge.flr', 
+              //   animation: 'hasNotification',
+              // ),
+              // child: IconButton(
+              //   icon: Icon(Icons.notifications), 
+              //   color: Colors.grey,
+              //   onPressed: (){
+              //     Navigator.push(
+              //       context, 
+              //       PageTransition(type: PageTransitionType.rightToLeft, 
+              //         child: NotificationScreen()));
+              //   }
+              // ),
+            // ),    
           ],
         ),
         backgroundColor: Colors.white,

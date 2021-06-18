@@ -11,7 +11,11 @@ class WifiConnect extends StatefulWidget {
 }
 class _WifiConnectState extends State<WifiConnect> {
 
-  final geolocator = Geolocator()..forceAndroidLocationManager = true;
+  var geoLocator = Geolocator();
+  bool serviceEnabled;
+  LocationPermission permission;
+
+
   TextEditingController _passwordController = TextEditingController();
   Timer timer;
   void initState(){
@@ -311,26 +315,30 @@ class _WifiConnectState extends State<WifiConnect> {
 
   void _checkGPS() async {
 
-    var status = await geolocator.checkGeolocationPermissionStatus();
-    bool isGPSOn = await geolocator.isLocationServiceEnabled();
-    var _lang = AppLocalizeService.of(context);
-    if (status == GeolocationStatus.granted && isGPSOn) {
-      loadWifiList();
-    } else if (isGPSOn == false) {
-      await Components.dialogGPS(
-        context,
-        Text(_lang.translate('turn_on_gps'), textAlign: TextAlign.center),
-        Text(_lang.translate('location_permission'), textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.bold)),
-      );
-    } else if (status != GeolocationStatus.granted) {
-      loadWifiList();
-    } else {
-      await Components.dialogGPS(
-        context,
-        Text(_lang.translate('turn_on_gps'), textAlign: TextAlign.center),
-        Text(_lang.translate('location_permission'), textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.bold)),
-      );
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
 
+    // var status = await geolocator.checkGeolocationPermissionStatus();
+    // bool isGPSOn = await geolocator.isLocationServiceEnabled();
+    var _lang = AppLocalizeService.of(context);
+    if (!serviceEnabled) {
+      await Components.dialogGPS(
+        context,
+        Text(_lang.translate('turn_on_gps'), textAlign: TextAlign.center),
+        Text(_lang.translate('location_permission'), textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.bold)),
+      );
+    } else if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      // await PermissionHandler()
+      //     .requestPermissions([PermissionGroup.locationWhenInUse]);
+      if(permission == LocationPermission.denied){
+        await Components.dialogGPS(
+          context,
+          Text(_lang.translate('turn_on_gps'), textAlign: TextAlign.center),
+          Text(_lang.translate('location_permission'), textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.bold)),
+        );
+      }
+    } else {
+      loadWifiList();
     }
   }
 

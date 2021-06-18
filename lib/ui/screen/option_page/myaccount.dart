@@ -2,6 +2,7 @@ import 'package:groovin_widgets/groovin_widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:koompi_hotspot/all_export.dart';
 
+
 class MyAccount extends StatefulWidget {
   @override
   _MyAccountState createState() => _MyAccountState();
@@ -26,7 +27,7 @@ class _MyAccountState extends State<MyAccount>
         materialOptions: MaterialOptions(
           statusBarColor: '#${Color(0xff0caddb).value.toRadixString(16)}',
           actionBarColor: '#${Color(0xff0caddb).value.toRadixString(16)}',
-          actionBarTitle: "KOOMPI Hotspot",
+          actionBarTitle: "KOOMPI Fi-Fi",
           allViewTitle: "All Photos",
           useDetailsView: false,
           selectCircleStrokeColor: "#000000",
@@ -276,7 +277,7 @@ class _MyAccountState extends State<MyAccount>
                                   backgroundImage: mData.image == null
                                       ? AssetImage('assets/images/avatar.png')
                                       : NetworkImage(
-                                          "${ApiService.avatar}/${mData.image}"),
+                                          "${ApiService.getAvatar}/${mData.image}"),
                                 ),
                           ),
                         ),

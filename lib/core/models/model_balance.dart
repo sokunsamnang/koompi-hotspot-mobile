@@ -42,7 +42,7 @@ class BalanceProvider with ChangeNotifier {
     try {
       await _prefService.read('token').then((onValue) async {
         http.Response response = await http.get(
-            '${ApiService.url}/selendra/portfolio',
+            Uri.parse('${ApiService.url}/selendra/portfolio'),
             headers: <String, String>{
               "accept": "application/json",
               "authorization": "Bearer " + onValue,

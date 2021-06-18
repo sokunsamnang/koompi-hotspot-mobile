@@ -258,7 +258,7 @@ class _CompleteInfoState extends State<CompleteInfo>{
                     SizedBox(height: 10.0),
                     FormBuilderChoiceChip(
                       onSaved: (newValue) => _gender = newValue,
-                      validators: [FormBuilderValidators.required()],
+                      validator: FormBuilderValidators.required(context),
                       decoration: InputDecoration(
                         border: InputBorder.none,
                         labelText: _lang.translate('gender'),
@@ -274,7 +274,7 @@ class _CompleteInfoState extends State<CompleteInfo>{
                       elevation: 2,
                       alignment: WrapAlignment.spaceBetween,
                       labelPadding: EdgeInsets.only(left: 35, right: 35),
-                      attribute: "gender",
+                      // attribute: "gender",
                       options: [
                         FormBuilderFieldOption(value: 'Male', child: Text(_lang.translate('male'))),
                         FormBuilderFieldOption(value: 'Female', child: Text(_lang.translate('female')))
@@ -282,7 +282,7 @@ class _CompleteInfoState extends State<CompleteInfo>{
                       onChanged: (value) {
                         if (value == null) {
                           //* If chip unselected, set value to last selection
-                          formKey.currentState.fields['gender'].currentState
+                          formKey.currentState.fields['gender'].value
                               .didChange(lastChoiceChipSelection);
                         } else {
                           //* If chip selected, save the value and rebuild
@@ -290,7 +290,7 @@ class _CompleteInfoState extends State<CompleteInfo>{
                             lastChoiceChipSelection = value;
                           });
                         }
-                      },
+                      }, name: 'gender',
                     ),
                   ],
                 ),
