@@ -128,8 +128,12 @@ class _CompleteInfoState extends State<CompleteInfo>{
         }
       }
     } on SocketException catch (_) {
+      await Components.dialog(
+        context,
+        textAlignCenter(text: 'Something may went wrong with your internet connection. Please try again!!!'),
+        warningTitleDialog()
+      );
       Navigator.pop(context);
-      print('not connected');
     }
   }
 

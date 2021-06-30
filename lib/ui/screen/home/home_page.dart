@@ -14,6 +14,7 @@ class HomePage extends StatefulWidget{
 }
 
 class _HomePageState extends State<HomePage>{
+  GlobalKey<ScaffoldState> globalKey = GlobalKey<ScaffoldState>();
 
   void configOneSignal() async {
     OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
@@ -27,54 +28,10 @@ class _HomePageState extends State<HomePage>{
 
   @override
   void initState() {
-    super.initState();
+    AppServices.noInternetConnection(globalKey);
     versionCheck(context);
     configOneSignal();
-    // FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-    //     RemoteNotification notification = message.notification;
-    //     AndroidNotification android = message.notification?.android;
-    //     if (notification != null && android != null) {
-    //       flutterLocalNotificationsPlugin.show(
-    //           notification.hashCode,
-    //           notification.title,
-    //           notification.body,
-    //           NotificationDetails(
-    //             android: AndroidNotificationDetails(
-    //               channel.id,
-    //               channel.name,
-    //               channel.description,
-    //               color: Colors.blue,
-    //               playSound: true,
-    //               icon: '@mipmap/ic_launcher',
-    //               // priority: Priority.high,
-    //               importance: Importance.high,
-    //               // showWhen: false
-    //             ),
-    //           ));
-    //     }
-    //   });
-
-      // FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      //   print('A new onMessageOpenedApp event was published!');
-      //   RemoteNotification notification = message.notification;
-      //   AndroidNotification android = message.notification?.android;
-      //   if (notification != null && android != null) {
-      //     showDialog(
-      //         context: context,
-      //         builder: (_) {
-      //           return AlertDialog(
-      //             title: Text(notification.title),
-      //             content: SingleChildScrollView(
-      //               child: Column(
-      //                 crossAxisAlignment: CrossAxisAlignment.start,
-      //                 children: [Text(notification.body)],
-      //               ),
-      //             ),
-      //           );
-      //         });
-      //   }
-      // });
-
+    super.initState();
   }
 
 
@@ -84,6 +41,7 @@ class _HomePageState extends State<HomePage>{
 
   Widget build(BuildContext context){
     return Scaffold(
+      key: globalKey,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Row(

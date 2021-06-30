@@ -69,6 +69,47 @@ class Components {
   //       });
   // }
 
+  static Future dialogNoOption(
+    BuildContext context, 
+    var text, 
+    var title, 
+    {
+      Widget action, 
+      // String firsTxtBtn = "OK", 
+      Color bgColor = Colors.white, 
+      Color barrierColor, 
+      bool removeBtn: false,
+      double pLeft: 10,
+      double pRight: 10,
+      double pTop: 15.0,
+      double pBottom: 5
+    }
+  ) async {
+    var result = await showDialog(
+      context: context,
+      barrierDismissible: false,
+      barrierColor: barrierColor ?? Colors.white.withOpacity(0),
+      builder: (BuildContext context) {
+        return StatefulBuilder(builder: (context2, setState){
+          return AlertDialog(
+            backgroundColor: bgColor,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+            contentPadding: EdgeInsets.only(left: pLeft, top: pTop, right: pRight, bottom: pBottom),
+            title: title != null ? Align(
+              alignment: Alignment.center,
+              child: title,
+            ) : null,
+            content: text,
+            actions: !removeBtn ? <Widget>[
+              action ?? Container()
+            ] : null,
+          );
+        });
+      }
+    );
+    return result;
+  }
+  
  /* Dialog of response from server */
   static Future dialog(
     BuildContext context, 

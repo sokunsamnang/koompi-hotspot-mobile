@@ -31,7 +31,7 @@ export 'package:http_parser/http_parser.dart';
 
 // Connection and Wi-Fi
 export 'package:connectivity/connectivity.dart';
- 
+export 'package:koompi_hotspot/core/services/connection.dart';
 
 
 // Widget

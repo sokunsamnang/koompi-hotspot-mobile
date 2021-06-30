@@ -3,6 +3,7 @@ import 'package:koompi_hotspot/all_export.dart';
 import 'package:line_awesome_icons/line_awesome_icons.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:shimmer/shimmer.dart';
 
 class MyWallet extends StatefulWidget {
   final Function resetState;
@@ -21,6 +22,7 @@ class _MyWalletState extends State<MyWallet> {
   @override
   void initState() {
     super.initState();
+    AppServices.noInternetConnection(_scaffoldKey);
     setState(() {
       fetchWallet();
     });
@@ -189,7 +191,19 @@ class _MyWalletState extends State<MyWallet> {
                       SizedBox(
                         height: 10,
                       ),
-                      Expanded(child: trxHistory(context),)
+                      Expanded(
+                        child: Shimmer.fromColors(
+                          baseColor: Colors.grey[300],
+                          highlightColor: Colors.grey[100],
+                          enabled: true,
+                          child: Scrollbar(
+                            isAlwaysShown: false,
+                            showTrackOnHover: false,
+                            radius: Radius.circular(12),
+                            child: trxHistory(context)
+                          )
+                        ),
+                      )
                     ],
                   ),
                 ),

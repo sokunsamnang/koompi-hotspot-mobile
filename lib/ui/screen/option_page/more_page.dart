@@ -7,9 +7,11 @@ class MorePage extends StatefulWidget {
 }
 
 class _MorePageState extends State<MorePage>
-    with SingleTickerProviderStateMixin {
+    with AutomaticKeepAliveClientMixin {
   AnimationController _controller;
 
+  GlobalKey<ScaffoldState> globalKey = GlobalKey<ScaffoldState>();
+  
   String name = mData.fullname;
 
   PackageInfo _packageInfo = PackageInfo(
@@ -18,6 +20,9 @@ class _MorePageState extends State<MorePage>
     version: '',
     buildNumber: '',
   );
+
+  @override
+  bool get wantKeepAlive => true;
 
   Future<void> _initPackageInfo() async {
     final PackageInfo info = await PackageInfo.fromPlatform();
@@ -42,7 +47,7 @@ class _MorePageState extends State<MorePage>
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(vsync: this);
+    AppServices.noInternetConnection(globalKey);
     _initPackageInfo();
   }
 
@@ -56,8 +61,11 @@ class _MorePageState extends State<MorePage>
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
+    
     var _lang = AppLocalizeService.of(context);
     return Scaffold(
+      key: globalKey,
       body: SingleChildScrollView(
         child: SafeArea(
           child: Column(
@@ -184,52 +192,5 @@ class _MorePageState extends State<MorePage>
       color: Colors.grey.shade400,
     );
   }
-}
 
-// showLogoutDialog(context) async {
-//   return showDialog(
-//       context: context,
-//       barrierDismissible: false,
-//       builder: (BuildContext context) {
-//         var _lang = AppLocalizeService.of(context);
-//         return AlertDialog(
-//           title: Row(
-//             children: [
-//               Icon(Icons.warning, color: Colors.yellow),
-//               Text(_lang.translate('warning'), style: TextStyle(fontFamily: 'Poppins-Bold'),),
-//             ],
-//           ),
-//           content: SingleChildScrollView(
-//             child: ListBody(
-//               children: <Widget>[
-//                 Text(_lang.translate('sign_out_warn')),
-//               ],
-//             ),
-//           ),
-//           actions: <Widget>[
-//             FlatButton(
-//               child: Text(_lang.translate('cancel')),
-//               onPressed: () {
-//                 Navigator.of(context).pop();
-//               },
-//             ),
-//             FlatButton(
-//               child: Text(_lang.translate('ok')),
-//               onPressed: () async {
-//                 dialogLoading(context);
-//                 await StorageServices().clearToken('token');
-//                 await StorageServices().clearToken('phone');
-//                 await StorageServices().clearToken('password');
-//                 Future.delayed(Duration(seconds: 2), () {
-//                   Timer(Duration(milliseconds: 500), () => Navigator.pushAndRemoveUntil(
-//                     context,
-//                     MaterialPageRoute(builder: (context) => LoginPhone()),
-//                     ModalRoute.withName('/loginPhone'),
-//                   ));
-//                 });
-//               },
-//             ),
-//           ],
-//         );
-//       });
-// }
+}

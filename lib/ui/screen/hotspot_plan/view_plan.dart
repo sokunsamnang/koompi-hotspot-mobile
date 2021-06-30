@@ -11,7 +11,8 @@ class _PlanViewState extends State<PlanView> {
 
   // final formKey = GlobalKey<FormState>();
   // AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
-
+  GlobalKey<ScaffoldState> globalKey = GlobalKey<ScaffoldState>();
+  
   final TextEditingController _passwordController = new TextEditingController();
 
   // void _submitRenewPlan(){
@@ -62,14 +63,19 @@ class _PlanViewState extends State<PlanView> {
       
       }
     } on SocketException catch (_) {
+      await Components.dialog(
+        context,
+        textAlignCenter(text: 'Something may went wrong with your internet connection. Please try again!!!'),
+        warningTitleDialog()
+      );
       Navigator.pop(context);
-      print('not connected');
     }
   }
 
   @override
   void initState() {
     super.initState();
+    AppServices.noInternetConnection(globalKey);
   }
 
   @override
@@ -81,6 +87,7 @@ class _PlanViewState extends State<PlanView> {
   Widget build(BuildContext context) {
     var _lang = AppLocalizeService.of(context);
     return Scaffold(
+      key: globalKey,
       appBar: AppBar(
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.black), 

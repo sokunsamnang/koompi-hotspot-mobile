@@ -10,6 +10,8 @@ class ResetNewPassword extends StatefulWidget {
 
 class _ResetNewPasswordState extends State<ResetNewPassword> {
 
+  GlobalKey<ScaffoldState> globalKey = GlobalKey<ScaffoldState>();
+
   bool isLoading = false;
   // Initially password is obscure
   bool _obscureText = true;
@@ -48,47 +50,6 @@ class _ResetNewPasswordState extends State<ResetNewPassword> {
       });
     }
   }
-
-  // showChangePasswordDialog(context) async {
-  //   var _lang = AppLocalizeService.of(context);
-  //   return showDialog(
-  //     context: context,
-  //     barrierDismissible: false,
-  //     builder: (BuildContext context) {
-  //       return WillPopScope(
-  //         onWillPop: () async => false,
-  //         child: AlertDialog(
-  //           title: Text(
-  //             _lang.translate('complete'),
-  //             textAlign: TextAlign.center,
-  //           ),
-  //           content: SingleChildScrollView(
-  //             child: ListBody(
-  //               children: <Widget>[
-  //                 Text(_lang.translate('tf_reset_password')),
-  //               ],
-  //             ),
-  //           ),
-  //           actions: <Widget>[
-  //             FlatButton(
-  //               child: Text(_lang.translate('ok')),
-  //               onPressed: () async {
-  //                 dialogLoading(context);
-  //                 Future.delayed(Duration(seconds: 2), () {
-  //                   Timer(Duration(milliseconds: 500), () => Navigator.pushAndRemoveUntil(
-  //                     context,
-  //                     MaterialPageRoute(builder: (context) => LoginPhone()),
-  //                     ModalRoute.withName('/loginPhone'),
-  //                   ));
-  //                 });
-  //               },
-  //             ),
-  //           ],
-  //         ),
-  //       );
-  //     }
-  //   );
-  // }
   
   Future <void> _resetPassword() async {
     dialogLoading(context);
@@ -133,74 +94,21 @@ class _ResetNewPasswordState extends State<ResetNewPassword> {
     }
   }
 
-  // showErrorServerDialog(BuildContext context) async {
-  //   return showDialog(
-  //     context: context,
-  //     barrierDismissible: false,
-  //     builder: (BuildContext context) {
-  //       var _lang = AppLocalizeService.of(context);
-  //       return AlertDialog(
-  //         title: Row(
-  //           children: [
-  //             Icon(Icons.error, color: Colors.red),
-  //             Text(_lang.translate('error'), style: TextStyle(fontFamily: 'Poppins-Bold'),),
-  //           ],
-  //         ),
-  //         content: SingleChildScrollView(
-  //           child: ListBody(
-  //             children: <Widget>[
-  //               Text(_lang.translate('error_server')),
-  //             ],
-  //           ),
-  //         ),
-  //         actions: <Widget>[
-  //           FlatButton(
-  //             child: Text(_lang.translate('ok')),
-  //             onPressed: () {
-  //               Navigator.of(context).pop();
-  //             },
-  //           ),
-  //         ],
-  //       );
-  //     });
-  // }
+  @override
+  void initState(){
+    super.initState();
+    AppServices.noInternetConnection(globalKey);
+  }
 
-  // showErrorDialog(BuildContext context) async {
-  //   return showDialog(
-  //     context: context,
-  //     barrierDismissible: false,
-  //     builder: (BuildContext context) {
-  //       var _lang = AppLocalizeService.of(context);
-  //       return AlertDialog(
-  //         title: Row(
-  //           children: [
-  //             Icon(Icons.warning, color: Colors.yellow),
-  //             Text(_lang.translate('warning'), style: TextStyle(fontFamily: 'Poppins-Bold'),),
-  //           ],
-  //         ),
-  //         content: SingleChildScrollView(
-  //           child: ListBody(
-  //             children: <Widget>[
-  //               Text('Something went wrong, Please try again.'),
-  //             ],
-  //           ),
-  //         ),
-  //         actions: <Widget>[
-  //           FlatButton(
-  //             child: Text(_lang.translate('ok')),
-  //             onPressed: () {
-  //               Navigator.of(context).pop();
-  //             },
-  //           ),
-  //         ],
-  //       );
-  //     });
-  // }
+  @override
+  void dispose(){
+    super.dispose();
+  }
 
-
-
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: globalKey,
       backgroundColor: Colors.white,
       body: GestureDetector(
         behavior: HitTestBehavior.opaque,

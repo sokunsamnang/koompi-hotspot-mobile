@@ -48,7 +48,8 @@ class StorageServices{
         try{
           await Provider.of<GetPlanProvider>(context, listen: false).fetchHotspotPlan();
           await Provider.of<NotificationProvider>(context, listen: false).fetchNotification();
-          await Provider.of<BalanceProvider>(context, listen: false).fetchPortforlio(context); 
+          // await Provider.of<BalanceProvider>(context, listen: false).fetchPortforlio(context); 
+          // await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory(); 
         }
         catch (e){
           print(e.toString());

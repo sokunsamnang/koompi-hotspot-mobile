@@ -61,9 +61,9 @@ class BalanceProvider with ChangeNotifier {
           mBalance = Balance();
           alertText = response.body;
           print('Error portfolio status: ${response.statusCode}');
-          await Components.dialog(
+          await Components.dialogNoOption(
             context,
-            textAlignCenter(text: 'Something went wrong. Please try again later!'),
+            textAlignCenter(text: 'Something went wrong or Server in maintenance. Please try again later!'),
             warningTitleDialog()
           );
         }

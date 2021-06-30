@@ -14,6 +14,8 @@ class Navbar extends StatefulWidget {
 }
 
 class _NavbarState extends State<Navbar> with WidgetsBindingObserver {
+
+
   int _selectedIndex = 0;
 
   final List<Widget> _widgetOptions = <Widget>[
@@ -96,7 +98,6 @@ class _NavbarState extends State<Navbar> with WidgetsBindingObserver {
   @override
   void initState(){
     super.initState();
-    internet();
     WidgetsBinding.instance.addObserver(this);
     DataConnectivityService()
         .connectivityStreamController
@@ -140,7 +141,7 @@ class _NavbarState extends State<Navbar> with WidgetsBindingObserver {
           child: _widgetOptions.elementAt(_selectedIndex),
         ),
       ),
-      bottomNavigationBar: _networkStatus.connectivityResult != ConnectivityResult.none ? Container(
+      bottomNavigationBar: Container(
         decoration: BoxDecoration(
           color: Colors.white, 
           boxShadow: [
@@ -184,7 +185,7 @@ class _NavbarState extends State<Navbar> with WidgetsBindingObserver {
                 }),
           ),
         ),
-      ) : _networkStatus.noNetwork(context),
+      ),
     );
   }
 }

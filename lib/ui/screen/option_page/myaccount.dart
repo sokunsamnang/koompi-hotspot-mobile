@@ -101,36 +101,14 @@ class _MyAccountState extends State<MyAccount>
         }
       }
     } on SocketException catch (_) {
-      print('not connected');
+      await Components.dialog(
+        context,
+        textAlignCenter(text: 'Something may went wrong with your internet connection. Please try again!!!'),
+        warningTitleDialog()
+      );
+      Navigator.pop(context);
     }
   }
-
-  // showErrorServerDialog(BuildContext context) async {
-    
-  //   return showDialog(
-  //       context: context,
-  //       barrierDismissible: false,
-  //       builder: (BuildContext context) {
-  //         return AlertDialog(
-  //           title: Text('Error'),
-  //           content: SingleChildScrollView(
-  //             child: ListBody(
-  //               children: <Widget>[
-  //                 Text('Update info not successfully'),
-  //               ],
-  //             ),
-  //           ),
-  //           actions: <Widget>[
-  //             FlatButton(
-  //               child: Text('OK'),
-  //               onPressed: () {
-  //                 Navigator.of(context).pop();
-  //               },
-  //             ),
-  //           ],
-  //         );
-  //       });
-  // }
 
   @override
   void initState() {

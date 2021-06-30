@@ -1,9 +1,8 @@
 import 'package:geolocator/geolocator.dart';
 import 'package:koompi_hotspot/all_export.dart';
-import 'package:location/location.dart';
-import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:wifi_connector/wifi_connector.dart';
 import 'package:wifi_iot/wifi_iot.dart';
+import 'package:location/location.dart' as loc;
 
 class WifiConnect extends StatefulWidget {
   @override
@@ -11,11 +10,7 @@ class WifiConnect extends StatefulWidget {
 }
 class _WifiConnectState extends State<WifiConnect> {
 
-  var geoLocator = Geolocator();
-  bool serviceEnabled;
-  LocationPermission permission;
-
-
+  final geolocator = Geolocator()..forceAndroidLocationManager = true;
   TextEditingController _passwordController = TextEditingController();
   Timer timer;
   void initState(){
@@ -99,16 +94,10 @@ class _WifiConnectState extends State<WifiConnect> {
   //     ]).show();
   // }
 
-  Future<void> _displayTextInputDialog(BuildContext context, String ssid) async {
-    // Initially password is obscure
-    bool _obscureText = true;
-
-    // Toggles the password show status
-    void _toggle() {
-      setState(() {
-        _obscureText = !_obscureText;
-      });
-    }
+   Future<String> _displayTextInputDialog(
+     BuildContext context, 
+     String ssid,
+    ) {
     var _lang = AppLocalizeService.of(context);
     return showDialog(
       context: context,
@@ -121,7 +110,7 @@ class _WifiConnectState extends State<WifiConnect> {
             // backgroundColor: Col,
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
             contentPadding: EdgeInsets.only(left: 10, top: 15, right: 10, bottom: 5),
-            title: new Text('Enter password $ssid', textAlign: TextAlign.center,),
+            title: new Text('Enter Password: $ssid', textAlign: TextAlign.center,),
             content: TextFormField(
               controller: _passwordController,
               onSaved: (val) => _passwordController.text = val,
@@ -193,15 +182,6 @@ class _WifiConnectState extends State<WifiConnect> {
                     ),
                     child: Text('OK'),
                     onPressed: () => {
-                      print(ssid),
-                      print(_passwordController.text),
-                      // WiFiForIoTPlugin.connect(
-                      //   ssid,
-                      //   password: _passwordController.text,
-                      //   joinOnce: false,
-                      //   withInternet: false,
-                      //   security: NetworkSecurity.WPA
-                      // );
                       WifiConnector.connectToWifi(
                         ssid: ssid, 
                         password: _passwordController.text, 
@@ -219,7 +199,6 @@ class _WifiConnectState extends State<WifiConnect> {
       },
     );
   }
-
 
   // Future<void> _displayTextInputDialog(BuildContext context, String ssid) async {
   //   // Initially password is obscure
@@ -315,30 +294,20 @@ class _WifiConnectState extends State<WifiConnect> {
 
   void _checkGPS() async {
 
-    serviceEnabled = await Geolocator.isLocationServiceEnabled();
-
-    // var status = await geolocator.checkGeolocationPermissionStatus();
-    // bool isGPSOn = await geolocator.isLocationServiceEnabled();
+    var status = await geolocator.checkGeolocationPermissionStatus();
+    bool isGPSOn = await geolocator.isLocationServiceEnabled();
     var _lang = AppLocalizeService.of(context);
-    if (!serviceEnabled) {
-      await Components.dialogGPS(
-        context,
-        Text(_lang.translate('turn_on_gps'), textAlign: TextAlign.center),
-        Text(_lang.translate('location_permission'), textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.bold)),
-      );
-    } else if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      // await PermissionHandler()
-      //     .requestPermissions([PermissionGroup.locationWhenInUse]);
-      if(permission == LocationPermission.denied){
-        await Components.dialogGPS(
-          context,
-          Text(_lang.translate('turn_on_gps'), textAlign: TextAlign.center),
-          Text(_lang.translate('location_permission'), textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.bold)),
-        );
-      }
-    } else {
+    if (status == GeolocationStatus.granted && isGPSOn) {
       loadWifiList();
+    } else if (isGPSOn == false) {
+      loc.Location locationR = loc.Location();
+      locationR.requestService();
+      
+    } else if (status != GeolocationStatus.granted) {
+      loadWifiList();
+    } else {
+      loc.Location locationR = loc.Location();
+      locationR.requestService();
     }
   }
 

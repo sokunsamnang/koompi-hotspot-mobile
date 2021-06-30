@@ -12,33 +12,7 @@ class _ChangeHotspotPlanState extends State<ChangeHotspotPlan> {
 
   final TextEditingController _passwordController = new TextEditingController();
 
-  // void _submitHotspotPlan30Days(){
-  //   final form = formKey.currentState;
-
-  //   if(form.validate()){
-  //     form.save();
-  //     buyHotspot30days(context);
-  //   }
-  //   else{
-  //     setState(() {
-  //       autovalidateMode = AutovalidateMode.always;
-  //     });
-  //   }
-  // }
-
-  // void _submitHotspotPlan365Days(){
-  //   final form = formKey.currentState;
-
-  //   if(form.validate()){
-  //     form.save();
-  //     buyHotspot365days(context);
-  //   }
-  //   else{
-  //     setState(() {
-  //       autovalidateMode = AutovalidateMode.always;
-  //     });
-  //   }
-  // }
+  GlobalKey<ScaffoldState> globalKey = GlobalKey<ScaffoldState>();
 
   Future <void> buyHotspot30days(BuildContext context) async {
     dialogLoading(context);
@@ -77,8 +51,12 @@ class _ChangeHotspotPlanState extends State<ChangeHotspotPlan> {
       
       }
     } on SocketException catch (_) {
+      await Components.dialog(
+        context,
+        textAlignCenter(text: 'Something may went wrong with your internet connection. Please try again!!!'),
+        warningTitleDialog()
+      );
       Navigator.pop(context);
-      print('not connected');
     }
   }
 
@@ -118,8 +96,12 @@ class _ChangeHotspotPlanState extends State<ChangeHotspotPlan> {
         }
       }
     } on SocketException catch (_) {
+      await Components.dialog(
+        context,
+        textAlignCenter(text: 'Something may went wrong with your internet connection. Please try again!!!'),
+        warningTitleDialog()
+      );
       Navigator.pop(context);
-      print('not connected');
     }
   }
 
@@ -138,6 +120,7 @@ class _ChangeHotspotPlanState extends State<ChangeHotspotPlan> {
   @override
   void initState() {
     super.initState();
+    AppServices.noInternetConnection(globalKey);
   }
 
   @override
@@ -149,6 +132,7 @@ class _ChangeHotspotPlanState extends State<ChangeHotspotPlan> {
   Widget build(BuildContext context) {
     var _lang = AppLocalizeService.of(context);
     return Scaffold(
+      key: globalKey,
       appBar: AppBar(
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.black), 

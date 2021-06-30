@@ -16,6 +16,7 @@ class _ChangePasswordState extends State<ChangePassword>
   
   @override
   void initState() {
+    AppServices.noInternetConnection(_modelChangePassword.globalKey);
     super.initState();
   }
 

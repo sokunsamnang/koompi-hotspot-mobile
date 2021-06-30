@@ -9,6 +9,7 @@ class LoginPhone extends StatefulWidget {
 class _LoginPhoneState extends State<LoginPhone> {
   final formKey = GlobalKey<FormState>();
   AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
+  GlobalKey<ScaffoldState> globalKey = GlobalKey<ScaffoldState>();
 
   String _email;
   String _password;
@@ -24,7 +25,7 @@ class _LoginPhoneState extends State<LoginPhone> {
   
   @override
   void initState() {
-    internet();
+    AppServices.noInternetConnection(globalKey);
     try {
       print('run version check');
       versionCheck(context);
@@ -32,15 +33,6 @@ class _LoginPhoneState extends State<LoginPhone> {
       print(e);
     }
     super.initState();
-  }
-
-  void internet() async {
-    _networkStatus.connectivityResult = await Connectivity().checkConnectivity();
-    _networkStatus.connectivitySubscription = _networkStatus.connectivity.onConnectivityChanged.listen((event) {
-      setState(() {
-        _networkStatus.connectivityResult = event;
-      });
-    });
   }
 
   @override
@@ -92,7 +84,8 @@ class _LoginPhoneState extends State<LoginPhone> {
             await StorageServices().saveString('token', token);
             await StorageServices().saveString('phone', '0${StorageServices.removeZero(phoneController.text)}');
             await StorageServices().saveString('password', passwordController.text);
-            await Provider.of<BalanceProvider>(context, listen: false).fetchPortforlio(context);
+            // await Provider.of<BalanceProvider>(context, listen: false).fetchPortforlio(context);
+            // await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory(); 
             await Provider.of<GetPlanProvider>(context, listen: false).fetchHotspotPlan();
             await Provider.of<NotificationProvider>(context, listen: false).fetchNotification();
             Navigator.pushAndRemoveUntil(
@@ -132,11 +125,10 @@ class _LoginPhoneState extends State<LoginPhone> {
         }
       }
     } on SocketException catch (_) {
-      print('not connected');
       await Components.dialog(
         context,
-        Text(_lang.translate('error_service')),
-        Text(_lang.translate('error')),
+        textAlignCenter(text: 'Something may went wrong with your internet connection. Please try again!!!'),
+        warningTitleDialog()
       );
       Navigator.pop(context);
     }
@@ -151,116 +143,6 @@ class _LoginPhoneState extends State<LoginPhone> {
       _obscureText = !_obscureText;
     });
   }
-
-  // errorDialog(BuildContext context) async {
-  //   return showDialog(
-  //       context: context,
-  //       barrierDismissible: false,
-  //       builder: (BuildContext context) {
-  //         var _lang = AppLocalizeService.of(context);
-  //         return AlertDialog(
-  //           title: Row(
-  //             children: [
-  //               Icon(Icons.error, color: Colors.red),
-  //               Text(_lang.translate('error'), style: TextStyle(fontFamily: 'Poppins-Bold'),),
-  //             ],
-  //           ),
-  //           content: SingleChildScrollView(
-  //             child: ListBody(
-  //               children: <Widget>[
-  //                 Text(_lang.translate('error_service')),
-  //               ],
-  //             ),
-  //           ),
-  //           actions: <Widget>[
-  //             FlatButton(
-  //               child: Text(_lang.translate('ok')),
-  //               onPressed: () {
-  //                 Navigator.of(context).pop();
-  //               },
-  //             ),
-  //           ],
-  //         );
-  //       });
-  // }
-
-  // showErrorDialog(BuildContext context) async {
-  //   var response = await PostRequest().userLogInPhone(
-  //         StorageServices.removeZero(phoneController.text),
-  //         passwordController.text);
-  //   var responseJson = json.decode(response.body);
-  //   return showDialog(
-  //     context: context,
-  //     barrierDismissible: false,
-  //     builder: (BuildContext context) {
-  //       var _lang = AppLocalizeService.of(context);
-  //       return AlertDialog(
-  //         title: Row(
-  //           children: [
-  //             Icon(Icons.warning, color: Colors.yellow),
-  //             Text(_lang.translate('warning'), style: TextStyle(fontFamily: 'Poppins-Bold'),),
-  //           ],
-  //         ),
-  //         content: SingleChildScrollView(
-  //           child: ListBody(
-  //             children: <Widget>[
-  //               Text(responseJson['message']),
-  //             ],
-  //           ),
-  //         ),
-  //         actions: <Widget>[
-  //           FlatButton(
-  //             child: Text('OK'),
-  //             onPressed: () {
-  //               Navigator.of(context).pop();
-  //             },
-  //           ),
-  //         ],
-  //       );
-  //     });
-  // }
-
-  // showErrorServerDialog(BuildContext context) async {
-  //   return showDialog(
-  //     context: context,
-  //     barrierDismissible: false,
-  //     builder: (BuildContext context) {
-  //       var _lang = AppLocalizeService.of(context);
-  //       return AlertDialog(
-  //         title: Row(
-  //           children: [
-  //             Icon(Icons.error, color: Colors.red),
-  //             Text(_lang.translate('error'), style: TextStyle(fontFamily: 'Poppins-Bold'),),
-  //           ],
-  //         ),
-  //         content: SingleChildScrollView(
-  //           child: ListBody(
-  //             children: <Widget>[
-  //               Text(_lang.translate('error_server')),
-  //             ],
-  //           ),
-  //         ),
-  //         actions: <Widget>[
-  //           FlatButton(
-  //             child: Text(_lang.translate('ok')),
-  //             onPressed: () {
-  //               Navigator.of(context).pop();
-  //             },
-  //           ),
-  //         ],
-  //       );
-  //     });
-  // }
-
-  // Widget horizontalLine() => Padding(
-  //   padding: EdgeInsets.symmetric(horizontal: 16.0),
-  //   child: Container(
-  //     width: ScreenUtil.getInstance().setWidth(120),
-  //     height: 1.0,
-  //     color: Colors.black26.withOpacity(.2),
-  //   ),
-  // );
-
   
   @override
   Widget build(BuildContext context) {
@@ -268,6 +150,7 @@ class _LoginPhoneState extends State<LoginPhone> {
     ScreenUtil.instance = ScreenUtil(width: 750, height: 1334, allowFontScaling: true);
 
     return Scaffold(
+      key: globalKey,
       backgroundColor: Colors.white,
       resizeToAvoidBottomInset: true,
       body: GestureDetector(
@@ -275,7 +158,7 @@ class _LoginPhoneState extends State<LoginPhone> {
         onTap: () {
           FocusScope.of(context).requestFocus(FocusNode());
         },
-        child: _networkStatus.connectivityResult != ConnectivityResult.none ? Stack(
+        child: Stack(
           fit: StackFit.expand,
           children: <Widget>[
             Column(
@@ -323,7 +206,7 @@ class _LoginPhoneState extends State<LoginPhone> {
               ),
             )
           ],
-        ) : _networkStatus.noNetwork(context),
+        ),
       ),
     );
   }

@@ -7,12 +7,15 @@ class ChooseOption extends StatefulWidget {
 class _ChooseOptionState extends State<ChooseOption>
     with SingleTickerProviderStateMixin {
   AnimationController _controller;
+  GlobalKey<ScaffoldState> globalKey = GlobalKey<ScaffoldState>();
 
   String lang;
   bool renewOption = mPlan.automatically;
+  
   @override
   void initState() {
     super.initState();
+    AppServices.noInternetConnection(globalKey);
     _controller = AnimationController(vsync: this);
   }
 
@@ -61,8 +64,12 @@ class _ChooseOptionState extends State<ChooseOption>
       
       }
     } on SocketException catch (_) {
+      await Components.dialog(
+        context,
+        textAlignCenter(text: 'Something may went wrong with your internet connection. Please try again!!!'),
+        warningTitleDialog()
+      );
       Navigator.pop(context);
-      print('not connected');
     }
   }
 
@@ -70,6 +77,7 @@ class _ChooseOptionState extends State<ChooseOption>
   Widget build(BuildContext context) {
     var _lang = AppLocalizeService.of(context);
     return Scaffold(
+      key: globalKey,
       appBar: AppBar(
         backgroundColor: Colors.white,
         title: Text(_lang.translate('renew_option'), style: TextStyle(color: Colors.black, fontFamily: 'Medium')),

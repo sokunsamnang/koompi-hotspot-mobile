@@ -22,6 +22,8 @@ class _SendRequestState extends State<SendRequest> {
   TextEditingController _passwordController = TextEditingController();
   Backend _backend = Backend();
 
+  GlobalKey<ScaffoldState> globalKey = GlobalKey<ScaffoldState>();
+
   final formKey = GlobalKey<FormState>();
   AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
 
@@ -71,7 +73,12 @@ class _SendRequestState extends State<SendRequest> {
         }
       }
     } on SocketException catch (_) {
-      print('not connected');
+      await Components.dialog(
+        context,
+        textAlignCenter(text: 'Something may went wrong with your internet connection. Please try again!!!'),
+        warningTitleDialog()
+      );
+      Navigator.pop(context);
     }
   }
 
@@ -183,6 +190,7 @@ class _SendRequestState extends State<SendRequest> {
 
   @override
   void initState() {
+    AppServices.noInternetConnection(globalKey);
     recieveWallet = TextEditingController(text: widget.walletKey);
     amount = TextEditingController(text: widget.amount.toString());
     super.initState();
@@ -197,6 +205,7 @@ class _SendRequestState extends State<SendRequest> {
   Widget build(BuildContext context) {
     var _lang = AppLocalizeService.of(context);
     return Scaffold(
+      key: globalKey,
       appBar: AppBar(
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.black), 
