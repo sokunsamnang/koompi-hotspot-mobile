@@ -1,6 +1,8 @@
 import 'package:groovin_widgets/groovin_widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:koompi_hotspot/all_export.dart';
+import 'package:koompi_hotspot/ui/reuse_widget/datePicker.dart';
+import 'package:koompi_hotspot/ui/reuse_widget/locationDorpDown.dart';
 
 
 class MyAccount extends StatefulWidget {
@@ -17,7 +19,7 @@ class _MyAccountState extends State<MyAccount>
   String imageUrl;
 
   Future<void> loadAsset() async {
-    List<Asset> resultList = List<Asset>();
+    List<Asset> resultList = <Asset>[];
 
     try {
       resultList = await MultiImagePicker.pickImages(
@@ -97,7 +99,6 @@ class _MyAccountState extends State<MyAccount>
             textAlignCenter(text: 'Update info not successfully'),
             warningTitleDialog()
           );
-          Navigator.pop(context);
         }
       }
     } on SocketException catch (_) {
@@ -195,7 +196,10 @@ class _MyAccountState extends State<MyAccount>
                 color: Colors.black,
               ),
               onPressed: () {
-                Navigator.pop(context);
+                setState(() {
+                  StorageServices().updateUserData(context);
+                });
+                // Navigator.pop(context);
               });
         }),
         actions: <Widget>[
@@ -262,8 +266,7 @@ class _MyAccountState extends State<MyAccount>
                       ),
                     ),
                     Center(
-                      child: FlatButton(
-                        colorBrightness: Brightness.dark,
+                      child: TextButton(
                         child: Text(_lang.translate('edit_profile_picture'),
                           style: TextStyle(
                               color: primaryColor,
@@ -432,7 +435,7 @@ class _MyAccountState extends State<MyAccount>
   }
 
   Widget locationPicker(BuildContext context) {
-    return _LocationDropdown(
+    return LocationDropdown(
       valueText: address ?? locationModel.selectedKhLocation.toString(),
       onPressed: () => showMaterialScrollPicker(
         context: context,
@@ -448,7 +451,7 @@ class _MyAccountState extends State<MyAccount>
   }
 
   Widget dateOfbirth(DateTime selectedDate, _selectDate, dateFormart, context) {
-    return _DateDropdown(
+    return DateDropdown(
       valueText: birthdate ?? 'Select Date of Birth',
       onPressed: () {
         _selectDate(context);
@@ -457,136 +460,3 @@ class _MyAccountState extends State<MyAccount>
   }
 }
 
-class _DateDropdown extends StatelessWidget {
-  const _DateDropdown(
-      {Key key,
-      this.child,
-      this.labelText,
-      this.valueText,
-      this.valueStyle,
-      this.onPressed})
-      : super(key: key);
-
-  final String labelText;
-  final String valueText;
-  final TextStyle valueStyle;
-  final VoidCallback onPressed;
-  final Widget child;
-
-  @override
-  Widget build(BuildContext context) {
-    return new InkWell(
-      splashColor: Colors.transparent,
-      highlightColor: Colors.transparent,
-      onTap: onPressed,
-      child: new InputDecorator(
-        decoration: new InputDecoration(
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12.0),
-            borderSide: BorderSide(
-              color: primaryColor,
-            ),
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12.0),
-            borderSide: BorderSide(
-              color: primaryColor,
-            ),
-          ),
-          errorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12.0),
-            borderSide: BorderSide(
-              color: Colors.red
-            ),
-          ),
-          focusedErrorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12.0),
-            borderSide: BorderSide(
-              color: Colors.red
-            ),
-          ),
-          hoverColor: Colors.black,
-          labelText: labelText,
-        ),
-        baseStyle: valueStyle,
-        child: new Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            new Icon(Icons.date_range_outlined,
-                color: primaryColor),
-            SizedBox(width: 10),
-            new Text(valueText, style: valueStyle),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _LocationDropdown extends StatelessWidget {
-  const _LocationDropdown(
-      {Key key,
-      this.child,
-      this.labelText,
-      this.valueText,
-      this.valueStyle,
-      this.onPressed})
-      : super(key: key);
-
-  final String labelText;
-  final String valueText;
-  final TextStyle valueStyle;
-  final VoidCallback onPressed;
-  final Widget child;
-
-  @override
-  Widget build(BuildContext context) {
-    return new InkWell(
-      splashColor: Colors.transparent,
-      highlightColor: Colors.transparent,
-      onTap: onPressed,
-      child: new InputDecorator(
-        decoration: new InputDecoration(
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12.0),
-            borderSide: BorderSide(
-              color: primaryColor,
-            ),
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12.0),
-            borderSide: BorderSide(
-              color: primaryColor,
-            ),
-          ),
-          errorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12.0),
-            borderSide: BorderSide(
-              color: Colors.red
-            ),
-          ),
-          focusedErrorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12.0),
-            borderSide: BorderSide(
-              color: Colors.red
-            ),
-          ),
-          hoverColor: Colors.black,
-          labelText: labelText,
-        ),
-        baseStyle: valueStyle,
-        child: new Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            new Icon(Icons.location_city_outlined,
-                color: primaryColor),
-            SizedBox(width: 10),
-            new Text(valueText, style: valueStyle),
-          ],
-        ),
-      ),
-    );
-  }
-}

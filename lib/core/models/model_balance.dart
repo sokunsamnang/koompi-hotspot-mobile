@@ -38,7 +38,7 @@ class BalanceProvider with ChangeNotifier {
   var _mData = new ModelUserData();
   ModelUserData get mData => _mData;
 
-  Future<String> fetchPortforlio(BuildContext context) async {
+  Future<String> fetchPortforlio() async {
     try {
       await _prefService.read('token').then((onValue) async {
         http.Response response = await http.get(
@@ -61,11 +61,6 @@ class BalanceProvider with ChangeNotifier {
           mBalance = Balance();
           alertText = response.body;
           print('Error portfolio status: ${response.statusCode}');
-          await Components.dialogNoOption(
-            context,
-            textAlignCenter(text: 'Something went wrong or Server in maintenance. Please try again later!'),
-            warningTitleDialog()
-          );
         }
       });
     } catch (e) {

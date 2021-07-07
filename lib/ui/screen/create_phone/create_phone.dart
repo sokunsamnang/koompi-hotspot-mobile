@@ -62,7 +62,6 @@ class _CreatePhoneState extends State<CreatePhone> {
   }
 
   Future <void> onSignUpByPhone() async {
-    var _lang = AppLocalizeService.of(context);
     dialogLoading(context);
     try {
       final result = await InternetAddress.lookup('google.com');

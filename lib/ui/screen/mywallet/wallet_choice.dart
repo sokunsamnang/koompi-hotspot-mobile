@@ -81,7 +81,7 @@ class _WalletChoiceState extends State<WalletChoice> {
                           StorageServices().read('token').then((value) async{
                             String _token = value;
                             await GetRequest().getUserProfile(_token);
-                            await Provider.of<BalanceProvider>(context, listen: false).fetchPortforlio(context);
+                            await Provider.of<BalanceProvider>(context, listen: false).fetchPortforlio();
                             await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
                           });
                           await Components.dialog(

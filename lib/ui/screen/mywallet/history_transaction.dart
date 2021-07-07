@@ -12,7 +12,9 @@ Widget trxHistory(BuildContext context) {
 
   var _lang = AppLocalizeService.of(context);
   List _buildList(List<TrxHistoryModel> history, BuildContext context, String userWallet) {
-    List<Widget> listItems = List();
+    // List<Widget> listItems = List();
+    List<Widget> listItems = List.filled(history.length, Container());
+
     print('My History: ${history.length}');
     for (int i = 0; i < history.length; i++) {
       DateTime date = DateTime.parse(history[i].createdAt);
@@ -51,130 +53,6 @@ Widget trxHistory(BuildContext context) {
                     child: TransactionDetail(history: history, index: i,)
                   )
                 );
-                // await showDialog(
-                //   context: context,
-                //   builder: (BuildContext context) {
-                //     return AlertDialog(
-                //       backgroundColor: Colors.white,
-                //       shape: RoundedRectangleBorder(
-                //         borderRadius: BorderRadius.circular(12.0)),
-                //       title: Align(
-                //         alignment: Alignment.center,
-                //         child: Text(
-                //           _lang.translate('transaction_history'),
-                //           style: GoogleFonts.nunito(
-                //             textStyle: TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.w700)
-                //             ),
-                //           textAlign: TextAlign.center,
-                //         ),
-                //       ),
-                //       contentPadding: EdgeInsets.only(top: 15.0),
-                //       content: Container(
-                //         child: Column(
-                //           mainAxisAlignment: MainAxisAlignment.start,
-                //           crossAxisAlignment: CrossAxisAlignment.stretch,
-                //           mainAxisSize: MainAxisSize.min,
-                //           children: [
-                //             Padding(
-                //               padding: EdgeInsets.only(left: 24.0, right: 24.0),
-                //               child: ItemList(
-                //                 title: _lang.translate('id'),
-                //                 trailing: history[i].id,
-                //               ),
-                //             ),
-                //             Padding(
-                //               padding: EdgeInsets.only(left: 24.0, right: 24.0),
-                //               child: ItemList(
-                //               title: _lang.translate('created_on'),
-                //               trailing: AppUtils.timeStampToDateTime(history[i].createdAt),
-                //             ),
-                //             ),
-                //             Padding(
-                //               padding: EdgeInsets.only(left: 24.0, right: 24.0),
-                //               child: ItemList(
-                //                 title: _lang.translate('sender'),
-                //                 trailing: history[i].sender,
-                //               ),
-                //             ),
-                //             Padding(
-                //               padding: EdgeInsets.only(left: 24.0, right: 24.0),
-                //               child: ItemList(
-                //                 title: _lang.translate('destination'),
-                //                 trailing: history[i].destination,
-                //               ),
-                //             ),
-                //             Padding(
-                //               padding: EdgeInsets.only(left: 24.0, right: 24.0),
-                //               child: ItemList(
-                //                 title: _lang.translate('amount'),
-                //                 trailing: history[i].amount.toString() + " SEL",
-                //               ),
-                //             ),
-                //             Padding(
-                //               padding: EdgeInsets.only(left: 24.0, right: 24.0),
-                //               child: ItemList(
-                //                 title: _lang.translate('fee'),
-                //                 trailing: history[i].fee.toString() + " SEL",
-                //               ),
-                //             ),
-                //             history[i].memo != '' ? Padding(
-                //               padding: EdgeInsets.only(left: 24.0, right: 24.0),
-                //               child: ItemList(
-                //                 title: _lang.translate('memo'),
-                //                 trailing: history[i].memo,
-                //               ),
-                //             ) : Container(),
-                //             Divider(
-                //               thickness: 1.5,
-                //               color: Colors.grey[300],
-                //             ),
-                //             InkWell(
-                //               child: Container(
-                //                 // padding: EdgeInsets.only(top: 20.0),
-                //                 decoration: BoxDecoration(
-                //                   color: Colors.white,
-                //                   borderRadius: BorderRadius.only(
-                //                       bottomLeft: Radius.circular(12.0),
-                //                       bottomRight: Radius.circular(12.0)),
-                //                 ),
-                //                 child:  mData.wallet == history[i].destination 
-                //                   ? FlatButton.icon(
-                //                     icon: Icon(Icons.replay_sharp, color: Colors.blue[700], size: 18),
-                //                     label: Text('RETURN', 
-                //                       style: GoogleFonts.nunito(
-                //                         textStyle: TextStyle(color: Colors.blue[700], fontSize: 17)
-                //                         ),
-                //                     ),
-                //                     onPressed: () => {
-                //                       Navigator.push(
-                //                         context,
-                //                         MaterialPageRoute(builder: (context) => SendRequest(history[i].sender, history[i].amount.toString())),
-                //                       ),
-                //                     }
-                //                   )
-                //                   :
-                //                   FlatButton.icon(
-                //                     icon: Icon(Icons.repeat_sharp, color: Colors.blue[700], size: 18),
-                //                     label: Text('REPEAT',
-                //                       style: GoogleFonts.nunito(
-                //                         textStyle: TextStyle(color: Colors.blue[700], fontSize: 17)
-                //                         ),
-                //                     ),
-                //                     onPressed: () => {
-                                      // Navigator.push(
-                                      //   context,
-                                      //   MaterialPageRoute(builder: (context) => SendRequest(history[i].destination, history[i].amount.toString())),
-                                      // ),
-                //                     }
-                //                   ),
-                //               ),
-                //             ),
-                //           ],
-                //         ),
-                //       ),
-                //     );
-                //   }
-                // );
               },
               child: Container(
                 margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 0.0),
@@ -244,57 +122,8 @@ Widget trxHistory(BuildContext context) {
                     ],
                   ),
                 ),
-                // child: ListTile(
-                //   trailing: Column(
-                //     mainAxisAlignment: MainAxisAlignment.center,
-                //     crossAxisAlignment: CrossAxisAlignment.center,
-                //     children: [
-                //       userWallet == history[i].destination
-                //           ? Text(
-                //               '+ ${history[i].amount.toString()} SEL',
-                //               style: TextStyle(
-                //                 fontWeight: FontWeight.w900,
-                //                 color: Colors.green,
-                //                 fontSize: 18.0,
-                //               ),
-                //             )
-                //           : Text(
-                //               '- ${history[i].amount.toString()} SEL',
-                //               style: TextStyle(
-                //                 fontWeight: FontWeight.w900,
-                //                 color: Colors.red,
-                //                 fontSize: 18.0,
-                //               ),
-                //             ),
-                //     ],
-                //   ),
-                //   leading: history[i].memo == 'Buy Hotspot Plan' || history[i].memo == 'Automatically top-up for renew plan.' || history[i].memo == 'Renew plan.'
-                //     ? Image.asset('assets/images/Koompi-WiFi-Icon.png', width: 25) 
-                //     : Image.asset('assets/images/sld.png', width: 25
-                //   ),
-
-                //   title: history[i].memo == 'Buy Hotspot Plan' || history[i].memo == 'Automatically top-up for renew plan.' || history[i].memo == 'Renew plan.' 
-                //   ? 
-                //   Text('KOOMPI Fi-Fi',
-                //     style: TextStyle(
-                //       fontWeight: FontWeight.w700,
-                //       fontSize: 18.0,
-                //     ),
-                //   ) 
-                //   :
-                //   Text(
-                //     userWallet == history[i].destination ? _lang.translate('recieved') : _lang.translate('sent'),
-                //     style: TextStyle(
-                //       fontWeight: FontWeight.w700,
-                //       fontSize: 18.0,
-                //     ),
-                //   ),
-                // ),
               ),
             ),
-            // Divider(
-            //   height: 4.0,
-            // ),
             SizedBox(height: 5),
           ],
         ),

@@ -18,7 +18,7 @@ versionCheck(context) async {
   double currentVersion = double.parse(info.version.trim().replaceAll(".", ""));
 
   //Get Latest version info from firebase config
-  final RemoteConfig remoteConfig = await RemoteConfig.instance;
+  final RemoteConfig remoteConfig = RemoteConfig.instance;
   
   var _lang = AppLocalizeService.of(context);
 

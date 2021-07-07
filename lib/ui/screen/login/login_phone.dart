@@ -20,8 +20,6 @@ class _LoginPhoneState extends State<LoginPhone> {
   String token;
   String messageAlert;
   bool isLoading = false;
-
-  NetworkStatus _networkStatus = NetworkStatus();
   
   @override
   void initState() {
@@ -38,7 +36,6 @@ class _LoginPhoneState extends State<LoginPhone> {
   @override
   void dispose() {
     super.dispose();
-    _networkStatus.connectivitySubscription.cancel();
     phoneController.dispose();
     passwordController.dispose();
   }
@@ -59,7 +56,6 @@ class _LoginPhoneState extends State<LoginPhone> {
 
   //check connection and login
   Future <void> login() async {
-    var _lang = AppLocalizeService.of(context);
     dialogLoading(context);
     try {
       final result = await InternetAddress.lookup('google.com');
@@ -124,13 +120,30 @@ class _LoginPhoneState extends State<LoginPhone> {
           Navigator.pop(context);
         }
       }
-    } on SocketException catch (_) {
+    } 
+    on SocketException catch(_){
+      print('No network socket exception');
       await Components.dialog(
         context,
-        textAlignCenter(text: 'Something may went wrong with your internet connection. Please try again!!!'),
+        textAlignCenter(text: 'Something went wrong with your internet connection. Please try again later!!!'),
         warningTitleDialog()
       );
-      Navigator.pop(context);
+    }
+    on TimeoutException catch(_) {
+      print('Time out exception');
+      await Components.dialog(
+        context,
+        textAlignCenter(text: 'Request Timeout. Please try again later!!!'),
+        warningTitleDialog()
+      );
+    }
+    on FormatException catch(_){
+      print('FormatException');
+      await Components.dialog(
+        context,
+        textAlignCenter(text: 'Something went wrong or Server in maintenance. Please try again later!!!'),
+        warningTitleDialog()
+      );
     }
   }
 
@@ -174,9 +187,7 @@ class _LoginPhoneState extends State<LoginPhone> {
                   children: <Widget>[
                     Container(
                       alignment: Alignment.topLeft,
-                      child: FlatButton(
-                        highlightColor: Colors.transparent,
-                        splashColor: Colors.transparent,
+                      child: TextButton(
                         child: Icon(Icons.language, color: Colors.black),
                         onPressed: () {
                           Navigator.push(

@@ -97,9 +97,7 @@ Widget startGetWallet(context) {
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: <Widget>[
-                              FlatButton(
-                                highlightColor: Colors.transparent,
-                                splashColor: Colors.transparent,
+                              TextButton(
                                 onPressed: () {
                                   Navigator.push(
                                     context, 
@@ -215,9 +213,7 @@ Widget noPlanView(BuildContext context) {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      FlatButton(
-                        highlightColor: Colors.transparent,
-                        splashColor: Colors.transparent,
+                      TextButton(
                         onPressed: () {
                           Navigator.push(
                             context, 
@@ -468,7 +464,7 @@ Widget _planExpire(context){
                       ),
                       SizedBox(height: 20),
                       Container(
-                        width: 110,
+                        width: 100,
                         padding: EdgeInsets.symmetric(horizontal: 1, vertical: 1),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(12)),
@@ -476,9 +472,7 @@ Widget _planExpire(context){
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: <Widget>[
-                            FlatButton(
-                              highlightColor: Colors.transparent,
-                              splashColor: Colors.transparent,
+                            TextButton(
                               onPressed: () {
                                 Navigator.push(
                                   context, 
@@ -651,7 +645,7 @@ Widget _myWalletButton(context){
                               ),
                               SizedBox(height: 20),
                               Container(
-                                width: 110,
+                                width: 100,
                                 padding: EdgeInsets.symmetric(horizontal: 1, vertical: 1),
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.all(Radius.circular(12)),
@@ -659,9 +653,7 @@ Widget _myWalletButton(context){
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: <Widget>[
-                                    FlatButton(
-                                      highlightColor: Colors.transparent,
-                                      splashColor: Colors.transparent,
+                                    TextButton(
                                       onPressed: () {
                                         Navigator.push(
                                           context, 

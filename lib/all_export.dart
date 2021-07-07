@@ -94,7 +94,6 @@ export 'package:koompi_hotspot/core/backend/get_request.dart';
 
 // Service
 export 'package:koompi_hotspot/core/services/services.dart';
-export 'package:koompi_hotspot/core/services/network_status.dart';
 export 'package:koompi_hotspot/core/services/updater.dart';
 
 // Component

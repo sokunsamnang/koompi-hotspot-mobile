@@ -44,17 +44,38 @@ class StorageServices{
     }
     else if (JwtDecoder.isExpired(token) == false ) {
       print('token not expire');
-      await GetRequest().getUserProfile(token).then((value) async{
-        try{
+      try{
+        await GetRequest().getUserProfile(token).then((value) async{
           await Provider.of<GetPlanProvider>(context, listen: false).fetchHotspotPlan();
           await Provider.of<NotificationProvider>(context, listen: false).fetchNotification();
-          // await Provider.of<BalanceProvider>(context, listen: false).fetchPortforlio(context); 
+          await Provider.of<BalanceProvider>(context, listen: false).fetchPortforlio(); 
           // await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory(); 
-        }
-        catch (e){
-          print(e.toString());
-        }
-      });
+        });
+      } 
+      on SocketException catch(_){
+        print('No network socket exception');
+        await Components.dialogNoOption(
+          context,
+          textAlignCenter(text: 'Something went wrong with your internet connection. Please try again later!!!'),
+          warningTitleDialog()
+        );
+      }
+      on TimeoutException catch(_) {
+        print('Time out exception');
+        await Components.dialogNoOption(
+          context,
+          textAlignCenter(text: 'Request Timeout. Please try again later!!!'),
+          warningTitleDialog()
+        );
+      }
+      on FormatException catch(_){
+        print('FormatException');
+        await Components.dialogNoOption(
+          context,
+          textAlignCenter(text: 'Something went wrong or Server in maintenance. Please try again later!!!'),
+          warningTitleDialog()
+        );
+      }
       
       Navigator.pushAndRemoveUntil(
         context, 
@@ -64,11 +85,6 @@ class StorageServices{
         ModalRoute.withName('/navbar'),
       );
 
-      // Navigator.pushAndRemoveUntil(
-      //   context,
-      //   MaterialPageRoute(builder: (context) => Navbar()),
-      //   ModalRoute.withName('/navbar'),
-      // );
     }
     else{
       Navigator.pushAndRemoveUntil(
@@ -103,11 +119,6 @@ class StorageServices{
             ModalRoute.withName('/navbar'),
           );
 
-          // Navigator.pushAndRemoveUntil(
-          //   context,
-          //   MaterialPageRoute(builder: (context) => Navbar()),
-          //   ModalRoute.withName('/navbar'),
-          // );
         }
       },
     );

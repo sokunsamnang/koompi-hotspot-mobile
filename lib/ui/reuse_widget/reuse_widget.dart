@@ -22,15 +22,6 @@ Widget titleDialog() {
   );
 }
 
-void snackBar(BuildContext context){
-  final snackBar = SnackBar(
-    content: Text('Coming Soon!!!'),
-    );
-
-    // Find the Scaffold in the widget tree and use
-    // it to show a SnackBar.
-    Scaffold.of(context).showSnackBar(snackBar);
-}
 class Components {
   // static void dialogLoading({BuildContext context, String contents}) {
   //   showDialog(

@@ -1,7 +1,4 @@
-// import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:koompi_hotspot/all_export.dart';
-import 'package:koompi_hotspot/main.dart';
 import 'package:koompi_hotspot/ui/screen/notification/notification_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:badges/badges.dart';
@@ -132,7 +129,7 @@ class _HomePageState extends State<HomePage>{
         onRefresh: () async{
           await Provider.of<GetPlanProvider>(context, listen: false).fetchHotspotPlan();
           await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
-          await Provider.of<BalanceProvider>(context, listen: false).fetchPortforlio(context);
+          await Provider.of<BalanceProvider>(context, listen: false).fetchPortforlio();
         },
         child: Container(
           height: MediaQuery.of(context).size.height,

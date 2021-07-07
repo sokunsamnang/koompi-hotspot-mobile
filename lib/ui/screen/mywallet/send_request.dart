@@ -50,7 +50,7 @@ class _SendRequestState extends State<SendRequest> {
         var responseJson = json.decode(_backend.response.body);
         if (_backend.response.statusCode == 200) {
           Future.delayed(Duration(seconds: 2), () async{
-            await Provider.of<BalanceProvider>(context, listen: false).fetchPortforlio(context);
+            await Provider.of<BalanceProvider>(context, listen: false).fetchPortforlio();
             await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
             Timer(
                 Duration(milliseconds: 500),

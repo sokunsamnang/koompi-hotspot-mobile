@@ -288,7 +288,7 @@ class MyLocationViewState extends State<MyLocationView>
     _showSnackBar(String message) {
       final snackBar =
           SnackBar(content: Text('$message'), duration: Duration(seconds: 1));
-      mykey.currentState.showSnackBar(snackBar);
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
     }
 
     /// returned build

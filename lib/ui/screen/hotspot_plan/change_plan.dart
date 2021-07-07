@@ -130,7 +130,6 @@ class _ChangeHotspotPlanState extends State<ChangeHotspotPlan> {
 
   @override
   Widget build(BuildContext context) {
-    var _lang = AppLocalizeService.of(context);
     return Scaffold(
       key: globalKey,
       appBar: AppBar(

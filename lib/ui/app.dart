@@ -95,8 +95,6 @@ class Splash extends StatefulWidget {
 
 class _SplashState extends State<Splash> {
 
-  NetworkStatus _networkStatus = NetworkStatus();
-
   startTime() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool firstTime = prefs.getBool('first_time');

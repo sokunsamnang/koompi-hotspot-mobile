@@ -1,6 +1,5 @@
 import 'package:groovin_widgets/groovin_widgets.dart';
 import 'package:koompi_hotspot/all_export.dart';
-import 'package:line_awesome_icons/line_awesome_icons.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:shimmer/shimmer.dart';
@@ -34,7 +33,7 @@ class _MyWalletState extends State<MyWallet> {
   }
 
   void fetchWallet() async{
-    await Provider.of<BalanceProvider>(context, listen: false).fetchPortforlio(context);
+    await Provider.of<BalanceProvider>(context, listen: false).fetchPortforlio();
     await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
   }
 
@@ -80,7 +79,7 @@ class _MyWalletState extends State<MyWallet> {
             // backgroundColor: AllCoustomTheme.getThemeData().primaryColor,
             body: RefreshIndicator(
               onRefresh: () async{
-                await Provider.of<BalanceProvider>(context, listen: false).fetchPortforlio(context);
+                await Provider.of<BalanceProvider>(context, listen: false).fetchPortforlio();
                 await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
               },
               child: SingleChildScrollView(

@@ -27,7 +27,6 @@ class _NotificationDetailState extends State<NotificationDetail> {
   
   @override
   Widget build(BuildContext context) {
-    var _lang = AppLocalizeService.of(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,

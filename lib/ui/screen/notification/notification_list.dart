@@ -7,47 +7,6 @@ import 'package:provider/provider.dart';
 
 Widget notificationList(BuildContext context) {
 
-  var _lang = AppLocalizeService.of(context);
-  // List _buildList(List<NotificationModel> notification, BuildContext context) {
-  //   List<Widget> listItems = List();
-  //   for (int i = 0; i < notification.length; i++) {
-  //     listItems.add(
-  //       Column(
-  //         mainAxisAlignment: MainAxisAlignment.center,
-  //         crossAxisAlignment: CrossAxisAlignment.start,
-  //         children: [
-  //           GestureDetector(
-  //             onTap: () async {
-  //               Navigator.push(
-  //                 context, 
-  //                 PageTransition(type: PageTransitionType.rightToLeft, 
-  //                   child: NotificationDetail(notification: notification, index: i,)));
-  //             },
-  //             child: Container(
-  //               height: 60.0,
-  //               color: Colors.white,
-  //               child: ListTile(
-  //                 leading: Image.asset('assets/images/promotion7.png'),
-  //                 title: Text(
-  //                   '${notification[i].title}',
-  //                   style: GoogleFonts.nunito(
-  //                     textStyle: TextStyle(color: Color(0xff0caddb), fontWeight: FontWeight.w900)
-  //                   ),
-  //                 ),
-  //                 trailing: Icon(Icons.arrow_forward_ios_outlined),
-  //               ),
-  //             ),
-  //           ),
-  //           Divider(
-  //             height: 4.0,
-  //           ),
-  //         ],
-  //       ),
-  //     );
-  //   }
-  //   return listItems;
-  // }
-
   var notification = Provider.of<NotificationProvider>(context);
   return Scaffold(
     // Have No History

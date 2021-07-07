@@ -25,7 +25,6 @@ class _NavbarState extends State<Navbar> with WidgetsBindingObserver {
     MorePage(),
   ];
 
-  NetworkStatus _networkStatus = NetworkStatus();
   
 
   @override
@@ -119,18 +118,9 @@ class _NavbarState extends State<Navbar> with WidgetsBindingObserver {
   @override
   void dispose(){
     super.dispose();
-    _networkStatus.connectivitySubscription.cancel();
     WidgetsBinding.instance.removeObserver(this);
   }
 
-  void internet() async {
-    _networkStatus.connectivityResult = await Connectivity().checkConnectivity();
-    _networkStatus.connectivitySubscription = _networkStatus.connectivity.onConnectivityChanged.listen((event) {
-      setState(() {
-        _networkStatus.connectivityResult = event;
-      });
-    });
-  }
   
   @override
   Widget build(BuildContext context) {

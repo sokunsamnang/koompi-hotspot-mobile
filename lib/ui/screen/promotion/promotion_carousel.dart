@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:koompi_hotspot/core/models/model_promotion.dart';
 import 'package:koompi_hotspot/ui/screen/promotion/promotion_detail.dart';
 

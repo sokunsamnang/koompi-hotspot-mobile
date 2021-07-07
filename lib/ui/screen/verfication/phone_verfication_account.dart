@@ -265,7 +265,7 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
                     const EdgeInsets.symmetric(vertical: 16.0, horizontal: 30),
                 child: ButtonTheme(
                   height: 50,
-                  child: FlatButton(
+                  child: TextButton(
                     onPressed: () async {
                       formKey.currentState.validate();
                       // conditions for validating
