@@ -6,9 +6,7 @@ class MorePage extends StatefulWidget {
   _MorePageState createState() => _MorePageState();
 }
 
-class _MorePageState extends State<MorePage>
-    with AutomaticKeepAliveClientMixin {
-  AnimationController _controller;
+class _MorePageState extends State<MorePage> {
 
   GlobalKey<ScaffoldState> globalKey = GlobalKey<ScaffoldState>();
   
@@ -21,8 +19,6 @@ class _MorePageState extends State<MorePage>
     buildNumber: '',
   );
 
-  @override
-  bool get wantKeepAlive => true;
 
   Future<void> _initPackageInfo() async {
     final PackageInfo info = await PackageInfo.fromPlatform();
@@ -46,23 +42,15 @@ class _MorePageState extends State<MorePage>
 
   @override
   void initState() {
-    super.initState();
-    AppServices.noInternetConnection(globalKey);
     _initPackageInfo();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _controller.dispose();
+    AppServices.noInternetConnection(globalKey);
+    super.initState();
   }
 
 
 
   @override
   Widget build(BuildContext context) {
-    super.build(context);
-    
     var _lang = AppLocalizeService.of(context);
     return Scaffold(
       key: globalKey,
@@ -147,19 +135,6 @@ class _MorePageState extends State<MorePage>
                         );
                       },
                     ),
-                    // _buildDivider(),
-                    // ListTile(
-                    //   leading: Icon(Icons.wifi_outlined),
-                    //   title: Text('Wi-Fi'),
-                    //   trailing: Icon(LineIcons.angle_right),
-                    //   onTap: () async {
-                    //     Navigator.push(
-                    //       context,
-                    //       MaterialPageRoute(
-                    //         builder: (_) => WifiConnect()),
-                    //     );
-                    //   },
-                    // ),
                     _buildDivider(),
                     ListTile(
                       leading: Icon(LineIcons.alternateSignOut, color: Colors.red),
@@ -183,7 +158,7 @@ class _MorePageState extends State<MorePage>
       ),
     );
   }
-
+    
   Container _buildDivider() {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 8.0),

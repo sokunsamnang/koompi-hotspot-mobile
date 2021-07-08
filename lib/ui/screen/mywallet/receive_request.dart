@@ -18,6 +18,8 @@ class _ReceiveRequestState extends State<ReceiveRequest> {
     final snackBarContent = SnackBar(
       content: Text("Copied"),
     );
+    
+    // ignore: deprecated_member_use
     _scaffoldkey.currentState.showSnackBar(snackBarContent);
   }
 

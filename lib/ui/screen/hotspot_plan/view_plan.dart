@@ -32,12 +32,13 @@ class _PlanViewState extends State<PlanView> {
   Future <void> renewPlan() async {
     dialogLoading(context);
 
-    var response = await PostRequest().renewPlanHotspot(
-      _passwordController.text
-    );
-    var responseJson = json.decode(response.body);
-
     try {
+
+      var response = await PostRequest().renewPlanHotspot(
+        _passwordController.text
+      );
+      var responseJson = json.decode(response.body);
+
       final result = await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
         print('Internet connected');
@@ -62,7 +63,8 @@ class _PlanViewState extends State<PlanView> {
         }
       
       }
-    } on SocketException catch (_) {
+    }
+    on SocketException catch (_) {
       await Components.dialog(
         context,
         textAlignCenter(text: 'Something may went wrong with your internet connection. Please try again!!!'),
@@ -70,6 +72,26 @@ class _PlanViewState extends State<PlanView> {
       );
       Navigator.pop(context);
     }
+    on FormatException catch(_){
+      print('FormatException');
+      await Components.dialog(
+        context,
+        textAlignCenter(text: 'Something went wrong or Server in maintenance. Please try again later!!!'),
+        warningTitleDialog()
+      );
+      Navigator.pop(context);
+    }
+    on TimeoutException catch(_) {
+      print('Time out exception');
+      await Components.dialog(
+        context,
+        textAlignCenter(text: 'Request Timeout. Please try again later!!!'),
+        warningTitleDialog()
+      );
+      Navigator.pop(context);
+    }
+    _passwordController.clear();
+    Navigator.of(context).pop();
   }
 
   @override

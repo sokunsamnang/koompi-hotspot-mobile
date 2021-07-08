@@ -64,6 +64,8 @@ class _NavbarState extends State<Navbar> with WidgetsBindingObserver {
 
 
   final flutterWebViewPlugin = FlutterWebviewPlugin();
+
+
   StreamSubscription<WebViewStateChanged> _onchanged; 
 
   Future inputWeb() async{
@@ -104,7 +106,7 @@ class _NavbarState extends State<Navbar> with WidgetsBindingObserver {
         .listen((event) {
       print(event);
       if (event == DataConnectionStatus.connected) {
-        // _paused();
+        return null;
       } 
       else if(event == DataConnectionStatus.disconnected){
         _paused();
@@ -117,8 +119,11 @@ class _NavbarState extends State<Navbar> with WidgetsBindingObserver {
 
   @override
   void dispose(){
-    super.dispose();
+    _onchanged.onDone(() {
+      _onchanged.cancel();
+    });
     WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
   }
 
   

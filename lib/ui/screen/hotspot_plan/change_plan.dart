@@ -17,13 +17,13 @@ class _ChangeHotspotPlanState extends State<ChangeHotspotPlan> {
   Future <void> buyHotspot30days(BuildContext context) async {
     dialogLoading(context);
 
-    var response = await PostRequest().changePlanHotspot(
-      _passwordController.text,
-      '30',
-    );
-    var responseJson = json.decode(response.body);
-
     try {
+      var response = await PostRequest().changePlanHotspot(
+        _passwordController.text,
+        '30',
+      );
+      var responseJson = json.decode(response.body);
+
       final result = await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
         print('Internet connected');
@@ -50,7 +50,8 @@ class _ChangeHotspotPlanState extends State<ChangeHotspotPlan> {
         }
       
       }
-    } on SocketException catch (_) {
+    } 
+    on SocketException catch (_) {
       await Components.dialog(
         context,
         textAlignCenter(text: 'Something may went wrong with your internet connection. Please try again!!!'),
@@ -58,18 +59,38 @@ class _ChangeHotspotPlanState extends State<ChangeHotspotPlan> {
       );
       Navigator.pop(context);
     }
+    on FormatException catch(_){
+      print('FormatException');
+      await Components.dialog(
+        context,
+        textAlignCenter(text: 'Something went wrong or Server in maintenance. Please try again later!!!'),
+        warningTitleDialog()
+      );
+      Navigator.pop(context);
+    }
+    on TimeoutException catch(_) {
+      print('Time out exception');
+      await Components.dialog(
+        context,
+        textAlignCenter(text: 'Request Timeout. Please try again later!!!'),
+        warningTitleDialog()
+      );
+      Navigator.pop(context);
+    }
+    _passwordController.clear();
+    Navigator.of(context).pop();
   }
 
   Future <void> buyHotspot365days(BuildContext context) async {
      dialogLoading(context);
 
-    var response = await PostRequest().changePlanHotspot(
-      _passwordController.text,
-      '365',
-    );
-    var responseJson = json.decode(response.body);
-
     try {
+      var response = await PostRequest().changePlanHotspot(
+        _passwordController.text,
+        '365',
+      );
+      var responseJson = json.decode(response.body);
+
       final result = await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
         print('Internet connected');
@@ -95,7 +116,8 @@ class _ChangeHotspotPlanState extends State<ChangeHotspotPlan> {
           Navigator.pop(context);
         }
       }
-    } on SocketException catch (_) {
+    } 
+    on SocketException catch (_) {
       await Components.dialog(
         context,
         textAlignCenter(text: 'Something may went wrong with your internet connection. Please try again!!!'),
@@ -103,6 +125,26 @@ class _ChangeHotspotPlanState extends State<ChangeHotspotPlan> {
       );
       Navigator.pop(context);
     }
+    on FormatException catch(_){
+      print('FormatException');
+      await Components.dialog(
+        context,
+        textAlignCenter(text: 'Something went wrong or Server in maintenance. Please try again later!!!'),
+        warningTitleDialog()
+      );
+      Navigator.pop(context);
+    }
+    on TimeoutException catch(_) {
+      print('Time out exception');
+      await Components.dialog(
+        context,
+        textAlignCenter(text: 'Request Timeout. Please try again later!!!'),
+        warningTitleDialog()
+      );
+      Navigator.pop(context);
+    }
+    _passwordController.clear();
+    Navigator.of(context).pop();
   }
 
 

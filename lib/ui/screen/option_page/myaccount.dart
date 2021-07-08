@@ -196,10 +196,7 @@ class _MyAccountState extends State<MyAccount>
                 color: Colors.black,
               ),
               onPressed: () {
-                setState(() {
-                  StorageServices().updateUserData(context);
-                });
-                // Navigator.pop(context);
+                Navigator.pop(context);
               });
         }),
         actions: <Widget>[

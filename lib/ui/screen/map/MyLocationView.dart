@@ -286,9 +286,10 @@ class MyLocationViewState extends State<MyLocationView>
 
     /// Show Snack Bar Messages
     _showSnackBar(String message) {
-      final snackBar =
-          SnackBar(content: Text('$message'), duration: Duration(seconds: 1));
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      final snackBar =  SnackBar(content: Text('$message'), duration: Duration(seconds: 1));
+     
+      // ignore: deprecated_member_use
+      mykey.currentState..showSnackBar(snackBar);
     }
 
     /// returned build

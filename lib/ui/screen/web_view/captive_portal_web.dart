@@ -28,7 +28,7 @@ class _CaptivePortalWebState extends State<CaptivePortalWeb> {
 
   @override
   void initState() { 
-    super.initState();
+    
     _onchanged = flutterWebViewPlugin.onStateChanged.listen((WebViewStateChanged state) {
       if (mounted) {
         if(state.type == WebViewState.finishLoad){ // if the full website page loaded
@@ -44,12 +44,17 @@ class _CaptivePortalWebState extends State<CaptivePortalWeb> {
         }
       }
     });
+    super.initState();
   }
 
   @override
   void dispose() {
-    super.dispose();
+    _onchanged.onDone(() {
+      _onchanged.cancel();
+    });
+    
     flutterWebViewPlugin.close();
+    super.dispose();
   }
   
   @override
@@ -57,7 +62,6 @@ class _CaptivePortalWebState extends State<CaptivePortalWeb> {
     var _lang = AppLocalizeService.of(context);
     return WillPopScope(
       onWillPop: () async{
-        dispose();
         return Navigator.canPop(context);
       },
       child: WebviewScaffold(
@@ -80,7 +84,6 @@ class _CaptivePortalWebState extends State<CaptivePortalWeb> {
                   color: Colors.black,
                 ),
                 onPressed: () {
-                  dispose();
                   Navigator.pop(context);
                 });
           }),
