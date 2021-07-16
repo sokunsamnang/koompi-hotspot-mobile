@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:koompi_hotspot/all_export.dart';
 import 'package:koompi_hotspot/core/models/model_notification.dart';
+import 'package:linkable/linkable.dart';
 
 class NotificationDetail extends StatefulWidget {
   final List<NotificationModel> notification;
@@ -106,11 +107,11 @@ class _NotificationDetailState extends State<NotificationDetail> {
                 SizedBox(height: 25),
                 Container(
                   margin: EdgeInsets.symmetric(horizontal: 15),
-                  child: Text(
-                    widget.notification[widget.index].description,
+                  child: Linkable(
+                    text: widget.notification[widget.index].description,
                     style: TextStyle(color: Colors.black, fontSize: 16, fontFamily: 'Poppins-Regular')
                   ),
-                )
+                ),
               ],
             ),
           ),

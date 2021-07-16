@@ -8,6 +8,7 @@ import 'package:quick_actions/quick_actions.dart';
 import 'package:koompi_hotspot/ui/screen/web_view/captive_portal_web.dart';
 import 'package:koompi_hotspot/ui/utils/auto_login_hotspot_constants.dart' as global;
 import 'package:responsive_framework/responsive_framework.dart';
+import 'package:koompi_hotspot/ui/utils/globals.dart' as globals;
 
 class App extends StatefulWidget{
   @override
@@ -71,6 +72,7 @@ class _AppState extends State<App> {
             GlobalMaterialLocalizations.delegate,
           ],
           initialRoute: '/',
+          navigatorKey: globals.appNavigator,
           routes: {
             '/navbar': (context) => Navbar(),
             '/plan': (context) => HotspotPlan(),

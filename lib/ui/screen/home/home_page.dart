@@ -1,8 +1,10 @@
 import 'package:koompi_hotspot/all_export.dart';
+import 'package:koompi_hotspot/core/models/model_notification.dart';
 import 'package:koompi_hotspot/ui/screen/notification/notification_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:badges/badges.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
+import 'package:koompi_hotspot/ui/utils/globals.dart' as globals;
 
 class HomePage extends StatefulWidget{
 
@@ -13,21 +15,32 @@ class HomePage extends StatefulWidget{
 class _HomePageState extends State<HomePage>{
   GlobalKey<ScaffoldState> globalKey = GlobalKey<ScaffoldState>();
 
-  void configOneSignal() async {
-    OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
+  Future<void> configOneSignal() async {
 
     OneSignal.shared.setAppId("05805743-ce69-4224-9afb-b2f36bf6c1db");
     // The promptForPushNotificationsWithUserResponse function will show the iOS push notification prompt. We recommend removing the following code and instead using an In-App Message to prompt for notification permission
     OneSignal.shared.promptUserForPushNotificationPermission().then((accepted) {
         print("Accepted permission: $accepted");
     });
+
+    // Navigator Handler 
+    OneSignal.shared.setNotificationOpenedHandler((openedResult) async{
+      
+      await Provider.of<NotificationProvider>(context, listen: false).fetchNotification();
+
+      globals.appNavigator.currentState.push(
+        PageTransition(type: PageTransitionType.rightToLeft, 
+          child: NotificationScreen())
+      );
+    });
   }
+
 
   @override
   void initState() {
+    configOneSignal();
     AppServices.noInternetConnection(globalKey);
     versionCheck(context);
-    configOneSignal();
     super.initState();
   }
 
@@ -55,7 +68,9 @@ class _HomePageState extends State<HomePage>{
                 );
               },
               child: CircleAvatar(
-                backgroundImage: mData.image == null ? AssetImage('assets/images/avatar.png') : NetworkImage("${ApiService.getAvatar}/${mData.image}"),
+                backgroundImage: mData.image == null
+                  ? AssetImage('assets/images/avatar.png')
+                  : NetworkImage("${ApiService.getAvatar}/${mData.image}"),
               ),
             ),
             RichText(
@@ -130,6 +145,7 @@ class _HomePageState extends State<HomePage>{
           await Provider.of<GetPlanProvider>(context, listen: false).fetchHotspotPlan();
           await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
           await Provider.of<BalanceProvider>(context, listen: false).fetchPortforlio();
+          await Provider.of<NotificationProvider>(context, listen: false).fetchNotification();
         },
         child: Container(
           height: MediaQuery.of(context).size.height,

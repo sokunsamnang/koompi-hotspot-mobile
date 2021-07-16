@@ -15,7 +15,7 @@ class NotificationModel {
   }
 
   void _fromJson(Map<String, dynamic> data) {
-    id = data['id'];
+    id = data['_id'];
     title = data['title'];
     category = data['category'];
     description = data['description'];

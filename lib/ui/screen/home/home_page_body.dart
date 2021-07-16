@@ -39,7 +39,7 @@ Widget bodyPage(BuildContext context) {
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 15),
           child: Text(
-            'PROMOTIONS',
+            "What's Hots",
             style: GoogleFonts.nunito(
             textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
             ),

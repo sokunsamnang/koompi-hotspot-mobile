@@ -40,7 +40,7 @@ class _NavbarState extends State<Navbar> with WidgetsBindingObserver {
             .listen((event) {
           print(event);
           if (event == DataConnectionStatus.connected) {
-            // _paused();
+            return null;
           } 
           else if(event == DataConnectionStatus.disconnected){
             _paused();

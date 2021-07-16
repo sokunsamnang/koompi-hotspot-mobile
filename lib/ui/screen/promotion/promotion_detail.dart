@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:koompi_hotspot/all_export.dart';
-import 'package:koompi_hotspot/core/models/model_promotion.dart';
+import 'package:koompi_hotspot/core/models/model_notification.dart';
+import 'package:provider/provider.dart';
+import 'package:linkable/linkable.dart';
 
 class PromotionScreen extends StatefulWidget {
-  final Promotion promotion;
+  final NotificationModel promotion;
   final int index;
 
   PromotionScreen({this.promotion, this.index});
@@ -14,7 +16,7 @@ class PromotionScreen extends StatefulWidget {
 }
 
 class _PromotionScreenState extends State<PromotionScreen> {
-
+  
   @override
   void initState(){
     super.initState();
@@ -28,6 +30,8 @@ class _PromotionScreenState extends State<PromotionScreen> {
   @override
   Widget build(BuildContext context) {
     var _lang = AppLocalizeService.of(context);
+    var notification = Provider.of<NotificationProvider>(context);
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -40,92 +44,74 @@ class _PromotionScreenState extends State<PromotionScreen> {
         ),
       ),
       body: SafeArea(
-        child: PageView.builder(
-          controller: PageController(
-            initialPage: promotions.indexOf(promotions[widget.index])
-          ),
-          scrollDirection: Axis.horizontal,
-          itemCount: promotions.length,
-          itemBuilder: (BuildContext context, int index) {
-          Promotion promotion = promotions[index];
-            return SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
-              child: Padding(
-                padding: const EdgeInsets.only(bottom: 30.0),
-                child: Column(
+        child: SingleChildScrollView(
+          physics: BouncingScrollPhysics(),
+          child: Padding(
+            padding: const EdgeInsets.only(bottom: 30.0),
+            child: Column(
+              children: <Widget>[
+                Stack(
                   children: <Widget>[
-                    Stack(
-                      children: <Widget>[
-                        Container(
-                          height: MediaQuery.of(context).size.width,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12.0),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black26,
-                                offset: Offset(0.0, 2.0),
-                                blurRadius: 6.0,
-                              ),
-                            ],
-                          ),
-                          child: Hero(
-                            tag: promotion.imageUrl,
-                            child: ClipRRect(
-                              // borderRadius: BorderRadius.circular(12.0),
-                              child: Image(
-                                image: AssetImage(promotion.imageUrl),
-                                fit: BoxFit.cover,
-                              ),
+                    Hero(
+                      tag: "${ApiService.notiImage}/${notification.notificationList[widget.index].image}",
+                      child: ClipRRect(
+                        // borderRadius: BorderRadius.circular(12.0),
+                        child: Image(
+                          image: NetworkImage(
+                              "${ApiService.notiImage}/${notification.notificationList[widget.index].image}"
                             ),
-                          ),
+                          fit: BoxFit.contain,
                         ),
-                      ],
+                      ),
                     ),
-                    SizedBox(height: 10),
-                    Container(
-                      margin: EdgeInsets.symmetric(horizontal: 15),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                  ],
+                ),
+                SizedBox(height: 10),
+                Container(
+                  margin: EdgeInsets.symmetric(horizontal: 15),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        widget.promotion.title,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 19.0,
+                          fontWeight: FontWeight.w700,
+                          letterSpacing: 1.2,
+                        ),
+                      ),
+                      Row(
                         children: <Widget>[
+                          Icon(
+                            FontAwesomeIcons.info,
+                            size: 12.5,
+                            color: Colors.black,
+                          ),
+                          SizedBox(width: 5.0),
                           Text(
-                            promotion.title,
+                            widget.promotion.category,
                             style: TextStyle(
                               color: Colors.black,
-                              fontSize: 20.0,
-                              fontWeight: FontWeight.w900,
-                              letterSpacing: 1.2,
                             ),
-                          ),
-                          Row(
-                            children: <Widget>[
-                              Icon(
-                                FontAwesomeIcons.info,
-                                size: 12.5,
-                                color: Colors.black,
-                              ),
-                              SizedBox(width: 5.0),
-                              Text(
-                                promotion.category,
-                                style: TextStyle(
-                                  color: Colors.black,
-                                ),
-                              ),
-                            ],
                           ),
                         ],
                       ),
-                    ),
-                    SizedBox(height: 25),
-                    Container(
-                      margin: EdgeInsets.symmetric(horizontal: 15),
-                      child: promotion.description,
-                    )
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            );
-          }
-        )
+                SizedBox(height: 25),
+                Container(
+                  margin: EdgeInsets.symmetric(horizontal: 15),
+                  child: Linkable(
+                    text: widget.promotion.description,
+                    style: TextStyle(color: Colors.black, fontSize: 16, fontFamily: 'Poppins-Regular')
+                  ),
+                )
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }
