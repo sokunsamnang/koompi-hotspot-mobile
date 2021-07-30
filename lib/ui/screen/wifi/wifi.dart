@@ -1,8 +1,9 @@
 import 'package:geolocator/geolocator.dart';
 import 'package:koompi_hotspot/all_export.dart';
-import 'package:wifi_connector/wifi_connector.dart';
 import 'package:wifi_iot/wifi_iot.dart';
 import 'package:location/location.dart' as loc;
+import 'package:wifi_connector/wifi_connector.dart';
+
 
 class WifiConnect extends StatefulWidget {
   @override
@@ -10,7 +11,7 @@ class WifiConnect extends StatefulWidget {
 }
 class _WifiConnectState extends State<WifiConnect> {
 
-  final geolocator = Geolocator()..forceAndroidLocationManager = true;
+  final Geolocator geolocator = Geolocator();
   TextEditingController _passwordController = TextEditingController();
   Timer timer;
 
@@ -18,7 +19,7 @@ class _WifiConnectState extends State<WifiConnect> {
   void initState(){
     super.initState();
     _checkGPS();
-    timer = Timer.periodic(Duration(seconds: 1), (Timer t) => setState((){
+    timer = Timer.periodic(Duration(seconds: 3), (Timer t) => setState((){
       WiFiForIoTPlugin.getSSID();
     }));
   }
@@ -31,6 +32,14 @@ class _WifiConnectState extends State<WifiConnect> {
     _passwordController.clear();
   }
   
+  Future<void> connectWifiHotpot(BuildContext context, String ssid) async {
+    // WiFiForIoTPlugin.forceWifiUsage(false);
+    dialogLoading(context);
+    await WifiConnector.connectToWifi(
+      ssid: ssid, 
+    );
+    Navigator.of(context).pop();
+  }
 
   Future<String> _displayTextInputDialog(
      BuildContext context, 
@@ -119,14 +128,17 @@ class _WifiConnectState extends State<WifiConnect> {
                       ),
                     ),
                     child: Text('OK'),
-                    onPressed: () => {
-                      WifiConnector.connectToWifi(
+                    onPressed: () async {
+                      // WiFiForIoTPlugin.forceWifiUsage(false);
+                      dialogLoading(context);
+                      await WifiConnector.connectToWifi(
                         ssid: ssid, 
                         password: _passwordController.text, 
-                        // isWEP: true
-                      ),
-                      Navigator.of(context).pop(),
-                      _passwordController.clear(),
+                        isWEP: true
+                      );
+                      Navigator.of(context).pop();
+                      _passwordController.clear();
+                      Navigator.of(context).pop();
                     }
                   ),
                 ],
@@ -151,20 +163,17 @@ class _WifiConnectState extends State<WifiConnect> {
   }
 
   void _checkGPS() async {
-
-    var status = await geolocator.checkGeolocationPermissionStatus();
-    bool isGPSOn = await geolocator.isLocationServiceEnabled();
-    if (status == GeolocationStatus.granted && isGPSOn) {
-      loadWifiList();
+    var status = await Geolocator.checkPermission();
+    bool isGPSOn = await Geolocator.isLocationServiceEnabled();
+    if (status == LocationPermission.denied && !isGPSOn) {
+      loc.Location locationR = loc.Location();
+      locationR.requestService();
     } else if (isGPSOn == false) {
       loc.Location locationR = loc.Location();
       locationR.requestService();
       
-    } else if (status != GeolocationStatus.granted) {
-      loadWifiList();
     } else {
-      loc.Location locationR = loc.Location();
-      locationR.requestService();
+      loadWifiList();
     }
   }
 
@@ -248,24 +257,19 @@ class _WifiConnectState extends State<WifiConnect> {
                                   ? Icon(Icons.lock)
                                   : null,
                         onTap: () async {
-                          print(wifi.ssid);
-                          print(_passwordController.text);
-                          wifi.capabilities.contains('WPA') 
-                          ||
-                          wifi.capabilities.contains('WEP') 
-                          ||
-                          wifi.capabilities.contains('PSK') 
-                          ?                    
-                          _displayTextInputDialog(context, wifi.ssid)
-                          // _onAlertWithCustomContentPressed(context, wifi.ssid)
-                          :
-                          // WiFiForIoTPlugin.connect(
-                          //   wifi.ssid,
-                          //   joinOnce: false,
-                          //   withInternet: false,
-                          //   security: NetworkSecurity.NONE
-                          // );
-                          await WifiConnector.connectToWifi(ssid: wifi.ssid);
+                          wifi.capabilities.contains('WPA2')
+                            || 
+                            wifi.capabilities.contains('WPS')
+                            || 
+                            wifi.capabilities.contains('WPA') 
+                            ||
+                            wifi.capabilities.contains('WEP') 
+                            ||
+                            wifi.capabilities.contains('PSK') 
+                            ?                    
+                            _displayTextInputDialog(context, wifi.ssid)
+                            :
+                            connectWifiHotpot(context, wifi.ssid);
                         },
                       );
                   });

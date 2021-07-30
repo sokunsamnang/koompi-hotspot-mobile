@@ -24,10 +24,8 @@ class MyLocationViewState extends State<MyLocationView>
     // Icons.content_copy,
   ];
 
-  final geolocator = Geolocator()..forceAndroidLocationManager = true;
+  final Geolocator geolocator = Geolocator();
 
-  var locationOptions =
-      LocationOptions(accuracy: LocationAccuracy.best, distanceFilter: 0);
 
   double lat;
   double long;
@@ -75,10 +73,9 @@ class MyLocationViewState extends State<MyLocationView>
 
     if (long == null || lat == null) {
       ///checks GPS then call localize
-      _checkGPS();
-    } else {
-      /// GPS is Okay just localize
+      _determinePosition();
       localize();
+      _moveCamera();
     }
 
     _controller = new AnimationController(
@@ -105,48 +102,45 @@ class MyLocationViewState extends State<MyLocationView>
     }
   }
 
-  _checkGPS() async {
-    /// when back to this tab should get previous position from libraries
-    if (lat != null && long != null) {
-      setState(() {
-        lat = lat;
-        long = long;
-        // placeName = positionName();
-      });
-    }
-    var status = await geolocator.checkGeolocationPermissionStatus();
-    bool isGPSOn = await geolocator.isLocationServiceEnabled();
-    if (status == GeolocationStatus.granted && isGPSOn) {
-      /// Localize Position
-      localize();
+  Future<Position> _determinePosition() async {
+    bool serviceEnabled;
+    LocationPermission permission;
 
-      _moveCamera();
-    } else if (isGPSOn == false) {
-      loc.Location locationR = loc.Location();
-      locationR.requestService();
-      // await Components.dialogGPS(
-      //   context,
-      //   Text(_lang.translate('turn_on_gps'), textAlign: TextAlign.center),
-      //   Text(_lang.translate('location_permission'), textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.bold)),
-      // );
-
-      localize();
-      _moveCamera();
-    } else if (status != GeolocationStatus.granted) {
-      localize();
-      _moveCamera();
-    } else {
-      loc.Location locationR = loc.Location();
-      locationR.requestService();
-      // await PermissionHandler()
-      //     .requestPermissions([PermissionGroup.locationWhenInUse]);
-      localize();
-      _moveCamera();
+    // Test if location services are enabled.
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      // Location services are not enabled don't continue
+      // accessing the position and request users of the 
+      // App to enable the location services.
+      return Future.error('Location services are disabled.');
     }
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        // Permissions are denied, next time you could try
+        // requesting permissions again (this is also where
+        // Android's shouldShowRequestPermissionRationale 
+        // returned true. According to Android guidelines
+        // your App should show an explanatory UI now.
+        return Future.error('Location permissions are denied');
+      }
+    }
+    
+    if (permission == LocationPermission.deniedForever) {
+      // Permissions are denied forever, handle appropriately. 
+      return Future.error(
+        'Location permissions are permanently denied, we cannot request permissions.');
+    } 
+
+    // When we reach here, permissions are granted and we can
+    // continue accessing the position of the device.
+    return await Geolocator.getCurrentPosition();
   }
 
   void localize() {
-    geolocator.getPositionStream(locationOptions).listen((Position position) {
+    Geolocator.getPositionStream(desiredAccuracy: LocationAccuracy.high).listen((Position position) {
       /// To not call setState when this state is not active
       if (!mounted) {
         return;

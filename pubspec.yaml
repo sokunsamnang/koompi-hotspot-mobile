@@ -11,7 +11,7 @@ description: A new Flutter project.
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 0.5.0+15
+version: 0.6.0+16
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
@@ -44,7 +44,7 @@ dependencies:
   flutter_webview_plugin: ^0.4.0
   fluttertoast: ^8.0.7
   font_awesome_flutter: ^9.1.0
-  geolocator: ^5.1.5
+  geolocator: ^7.3.1
   google_fonts: ^2.1.0
   google_nav_bar: ^2.0.0
   groovin_widgets: ^2.1.0
@@ -64,7 +64,7 @@ dependencies:
   page_transition: ^2.0.2
   path_provider: ^2.0.2
   percent_indicator: ^3.0.1
-  permission_handler: ^8.1.0
+  permission_handler: ^8.1.4+2
   pin_code_fields: ^7.2.0
   provider: ^5.0.0
   qr_code_scanner: ^0.4.0
@@ -78,7 +78,7 @@ dependencies:
   syncfusion_flutter_gauges: ^19.1.69
   url_launcher: ^6.0.6
   wifi_connector: ^1.0.2
-  wifi_iot: ^0.3.3
+  wifi_iot: ^0.3.4
 
 flutter_icons:
   image_path: "assets/images/Koompi-WiFi-Icon.png"

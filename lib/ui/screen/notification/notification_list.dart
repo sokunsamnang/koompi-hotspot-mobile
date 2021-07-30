@@ -109,7 +109,7 @@ Widget notificationList(BuildContext context) {
                                   child: VerticalDivider(color: Colors.black)
                                 ),
                                 Text(
-                                  AppUtils.timeStampToDateTime(notification.notificationList[index].date),
+                                  AppUtils.timeStampToDate(notification.notificationList[index].date),
                                   style: TextStyle(fontSize: 10.0),
                                 ),
                               ],

@@ -62,7 +62,7 @@ class _NotificationDetailState extends State<NotificationDetail> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        AppUtils.timeStampToDateTime(widget.notification[widget.index].date),
+                        AppUtils.timeStampToDate(widget.notification[widget.index].date),
                         style: TextStyle(
                           fontSize: 11,
                           color: Colors.black,
