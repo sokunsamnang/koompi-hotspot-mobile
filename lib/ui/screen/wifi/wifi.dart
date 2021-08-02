@@ -1,5 +1,7 @@
 import 'package:geolocator/geolocator.dart';
 import 'package:koompi_hotspot/all_export.dart';
+import 'package:koompi_hotspot/ui/utils/connectivity_status.dart';
+import 'package:provider/provider.dart';
 import 'package:wifi_iot/wifi_iot.dart';
 import 'package:location/location.dart' as loc;
 import 'package:wifi_connector/wifi_connector.dart';
@@ -204,9 +206,12 @@ class _WifiConnectState extends State<WifiConnect> {
 
   @override
   Widget build(BuildContext context) {
+
+    var connectionStatus = Provider.of<ConnectivityStatus>(context);
+    
     return Scaffold(
       appBar: AppBar(
-        title: Row(
+        title: connectionStatus == ConnectivityStatus.WiFi ? Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
@@ -227,11 +232,20 @@ class _WifiConnectState extends State<WifiConnect> {
               label: Text('Scan',style: TextStyle(color: primaryColor)),
             ),
           ],
+        )
+        :
+        Text(
+          "Wi-Fi", 
+          style: TextStyle(
+            color: Colors.black, 
+            fontFamily: "Poppins-Bold",
+            fontSize: 18,
+          ),
         ),
         automaticallyImplyLeading: false,
         backgroundColor: Colors.white,
       ),
-      body: Container(
+      body: connectionStatus == ConnectivityStatus.WiFi ? Container(
         child: Column(
           children: [
             isConnected(),
@@ -277,7 +291,50 @@ class _WifiConnectState extends State<WifiConnect> {
             )
           ],
         ),
-      ),
+      )
+      :
+      wifiTurnOff(context),
+    );
+  }
+
+  Widget wifiTurnOff(BuildContext context){
+    return Container(
+      child: Container(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Align(
+              alignment: Alignment.center,
+              child: SvgPicture.asset(
+                'assets/images/no_access.svg',
+                height: MediaQuery.of(context).size.height * 0.25,
+                width: MediaQuery.of(context).size.width * 0.25,
+                placeholderBuilder: (context) => Center(),
+              ),
+            ),
+            SizedBox(height: 25),
+            TextButton(
+              style: ButtonStyle(
+                foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                backgroundColor: MaterialStateProperty.all<Color>(HexColor('0CACDA')),
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  )
+                ),
+                padding: MaterialStateProperty.all(
+                  EdgeInsets.symmetric(vertical: 10, horizontal: 35)
+                ),
+              ),
+              child: Text('Turn on Wi-Fi'),
+              onPressed: () => {
+                WiFiForIoTPlugin.setEnabled(true)
+              }
+            ),
+          ],
+        ),
+      )
     );
   }
 }

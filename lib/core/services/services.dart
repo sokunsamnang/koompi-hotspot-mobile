@@ -52,14 +52,14 @@ class StorageServices{
           // await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory(); 
         });
       } 
-      on SocketException catch(_){
-        print('No network socket exception');
-        await Components.dialogNoOption(
-          context,
-          textAlignCenter(text: 'Something went wrong with your internet connection. Please try again later!!!'),
-          warningTitleDialog()
-        );
-      }
+      // on SocketException catch(_){
+      //   print('No network socket exception');
+      //   await Components.dialogNoOption(
+      //     context,
+      //     textAlignCenter(text: 'Something went wrong with your internet connection. Please try again later!!!'),
+      //     warningTitleDialog()
+      //   );
+      // }
       on TimeoutException catch(_) {
         print('Time out exception');
         await Components.dialogNoOption(

@@ -1,6 +1,6 @@
 import 'package:groovin_widgets/groovin_widgets.dart';
 import 'package:koompi_hotspot/all_export.dart';
-
+import 'package:intl/intl.dart';
 
 Widget bodyPage(BuildContext context) {
   return Container(
@@ -252,6 +252,12 @@ Widget noPlanView(BuildContext context) {
 
 
 Widget _planViewButton(context){
+
+  final datePlan = new DateFormat("yyyy MMM dd").parse(mPlan.timeLeft);
+  final toDayDate = DateTime.now();
+  var different = datePlan.difference(toDayDate).inDays;
+
+
   var _lang = AppLocalizeService.of(context);
   return mPlan.status == true ? Container(
     child: Padding(
@@ -361,7 +367,7 @@ Widget _planViewButton(context){
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    '${_lang.translate('expire')}:',
+                                    'Expire:',
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontFamily: 'Medium',
@@ -369,7 +375,8 @@ Widget _planViewButton(context){
                                     ),
                                   ),
                                   Text(
-                                    '${mPlan.plan} ${_lang.translate('day')}',
+                                    'In ${different.toString()} Days',
+                                    // '${mPlan.plan} ${_lang.translate('day')}',
                                     style: TextStyle(
                                       color: Colors.white,
                                     ),

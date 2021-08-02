@@ -2,6 +2,8 @@ import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:koompi_hotspot/all_export.dart';
 import 'package:koompi_hotspot/core/models/lang.dart';
 import 'package:koompi_hotspot/core/models/model_notification.dart';
+import 'package:koompi_hotspot/ui/utils/connectivity_status.dart';
+import 'package:koompi_hotspot/ui/utils/connectivty.dart';
 import 'package:koompi_hotspot/ui/utils/shortcut.dart';
 import 'package:provider/provider.dart';
 import 'package:quick_actions/quick_actions.dart';
@@ -22,70 +24,74 @@ class _AppState extends State<App> {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider<LangProvider>(
-          create: (context) => LangProvider(),
-        ),
-        ChangeNotifierProvider<BalanceProvider>(
-          create: (context) => BalanceProvider(),
-        ),
-        ChangeNotifierProvider<TrxHistoryProvider>(
-          create: (context) => TrxHistoryProvider()
-        ),
-        ChangeNotifierProvider<GetPlanProvider>(
-          create: (context) => GetPlanProvider(),
-        ),
-        ChangeNotifierProvider<NotificationProvider>(
-          create: (context) => NotificationProvider(),
-        ),
-      ],
-      child: Consumer<LangProvider>(
-        builder: (context, value, child) => MaterialApp(
-          // builder: (context, child) => ScrollConfiguration(
-          //   behavior: ScrollBehavior()
-          //     ..buildViewportChrome(context, child, AxisDirection.down),
-          //   child: child,
-          // ),
-          builder: (context, widget) => ResponsiveWrapper.builder(
-            BouncingScrollWrapper.builder(context, widget),
-            maxWidth: 2460,
-            minWidth: 425,
-            defaultScale: true,
-            breakpoints: [
-              ResponsiveBreakpoint.autoScale(425, name: MOBILE),
-              ResponsiveBreakpoint.autoScale(800, name: TABLET),
-              ResponsiveBreakpoint.autoScale(1000, name: DESKTOP),
-              ResponsiveBreakpoint.autoScale(2460, name: '4K'),
-            ],
+    return StreamProvider<ConnectivityStatus>(
+      initialData: ConnectivityStatus.WiFi,
+      create: (context) => ConnectivityService().connectionStatusController.stream,
+      child: MultiProvider(
+        providers: [
+          ChangeNotifierProvider<LangProvider>(
+            create: (context) => LangProvider(),
           ),
-          locale: value.manualLocale,
-          supportedLocales: [
-              const Locale('en', 'US'),
-              const Locale('km', 'KH'),
-            ],
-          localizationsDelegates: [
-            AppLocalizeService.delegate,
-            //build-in localization for material wiidgets
-            GlobalWidgetsLocalizations.delegate,
+          ChangeNotifierProvider<BalanceProvider>(
+            create: (context) => BalanceProvider(),
+          ),
+          ChangeNotifierProvider<TrxHistoryProvider>(
+            create: (context) => TrxHistoryProvider()
+          ),
+          ChangeNotifierProvider<GetPlanProvider>(
+            create: (context) => GetPlanProvider(),
+          ),
+          ChangeNotifierProvider<NotificationProvider>(
+            create: (context) => NotificationProvider(),
+          ),
+        ],
+        child: Consumer<LangProvider>(
+          builder: (context, value, child) => MaterialApp(
+            // builder: (context, child) => ScrollConfiguration(
+            //   behavior: ScrollBehavior()
+            //     ..buildViewportChrome(context, child, AxisDirection.down),
+            //   child: child,
+            // ),
+            builder: (context, widget) => ResponsiveWrapper.builder(
+              BouncingScrollWrapper.builder(context, widget),
+              maxWidth: 2460,
+              minWidth: 425,
+              defaultScale: true,
+              breakpoints: [
+                ResponsiveBreakpoint.autoScale(425, name: MOBILE),
+                ResponsiveBreakpoint.autoScale(800, name: TABLET),
+                ResponsiveBreakpoint.autoScale(1000, name: DESKTOP),
+                ResponsiveBreakpoint.autoScale(2460, name: '4K'),
+              ],
+            ),
+            locale: value.manualLocale,
+            supportedLocales: [
+                const Locale('en', 'US'),
+                const Locale('km', 'KH'),
+              ],
+            localizationsDelegates: [
+              AppLocalizeService.delegate,
+              //build-in localization for material wiidgets
+              GlobalWidgetsLocalizations.delegate,
 
-            GlobalMaterialLocalizations.delegate,
-          ],
-          initialRoute: '/',
-          navigatorKey: globals.appNavigator,
-          routes: {
-            '/navbar': (context) => Navbar(),
-            '/plan': (context) => HotspotPlan(),
-            // '/loginEmail':(context) => LoginPage(),
-            '/loginPhone': (context) => LoginPhone(),
-            // '/welcome': (context) => WelcomeScreen(),
-            '/walletScreen': (context) => WalletScreen(),
-          },
-          title: 'KOOMPI Hotspot',
-          home: Splash(),
+              GlobalMaterialLocalizations.delegate,
+            ],
+            initialRoute: '/',
+            navigatorKey: globals.appNavigator,
+            routes: {
+              '/navbar': (context) => Navbar(),
+              '/plan': (context) => HotspotPlan(),
+              // '/loginEmail':(context) => LoginPage(),
+              '/loginPhone': (context) => LoginPhone(),
+              // '/welcome': (context) => WelcomeScreen(),
+              '/walletScreen': (context) => WalletScreen(),
+            },
+            title: 'KOOMPI Hotspot',
+            home: Splash(),
+          ),
         ),
+        
       ),
-      
     );
   }
 }
@@ -239,11 +245,6 @@ class _SplashState extends State<Splash> {
     } else {
       // Neither mobile data or WIFI detected, not internet connection found.
       print('Neither mobile data or WIFI detected, not internet connection found.');
-      // Navigator.push(
-      //   context,
-      //   MaterialPageRoute(
-      //     builder: (_) => _networkStatus.restartApp(context)),
-      // );
       return false;
     }
   }

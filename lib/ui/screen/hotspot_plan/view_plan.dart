@@ -1,7 +1,7 @@
 import 'package:groovin_widgets/groovin_widgets.dart';
 import 'package:koompi_hotspot/all_export.dart';
 import 'package:provider/provider.dart';
-
+import 'package:intl/intl.dart';
 class PlanView extends StatefulWidget {
   @override
   _PlanViewState createState() => _PlanViewState();
@@ -202,6 +202,10 @@ class _PlanViewState extends State<PlanView> {
   }
 
   Widget myPlan(BuildContext context){
+    final datePlan = new DateFormat("yyyy MMM dd").parse(mPlan.timeLeft);
+    final toDayDate = DateTime.now();
+    var different = datePlan.difference(toDayDate).inDays;
+
     var _lang = AppLocalizeService.of(context);
     return InkWell(
       onTap: (){
@@ -340,14 +344,14 @@ class _PlanViewState extends State<PlanView> {
             child: Row(
               children: [
                 Text(
-                  '${_lang.translate('expire')}:',
+                  'Expire:',
                   style: GoogleFonts.nunito(
                   textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
                   ),
                 ),
                 Expanded(child: Container()),
                 Text(
-                  '${mPlan.plan} ${_lang.translate('day')}', 
+                  'In ${different.toString()} Days',
                   style: GoogleFonts.nunito(
                   textStyle: TextStyle(color: Colors.black, fontSize: 16, )
                   ),

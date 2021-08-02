@@ -16,10 +16,11 @@ KOOMPI Wi-Fi Hotspot is for accessable and affordable for everyone and  KOOMPI s
 - [x] Subscribe hotspot plan.
 - [x] Unsubscribe hotspot plan.
 - [x] Speed Test.
-- [ ] Notification.
+- [x] Notification.
 - [x] KH Language
 - [x] Login Captive Portal in the app
 - [x] Quick action to login Captive Portal
+- [ ] Connect Wi-Fi From App
 
 
 ## Prerequisite: 
