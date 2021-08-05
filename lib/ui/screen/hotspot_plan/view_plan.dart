@@ -344,14 +344,48 @@ class _PlanViewState extends State<PlanView> {
             child: Row(
               children: [
                 Text(
-                  'Expire:',
+                  '${_lang.translate('plan')}:',
                   style: GoogleFonts.nunito(
                   textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
                   ),
                 ),
                 Expanded(child: Container()),
                 Text(
+                  '${mPlan.plan} ${_lang.translate('day')}',
+                  style: GoogleFonts.nunito(
+                  textStyle: TextStyle(color: Colors.black, fontSize: 16, )
+                  ),
+                ),
+              ],
+            ),
+          ),
+          
+          Padding(
+            padding: EdgeInsets.only(right: 35, left:35, top: 10),
+            child: Row(
+              children: [
+                Text(
+                   '${_lang.translate('expire')}:',
+                  style: GoogleFonts.nunito(
+                  textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
+                  ),
+                ),
+                Expanded(child: Container()),
+                mPlan.status == true 
+                ? 
+                Text(
+                  different == 1 
+                  ?
+                  'In ${different.toString()} Day'
+                  :
                   'In ${different.toString()} Days',
+                  style: GoogleFonts.nunito(
+                  textStyle: TextStyle(color: Colors.black, fontSize: 16, )
+                  ),
+                )
+                :
+                Text(
+                  "${_lang.translate('expired')}",
                   style: GoogleFonts.nunito(
                   textStyle: TextStyle(color: Colors.black, fontSize: 16, )
                   ),

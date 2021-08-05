@@ -2,7 +2,6 @@ import 'package:flutter_map_marker_cluster/flutter_map_marker_cluster.dart';
 import 'package:koompi_hotspot/all_export.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:location/location.dart' as loc;
 
 class MyLocationView extends StatefulWidget {
   @override

@@ -367,7 +367,7 @@ Widget _planViewButton(context){
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    'Expire:',
+                                    '${_lang.translate('plan')}:',
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontFamily: 'Medium',
@@ -375,8 +375,7 @@ Widget _planViewButton(context){
                                     ),
                                   ),
                                   Text(
-                                    'In ${different.toString()} Days',
-                                    // '${mPlan.plan} ${_lang.translate('day')}',
+                                    '${mPlan.plan} ${_lang.translate('day')}',
                                     style: TextStyle(
                                       color: Colors.white,
                                     ),

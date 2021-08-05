@@ -1,7 +1,5 @@
 import 'package:geolocator/geolocator.dart';
 import 'package:koompi_hotspot/all_export.dart';
-import 'package:koompi_hotspot/ui/utils/connectivity_status.dart';
-import 'package:provider/provider.dart';
 import 'package:wifi_iot/wifi_iot.dart';
 import 'package:location/location.dart' as loc;
 import 'package:wifi_connector/wifi_connector.dart';
@@ -29,9 +27,9 @@ class _WifiConnectState extends State<WifiConnect> {
 
   @override
   void dispose(){
-    super.dispose();
     timer?.cancel();
     _passwordController.clear();
+    super.dispose();
   }
   
   Future<void> connectWifiHotpot(BuildContext context, String ssid) async {
@@ -173,7 +171,6 @@ class _WifiConnectState extends State<WifiConnect> {
     } else if (isGPSOn == false) {
       loc.Location locationR = loc.Location();
       locationR.requestService();
-      
     } else {
       loadWifiList();
     }
@@ -206,18 +203,15 @@ class _WifiConnectState extends State<WifiConnect> {
 
   @override
   Widget build(BuildContext context) {
-
-    var connectionStatus = Provider.of<ConnectivityStatus>(context);
-    
     return Scaffold(
       appBar: AppBar(
-        title: connectionStatus == ConnectivityStatus.WiFi ? Row(
+        title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "Wi-Fi", 
+              "Wi-Fi",
               style: TextStyle(
-                color: Colors.black, 
+                color: Colors.black,
                 fontFamily: "Poppins-Bold",
                 fontSize: 18,
               ),
@@ -232,30 +226,22 @@ class _WifiConnectState extends State<WifiConnect> {
               label: Text('Scan',style: TextStyle(color: primaryColor)),
             ),
           ],
-        )
-        :
-        Text(
-          "Wi-Fi", 
-          style: TextStyle(
-            color: Colors.black, 
-            fontFamily: "Poppins-Bold",
-            fontSize: 18,
-          ),
         ),
         automaticallyImplyLeading: false,
         backgroundColor: Colors.white,
       ),
-      body: connectionStatus == ConnectivityStatus.WiFi ? Container(
+      body: Container(
         child: Column(
           children: [
             isConnected(),
 
             Expanded(
               child: FutureBuilder<List<WifiNetwork>>(
-              future: loadWifiList(),
-              builder: (context, snapshot) {
-                List<WifiNetwork> wifiNetwork = snapshot.data ?? [];
+                future: loadWifiList(),
+                builder: (context, snapshot) {
+                  List<WifiNetwork> wifiNetwork = snapshot.data ?? [];
                   print(wifiNetwork.length);
+                  if (wifiNetwork.length > 0)
                   return ListView.builder(
                     itemCount: wifiNetwork.length,
                     itemBuilder: (context, index) {
@@ -263,78 +249,89 @@ class _WifiConnectState extends State<WifiConnect> {
                       return new ListTile(
                         leading: Icon(Icons.signal_wifi_4_bar_sharp),
                         title: new Text(wifi.ssid),
-                        trailing: wifi.capabilities.contains('WPA') 
-                                  ||
-                                  wifi.capabilities.contains('WEP') 
-                                  ||
-                                  wifi.capabilities.contains('PSK')
-                                  ? Icon(Icons.lock)
-                                  : null,
+                        trailing: wifi.capabilities.contains('WPA')
+                            ||
+                            wifi.capabilities.contains('WEP')
+                            ||
+                            wifi.capabilities.contains('PSK')
+                            ? Icon(Icons.lock)
+                            : null,
                         onTap: () async {
                           wifi.capabilities.contains('WPA2')
-                            || 
-                            wifi.capabilities.contains('WPS')
-                            || 
-                            wifi.capabilities.contains('WPA') 
-                            ||
-                            wifi.capabilities.contains('WEP') 
-                            ||
-                            wifi.capabilities.contains('PSK') 
-                            ?                    
-                            _displayTextInputDialog(context, wifi.ssid)
-                            :
-                            connectWifiHotpot(context, wifi.ssid);
+                              ||
+                              wifi.capabilities.contains('WPS')
+                              ||
+                              wifi.capabilities.contains('WPA')
+                              ||
+                              wifi.capabilities.contains('WEP')
+                              ||
+                              wifi.capabilities.contains('PSK')
+                              ?
+                              _displayTextInputDialog(context, wifi.ssid)
+                              :
+                              connectWifiHotpot(context, wifi.ssid);
                         },
                       );
-                  });
-              }),
+                    }
+                  );
+                  if(wifiNetwork.length == 0)
+                    return gpsTurnOff(context);
+                  else
+                    return gpsTurnOff(context);
+                  }
+              ),
             )
           ],
         ),
-      )
-      :
-      wifiTurnOff(context),
+      ),
     );
   }
 
-  Widget wifiTurnOff(BuildContext context){
+  Widget gpsTurnOff(BuildContext context){
     return Container(
-      child: Container(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Align(
-              alignment: Alignment.center,
-              child: SvgPicture.asset(
-                'assets/images/no_access.svg',
-                height: MediaQuery.of(context).size.height * 0.25,
-                width: MediaQuery.of(context).size.width * 0.25,
-                placeholderBuilder: (context) => Center(),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Align(
+            alignment: Alignment.center,
+            child: SvgPicture.asset(
+              'assets/images/no_access.svg',
+              height: MediaQuery.of(context).size.height * 0.25,
+              width: MediaQuery.of(context).size.width * 0.25,
+              placeholderBuilder: (context) => Center(),
+            ),
+          ),
+          Flexible(
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(30.0, 20, 30, 20),
+              child: Text(
+                'Wi-Fi list is depended on GPS. Please enable GPS!',
+                textAlign: TextAlign.center,
               ),
             ),
-            SizedBox(height: 25),
-            TextButton(
+          ),
+          TextButton(
               style: ButtonStyle(
                 foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
                 backgroundColor: MaterialStateProperty.all<Color>(HexColor('0CACDA')),
                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  )
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    )
                 ),
                 padding: MaterialStateProperty.all(
-                  EdgeInsets.symmetric(vertical: 10, horizontal: 35)
+                    EdgeInsets.symmetric(vertical: 10, horizontal: 35)
                 ),
               ),
-              child: Text('Turn on Wi-Fi'),
-              onPressed: () => {
-                WiFiForIoTPlugin.setEnabled(true)
+              child: Text('Enable GPS'),
+              onPressed: () {
+                loc.Location locationR = loc.Location();
+                locationR.requestService();
               }
-            ),
-          ],
-        ),
-      )
+          ),
+        ],
+      ),
     );
   }
 }
