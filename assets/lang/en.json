@@ -110,7 +110,7 @@
     "ok": "OK",
     "cancel": "CANCEL",
     "enter_password": "Please enter your password",
-    "in_use_plan": "Your current plan does not expire yet. Please switch to the manually renew option to change the plan before expired.",
+    "in_use_plan": "Your current plan does not expire yet. Please switch to the manually renew to change the plan after expired.",
     "auto": "Automatically",
     "manual": "Manually",
     "renew_option": "Renew Option",

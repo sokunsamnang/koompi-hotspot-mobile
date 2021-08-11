@@ -374,6 +374,10 @@ class _PlanViewState extends State<PlanView> {
                 mPlan.status == true 
                 ? 
                 Text(
+                  different == 0 
+                  ?
+                  'Today'
+                  :
                   different == 1 
                   ?
                   'In ${different.toString()} Day'

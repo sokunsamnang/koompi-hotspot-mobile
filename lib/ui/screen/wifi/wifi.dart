@@ -31,6 +31,81 @@ class _WifiConnectState extends State<WifiConnect> {
     _passwordController.clear();
     super.dispose();
   }
+
+  void _wifiOptionBottomSheet(context, String ssid){
+    showModalBottomSheet(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(topLeft: Radius.circular(12), topRight: Radius.circular(12)),
+      ),
+      isScrollControlled: true,
+      context: context,
+      builder: (BuildContext context){
+        return Container(
+          height: 153,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.only(topLeft: Radius.circular(12), topRight: Radius.circular(12)),
+          ),
+          child: new Column(
+            children: <Widget>[
+              Align(
+                alignment: Alignment.center,
+                child: MyText(
+                  top: 20,
+                  bottom: 20,
+                  text: ssid,
+                  color: '#000000',
+                ),
+              ),
+
+              Row(
+                children: [
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () async{
+                        await WiFiForIoTPlugin.removeWifiNetwork(ssid);
+                        Navigator.of(context).pop();
+                      },
+                      child: Column(
+                        children: [
+                          Icon(Icons.delete_outline_outlined, size: 35, color: primaryColor),
+                          MyText(
+                            top: 6,
+                            text: 'Forget Network',
+                            fontSize: 12,
+                            color: '#000000',
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () async{
+                        await WiFiForIoTPlugin.disconnect();
+                        Navigator.of(context).pop();
+                      },
+                      child: Column(
+                        children: [
+                          Icon(Icons.wifi_off_outlined, size: 35, color: primaryColor),
+                          MyText(
+                            top: 6,
+                            text: 'Disconnent Network',
+                            fontSize: 12,
+                            color: '#000000',
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        );
+      }
+    );
+  }
   
   Future<void> connectWifiHotpot(BuildContext context, String ssid) async {
     // WiFiForIoTPlugin.forceWifiUsage(false);
@@ -137,8 +212,8 @@ class _WifiConnectState extends State<WifiConnect> {
                         isWEP: true
                       );
                       Navigator.of(context).pop();
-                      _passwordController.clear();
                       Navigator.of(context).pop();
+                      _passwordController.clear();
                     }
                   ),
                 ],
@@ -188,7 +263,16 @@ class _WifiConnectState extends State<WifiConnect> {
               ListTile(
                 leading: Icon(Icons.signal_wifi_4_bar_sharp, color: Colors.green),
                 title: Text('${ssid.data}',),
-                trailing: Text('Connected', style: TextStyle(color: Colors.green),),
+                trailing: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text('Connected', style: TextStyle(color: Colors.green),),
+                    SizedBox(width: 10),
+                    GestureDetector(
+                      onTap: () => _wifiOptionBottomSheet(context, ssid.data), 
+                      child: Icon(Icons.settings_outlined, color: primaryColor)),
+                  ],
+                ),
               ),
               Divider(
                 thickness: 1.5,
@@ -306,7 +390,7 @@ class _WifiConnectState extends State<WifiConnect> {
             child: Padding(
               padding: const EdgeInsets.fromLTRB(30.0, 20, 30, 20),
               child: Text(
-                'Wi-Fi list is depended on GPS. Please enable GPS!',
+                'To show Wi-Fi list is depended on GPS. Please enable GPS!',
                 textAlign: TextAlign.center,
               ),
             ),
