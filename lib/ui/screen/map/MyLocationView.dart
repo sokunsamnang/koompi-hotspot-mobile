@@ -2,6 +2,7 @@ import 'package:flutter_map_marker_cluster/flutter_map_marker_cluster.dart';
 import 'package:koompi_hotspot/all_export.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:location/location.dart' as loc;
 
 class MyLocationView extends StatefulWidget {
   @override
@@ -57,6 +58,7 @@ class MyLocationViewState extends State<MyLocationView>
   
   @override
   void initState() {
+    super.initState();
     AppServices.noInternetConnection(mykey);
     _markers = _latLngList
     .map((point) => Marker(
@@ -72,7 +74,7 @@ class MyLocationViewState extends State<MyLocationView>
 
     if (long == null || lat == null) {
       ///checks GPS then call localize
-      _determinePosition();
+      _checkGPS();
       localize();
       _moveCamera();
     }
@@ -81,14 +83,13 @@ class MyLocationViewState extends State<MyLocationView>
       vsync: this,
       duration: const Duration(milliseconds: 500),
     );
-    
-    super.initState();
+
   }
 
   @override
   void dispose() {
-    super.dispose();
     _controller.dispose();
+    super.dispose();
   }
 
   _moveCamera() {
@@ -101,41 +102,13 @@ class MyLocationViewState extends State<MyLocationView>
     }
   }
 
-  Future<Position> _determinePosition() async {
-    bool serviceEnabled;
-    LocationPermission permission;
-
-    // Test if location services are enabled.
-    serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) {
-      // Location services are not enabled don't continue
-      // accessing the position and request users of the 
-      // App to enable the location services.
-      return Future.error('Location services are disabled.');
-    }
-
-    permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        // Permissions are denied, next time you could try
-        // requesting permissions again (this is also where
-        // Android's shouldShowRequestPermissionRationale 
-        // returned true. According to Android guidelines
-        // your App should show an explanatory UI now.
-        return Future.error('Location permissions are denied');
-      }
-    }
-    
-    if (permission == LocationPermission.deniedForever) {
-      // Permissions are denied forever, handle appropriately. 
-      return Future.error(
-        'Location permissions are permanently denied, we cannot request permissions.');
+  void _checkGPS() async {
+    var status = await Geolocator.checkPermission();
+    bool isGPSOn = await Geolocator.isLocationServiceEnabled();
+    if (status == LocationPermission.denied && !isGPSOn) {
+      loc.Location locationR = loc.Location();
+      locationR.requestService();
     } 
-
-    // When we reach here, permissions are granted and we can
-    // continue accessing the position of the device.
-    return await Geolocator.getCurrentPosition();
   }
 
   void localize() {
