@@ -12,7 +12,7 @@ var alertStyle = AlertStyle(
   ),
   animationDuration: Duration(milliseconds: 400),
   alertBorder: RoundedRectangleBorder(
-    borderRadius: BorderRadius.circular(0.0),
+    borderRadius: BorderRadius.circular(12.0),
     side: BorderSide(
       color: Colors.grey,
     ),

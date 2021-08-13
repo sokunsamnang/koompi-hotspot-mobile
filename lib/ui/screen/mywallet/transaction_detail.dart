@@ -274,11 +274,15 @@ class _TransactionDetailState extends State<TransactionDetail> {
                             ?
                             Container(
                               width: MediaQuery.of(context).size.width,
-                              child: RaisedButton(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(12.0),
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  onPrimary: Colors.white,
+                                  primary: HexColor('0CACDA'),
+                                  elevation: 2.5,
+                                  shape: const RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.all(Radius.circular(12)),
+                                  ),
                                 ),
-                                color: HexColor('0CACDA'),
                                 onPressed: () {
                                   Navigator.push(
                                     context,
@@ -287,7 +291,6 @@ class _TransactionDetailState extends State<TransactionDetail> {
                                     ),
                                   );
                                 },
-                                elevation: 2.5,
                                 child: Padding(
                                   padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
                                   child: Text(
@@ -302,11 +305,15 @@ class _TransactionDetailState extends State<TransactionDetail> {
                             :
                             Container(
                               width: MediaQuery.of(context).size.width,
-                              child: RaisedButton(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(12.0),
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  onPrimary: Colors.white,
+                                  primary: HexColor('0CACDA'),
+                                  elevation: 2.5,
+                                  shape: const RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.all(Radius.circular(12)),
+                                  ),
                                 ),
-                                color: HexColor('0CACDA'),
                                 onPressed: () {
                                   Navigator.push(
                                     context,
@@ -315,7 +322,6 @@ class _TransactionDetailState extends State<TransactionDetail> {
                                     ),
                                   );
                                 },
-                                elevation: 2.5,
                                 child: Padding(
                                   padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
                                   child: Text(
@@ -334,16 +340,18 @@ class _TransactionDetailState extends State<TransactionDetail> {
                             //========= Back Button =========
                             Container(
                               width: MediaQuery.of(context).size.width,
-                              child: RaisedButton(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(12.0),
-                                  side: BorderSide(color: HexColor('0CACDA'), width: 2)
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  onPrimary: Colors.white,
+                                  primary: HexColor('0CACDA'),
+                                  elevation: 2.5,
+                                  shape: const RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.all(Radius.circular(12)),
+                                  ),
                                 ),
-                                color: Colors.white,
                                 onPressed: () {
                                   Navigator.pop(context);
                                 },
-                                elevation: 2.5,
                                 child: Padding(
                                   padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
                                   child: Text(

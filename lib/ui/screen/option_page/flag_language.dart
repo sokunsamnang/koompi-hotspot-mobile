@@ -58,8 +58,8 @@ class _LanguageViewState extends State<LanguageView>
                 child: Column(
                   children: <Widget>[
                     ListTile(
-                      leading: Image.network(
-                        "https://cdn.webshopapp.com/shops/94414/files/53596372/cambodia-flag-image-free-download.jpg",
+                      leading: Image.asset(
+                        'assets/images/kh_flag.png',
                         height: 50,
                         width: 50,
                       ),
@@ -87,8 +87,8 @@ class _LanguageViewState extends State<LanguageView>
                     ),
                     _buildDivider(),
                     ListTile(
-                      leading: Image.network(
-                        "https://upload.wikimedia.org/wikipedia/en/thumb/a/ae/Flag_of_the_United_Kingdom.svg/1200px-Flag_of_the_United_Kingdom.svg.png",
+                      leading: Image.asset(
+                        'assets/images/eng_flag.png',
                         width: 50,
                         height: 50,
                       ),

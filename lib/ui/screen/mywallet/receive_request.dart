@@ -72,161 +72,160 @@ class _ReceiveRequestState extends State<ReceiveRequest> {
               color: Colors.black, fontFamily: 'Medium', fontSize: 22.0),
         ),
       ),
-      body: mBalance.token != null
-          ? SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
+      body: SingleChildScrollView(
+          physics: BouncingScrollPhysics(),
+          child: Container(
+            // height: MediaQuery.of(context).size.height * 0.74,
+            margin: const EdgeInsets.symmetric(
+              horizontal: 25.0, vertical: 40
+            ),
+            child: Card(
+              elevation: 2,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+              color: Colors.white,
               child: Container(
-                // height: MediaQuery.of(context).size.height * 0.74,
-                margin: const EdgeInsets.symmetric(
-                  horizontal: 25.0, vertical: 40
-                ),
-                child: Card(
-                  elevation: 2,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  color: Colors.white,
-                  child: Container(
-                    // height: MediaQuery.of(context).size.height,
-                    // width: MediaQuery.of(context).size.width,
-                    padding: const EdgeInsets.all(20.0),
-                    child: Column(
-                      children: [
-                        Container(
-                          child: RepaintBoundary(
-                            key: _keyQrShare,
-                            child: Container(
-                              color: Colors.white,
-                              child: Column(
-                                children: [
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  Text(
-                                    'SELENDRA (SEL)', 
-                                    style: GoogleFonts.nunito(
-                                    textStyle: TextStyle(color: primaryColor, fontSize: 25, fontWeight: FontWeight.w700)
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 20,
-                                  ),
-                                  QrImage(
-                                    data: mData.wallet ?? '',
-                                    version: QrVersions.auto,
-                                    embeddedImage: AssetImage('assets/images/SelendraQr.png'),
-                                    size: 225.0,
-                                    embeddedImageStyle: QrEmbeddedImageStyle(
-                                      size: Size(50, 50),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 20.0,
-                                  ),
-                                  Text(
-                                    mData.fullname ?? '', 
-                                    style: GoogleFonts.nunito(
-                                    textStyle: TextStyle(color: primaryColor, fontSize: 18, fontWeight: FontWeight.w700)
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 10.0,
-                                  ),
-                                  Text(
-                                    mData.wallet ?? '',
-                                    textAlign: TextAlign.center,
-                                  ),
-                                  SizedBox(
-                                    height: 20.0,
-                                  ),
-                                ],
+                // height: MediaQuery.of(context).size.height,
+                // width: MediaQuery.of(context).size.width,
+                padding: const EdgeInsets.all(20.0),
+                child: Column(
+                  children: [
+                    Container(
+                      child: RepaintBoundary(
+                        key: _keyQrShare,
+                        child: Container(
+                          color: Colors.white,
+                          child: Column(
+                            children: [
+                              SizedBox(
+                                height: 10,
                               ),
-                            ),
-                          ),
-                        ),
-                        Center(
-                          child: InkWell(
-                            child: Container(
-                              width: MediaQuery.of(context).size.width,
-                              height: 50,
-                              decoration: BoxDecoration(
-                                  gradient: LinearGradient(colors: [
-                                    Color(0xFF17ead9),
-                                    Color(0xFF6078ea)
-                                  ]),
-                                  borderRadius: BorderRadius.circular(12),
-                                  boxShadow: [
-                                    BoxShadow(
-                                        color: Color(0xFF6078ea)
-                                            .withOpacity(.3),
-                                        offset: Offset(0.0, 8.0),
-                                        blurRadius: 8.0)
-                                  ]),
-                              child: Material(
-                                color: Colors.transparent,
-                                child: InkWell(
-                                  customBorder: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
-                                  onTap: () async {
-                                    copyWallet(mData.wallet);
-                                    showSnackBar();
-                                  },
-                                  child: Center(
-                                    child: Text(
-                                      _lang.translate('copy'),
-                                      style: GoogleFonts.nunito(
-                                        textStyle: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w700,
-                                          fontSize: 18,
-                                        )
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 20.0,
-                        ),
-                        Container(
-                          width: MediaQuery.of(context).size.width,
-                          child: RaisedButton(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12.0),
-                              side: BorderSide(color: HexColor('0CACDA'), width: 2)
-                            ),
-                            color: Colors.white,
-                            onPressed: () {
-                              qrShare(_keyQrShare, mData.wallet);
-                            },
-                            elevation: 2.5,
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
-                              child: Text(
-                                _lang.translate('share'),
+                              Text(
+                                'SELENDRA (SEL)', 
                                 style: GoogleFonts.nunito(
-                                  textStyle: TextStyle(
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 18,
-                                  )
+                                textStyle: TextStyle(color: primaryColor, fontSize: 25, fontWeight: FontWeight.w700)
+                                ),
+                              ),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              QrImage(
+                                data: mData.wallet ?? '',
+                                version: QrVersions.auto,
+                                embeddedImage: AssetImage('assets/images/SelendraQr.png'),
+                                size: 225.0,
+                                embeddedImageStyle: QrEmbeddedImageStyle(
+                                  size: Size(50, 50),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 20.0,
+                              ),
+                              Text(
+                                mData.fullname ?? '', 
+                                style: GoogleFonts.nunito(
+                                textStyle: TextStyle(color: primaryColor, fontSize: 18, fontWeight: FontWeight.w700)
+                                ),
+                              ),
+                              SizedBox(
+                                height: 10.0,
+                              ),
+                              Text(
+                                mData.wallet ?? '',
+                                textAlign: TextAlign.center,
+                              ),
+                              SizedBox(
+                                height: 20.0,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    Center(
+                      child: InkWell(
+                        child: Container(
+                          width: MediaQuery.of(context).size.width,
+                          height: 50,
+                          decoration: BoxDecoration(
+                              gradient: LinearGradient(colors: [
+                                Color(0xFF17ead9),
+                                Color(0xFF6078ea)
+                              ]),
+                              borderRadius: BorderRadius.circular(12),
+                              boxShadow: [
+                                BoxShadow(
+                                    color: Color(0xFF6078ea)
+                                        .withOpacity(.3),
+                                    offset: Offset(0.0, 8.0),
+                                    blurRadius: 8.0)
+                              ]),
+                          child: Material(
+                            color: Colors.transparent,
+                            child: InkWell(
+                              customBorder: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              onTap: () async {
+                                copyWallet(mData.wallet);
+                                showSnackBar();
+                              },
+                              child: Center(
+                                child: Text(
+                                  _lang.translate('copy'),
+                                  style: GoogleFonts.nunito(
+                                    textStyle: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 18,
+                                    )
+                                  ),
                                 ),
                               ),
                             ),
                           ),
                         ),
-                      ],
+                      ),
                     ),
-                  ),
+                    SizedBox(
+                      height: 20.0,
+                    ),
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          onPrimary: Colors.black87,
+                          primary: Colors.white,
+                          elevation: 2.5,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(12)),
+                            side: BorderSide(color: HexColor('0CACDA'), width: 2),
+                          ),
+                        ),
+                        onPressed: () {
+                          qrShare(_keyQrShare, mData.wallet);
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+                          child: Text(
+                            _lang.translate('share'),
+                            style: GoogleFonts.nunito(
+                              textStyle: TextStyle(
+                                fontWeight: FontWeight.w700,
+                                fontSize: 18,
+                              )
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-          )
-          : Center(
-              child: Text('No Data'),
             ),
+          ),
+      ),
     );
   }
 }

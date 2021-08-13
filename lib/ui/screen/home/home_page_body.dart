@@ -1,6 +1,5 @@
 import 'package:groovin_widgets/groovin_widgets.dart';
 import 'package:koompi_hotspot/all_export.dart';
-import 'package:intl/intl.dart';
 
 Widget bodyPage(BuildContext context) {
   return Container(
@@ -32,7 +31,7 @@ Widget bodyPage(BuildContext context) {
             ),
           ),
         ),
-        mBalance.token == null ? startGetWallet(context) : _myWalletButton(context),
+        mBalance.token != null ? startGetWallet(context) : _myWalletButton(context),
         
         // ===========Promotion Widget===========
         SizedBox(height: 20),
@@ -80,7 +79,7 @@ Widget startGetWallet(context) {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      mBalance.message == 'Internal server error!' ? Text(
+                      mBalanceError.message == "Internal server error!" ? Text(
                           _lang.translate('selendra_down'),
                           style: GoogleFonts.nunito(
                           textStyle: TextStyle(color: Colors.white, fontWeight: FontWeight.w700)
@@ -252,11 +251,6 @@ Widget noPlanView(BuildContext context) {
 
 
 Widget _planViewButton(context){
-
-  final datePlan = new DateFormat("yyyy MMM dd").parse(mPlan.timeLeft);
-  final toDayDate = DateTime.now();
-  var different = datePlan.difference(toDayDate).inDays;
-
 
   var _lang = AppLocalizeService.of(context);
   return mPlan.status == true ? Container(
@@ -639,7 +633,8 @@ Widget _myWalletButton(context){
                                       ),
                                       mBalance != null ?
                                       Text(
-                                        '${mBalance.token.toStringAsFixed(4)}',
+                                        // '${mBalance.token.toStringAsFixed(4)}',
+                                        "",
                                         style: GoogleFonts.nunito(
                                         textStyle: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w700)
                                         ),

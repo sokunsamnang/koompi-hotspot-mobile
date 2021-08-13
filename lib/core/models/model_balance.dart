@@ -31,6 +31,27 @@ class Balance {
 
 Balance mBalance = Balance();
 
+class BalanceError {
+  BalanceError({
+    this.message
+  });
+
+  String message;
+
+  factory BalanceError.fromJson(String str) => BalanceError.fromMap(json.decode(str));
+
+  String toJson() => json.encode(toMap());
+
+  factory BalanceError.fromMap(Map<String, dynamic> json) => BalanceError(
+        message: json["message"],
+      );
+
+  Map<String, dynamic> toMap() => {
+        "message": message,
+      };
+}
+BalanceError mBalanceError = BalanceError();
+
 class BalanceProvider with ChangeNotifier {
   StorageServices _prefService = StorageServices();
   String alertText;
@@ -58,9 +79,9 @@ class BalanceProvider with ChangeNotifier {
 
           alertText = response.statusCode.toString();
         } else {
-          mBalance = Balance();
-          alertText = response.body;
-          print('Error portfolio status: ${response.statusCode}');
+          var responseBody = json.decode(response.body);
+          if (mBalanceError.message == "Internal server error!") mBalanceError.message.toString();
+          mBalanceError = BalanceError.fromMap(responseBody);
         }
       });
     } catch (e) {

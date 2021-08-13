@@ -49,7 +49,16 @@ class SpeedTestNetState extends State<SpeedTestNet> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         title: Text(_lang.translate('speed_test'), style: TextStyle(color: Colors.black, fontFamily: 'Medium'),),
-        automaticallyImplyLeading: false,
+        leading: Builder(builder: (BuildContext context) {
+          return IconButton(
+              icon: Icon(
+                Icons.arrow_back,
+                color: Colors.black,
+              ),
+              onPressed: () {
+                Navigator.pop(context);
+              });
+        }),
       ),
       body: Center(
         child: Column(
@@ -137,31 +146,25 @@ class SpeedTestNetState extends State<SpeedTestNet> {
             isTesting == false ? Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                RaisedButton(
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    padding: EdgeInsets.zero,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12))),
                   child: Ink(
                     decoration: BoxDecoration(
                       gradient: buttonGradient,
-                      borderRadius: BorderRadius.all(Radius.circular(12.0)),
-                    ),
+                      borderRadius: BorderRadius.circular(12)),
                     child: Container(
-                      constraints: const BoxConstraints(
-                          minWidth: 188.0, minHeight: 46.0), // min sizes for Material buttons
+                      width: 300,
+                      height: 50,
                       alignment: Alignment.center,
                       child: Text(
-                        _lang.translate('start_test'),
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
+                         _lang.translate('start_test'),
+                        style: TextStyle(fontSize: 24, fontStyle: FontStyle.italic),
                       ),
                     ),
                   ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12.0)),
-                  padding: const EdgeInsets.all(0.0),
-                  color: Colors.red,
-                  textColor: txtCol,
                   onPressed: () {
                     if (!isTesting) {
                       setState(() {
@@ -207,7 +210,7 @@ class SpeedTestNetState extends State<SpeedTestNet> {
                                       ),
                                       onPressed: () => Navigator.pop(context),
                                       color: Color.fromRGBO(114, 137, 218, 1.0),
-                                      radius: BorderRadius.circular(0.0),
+                                      radius: BorderRadius.circular(12.0),
                                     ),
                                   ],
                                 ).show();

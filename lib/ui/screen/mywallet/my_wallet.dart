@@ -108,15 +108,18 @@ class _MyWalletState extends State<MyWallet> {
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: <Widget>[
                             Expanded(
-                              child: RaisedButton(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(12.0),
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  onPrimary: Colors.black87,
+                                  primary: HexColor('94FAD5'),
+                                  elevation: 5,
+                                  shape: const RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.all(Radius.circular(12)),
+                                  ),
                                 ),
-                                color: HexColor('94FAD5'),
                                 onPressed: () {
                                   _sendWalletBottomSheet(context, widget.walletKey);
                                 },
-                                elevation: 5,
                                 child: Padding(
                                   padding: const EdgeInsets.all(5.0),
                                   child: Column(
@@ -132,11 +135,15 @@ class _MyWalletState extends State<MyWallet> {
                             ),
                             SizedBox(width: 20),
                             Expanded(
-                              child: RaisedButton(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(12.0),
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  onPrimary: Colors.black87,
+                                  primary: HexColor('7CDBFA'),
+                                  elevation: 5,
+                                  shape: const RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.all(Radius.circular(12)),
+                                  ),
                                 ),
-                                color: HexColor('7CDBFA'),
                                 onPressed: () {
                                   Navigator.push(
                                     context, 
@@ -145,7 +152,6 @@ class _MyWalletState extends State<MyWallet> {
                                     )
                                   );
                                 },
-                                elevation: 5,
                                 child: Padding(
                                   padding: const EdgeInsets.all(5.0),
                                   child: Column(
@@ -311,7 +317,7 @@ void _sendWalletBottomSheet(context, String walletKey){
                         Icon(Icons.qr_code_scanner_outlined, size: 35, color: primaryColor),
                         MyText(
                           top: 6,
-                          text: 'Scan Wallet',
+                          text: 'Scan QR',
                           fontSize: 12,
                           color: '#000000',
                         )

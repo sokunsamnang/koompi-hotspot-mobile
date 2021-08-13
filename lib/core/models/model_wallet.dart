@@ -12,6 +12,6 @@ final List<Wallet> wallets = [
   Wallet(
     'Selendra (SEL)',
     '${mBalance.token}',
-    'assets/images/icon_launcher.png',
+    'assets/images/sld.png',
   ),
 ];

@@ -76,7 +76,6 @@ export 'package:koompi_hotspot/ui/utils/app_localization.dart';
 export 'package:koompi_hotspot/ui/app.dart';
 export 'package:koompi_hotspot/ui/utils/app_utils.dart';
 export 'package:koompi_hotspot/ui/utils/app_localization.dart';
-export 'package:koompi_hotspot/ui/utils/flag_language.dart';
 
 /* Core */
 // Model
