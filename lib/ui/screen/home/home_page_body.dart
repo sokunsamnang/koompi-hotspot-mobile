@@ -31,7 +31,7 @@ Widget bodyPage(BuildContext context) {
             ),
           ),
         ),
-        mBalance.token != null ? startGetWallet(context) : _myWalletButton(context),
+        mBalance.token == null ? startGetWallet(context) : _myWalletButton(context),
         
         // ===========Promotion Widget===========
         SizedBox(height: 20),
