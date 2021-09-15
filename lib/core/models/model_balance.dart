@@ -1,65 +1,38 @@
-import 'package:http/http.dart' as http;
 import 'package:koompi_hotspot/all_export.dart';
+import 'package:http/http.dart' as http;
 
-class Balance {
-  Balance({
-    this.token,
-    this.symbol,
-    this.message
-  });
-
-  double token;
+class BalanceModel {
+  
+  String id;
+  String token;
   String symbol;
-  String message;
 
-  factory Balance.fromJson(String str) => Balance.fromMap(json.decode(str));
+  BalanceModel(Map<String, dynamic> data) {
+    _fromJson(data);
+  }
 
-  String toJson() => json.encode(toMap());
-
-  factory Balance.fromMap(Map<String, dynamic> json) => Balance(
-        token: json["token"].toDouble(),
-        symbol: json["symbol"],
-        message: json["message"],
-      );
-
-  Map<String, dynamic> toMap() => {
-        "token": token,
-        "symbol": symbol,
-        "message": message,
-      };
+  void _fromJson(Map<String, dynamic> data) {
+    id = data['id'];
+    token = data['token'];
+    symbol = data['symbol'];
+  }
 }
-
-Balance mBalance = Balance();
-
-class BalanceError {
-  BalanceError({
-    this.message
-  });
-
-  String message;
-
-  factory BalanceError.fromJson(String str) => BalanceError.fromMap(json.decode(str));
-
-  String toJson() => json.encode(toMap());
-
-  factory BalanceError.fromMap(Map<String, dynamic> json) => BalanceError(
-        message: json["message"],
-      );
-
-  Map<String, dynamic> toMap() => {
-        "message": message,
-      };
-}
-BalanceError mBalanceError = BalanceError();
 
 class BalanceProvider with ChangeNotifier {
-  StorageServices _prefService = StorageServices();
-  String alertText;
+  Backend _backend;
 
-  var _mData = new ModelUserData();
-  ModelUserData get mData => _mData;
+  GetRequest _getRequest;
 
-  Future<String> fetchPortforlio() async {
+  List<BalanceModel> balanceList = [];
+
+
+  Future<void> fetchPortfolio() async {
+    StorageServices _prefService = StorageServices();
+
+    _backend = Backend();
+    _getRequest = GetRequest();
+    balanceList = [];
+
     try {
       await _prefService.read('token').then((onValue) async {
         http.Response response = await http.get(
@@ -71,17 +44,13 @@ class BalanceProvider with ChangeNotifier {
 
         if (response.statusCode == 200) {
           var responseBody = json.decode(response.body);
-          if (mBalance.token != null) mBalance.token.toString();
-          mBalance = Balance.fromMap(responseBody);
-
-          // Check Balance Retrieve NULL
-          if (mBalance != null) wallets[0].amount = mBalance.token.toString();
-
-          alertText = response.statusCode.toString();
+          _backend.listData = responseBody;
+          for (var l in _backend.listData) {
+            balanceList.add(BalanceModel(l));
+          }
         } else {
           var responseBody = json.decode(response.body);
-          if (mBalanceError.message == "Internal server error!") mBalanceError.message.toString();
-          mBalanceError = BalanceError.fromMap(responseBody);
+          return responseBody;
         }
       });
     } catch (e) {
@@ -89,6 +58,25 @@ class BalanceProvider with ChangeNotifier {
     }
 
     notifyListeners();
-    return alertText ?? '';
+
+
+  //   // Fetch Balance
+  //   await _getRequest.getPortfolio().then((value) {
+  //     _backend.listData = json.decode(value.body);
+  //     // _backend.listData = List<dynamic>.from(
+  //     //   balanceList.map<dynamic>(
+  //     //     (dynamic item) => value.body,
+  //     //   ),
+  //     // );
+  //     if (_backend.listData.isEmpty)
+  //       balanceList = null;
+  //     else {
+  //       for (var l in _backend.listData) {
+  //         balanceList.add(BalanceModel(l));
+  //       }
+  //     }
+  //   });
+
+  //   notifyListeners();
   }
 }

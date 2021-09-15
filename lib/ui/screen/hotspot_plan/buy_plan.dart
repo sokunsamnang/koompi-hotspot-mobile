@@ -58,7 +58,7 @@ class _HotspotPlanState extends State<HotspotPlan> {
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
         print('Internet connected');
         if(response.statusCode == 200){    
-          await Provider.of<BalanceProvider>(context, listen: false).fetchPortforlio();
+          await Provider.of<BalanceProvider>(context, listen: false).fetchPortfolio();
           await Provider.of<GetPlanProvider>(context, listen: false).fetchHotspotPlan();
           Navigator.pushAndRemoveUntil(
             context,
@@ -104,7 +104,7 @@ class _HotspotPlanState extends State<HotspotPlan> {
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
         print('Internet connected');
         if(response.statusCode == 200){    
-          await Provider.of<BalanceProvider>(context, listen: false).fetchPortforlio();
+          await Provider.of<BalanceProvider>(context, listen: false).fetchPortfolio();
           await Provider.of<GetPlanProvider>(context, listen: false).fetchHotspotPlan();
           Navigator.pushAndRemoveUntil(
             context,

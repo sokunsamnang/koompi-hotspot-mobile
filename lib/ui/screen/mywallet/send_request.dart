@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:koompi_hotspot/all_export.dart';
+import 'package:koompi_hotspot/ui/reuse_widget/customDropDown.dart';
 import 'package:provider/provider.dart';
 
 class SendRequest extends StatefulWidget {
@@ -16,11 +17,44 @@ class SendRequest extends StatefulWidget {
 
 class _SendRequestState extends State<SendRequest> {
   TextEditingController recieveWallet;
-  TextEditingController asset = TextEditingController(text: 'SEL');
+  String asset = "";
   TextEditingController amount;
   TextEditingController memo = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
   Backend _backend = Backend();
+  
+
+
+
+  final List<TokenTypeModel> _tokenTypeModelList = [
+    TokenTypeModel(tokenName: 'RISE', imageToken: Image.asset('assets/images/sld_fit.png', scale: 40,)),
+    TokenTypeModel(tokenName: 'SEL', imageToken: Image.asset('assets/images/sld_fit.png', scale: 40,)),
+  ];
+  TokenTypeModel _tokenTypeModel = TokenTypeModel();
+  List<DropdownMenuItem<TokenTypeModel>> _tokenTypeModelDropdownList;
+  List<DropdownMenuItem<TokenTypeModel>> _buildTokenTypeModelDropdown(
+      List tokenTypeModelList) {
+    List<DropdownMenuItem<TokenTypeModel>> items = [];
+    for (TokenTypeModel tokenTypeModel in tokenTypeModelList) {
+      items.add(DropdownMenuItem(
+        value: tokenTypeModel,
+        child: Row(
+          children: [
+            tokenTypeModel.imageToken,
+            Text(tokenTypeModel.tokenName),
+          ],
+        ),
+      ));
+    }
+    return items;
+  }
+
+  _onChangetokenTypeModelDropdown(TokenTypeModel tokenTypeModel) {
+    setState(() {
+      _tokenTypeModel = tokenTypeModel;
+      asset = _tokenTypeModel.tokenName;
+    });
+  }
 
   GlobalKey<ScaffoldState> globalKey = GlobalKey<ScaffoldState>();
 
@@ -46,12 +80,12 @@ class _SendRequestState extends State<SendRequest> {
       final result = await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
         print('Internet connected');
-        _backend.response = await PostRequest().sendPayment(_passwordController.text, recieveWallet.text, amount.text, memo.text);
+        _backend.response = await PostRequest().sendPayment(_passwordController.text, recieveWallet.text, asset, amount.text, memo.text);
         var responseJson = json.decode(_backend.response.body);
         if (_backend.response.statusCode == 200) {
           Future.delayed(Duration(seconds: 2), () async{
-            await Provider.of<BalanceProvider>(context, listen: false).fetchPortforlio();
-            await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
+            await Provider.of<BalanceProvider>(context, listen: false).fetchPortfolio();
+            // await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
             Timer(
                 Duration(milliseconds: 500),
                 () => Navigator.pushAndRemoveUntil(
@@ -193,6 +227,11 @@ class _SendRequestState extends State<SendRequest> {
     AppServices.noInternetConnection(globalKey);
     recieveWallet = TextEditingController(text: widget.walletKey);
     amount = TextEditingController(text: widget.amount.toString());
+
+    // Value Dropdown
+    _tokenTypeModelDropdownList = _buildTokenTypeModelDropdown(_tokenTypeModelList);
+    _tokenTypeModel = _tokenTypeModelList[0];
+    asset = _tokenTypeModel.tokenName;
     super.initState();
   }
 
@@ -292,38 +331,13 @@ class _SendRequestState extends State<SendRequest> {
                     SizedBox(height: 16.0),
                     Text(_lang.translate('asset')),
                     SizedBox(height: 10.0),
-                    TextFormField(
-                      controller: asset,
-                      readOnly: true,
-                      decoration: InputDecoration(
-                        prefixIcon: Icon(Icons.account_balance_wallet_outlined, color: HexColor('0CACDA')),
-                        hintText: 'Wallet',
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12.0),
-                          borderSide: BorderSide(
-                            color: primaryColor,
-                          ),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12.0),
-                          borderSide: BorderSide(
-                            color: primaryColor,
-                          ),
-                        ),
-                        errorBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12.0),
-                          borderSide: BorderSide(
-                            color: Colors.red
-                          ),
-                        ),
-                        focusedErrorBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12.0),
-                          borderSide: BorderSide(
-                            color: Colors.red
-                          ),
-                        ),
-                      ),
+                    CustomDropdown(
+                      dropdownMenuItemList: _tokenTypeModelDropdownList,
+                      onChanged: _onChangetokenTypeModelDropdown,
+                      value: _tokenTypeModel,
+                      isEnabled: true,
                     ),
+
                     SizedBox(height: 16.0),
                     Text(_lang.translate('amount')),
                     SizedBox(height: 10.0),

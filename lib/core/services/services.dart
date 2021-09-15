@@ -48,18 +48,18 @@ class StorageServices{
         await GetRequest().getUserProfile(token).then((value) async{
           await Provider.of<GetPlanProvider>(context, listen: false).fetchHotspotPlan();
           await Provider.of<NotificationProvider>(context, listen: false).fetchNotification();
-          // await Provider.of<BalanceProvider>(context, listen: false).fetchPortforlio(); 
+          await Provider.of<BalanceProvider>(context, listen: false).fetchPortfolio(); 
           // await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory(); 
         });
       } 
-      // on SocketException catch(_){
-      //   print('No network socket exception');
-      //   await Components.dialogNoOption(
-      //     context,
-      //     textAlignCenter(text: 'Something went wrong with your internet connection. Please try again later!!!'),
-      //     warningTitleDialog()
-      //   );
-      // }
+      on SocketException catch(_){
+        print('No network socket exception');
+        await Components.dialogNoOption(
+          context,
+          textAlignCenter(text: 'Something went wrong with your internet connection. Please try again later!!!'),
+          warningTitleDialog()
+        );
+      }
       on TimeoutException catch(_) {
         print('Time out exception');
         await Components.dialogNoOption(

@@ -78,16 +78,16 @@ class _WalletChoiceState extends State<WalletChoice> {
                         var responseJson = json.decode(response.body);
                         if (response.statusCode == 200) {
                           print(response.body);
-                          StorageServices().read('token').then((value) async{
-                            String _token = value;
-                            await GetRequest().getUserProfile(_token);
-                            await Provider.of<BalanceProvider>(context, listen: false).fetchPortforlio();
-                            await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
-                          });
                           await Components.dialog(
                             context,
                             textAlignCenter(text: responseJson['message']),
                             titleDialog());
+                          await Provider.of<BalanceProvider>(context, listen: false).fetchPortfolio();
+                          // await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
+                          StorageServices().read('token').then((value) async{
+                            String _token = value;
+                            await GetRequest().getUserProfile(_token);
+                          });
                           Navigator.pushReplacement(
                             context,
                             PageTransition(type: PageTransitionType.rightToLeft, 
@@ -101,8 +101,8 @@ class _WalletChoiceState extends State<WalletChoice> {
                             warningTitleDialog()
                           );
                           Navigator.pop(context);
+                          Navigator.pop(context);
                         }
-                        Navigator.of(context).pop();
                       },
                       child: Center(
                         child: Text(_lang.translate('get_wallet'),

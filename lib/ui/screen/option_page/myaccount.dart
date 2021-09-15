@@ -2,7 +2,7 @@ import 'package:groovin_widgets/groovin_widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:koompi_hotspot/all_export.dart';
 import 'package:koompi_hotspot/ui/reuse_widget/datePicker.dart';
-import 'package:koompi_hotspot/ui/reuse_widget/locationDorpDown.dart';
+import 'package:koompi_hotspot/ui/reuse_widget/locationDropDown.dart';
 
 
 class MyAccount extends StatefulWidget {

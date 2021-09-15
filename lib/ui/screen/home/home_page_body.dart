@@ -1,5 +1,6 @@
 import 'package:groovin_widgets/groovin_widgets.dart';
 import 'package:koompi_hotspot/all_export.dart';
+import 'package:provider/provider.dart';
 
 Widget bodyPage(BuildContext context) {
   return Container(
@@ -31,7 +32,7 @@ Widget bodyPage(BuildContext context) {
             ),
           ),
         ),
-        mBalance.token == null ? startGetWallet(context) : _myWalletButton(context),
+        mData.wallet == null ? startGetWallet(context) : _myWalletButton(context),
         
         // ===========Promotion Widget===========
         SizedBox(height: 20),
@@ -79,13 +80,6 @@ Widget startGetWallet(context) {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      mBalanceError.message == "Internal server error!" ? Text(
-                          _lang.translate('selendra_down'),
-                          style: GoogleFonts.nunito(
-                          textStyle: TextStyle(color: Colors.white, fontWeight: FontWeight.w700)
-                          ),
-                        )
-                        :
                         Container(
                           width: 150,
                           padding: EdgeInsets.symmetric(horizontal: 1, vertical: 1),
@@ -513,6 +507,7 @@ Widget _planExpire(context){
 }
 
 Widget _myWalletButton(context){
+  var balance = Provider.of<BalanceProvider>(context);
   var _lang = AppLocalizeService.of(context);
   return Container(
     child: Padding(
@@ -623,7 +618,7 @@ Widget _myWalletButton(context){
                                             Image.asset('assets/images/sld.png', width: 15),
                                             SizedBox(width: 10),
                                             Text(
-                                              'SEL', 
+                                              '${balance.balanceList[0].symbol}',
                                               style: GoogleFonts.nunito(
                                               textStyle: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w700)
                                               ),
@@ -631,10 +626,41 @@ Widget _myWalletButton(context){
                                           ],
                                         ),
                                       ),
-                                      mBalance != null ?
+                                      balance.balanceList[0].token != null ?
                                       Text(
-                                        // '${mBalance.token.toStringAsFixed(4)}',
-                                        "",
+                                        '${balance.balanceList[0].token}',
+                                        style: GoogleFonts.nunito(
+                                        textStyle: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w700)
+                                        ),
+                                      )
+                                      : CircularProgressIndicator(),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                child: Padding(
+                                  padding: EdgeInsets.symmetric(horizontal: 50),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Container(
+                                        child: Row(
+                                          children: [
+                                            Image.asset('assets/images/sld.png', width: 15),
+                                            SizedBox(width: 10),
+                                            Text(
+                                              '${balance.balanceList[1].symbol}',
+                                              style: GoogleFonts.nunito(
+                                              textStyle: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w700)
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      balance.balanceList[1].token != null ?
+                                      Text(
+                                        '${balance.balanceList[1].token}',
                                         style: GoogleFonts.nunito(
                                         textStyle: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w700)
                                         ),

@@ -7,9 +7,6 @@ class GetRequest with ChangeNotifier{
   var _mData = new ModelUserData();
   ModelUserData get mUser => _mData;
 
-
-  var _mBalance = new Balance();
-  Balance get mBlanace => _mBalance;
   
   StorageServices _prefService = StorageServices();
   Backend _backend = Backend();
@@ -67,4 +64,18 @@ class GetRequest with ChangeNotifier{
     }
     return null;
   }
+
+  Future<http.Response> getPortfolio() async {
+    /* Expired Token In Welcome Screen */
+    await _prefService.read('token').then((value) {
+      _backend.token = Map<String, dynamic>.from({"token": value});
+    });
+    if (_backend.token != null) {
+      _backend.response = await http.get(Uri.parse("${ApiService.url}/selendra/portfolio"),
+      headers: _backend.conceteHeader("authorization", "Bearer ${_backend.token['token']}"));
+      return _backend.response;
+    }
+    return null;
+  }
+
 }

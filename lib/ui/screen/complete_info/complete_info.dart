@@ -1,7 +1,7 @@
 import 'package:koompi_hotspot/all_export.dart';
 import 'package:intl/intl.dart';
 import 'package:koompi_hotspot/ui/reuse_widget/datePicker.dart';
-import 'package:koompi_hotspot/ui/reuse_widget/locationDorpDown.dart';
+import 'package:koompi_hotspot/ui/reuse_widget/locationDropDown.dart';
 import 'package:koompi_hotspot/ui/reuse_widget/reuse_widget.dart';
 
 class CompleteInfo extends StatefulWidget {

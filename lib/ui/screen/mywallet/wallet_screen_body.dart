@@ -31,6 +31,6 @@ class _BodyState extends State<Body> {
 
   @override
   Widget build(BuildContext context) {
-    return mBalance == null ? WalletChoice() : MyWallet(resetState: resetState);
+    return mData.wallet == null ? WalletChoice() : MyWallet(resetState: resetState);
   }
 }

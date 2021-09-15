@@ -145,7 +145,7 @@ class PostRequest with ChangeNotifier {
     return _backend.response;
   }
 
-  Future<http.Response> sendPayment(String password, String dest, String amount, String memo) async {
+  Future<http.Response> sendPayment(String password, String dest, String asset, String amount, String memo) async {
     await _prefService.read('token').then((value) {
       _backend.token = Map<String, dynamic>.from({'token': value});
     });
@@ -155,7 +155,7 @@ class PostRequest with ChangeNotifier {
         /* Convert to Json String */
         "password": password,
         "dest_wallet": dest,
-        "asset": 'SEL',
+        "asset": asset,
         "amount": amount,
         "memo": memo
       });

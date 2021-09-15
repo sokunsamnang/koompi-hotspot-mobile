@@ -119,7 +119,7 @@ class _NavbarState extends State<Navbar> with WidgetsBindingObserver {
 
   @override
   void dispose(){
-    _onchanged.cancel();
+    // _onchanged.cancel();
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }

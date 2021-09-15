@@ -16,15 +16,14 @@ class MyWallet extends StatefulWidget {
 
 class _MyWalletState extends State<MyWallet> {
   var appBarheight = 0.0;
-  var _scaffoldKey = new GlobalKey<ScaffoldState>();
+  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  // var _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
+    // fetchWallet();
     AppServices.noInternetConnection(_scaffoldKey);
-    setState(() {
-      fetchWallet();
-    });
   }
 
   @override
@@ -33,8 +32,8 @@ class _MyWalletState extends State<MyWallet> {
   }
 
   void fetchWallet() async{
-    await Provider.of<BalanceProvider>(context, listen: false).fetchPortforlio();
-    await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
+    await Provider.of<BalanceProvider>(context, listen: false).fetchPortfolio();
+    // await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
   }
 
   @override
@@ -79,7 +78,7 @@ class _MyWalletState extends State<MyWallet> {
             // backgroundColor: AllCoustomTheme.getThemeData().primaryColor,
             body: RefreshIndicator(
               onRefresh: () async{
-                await Provider.of<BalanceProvider>(context, listen: false).fetchPortforlio();
+                await Provider.of<BalanceProvider>(context, listen: false).fetchPortfolio();
                 await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
               },
               child: SingleChildScrollView(
@@ -96,7 +95,7 @@ class _MyWalletState extends State<MyWallet> {
                           right: 10,
                           left: 10,
                         ),
-                        child: getTotalBalance(),
+                        child: getTotalBalance(context),
                       ),
                       SizedBox(
                         height: 6,
@@ -220,7 +219,8 @@ class _MyWalletState extends State<MyWallet> {
     );
   }
 
-  Widget getTotalBalance(){
+ Widget getTotalBalance(BuildContext context){
+    var balance = Provider.of<BalanceProvider>(context);
     var _lang = AppLocalizeService.of(context);
     return Container(
       padding: const EdgeInsets.only(
@@ -257,9 +257,18 @@ class _MyWalletState extends State<MyWallet> {
                 ),
               ),
               SizedBox(width: 10),
-              mBalance.token != null ?
+              balance.balanceList[0].token != null ?
               Text(
-                '${mBalance.token.toStringAsFixed(4)} SEL',
+                '${balance.balanceList[0].token} ${balance.balanceList[0].symbol}',
+                style: GoogleFonts.inter(
+                fontSize: 25.0,
+                textStyle: TextStyle(color: Colors.white, fontWeight: FontWeight.w700)
+                ),
+              )
+              : CircularProgressIndicator(),
+              balance.balanceList[1].token != null ?
+              Text(
+                '${balance.balanceList[1].token} ${balance.balanceList[1].symbol}',
                 style: GoogleFonts.inter(
                 fontSize: 25.0,
                 textStyle: TextStyle(color: Colors.white, fontWeight: FontWeight.w700)

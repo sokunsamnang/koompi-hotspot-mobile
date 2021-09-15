@@ -32,16 +32,12 @@ class NotificationProvider with ChangeNotifier {
 
   List<NotificationModel> notificationList = [];
 
-  // TrxHistoryProvider() {
-  //   fetchTrxHistory();
-  // }
-
   Future<void> fetchNotification() async {
     _backend = Backend();
     _getRequest = GetRequest();
     notificationList = [];
 
-    // Fetch History
+    // Fetch Notification
     await _getRequest.getNotification().then((value) {
       _backend.listData = json.decode(value.body);
       if (_backend.listData.isEmpty)
