@@ -203,10 +203,11 @@ class _PlanViewState extends State<PlanView> {
 
   Widget myPlan(BuildContext context){
     final datePlan = new DateFormat("yyyy MMM dd").parse(mPlan.timeLeft);
-    final toDayDate = DateTime.now();
+    final DateTime now = new DateTime.now();
+    final DateTime toDayDate = new DateTime(now.year, now.month, now.day);
     var different = datePlan.difference(toDayDate).inDays;
-
     var _lang = AppLocalizeService.of(context);
+    
     return InkWell(
       onTap: (){
         Navigator.push(
@@ -251,11 +252,11 @@ class _PlanViewState extends State<PlanView> {
                       child: Row(
                         children: [
                           Image.asset('assets/images/Koompi-WiFi-Icon.png', scale: 50,),
-                          SizedBox(width: 10),
+                          SizedBox(width: 5),
                           Text(
                             _lang.translate('hotspot_plan'),
                             style: GoogleFonts.nunito(
-                            textStyle: TextStyle(color: primaryColor,fontSize: 25, fontWeight: FontWeight.w700)
+                            textStyle: TextStyle(color: primaryColor,fontSize: 24, fontWeight: FontWeight.w700)
                             ),
                           ),
                         ],
@@ -284,9 +285,9 @@ class _PlanViewState extends State<PlanView> {
           SizedBox(height: 20),
           Center(
             child: Text(
-              '${mPlan.balance} SEL', 
+              '${mPlan.balance} RISE', 
               style: GoogleFonts.nunito(
-              textStyle: TextStyle(color: primaryColor, fontSize: 23, fontWeight: FontWeight.w700)
+              textStyle: TextStyle(color: primaryColor, fontSize: 22, fontWeight: FontWeight.w700)
               ),
             ),
           ),
@@ -311,7 +312,7 @@ class _PlanViewState extends State<PlanView> {
                 Text(
                   '${mPlan.device} ${_lang.translate('devices')}', 
                   style: GoogleFonts.nunito(
-                  textStyle: TextStyle(color: Colors.black, fontSize: 16)
+                  textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
                   ),
                 ),
               ],
@@ -332,7 +333,7 @@ class _PlanViewState extends State<PlanView> {
                 Text(
                   '5 ${_lang.translate('mb')}', 
                   style: GoogleFonts.nunito(
-                  textStyle: TextStyle(color: Colors.black, fontSize: 16)
+                  textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
                   ),
                 ),
               ],
@@ -353,7 +354,7 @@ class _PlanViewState extends State<PlanView> {
                 Text(
                   '${mPlan.plan} ${_lang.translate('day')}',
                   style: GoogleFonts.nunito(
-                  textStyle: TextStyle(color: Colors.black, fontSize: 16, )
+                  textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
                   ),
                 ),
               ],
@@ -380,18 +381,18 @@ class _PlanViewState extends State<PlanView> {
                   :
                   different == 1 
                   ?
-                  'In ${different.toString()} Day'
+                  'Tomorrow'
                   :
                   'In ${different.toString()} Days',
                   style: GoogleFonts.nunito(
-                  textStyle: TextStyle(color: Colors.black, fontSize: 16, )
+                  textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
                   ),
                 )
                 :
                 Text(
                   "${_lang.translate('expired')}",
                   style: GoogleFonts.nunito(
-                  textStyle: TextStyle(color: Colors.black, fontSize: 16, )
+                  textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
                   ),
                 ),
               ],
@@ -412,7 +413,7 @@ class _PlanViewState extends State<PlanView> {
                 Text(
                   '${mPlan.timeLeft.split(' ').reversed.join(' ')}', 
                   style: GoogleFonts.nunito(
-                  textStyle: TextStyle(color: Colors.black, fontSize: 16)
+                  textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
                   ),
                 ),
               ],

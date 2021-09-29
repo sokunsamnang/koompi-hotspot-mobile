@@ -70,7 +70,7 @@ class _CompletePaymentState extends State<CompletePayment> {
                               dialogLoading(context);
                               Future.delayed(Duration(seconds: 2), () async{
                                 await Provider.of<BalanceProvider>(context, listen: false).fetchPortfolio();
-                                // await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
+                                await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
                                 Timer(
                                   Duration(milliseconds: 500),
                                   () => Navigator.pushAndRemoveUntil(

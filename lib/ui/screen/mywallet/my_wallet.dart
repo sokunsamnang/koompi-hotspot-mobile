@@ -33,7 +33,7 @@ class _MyWalletState extends State<MyWallet> {
 
   void fetchWallet() async{
     await Provider.of<BalanceProvider>(context, listen: false).fetchPortfolio();
-    // await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
+    await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
   }
 
   @override
@@ -195,19 +195,20 @@ class _MyWalletState extends State<MyWallet> {
                       SizedBox(
                         height: 10,
                       ),
-                      Expanded(
-                        child: Shimmer.fromColors(
-                          baseColor: Colors.grey[300],
-                          highlightColor: Colors.grey[100],
-                          enabled: true,
-                          child: Scrollbar(
-                            isAlwaysShown: false,
-                            showTrackOnHover: false,
-                            radius: Radius.circular(12),
-                            child: trxHistory(context)
-                          )
-                        ),
-                      )
+                      Expanded(child: trxHistory(context)),
+                      // Expanded(
+                      //   child: Shimmer.fromColors(
+                      //     baseColor: Colors.grey[300],
+                      //     highlightColor: Colors.grey[100],
+                      //     enabled: true,
+                      //     child: Scrollbar(
+                      //       isAlwaysShown: false,
+                      //       showTrackOnHover: false,
+                      //       radius: Radius.circular(12),
+                      //       child: trxHistory(context)
+                      //     )
+                      //   ),
+                      // )
                     ],
                   ),
                 ),

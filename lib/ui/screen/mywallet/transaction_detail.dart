@@ -23,15 +23,16 @@ class _TransactionDetailState extends State<TransactionDetail> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Transaction Details', style: TextStyle(color: Colors.black, fontSize: 18,fontFamily: 'Medium')),
-        backgroundColor: HexColor('0CACDA'),
+        brightness: Brightness.dark,
+        title: Text('Transaction Details', style: TextStyle(color: Colors.white, fontSize: 18,fontFamily: 'Medium')),
+        backgroundColor: HexColor('00336A'),
         centerTitle: true,
         elevation: 0,
-        shadowColor: HexColor('0CACDA'),
+        shadowColor: HexColor('00336A'),
         automaticallyImplyLeading: true,
         leading: IconButton(
           icon: Icon(Icons.arrow_back), 
-          color: Colors.black,
+          color: Colors.white,
           onPressed: (){
             Navigator.pop(context);
           }
@@ -49,34 +50,39 @@ class _TransactionDetailState extends State<TransactionDetail> {
                     children: <Widget>[
                       Container(
                         height: 75.0,
-                        color: HexColor('0CACDA'),
+                        color: HexColor('00336A'),
                       ),
                       Container(
                         color: Colors.white,
                       ),
+
+                      SizedBox(
+                        height: 40.0,
+                      ),
+
+                      mData.wallet == history[i].destination
+                      ? 
+                      Text(
+                        _lang.translate('recieved'),
+                        style: GoogleFonts.nunito(
+                          textStyle: TextStyle(fontSize: 16, color: Colors.green, fontWeight: FontWeight.w700)
+                        ),
+                      )
+                      : 
+                      Text(
+                        _lang.translate('sent'),
+                        style: GoogleFonts.nunito(
+                          textStyle: TextStyle(fontSize: 16, color: Colors.red, fontWeight: FontWeight.w700)
+                        ),
+                      ),
+
                       Padding(
                         padding: const EdgeInsets.only(right: 25.0, left: 25.0, bottom: 38),
                         child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            SizedBox(
-                              height: 40.0,
-                            ),
-
-                            mData.wallet == history[i].destination
-                            ? 
-                            Text(
-                              _lang.translate('recieved'),
-                              style: GoogleFonts.nunito(
-                                textStyle: TextStyle(fontSize: 16, color: Colors.green, fontWeight: FontWeight.w700)
-                              ),
-                            )
-                            : 
-                            Text(
-                              _lang.translate('sent'),
-                              style: GoogleFonts.nunito(
-                                textStyle: TextStyle(fontSize: 16, color: Colors.red, fontWeight: FontWeight.w700)
-                              ),
-                            ),
+                            
                             SizedBox(
                               height: 30.0,
                             ),
@@ -96,7 +102,7 @@ class _TransactionDetailState extends State<TransactionDetail> {
                                       ),
                                     ),
                                     Text(
-                                      AppUtils.timeStampToDate(history[i].createdAt),
+                                      AppUtils.timeStampToDate(history[i].datetime),
                                       style: GoogleFonts.nunito(
                                       textStyle: TextStyle(color: Colors.black, fontSize: 15, fontWeight: FontWeight.w400)
                                       ),
@@ -115,7 +121,7 @@ class _TransactionDetailState extends State<TransactionDetail> {
                                       ),
                                     ),
                                     Text(
-                                      AppUtils.timeStampToTime(history[i].createdAt),
+                                      AppUtils.timeStampToTime(history[i].datetime),
                                       style: GoogleFonts.nunito(
                                       textStyle: TextStyle(color: Colors.black, fontSize: 15, fontWeight: FontWeight.w400)
                                       ),
@@ -141,7 +147,7 @@ class _TransactionDetailState extends State<TransactionDetail> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 Text(
-                                  'Amount (SEL)',
+                                  'Amount (${history[i].symbol})',
                                   style: GoogleFonts.nunito(
                                   textStyle: TextStyle(color: HexColor('0CACDA'), fontSize: 15, fontWeight: FontWeight.w600)
                                   ),
@@ -151,7 +157,7 @@ class _TransactionDetailState extends State<TransactionDetail> {
                                     Image.asset('assets/images/sld.png', width: 15,),
                                     SizedBox(width: 5),
                                     Text(
-                                      history[i].amount.toString() + " SEL",
+                                      '${history[i].amount} ${history[i].symbol}  ',
                                       style: GoogleFonts.nunito(
                                       textStyle: TextStyle(color: Colors.black, fontSize: 15, fontWeight: FontWeight.w400)
                                       ),
@@ -161,34 +167,34 @@ class _TransactionDetailState extends State<TransactionDetail> {
                               ],
                             ),
 
-                            SizedBox(
-                              height: 15,
-                            ),
-                            //========= Fee Transaction =========
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Fee (SEL)',
-                                  style: GoogleFonts.nunito(
-                                  textStyle: TextStyle(color: HexColor('0CACDA'), fontSize: 15, fontWeight: FontWeight.w600)
-                                  ),
-                                ),
-                                Row(
-                                  children: [
-                                    Image.asset('assets/images/sld.png', width: 15,),
-                                    SizedBox(width: 5),
-                                    Text(
-                                      history[i].fee.toString() + " SEL",
-                                      style: GoogleFonts.nunito(
-                                      textStyle: TextStyle(color: Colors.black, fontSize: 15, fontWeight: FontWeight.w400)
-                                      ),
-                                    ),
-                                  ]
-                                )
-                              ],
-                            ),
+                            // SizedBox(
+                            //   height: 15,
+                            // ),
+                            // //========= Fee Transaction =========
+                            // Column(
+                            //   crossAxisAlignment: CrossAxisAlignment.start,
+                            //   mainAxisAlignment: MainAxisAlignment.start,
+                            //   children: [
+                            //     Text(
+                            //       'Fee (SEL)',
+                            //       style: GoogleFonts.nunito(
+                            //       textStyle: TextStyle(color: HexColor('0CACDA'), fontSize: 15, fontWeight: FontWeight.w600)
+                            //       ),
+                            //     ),
+                            //     Row(
+                            //       children: [
+                            //         Image.asset('assets/images/sld.png', width: 15,),
+                            //         SizedBox(width: 5),
+                            //         Text(
+                            //           history[i].fee+ " SEL",
+                            //           style: GoogleFonts.nunito(
+                            //           textStyle: TextStyle(color: Colors.black, fontSize: 15, fontWeight: FontWeight.w400)
+                            //           ),
+                            //         ),
+                            //       ]
+                            //     )
+                            //   ],
+                            // ),
 
                             SizedBox(
                               height: 5,
@@ -265,6 +271,30 @@ class _TransactionDetailState extends State<TransactionDetail> {
                                 ),
                               ],
                             ),
+                            
+                            history[i].memo != "" ? SizedBox(
+                              height: 15,
+                            ) : Container(),
+                            // Memo
+                            history[i].memo != "" ? Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: <Widget>[
+                                Text(
+                                  'Memo',
+                                  style: GoogleFonts.nunito(
+                                  textStyle: TextStyle(color: HexColor('0CACDA'), fontSize: 15, fontWeight: FontWeight.w600)
+                                  ),
+                                ),
+                                Text(
+                                  history[i].memo,
+                                  style: GoogleFonts.nunito(
+                                  textStyle: TextStyle(color: Colors.black, fontSize: 15, fontWeight: FontWeight.w400)
+                                  ),
+                                ),
+                              ],
+                            )
+                            : Container(),
 
                             SizedBox(
                               height: 25,

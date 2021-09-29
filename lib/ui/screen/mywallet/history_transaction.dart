@@ -12,12 +12,12 @@ Widget trxHistory(BuildContext context) {
 
   var _lang = AppLocalizeService.of(context);
   List _buildList(List<TrxHistoryModel> history, BuildContext context, String userWallet) {
-    // List<Widget> listItems = List();
-    List<Widget> listItems = List.filled(history.length, Container());
+    List<Widget> listItems = [];
+    // List<Widget> listItems = List.filled(history.length, Container());
 
     print('My History: ${history.length}');
     for (int i = 0; i < history.length; i++) {
-      DateTime date = DateTime.parse(history[i].createdAt);
+      DateTime date = DateTime.parse(history[i].datetime);
       String dateString = DateFormat("EEEE, d MMMM, y").format(date);
 
       if (today == dateString) {
@@ -94,7 +94,7 @@ Widget trxHistory(BuildContext context) {
                                 ),
                               ),
                               Text(
-                                AppUtils.timeStampToDateTime(history[i].createdAt),
+                                AppUtils.timeStampToDateTime(history[i].datetime),
                                 style: GoogleFonts.nunito(
                                   textStyle: TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.w400)
                                 ),
@@ -107,14 +107,14 @@ Widget trxHistory(BuildContext context) {
                       userWallet == history[i].destination
                         ? 
                         Text(
-                          '+ ${history[i].amount.toString()} SEL',
+                          '+ ${history[i].amount} ${history[i].symbol}',
                           style: GoogleFonts.nunito(
                             textStyle: TextStyle(color: Colors.green, fontSize: 18, fontWeight: FontWeight.w700)
                           ),
                         )
                         : 
                         Text(
-                          '- ${history[i].amount.toString()} SEL',
+                          '- ${history[i].amount} ${history[i].symbol}',
                           style: GoogleFonts.nunito(
                             textStyle: TextStyle(color: Colors.red, fontSize: 18, fontWeight: FontWeight.w700)
                           ),
@@ -137,10 +137,11 @@ Widget trxHistory(BuildContext context) {
     // Have No History
     body: history.trxHistoryList == null
         ? SafeArea(
-            child: Column(
-              children: [
-                Expanded(
-                  child: Align(
+            child: Container(
+              margin: const EdgeInsets.symmetric(vertical: 50.0),
+              child: Column(
+                children: [
+                  Align(
                     alignment: Alignment.center,
                     child: SvgPicture.asset(
                       'assets/images/undraw_wallet.svg',
@@ -149,8 +150,17 @@ Widget trxHistory(BuildContext context) {
                       placeholderBuilder: (context) => Center(),
                     ),
                   ),
-                ),
-              ],
+                  Padding(
+                    padding: const EdgeInsets.all(18.0),
+                    child: Text(
+                      "No Activity",
+                      style: GoogleFonts.nunito(
+                        textStyle: TextStyle(color: Colors.black, fontSize: 24,fontWeight: FontWeight.w700)
+                        ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           )
 

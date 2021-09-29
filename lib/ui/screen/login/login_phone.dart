@@ -82,7 +82,7 @@ class _LoginPhoneState extends State<LoginPhone> {
             await StorageServices().saveString('phone', '0${StorageServices.removeZero(phoneController.text)}');
             await StorageServices().saveString('password', passwordController.text);
             await Provider.of<BalanceProvider>(context, listen: false).fetchPortfolio();
-            // await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory(); 
+            await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory(); 
             await Provider.of<GetPlanProvider>(context, listen: false).fetchHotspotPlan();
             await Provider.of<NotificationProvider>(context, listen: false).fetchNotification();
             Navigator.pushAndRemoveUntil(

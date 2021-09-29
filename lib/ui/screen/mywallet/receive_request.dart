@@ -102,7 +102,7 @@ class _ReceiveRequestState extends State<ReceiveRequest> {
                                 height: 10,
                               ),
                               Text(
-                                'SELENDRA (SEL)', 
+                                'SELENDRA WALLET', 
                                 style: GoogleFonts.nunito(
                                 textStyle: TextStyle(color: primaryColor, fontSize: 25, fontWeight: FontWeight.w700)
                                 ),

@@ -83,7 +83,7 @@ class _WalletChoiceState extends State<WalletChoice> {
                             textAlignCenter(text: responseJson['message']),
                             titleDialog());
                           await Provider.of<BalanceProvider>(context, listen: false).fetchPortfolio();
-                          // await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
+                          await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
                           StorageServices().read('token').then((value) async{
                             String _token = value;
                             await GetRequest().getUserProfile(_token);

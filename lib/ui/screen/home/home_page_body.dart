@@ -306,16 +306,14 @@ Widget _planViewButton(context){
                                 children: [
                                   Text(
                                     '${_lang.translate('device')}:',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontFamily: 'Medium',
-                                      fontWeight: FontWeight.w700,
+                                    style: GoogleFonts.nunito(
+                                      textStyle: TextStyle(color: Colors.white, fontWeight: FontWeight.w700)
                                     ),
                                   ),
                                   Text(
                                     '${mPlan.device} ${_lang.translate('devices')}',
-                                    style: TextStyle(
-                                      color: Colors.white,
+                                    style: GoogleFonts.nunito(
+                                      textStyle: TextStyle(color: Colors.white, fontWeight: FontWeight.w700)
                                     ),
                                   ),
                                 ],
@@ -331,16 +329,14 @@ Widget _planViewButton(context){
                                 children: [
                                   Text(
                                     '${_lang.translate('speed')}:',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontFamily: 'Medium',
-                                      fontWeight: FontWeight.w700,
+                                    style: GoogleFonts.nunito(
+                                      textStyle: TextStyle(color: Colors.white, fontWeight: FontWeight.w700)
                                     ),
                                   ),
                                   Text(
                                     '5 ${_lang.translate('mb')}',
-                                    style: TextStyle(
-                                      color: Colors.white,
+                                    style: GoogleFonts.nunito(
+                                      textStyle: TextStyle(color: Colors.white, fontWeight: FontWeight.w700)
                                     ),
                                   ),
                                 ],
@@ -356,16 +352,14 @@ Widget _planViewButton(context){
                                 children: [
                                   Text(
                                     '${_lang.translate('plan')}:',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontFamily: 'Medium',
-                                      fontWeight: FontWeight.w700,
+                                    style: GoogleFonts.nunito(
+                                      textStyle: TextStyle(color: Colors.white, fontWeight: FontWeight.w700)
                                     ),
                                   ),
                                   Text(
                                     '${mPlan.plan} ${_lang.translate('day')}',
-                                    style: TextStyle(
-                                      color: Colors.white,
+                                    style: GoogleFonts.nunito(
+                                      textStyle: TextStyle(color: Colors.white, fontWeight: FontWeight.w700)
                                     ),
                                   ),
                                   ],
@@ -381,16 +375,14 @@ Widget _planViewButton(context){
                                   children: [
                                     Text(
                                       '${_lang.translate('valid_until')}:',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontFamily: 'Medium',
-                                        fontWeight: FontWeight.w700,
+                                      style: GoogleFonts.nunito(
+                                        textStyle: TextStyle(color: Colors.white, fontWeight: FontWeight.w700)
                                       ),
                                     ),
                                     Text(
                                       '${mPlan.timeLeft.split(' ').reversed.join(' ')}', 
-                                      style: TextStyle(
-                                        color: Colors.white,
+                                      style: GoogleFonts.nunito(
+                                        textStyle: TextStyle(color: Colors.white, fontWeight: FontWeight.w700)
                                       ),
                                     ),
                                   ],

@@ -114,7 +114,7 @@ class PostRequest with ChangeNotifier {
         "password": password,
         "simultaneous": "2",
         "value": value,
-        "asset": "SEL",
+        "asset": "RISE",
         "memo": "Buy Hotspot Plan"
       });
 
@@ -238,29 +238,29 @@ class PostRequest with ChangeNotifier {
     return null;
   }
 
-  Future<http.Response> hotspotPayment(String amount) async {
-    await _prefService.read('token').then((value) {
-      _backend.token = Map<String, dynamic>.from({'token': value});
-    });
+  // Future<http.Response> hotspotPayment(String amount) async {
+  //   await _prefService.read('token').then((value) {
+  //     _backend.token = Map<String, dynamic>.from({'token': value});
+  //   });
 
-    if (_backend.token != null) {
-      _backend.bodyEncode = json.encode({
-        /* Convert to Json String */
-        "asset": 'SEL',
-        "plan": amount,
-        "memo": 'Buy Hotspot'
-      });
+  //   if (_backend.token != null) {
+  //     _backend.bodyEncode = json.encode({
+  //       /* Convert to Json String */
+  //       "asset": 'RISE',
+  //       "plan": amount,
+  //       "memo": 'Buy Hotspot'
+  //     });
 
-      _backend.response = await http.post(Uri.parse('${ApiService.url}/selendra/payment'),
-          headers: _backend.conceteHeader(
-              "authorization", "Bearer ${_backend.token['token']}"),
-          body: _backend.bodyEncode);
+  //     _backend.response = await http.post(Uri.parse('${ApiService.url}/selendra/payment'),
+  //         headers: _backend.conceteHeader(
+  //             "authorization", "Bearer ${_backend.token['token']}"),
+  //         body: _backend.bodyEncode);
 
-      print(_backend.response.body);
-      return _backend.response;
-    }
-    return null;
-  }
+  //     print(_backend.response.body);
+  //     return _backend.response;
+  //   }
+  //   return null;
+  // }
 
   // Upload Fil Image To Get Url Image
   Future<String> upLoadImage(File _image) async {

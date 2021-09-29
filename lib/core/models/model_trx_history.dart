@@ -1,25 +1,29 @@
 import 'package:koompi_hotspot/all_export.dart';
 
 class TrxHistoryModel {
-  dynamic amount;
-  double fee;
   String id;
+  String hash;
   String sender;
   String destination;
+  String amount;
+  String fee;
+  String symbol;
   String memo;
-  String createdAt;
+  String datetime;
   TrxHistoryModel(Map<String, dynamic> data) {
     _fromJson(data);
   }
 
   void _fromJson(Map<String, dynamic> data) {
-    amount = data['amount'];
-    fee = data['fee'];
-    id = data['id'];
+    id = data['tx_id'];
+    hash = data['hash'];
     sender = data['sender'];
     destination = data['destination'];
+    amount = data['amount'];
+    fee = data['fee'];
+    symbol = data['symbol'];
     memo = data['memo'];
-    createdAt = data['created_at'];
+    datetime = data['datetime'];
   }
 }
 
