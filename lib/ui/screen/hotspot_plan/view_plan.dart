@@ -31,26 +31,28 @@ class _PlanViewState extends State<PlanView> {
 
   Future <void> renewPlan() async {
     dialogLoading(context);
+    var response = await PostRequest().renewPlanHotspot(
+      _passwordController.text
+    );
+    var responseJson = json.decode(response.body);
 
     try {
-
-      var response = await PostRequest().renewPlanHotspot(
-        _passwordController.text
-      );
-      var responseJson = json.decode(response.body);
 
       final result = await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
         print('Internet connected');
+
         if(response.statusCode == 200){    
-          await Provider.of<GetPlanProvider>(context, listen: false).fetchHotspotPlan();
-          Navigator.pushAndRemoveUntil(
-            context,
-            PageTransition(type: PageTransitionType.rightToLeft, 
-              child: CompletePlan(),
-            ),
-            ModalRoute.withName('/navbar'),
-          );
+          Future.delayed(Duration(seconds: 2), () async{
+            await Provider.of<GetPlanProvider>(context, listen: false).fetchHotspotPlan();
+            Timer(Duration(milliseconds: 500), () => Navigator.pushAndRemoveUntil(
+              context,
+              PageTransition(type: PageTransitionType.rightToLeft, 
+                child: CompletePlan(),
+              ),
+              ModalRoute.withName('/navbar'),
+            ));
+          });
         }
         else{
           _passwordController.clear();
@@ -59,7 +61,6 @@ class _PlanViewState extends State<PlanView> {
             textAlignCenter(text: responseJson['message']),
             warningTitleDialog()
           );
-          Navigator.of(context).pop();
         }
       
       }
@@ -595,6 +596,7 @@ class _PlanViewState extends State<PlanView> {
                     ),
                     child: Text('OK'),
                     onPressed: () => {
+                      Navigator.of(context).pop(),
                       dialogLoading(context),
                       renewPlan(),
                       Navigator.of(context).pop(),

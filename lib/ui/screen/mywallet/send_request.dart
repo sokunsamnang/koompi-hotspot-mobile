@@ -116,7 +116,7 @@ class _SendRequestState extends State<SendRequest> {
     }
   }
 
-   Future<String> _showDialogPassword(
+  Future<String> _showDialogPassword(
      BuildContext context, 
      TextEditingController recieveWallet, 
      TextEditingController amount,
