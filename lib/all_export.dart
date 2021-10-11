@@ -45,7 +45,6 @@ export 'package:intl_phone_number_input/intl_phone_number_input.dart';
 export 'package:flutter_svg/flutter_svg.dart';
 export 'package:flutter_image_compress/flutter_image_compress.dart';
 export 'package:multi_image_picker2/multi_image_picker2.dart';
-export 'package:flutter_absolute_path/flutter_absolute_path.dart';
 
 // Animation
 export 'package:flare_flutter/flare_actor.dart';

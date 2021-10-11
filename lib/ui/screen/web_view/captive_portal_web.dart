@@ -28,7 +28,7 @@ class _CaptivePortalWebState extends State<CaptivePortalWeb> {
 
   @override
   void initState() { 
-    
+    super.initState();
     _onchanged = flutterWebViewPlugin.onStateChanged.listen((WebViewStateChanged state) {
       if (mounted) {
         if(state.type == WebViewState.finishLoad){ // if the full website page loaded
@@ -44,7 +44,6 @@ class _CaptivePortalWebState extends State<CaptivePortalWeb> {
         }
       }
     });
-    super.initState();
   }
 
   @override
@@ -69,11 +68,10 @@ class _CaptivePortalWebState extends State<CaptivePortalWeb> {
         withJavascript: true,
         javascriptChannels: jsChannels,
         userAgent: kAndroidUserAgent,
-        withLocalUrl: true,
-        allowFileURLs: true,
-        withLocalStorage: true,
-        hidden: true,
-        appCacheEnabled: true,
+        withZoom: true,
+        useWideViewPort: true,
+        displayZoomControls:true,
+        withOverviewMode: true,
         appBar: AppBar(
           backgroundColor: Colors.white,
           title: Text(_lang.translate('login_hotspot'), style: TextStyle(color: Colors.black, fontFamily: 'Medium')),
