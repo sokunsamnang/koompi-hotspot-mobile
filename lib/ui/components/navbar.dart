@@ -73,25 +73,25 @@ class _NavbarState extends State<Navbar> with WidgetsBindingObserver {
     setState(() {
       global.phone = prefs.getString('phone');
       global.password = prefs.getString('password');
-    });
 
-    print('Run web portal');
-    flutterWebViewPlugin.close();
-    flutterWebViewPlugin.launch(selectedUrl, hidden: true, withJavascript: true, ignoreSSLErrors: true);
-    _onchanged = flutterWebViewPlugin.onStateChanged.listen((WebViewStateChanged state) {
-      if (mounted) {
-        if(state.type== WebViewState.finishLoad){ // if the full website page loaded
-          print('web laoded');
-          flutterWebViewPlugin.evalJavascript('document.getElementById("user").value="${global.phone}"'); // Replace with the id of username field
-          flutterWebViewPlugin.evalJavascript('document.getElementById("password").value="${global.password}"'); // Replace with the id of password field
-          flutterWebViewPlugin.evalJavascript('document.getElementById("btnlogin").click()');  // Replace with Submit button id
+      print('Run web portal');
+      flutterWebViewPlugin.close();
+      flutterWebViewPlugin.launch(selectedUrl, hidden: true, withJavascript: true, ignoreSSLErrors: true);
+      _onchanged = flutterWebViewPlugin.onStateChanged.listen((WebViewStateChanged state) {
+        if (mounted) {
+          if(state.type== WebViewState.finishLoad){ // if the full website page loaded
+            print('web laoded');
+            flutterWebViewPlugin.evalJavascript('document.getElementById("user").value="${global.phone}"'); // Replace with the id of username field
+            flutterWebViewPlugin.evalJavascript('document.getElementById("password").value="${global.password}"'); // Replace with the id of password field
+            flutterWebViewPlugin.evalJavascript('document.getElementById("btnlogin").click()');  // Replace with Submit button id
 
-        }else if (state.type== WebViewState.abortLoad){ // if there is a problem with loading the url
-          print("there is a problem...");
-        } else if(state.type== WebViewState.startLoad){ // if the url started loading
-          print("start loading...");
+          }else if (state.type== WebViewState.abortLoad){ // if there is a problem with loading the url
+            print("there is a problem...");
+          } else if(state.type== WebViewState.startLoad){ // if the url started loading
+            print("start loading...");
+          }
         }
-      }
+      });
     });
   }
 
