@@ -44,8 +44,8 @@ class MyLocationViewState extends State<MyLocationView>
     // S'ang school
     LatLng(11.357523855156012, 105.00719501166897),
 
-    // Boran 
-    LatLng(11.567623, 104.926502),
+    // The Natte 
+    LatLng(11.55810367571426, 104.91961299234609),
 
     // NIPTICT
     LatLng(11.65482898034104, 104.9113345380725),

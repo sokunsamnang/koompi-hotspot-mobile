@@ -94,7 +94,7 @@ class _LoginPhoneState extends State<LoginPhone> {
             );
           }
           else {
-            Navigator.pop(context);
+            Navigator.of(context).pop();
             try {
               messageAlert = responseJson['error']['message'];
             } catch (e) {
@@ -109,7 +109,7 @@ class _LoginPhoneState extends State<LoginPhone> {
             textAlignCenter(text: responseJson['message']),
             warningTitleDialog()
           );
-          Navigator.pop(context);
+          Navigator.of(context).pop();
         }
         else if (response.statusCode >= 500 && response.statusCode < 600){
 
@@ -118,7 +118,7 @@ class _LoginPhoneState extends State<LoginPhone> {
             textAlignCenter(text: responseJson['message']),
             warningTitleDialog()
           );
-          Navigator.pop(context);
+          Navigator.of(context).pop();
         }
       }
     } 
@@ -129,6 +129,7 @@ class _LoginPhoneState extends State<LoginPhone> {
         textAlignCenter(text: 'Something went wrong with your internet connection. Please try again later!!!'),
         warningTitleDialog()
       );
+      Navigator.of(context).pop();
     }
     on TimeoutException catch(_) {
       print('Time out exception');
@@ -137,6 +138,7 @@ class _LoginPhoneState extends State<LoginPhone> {
         textAlignCenter(text: 'Request Timeout. Please try again later!!!'),
         warningTitleDialog()
       );
+      Navigator.of(context).pop();
     }
     on FormatException catch(_){
       print('FormatException');
@@ -145,6 +147,7 @@ class _LoginPhoneState extends State<LoginPhone> {
         textAlignCenter(text: 'Something went wrong or Server in maintenance. Please try again later!!!'),
         warningTitleDialog()
       );
+      Navigator.of(context).pop();
     }
   }
 

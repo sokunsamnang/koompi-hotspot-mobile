@@ -102,7 +102,7 @@ class _SendRequestState extends State<SendRequest> {
             textAlignCenter(text: responseJson['message']),
             warningTitleDialog()
           );
-          Navigator.pop(context);
+          Navigator.of(context).pop();
           _passwordController.clear();
         }
       }
@@ -112,7 +112,8 @@ class _SendRequestState extends State<SendRequest> {
         textAlignCenter(text: 'Something may went wrong with your internet connection. Please try again!!!'),
         warningTitleDialog()
       );
-      Navigator.pop(context);
+      Navigator.of(context).pop();
+      _passwordController.clear();
     }
   }
 

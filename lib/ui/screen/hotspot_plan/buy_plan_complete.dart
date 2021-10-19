@@ -68,6 +68,7 @@ class _CompletePlanState extends State<CompletePlan> {
                             onTap: () async {
                               dialogLoading(context);
                               await Provider.of<BalanceProvider>(context, listen: false).fetchPortfolio();
+                              await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory(); 
                               await Provider.of<GetPlanProvider>(context, listen: false).fetchHotspotPlan();
                               Future.delayed(Duration(seconds: 3), () async {
                                 Timer(Duration(milliseconds: 500), () => Navigator.pushAndRemoveUntil(

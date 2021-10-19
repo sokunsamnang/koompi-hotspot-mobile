@@ -69,13 +69,13 @@ class _HotspotPlanState extends State<HotspotPlan> {
           );
         }
         else{
-          _passwordController.clear();
           await Components.dialog(
             context,
             textAlignCenter(text: responseJson['message']),
             warningTitleDialog()
           );
-          Navigator.pop(context);
+          Navigator.of(context).pop();
+          _passwordController.clear();
         }
       
       }
@@ -85,7 +85,8 @@ class _HotspotPlanState extends State<HotspotPlan> {
         textAlignCenter(text: 'Something may went wrong with your internet connection. Please try again!!!'),
         warningTitleDialog()
       );
-      Navigator.pop(context);
+      Navigator.of(context).pop();
+      _passwordController.clear();
     }
   }
 
@@ -115,13 +116,13 @@ class _HotspotPlanState extends State<HotspotPlan> {
           );
         }
         else{
-          _passwordController.clear();
           await Components.dialog(
             context,
             textAlignCenter(text: responseJson['message']),
             warningTitleDialog()
           );
-          Navigator.pop(context);
+          Navigator.of(context).pop();
+          _passwordController.clear();
         }
       
       }
@@ -131,7 +132,8 @@ class _HotspotPlanState extends State<HotspotPlan> {
         textAlignCenter(text: 'Something may went wrong with your internet connection. Please try again!!!'),
         warningTitleDialog()
       );
-      Navigator.pop(context);
+      Navigator.of(context).pop();
+      _passwordController.clear();
     }
   }
 

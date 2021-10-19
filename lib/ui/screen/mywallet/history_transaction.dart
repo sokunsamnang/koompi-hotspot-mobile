@@ -68,7 +68,7 @@ Widget trxHistory(BuildContext context) {
                     children: [
                       Row(
                         children: [
-                          history[i].memo == 'Buy Hotspot Plan' || history[i].memo == 'Automatically top-up for renew plan.' || history[i].memo == 'Renew plan.'
+                          history[i].memo == 'Buy Hotspot Plan 30 Days' || history[i].memo == 'Buy Hotspot Plan 365 Days' || history[i].memo == 'Automatically top-up for renew plan.'
                             ? 
                             Image.asset('assets/images/Koompi-WiFi-Icon.png')
                             : 
