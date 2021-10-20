@@ -91,7 +91,7 @@ class _HotspotPlanState extends State<HotspotPlan> {
   }
 
   Future <void> buyHotspot365days(BuildContext context) async {
-     dialogLoading(context);
+    dialogLoading(context);
 
     var response = await PostRequest().buyHotspotPlan(
       mData.phone,
@@ -691,9 +691,7 @@ class _HotspotPlanState extends State<HotspotPlan> {
                     ),
                     child: Text('OK'),
                     onPressed: () => {
-                      dialogLoading(context),
                       _submitHotspotPlan30Days(),
-                      Navigator.of(context).pop(),
                     }
                   ),
                 ],
@@ -800,9 +798,7 @@ class _HotspotPlanState extends State<HotspotPlan> {
                     ),
                     child: Text('OK'),
                     onPressed: () => {
-                      dialogLoading(context),
                       _submitHotspotPlan365Days(),
-                      Navigator.of(context).pop(),
                     }
                   ),
                 ],

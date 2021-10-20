@@ -15,8 +15,6 @@ class _ChangeHotspotPlanState extends State<ChangeHotspotPlan> {
   GlobalKey<ScaffoldState> globalKey = GlobalKey<ScaffoldState>();
 
   Future <void> buyHotspot30days(BuildContext context) async {
-    dialogLoading(context);
-
     try {
       var response = await PostRequest().changePlanHotspot(
         _passwordController.text,
@@ -28,16 +26,14 @@ class _ChangeHotspotPlanState extends State<ChangeHotspotPlan> {
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
         print('Internet connected');
         if(response.statusCode == 200){    
-          Future.delayed(Duration(seconds: 2), () async{
-            await Provider.of<GetPlanProvider>(context, listen: false).fetchHotspotPlan();
-            Timer(Duration(milliseconds: 500), () => Navigator.pushAndRemoveUntil(
-              context,
-              PageTransition(type: PageTransitionType.rightToLeft, 
-                child: CompletePlan(),
-              ),
-              ModalRoute.withName('/navbar'),
-            ));
-          });
+          await Provider.of<GetPlanProvider>(context, listen: false).fetchHotspotPlan();
+          Navigator.pushAndRemoveUntil(
+            context,
+            PageTransition(type: PageTransitionType.rightToLeft, 
+              child: CompletePlan(),
+            ),
+            ModalRoute.withName('/navbar'),
+          );
         }
         else{
           _passwordController.clear();
@@ -46,7 +42,8 @@ class _ChangeHotspotPlanState extends State<ChangeHotspotPlan> {
             textAlignCenter(text: responseJson['message']),
             warningTitleDialog()
           );
-          Navigator.pop(context);
+          _passwordController.clear();
+          Navigator.of(context).pop();
         }
       
       }
@@ -57,7 +54,8 @@ class _ChangeHotspotPlanState extends State<ChangeHotspotPlan> {
         textAlignCenter(text: 'Something may went wrong with your internet connection. Please try again!!!'),
         warningTitleDialog()
       );
-      Navigator.pop(context);
+      _passwordController.clear();
+      Navigator.of(context).pop();  
     }
     on FormatException catch(_){
       print('FormatException');
@@ -66,7 +64,8 @@ class _ChangeHotspotPlanState extends State<ChangeHotspotPlan> {
         textAlignCenter(text: 'Something went wrong or Server in maintenance. Please try again later!!!'),
         warningTitleDialog()
       );
-      Navigator.pop(context);
+      _passwordController.clear();
+      Navigator.of(context).pop();
     }
     on TimeoutException catch(_) {
       print('Time out exception');
@@ -75,15 +74,12 @@ class _ChangeHotspotPlanState extends State<ChangeHotspotPlan> {
         textAlignCenter(text: 'Request Timeout. Please try again later!!!'),
         warningTitleDialog()
       );
-      Navigator.pop(context);
+      _passwordController.clear();
+      Navigator.of(context).pop();
     }
-    _passwordController.clear();
-    Navigator.of(context).pop();
   }
 
   Future <void> buyHotspot365days(BuildContext context) async {
-     dialogLoading(context);
-
     try {
       var response = await PostRequest().changePlanHotspot(
         _passwordController.text,
@@ -113,7 +109,8 @@ class _ChangeHotspotPlanState extends State<ChangeHotspotPlan> {
             textAlignCenter(text: responseJson['message']),
             warningTitleDialog()
           );
-          Navigator.pop(context);
+          _passwordController.clear();
+          Navigator.of(context).pop();
         }
       }
     } 
@@ -123,7 +120,8 @@ class _ChangeHotspotPlanState extends State<ChangeHotspotPlan> {
         textAlignCenter(text: 'Something may went wrong with your internet connection. Please try again!!!'),
         warningTitleDialog()
       );
-      Navigator.pop(context);
+      _passwordController.clear();
+      Navigator.of(context).pop();
     }
     on FormatException catch(_){
       print('FormatException');
@@ -132,7 +130,8 @@ class _ChangeHotspotPlanState extends State<ChangeHotspotPlan> {
         textAlignCenter(text: 'Something went wrong or Server in maintenance. Please try again later!!!'),
         warningTitleDialog()
       );
-      Navigator.pop(context);
+      _passwordController.clear();
+      Navigator.of(context).pop();
     }
     on TimeoutException catch(_) {
       print('Time out exception');
@@ -141,10 +140,9 @@ class _ChangeHotspotPlanState extends State<ChangeHotspotPlan> {
         textAlignCenter(text: 'Request Timeout. Please try again later!!!'),
         warningTitleDialog()
       );
-      Navigator.pop(context);
+      _passwordController.clear();
+      Navigator.of(context).pop();
     }
-    _passwordController.clear();
-    Navigator.of(context).pop();
   }
 
 
@@ -658,7 +656,6 @@ class _ChangeHotspotPlanState extends State<ChangeHotspotPlan> {
                     onPressed: () => {
                       dialogLoading(context),
                       buyHotspot30days(context),
-                      Navigator.of(context).pop(),
                     }
                   ),
                 ],
@@ -757,7 +754,6 @@ class _ChangeHotspotPlanState extends State<ChangeHotspotPlan> {
                     onPressed: () => {
                       dialogLoading(context),
                       buyHotspot365days(context),
-                      Navigator.of(context).pop(),
                     }
                   ),
                 ],

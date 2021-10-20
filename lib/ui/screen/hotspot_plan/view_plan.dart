@@ -30,7 +30,6 @@ class _PlanViewState extends State<PlanView> {
   // }
 
   Future <void> renewPlan() async {
-    dialogLoading(context);
     var response = await PostRequest().renewPlanHotspot(
       _passwordController.text
     );
@@ -43,24 +42,23 @@ class _PlanViewState extends State<PlanView> {
         print('Internet connected');
 
         if(response.statusCode == 200){    
-          Future.delayed(Duration(seconds: 2), () async{
-            await Provider.of<GetPlanProvider>(context, listen: false).fetchHotspotPlan();
-            Timer(Duration(milliseconds: 500), () => Navigator.pushAndRemoveUntil(
-              context,
-              PageTransition(type: PageTransitionType.rightToLeft, 
-                child: CompletePlan(),
-              ),
-              ModalRoute.withName('/navbar'),
-            ));
-          });
+          await Provider.of<GetPlanProvider>(context, listen: false).fetchHotspotPlan();
+          Navigator.pushAndRemoveUntil(
+            context,
+            PageTransition(type: PageTransitionType.rightToLeft, 
+              child: CompletePlan(),
+            ),
+            ModalRoute.withName('/navbar'),
+          );
         }
         else{
-          _passwordController.clear();
           await Components.dialog(
             context,
             textAlignCenter(text: responseJson['message']),
             warningTitleDialog()
           );
+          _passwordController.clear();
+          Navigator.of(context).pop();
         }
       
       }
@@ -71,7 +69,8 @@ class _PlanViewState extends State<PlanView> {
         textAlignCenter(text: 'Something may went wrong with your internet connection. Please try again!!!'),
         warningTitleDialog()
       );
-      Navigator.pop(context);
+      _passwordController.clear();
+      Navigator.of(context).pop();
     }
     on FormatException catch(_){
       print('FormatException');
@@ -80,7 +79,8 @@ class _PlanViewState extends State<PlanView> {
         textAlignCenter(text: 'Something went wrong or Server in maintenance. Please try again later!!!'),
         warningTitleDialog()
       );
-      Navigator.pop(context);
+      _passwordController.clear();
+      Navigator.of(context).pop();
     }
     on TimeoutException catch(_) {
       print('Time out exception');
@@ -89,10 +89,9 @@ class _PlanViewState extends State<PlanView> {
         textAlignCenter(text: 'Request Timeout. Please try again later!!!'),
         warningTitleDialog()
       );
-      Navigator.pop(context);
+      _passwordController.clear();
+      Navigator.of(context).pop();
     }
-    _passwordController.clear();
-    Navigator.of(context).pop();
   }
 
   @override
@@ -596,10 +595,9 @@ class _PlanViewState extends State<PlanView> {
                     ),
                     child: Text('OK'),
                     onPressed: () => {
-                      Navigator.of(context).pop(),
                       dialogLoading(context),
                       renewPlan(),
-                      Navigator.of(context).pop(),
+                      // Navigator.of(context).pop(),
                     }
                   ),
                 ],
