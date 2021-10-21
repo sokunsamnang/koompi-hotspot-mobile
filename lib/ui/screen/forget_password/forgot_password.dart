@@ -40,6 +40,9 @@ class _ForgotPasswordState extends State<ForgotPassword> {
   }
 
   Future <void> _submit() async {
+
+    var _lang = AppLocalizeService.of(context);
+
     dialogLoading(context);
     try {
       final result = await InternetAddress.lookup('google.com');
@@ -64,7 +67,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
             textAlignCenter(text: responseJson['message']),
             warningTitleDialog()
           );
-          Navigator.pop(context);
+          Navigator.of(context).pop();
         }
         else if (response.statusCode >= 500 && response.statusCode <600){
           await Components.dialog(
@@ -72,16 +75,16 @@ class _ForgotPasswordState extends State<ForgotPassword> {
             textAlignCenter(text: responseJson['message']),
             warningTitleDialog()
           );
-          Navigator.pop(context);
+          Navigator.of(context).pop();
         }
       }
     } on SocketException catch (_) {
       await Components.dialog(
         context,
-        textAlignCenter(text: 'Something may went wrong with your internet connection. Please try again!!!'),
+        textAlignCenter(text: _lang.translate('no_internet_message')),
         warningTitleDialog()
       );
-      Navigator.pop(context);
+      Navigator.of(context).pop();
     }
   }
 

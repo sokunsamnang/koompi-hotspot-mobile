@@ -57,6 +57,8 @@ class _LoginPhoneState extends State<LoginPhone> {
 
   //check connection and login
   Future <void> login() async {
+    var _lang = AppLocalizeService.of(context);
+
     dialogLoading(context);
     try {
       final result = await InternetAddress.lookup('google.com');
@@ -126,7 +128,7 @@ class _LoginPhoneState extends State<LoginPhone> {
       print('No network socket exception');
       await Components.dialog(
         context,
-        textAlignCenter(text: 'Something went wrong with your internet connection. Please try again later!!!'),
+        textAlignCenter(text: _lang.translate('no_internet_message')),
         warningTitleDialog()
       );
       Navigator.of(context).pop();
@@ -135,7 +137,7 @@ class _LoginPhoneState extends State<LoginPhone> {
       print('Time out exception');
       await Components.dialog(
         context,
-        textAlignCenter(text: 'Request Timeout. Please try again later!!!'),
+        textAlignCenter(text: _lang.translate('request_timeout')),
         warningTitleDialog()
       );
       Navigator.of(context).pop();
@@ -144,7 +146,7 @@ class _LoginPhoneState extends State<LoginPhone> {
       print('FormatException');
       await Components.dialog(
         context,
-        textAlignCenter(text: 'Something went wrong or Server in maintenance. Please try again later!!!'),
+        textAlignCenter(text: _lang.translate('server_error')),
         warningTitleDialog()
       );
       Navigator.of(context).pop();

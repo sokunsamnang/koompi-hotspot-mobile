@@ -212,12 +212,36 @@ class _ChangePasswordState extends State<ChangePassword>
           textAlignCenter(text: responseJson['message']),
           warningTitleDialog()
         );
-        Navigator.pop(context);
+        Navigator.of(context).pop();
         print(response.body);
       }
-    } catch (e) {
-      Navigator.pop(context);
-      alertText = responseBody['message'];
+    } 
+    on SocketException catch(_){
+      print('No network socket exception');
+      await Components.dialog(
+        context,
+        textAlignCenter(text: _lang.translate('no_internet_message')),
+        warningTitleDialog()
+      );
+      Navigator.of(context).pop();
+    }
+    on TimeoutException catch(_) {
+      print('Time out exception');
+      await Components.dialog(
+        context,
+        textAlignCenter(text: _lang.translate('request_timeout')),
+        warningTitleDialog()
+      );
+      Navigator.of(context).pop();
+    }
+    on FormatException catch(_){
+      print('FormatException');
+      await Components.dialog(
+        context,
+        textAlignCenter(text: _lang.translate('server_error')),
+        warningTitleDialog()
+      );
+      Navigator.of(context).pop();
     }
   }
 

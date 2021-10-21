@@ -15,6 +15,8 @@ class _ChangeHotspotPlanState extends State<ChangeHotspotPlan> {
   GlobalKey<ScaffoldState> globalKey = GlobalKey<ScaffoldState>();
 
   Future <void> buyHotspot30days(BuildContext context) async {
+    var _lang = AppLocalizeService.of(context);
+
     try {
       var response = await PostRequest().changePlanHotspot(
         _passwordController.text,
@@ -51,7 +53,7 @@ class _ChangeHotspotPlanState extends State<ChangeHotspotPlan> {
     on SocketException catch (_) {
       await Components.dialog(
         context,
-        textAlignCenter(text: 'Something may went wrong with your internet connection. Please try again!!!'),
+        textAlignCenter(text: _lang.translate('no_internet_message')),
         warningTitleDialog()
       );
       _passwordController.clear();
@@ -61,7 +63,7 @@ class _ChangeHotspotPlanState extends State<ChangeHotspotPlan> {
       print('FormatException');
       await Components.dialog(
         context,
-        textAlignCenter(text: 'Something went wrong or Server in maintenance. Please try again later!!!'),
+        textAlignCenter(text: _lang.translate('server_error')),
         warningTitleDialog()
       );
       _passwordController.clear();
@@ -71,7 +73,7 @@ class _ChangeHotspotPlanState extends State<ChangeHotspotPlan> {
       print('Time out exception');
       await Components.dialog(
         context,
-        textAlignCenter(text: 'Request Timeout. Please try again later!!!'),
+        textAlignCenter(text: _lang.translate('request_timeout')),
         warningTitleDialog()
       );
       _passwordController.clear();
@@ -80,6 +82,8 @@ class _ChangeHotspotPlanState extends State<ChangeHotspotPlan> {
   }
 
   Future <void> buyHotspot365days(BuildContext context) async {
+    var _lang = AppLocalizeService.of(context);
+
     try {
       var response = await PostRequest().changePlanHotspot(
         _passwordController.text,
@@ -117,7 +121,7 @@ class _ChangeHotspotPlanState extends State<ChangeHotspotPlan> {
     on SocketException catch (_) {
       await Components.dialog(
         context,
-        textAlignCenter(text: 'Something may went wrong with your internet connection. Please try again!!!'),
+        textAlignCenter(text: _lang.translate('no_internet_message')),
         warningTitleDialog()
       );
       _passwordController.clear();
@@ -127,7 +131,7 @@ class _ChangeHotspotPlanState extends State<ChangeHotspotPlan> {
       print('FormatException');
       await Components.dialog(
         context,
-        textAlignCenter(text: 'Something went wrong or Server in maintenance. Please try again later!!!'),
+        textAlignCenter(text: _lang.translate('server_error')),
         warningTitleDialog()
       );
       _passwordController.clear();
@@ -137,7 +141,7 @@ class _ChangeHotspotPlanState extends State<ChangeHotspotPlan> {
       print('Time out exception');
       await Components.dialog(
         context,
-        textAlignCenter(text: 'Request Timeout. Please try again later!!!'),
+        textAlignCenter(text: _lang.translate('request_timeout')),
         warningTitleDialog()
       );
       _passwordController.clear();

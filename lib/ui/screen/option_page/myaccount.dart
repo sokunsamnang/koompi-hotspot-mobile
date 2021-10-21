@@ -77,6 +77,8 @@ class _MyAccountState extends State<MyAccount>
   }
 
   Future<void> _onSubmit() async {
+    var _lang = AppLocalizeService.of(context);
+
     dialogLoading(context);
     try {
       final result = await InternetAddress.lookup('google.com');
@@ -93,22 +95,22 @@ class _MyAccountState extends State<MyAccount>
             StorageServices().updateUserData(context);
           });
         } else {
-          Navigator.pop(context);
           print('update info not Successful');
           await Components.dialog(
             context,
-            textAlignCenter(text: 'Update info not successfully'),
+            textAlignCenter(text: _lang.translate('update_info_error')),
             warningTitleDialog()
           );
+          Navigator.of(context).pop();
         }
       }
     } on SocketException catch (_) {
       await Components.dialog(
         context,
-        textAlignCenter(text: 'Something may went wrong with your internet connection. Please try again!!!'),
+        textAlignCenter(text: _lang.translate('no_internet_message')),
         warningTitleDialog()
       );
-      Navigator.pop(context);
+      Navigator.of(context).pop();
     }
   }
 

@@ -75,6 +75,8 @@ class _SendRequestState extends State<SendRequest> {
   }
 
   Future<void> _onSubmit() async {
+    var _lang = AppLocalizeService.of(context);
+
     dialogLoading(context);
     try {
       final result = await InternetAddress.lookup('google.com');
@@ -109,7 +111,7 @@ class _SendRequestState extends State<SendRequest> {
     } on SocketException catch (_) {
       await Components.dialog(
         context,
-        textAlignCenter(text: 'Something may went wrong with your internet connection. Please try again!!!'),
+        textAlignCenter(text: _lang.translate('no_internet_message')),
         warningTitleDialog()
       );
       Navigator.of(context).pop();

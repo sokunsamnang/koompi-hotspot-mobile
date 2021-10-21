@@ -44,6 +44,8 @@ class _HotspotPlanState extends State<HotspotPlan> {
   }
 
   Future <void> buyHotspot30days(BuildContext context) async {
+    var _lang = AppLocalizeService.of(context);
+
     dialogLoading(context);
 
     var response = await PostRequest().buyHotspotPlan(
@@ -82,7 +84,7 @@ class _HotspotPlanState extends State<HotspotPlan> {
     } on SocketException catch (_) {
       await Components.dialog(
         context,
-        textAlignCenter(text: 'Something may went wrong with your internet connection. Please try again!!!'),
+        textAlignCenter(text: _lang.translate('no_internet_message')),
         warningTitleDialog()
       );
       Navigator.of(context).pop();
@@ -91,6 +93,9 @@ class _HotspotPlanState extends State<HotspotPlan> {
   }
 
   Future <void> buyHotspot365days(BuildContext context) async {
+
+    var _lang = AppLocalizeService.of(context);
+    
     dialogLoading(context);
 
     var response = await PostRequest().buyHotspotPlan(
@@ -129,7 +134,7 @@ class _HotspotPlanState extends State<HotspotPlan> {
     } on SocketException catch (_) {
       await Components.dialog(
         context,
-        textAlignCenter(text: 'Something may went wrong with your internet connection. Please try again!!!'),
+        textAlignCenter(text: _lang.translate('no_internet_message')),
         warningTitleDialog()
       );
       Navigator.of(context).pop();

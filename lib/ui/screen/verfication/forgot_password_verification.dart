@@ -45,6 +45,8 @@ class _ForgotPasswordVerificationState extends State<ForgotPasswordVerification>
   }
 
   Future<void> _submitOtp(String vCode) async {
+    var _lang = AppLocalizeService.of(context);
+    
     dialogLoading(context);
     try {
       String apiUrl = '${ApiService.url}/auth/confirm-phone';
@@ -76,10 +78,35 @@ class _ForgotPasswordVerificationState extends State<ForgotPasswordVerification>
             textAlignCenter(text: responseJson['message']),
             warningTitleDialog()
           );
-          Navigator.pop(context);
+          Navigator.of(context).pop();
       }
-    } catch (e) {
-      Navigator.pop(context);
+    } 
+    on SocketException catch(_){
+      print('No network socket exception');
+      await Components.dialog(
+        context,
+        textAlignCenter(text: _lang.translate('no_internet_message')),
+        warningTitleDialog()
+      );
+      Navigator.of(context).pop();
+    }
+    on TimeoutException catch(_) {
+      print('Time out exception');
+      await Components.dialog(
+        context,
+        textAlignCenter(text: _lang.translate('request_timeout')),
+        warningTitleDialog()
+      );
+      Navigator.of(context).pop();
+    }
+    on FormatException catch(_){
+      print('FormatException');
+      await Components.dialog(
+        context,
+        textAlignCenter(text: _lang.translate('server_error')),
+        warningTitleDialog()
+      );
+      Navigator.of(context).pop();
     }
     
   }

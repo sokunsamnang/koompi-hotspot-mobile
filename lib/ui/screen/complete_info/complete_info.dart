@@ -100,6 +100,8 @@ class _CompleteInfoState extends State<CompleteInfo>{
   }
   
   Future <void> _submit() async {
+    var _lang = AppLocalizeService.of(context);
+
     // _submit(context);
     dialogLoading(context);
     try {
@@ -125,22 +127,22 @@ class _CompleteInfoState extends State<CompleteInfo>{
           });
         } 
         else {
-          Navigator.pop(context);
           print('register not Successful');
           await Components.dialog(
             context,
-            textAlignCenter(text: 'Register not Successfully'),
+            textAlignCenter(text: _lang.translate('register_error')),
             warningTitleDialog()
           );
+          Navigator.of(context).pop();
         }
       }
     } on SocketException catch (_) {
       await Components.dialog(
         context,
-        textAlignCenter(text: 'Something may went wrong with your internet connection. Please try again!!!'),
+        textAlignCenter(text: _lang.translate('no_internet_message')),
         warningTitleDialog()
       );
-      Navigator.pop(context);
+      Navigator.of(context).pop();
     }
   }
 

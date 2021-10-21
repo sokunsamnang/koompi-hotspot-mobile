@@ -22,6 +22,8 @@ class StorageServices{
   }
 
   checkUser(BuildContext context) async {
+    var _lang = AppLocalizeService.of(context);
+
     SharedPreferences isToken = await SharedPreferences.getInstance();
     String token = isToken.getString('token');
 
@@ -56,7 +58,7 @@ class StorageServices{
         print('No network socket exception');
         await Components.dialogNoOption(
           context,
-          textAlignCenter(text: 'Something went wrong with your internet connection. Please try again later!!!'),
+          textAlignCenter(text: _lang.translate('no_internet_message')),
           warningTitleDialog()
         );
       }
@@ -64,7 +66,7 @@ class StorageServices{
         print('Time out exception');
         await Components.dialogNoOption(
           context,
-          textAlignCenter(text: 'Request Timeout. Please try again later!!!'),
+          textAlignCenter(text: _lang.translate('request_timeout')),
           warningTitleDialog()
         );
       }
@@ -72,7 +74,7 @@ class StorageServices{
         print('FormatException');
         await Components.dialogNoOption(
           context,
-          textAlignCenter(text: 'Something went wrong or Server in maintenance. Please try again later!!!'),
+          textAlignCenter(text: _lang.translate('server_error')),
           warningTitleDialog()
         );
       }
@@ -94,12 +96,6 @@ class StorageServices{
         ),
         ModalRoute.withName('/loginPhone'),
       );
-      
-      // Navigator.pushAndRemoveUntil(
-      //   context,
-      //   MaterialPageRoute(builder: (context) => LoginPhone()),
-      //   ModalRoute.withName('/loginPhone'),
-      // );
     }
   }
 

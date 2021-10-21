@@ -32,6 +32,8 @@ class _ChooseOptionState extends State<ChooseOption>
   }
 
   Future <void> renewPlanOption() async {
+    var _lang = AppLocalizeService.of(context);
+
     dialogLoading(context);
     var response = await PostRequest().renewOption(
       renewOption,
@@ -59,17 +61,17 @@ class _ChooseOptionState extends State<ChooseOption>
             textAlignCenter(text: responseJson['message']),
             warningTitleDialog()
           );
-          Navigator.pop(context);
+          Navigator.of(context).pop();
         }
       
       }
     } on SocketException catch (_) {
       await Components.dialog(
         context,
-        textAlignCenter(text: 'Something may went wrong with your internet connection. Please try again!!!'),
+        textAlignCenter(text: _lang.translate('no_internet_message')),
         warningTitleDialog()
       );
-      Navigator.pop(context);
+      Navigator.of(context).pop();
     }
   }
 

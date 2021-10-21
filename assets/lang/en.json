@@ -142,5 +142,10 @@
     "forget_network": "Forget Network",
     "disconnect_network": "Disconnect Network",
     "notifications": "Notifications",
-    "fifi_map": "Fi-Fi Map"
+    "fifi_map": "Fi-Fi Map",
+    "no_internet_message": "Something went wrong with your internet connection. Please try again later!!!",
+    "request_timeout": "Request Timeout. Please try again later!!!",
+    "server_error": "Something went wrong or the server is in maintenance. Please try again later!!!",
+    "register_error": "Register not successfully",
+    "update_info_error": "Update info not successfully"
 }

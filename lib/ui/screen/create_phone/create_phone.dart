@@ -62,6 +62,8 @@ class _CreatePhoneState extends State<CreatePhone> {
   }
 
   Future <void> onSignUpByPhone() async {
+    var _lang = AppLocalizeService.of(context);
+
     dialogLoading(context);
     try {
       final result = await InternetAddress.lookup('google.com');
@@ -87,7 +89,7 @@ class _CreatePhoneState extends State<CreatePhone> {
             textAlignCenter(text: responseJson['message']),
             warningTitleDialog()
           );
-          Navigator.pop(context);
+          Navigator.of(context).pop();
         }
         else if (response.statusCode >= 500 && response.statusCode <600){
           await Components.dialog(
@@ -95,16 +97,16 @@ class _CreatePhoneState extends State<CreatePhone> {
             textAlignCenter(text: responseJson['message']),
             warningTitleDialog()
           );
-          Navigator.pop(context);
+          Navigator.of(context).pop();
         }
       }
     } on SocketException catch (_) {
       await Components.dialog(
         context,
-        textAlignCenter(text: 'Something may went wrong with your internet connection. Please try again!!!'),
+        textAlignCenter(text: _lang.translate('no_internet_message')),
         warningTitleDialog()
       );
-      Navigator.pop(context);
+      Navigator.of(context).pop();
     }
   }
 
