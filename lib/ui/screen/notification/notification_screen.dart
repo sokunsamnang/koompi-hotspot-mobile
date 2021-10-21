@@ -22,11 +22,13 @@ class _NotificationScreenState extends State<NotificationScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var _lang = AppLocalizeService.of(context);
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
         title: Text(
-          'Notification',
+          _lang.translate('notifications'),
           style: TextStyle(color: Colors.black, fontFamily: 'Medium'),
         ),
         iconTheme: IconThemeData(

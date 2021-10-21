@@ -33,6 +33,8 @@ class _WifiConnectState extends State<WifiConnect> {
   }
 
   void _wifiOptionBottomSheet(context, String ssid){
+    var _lang = AppLocalizeService.of(context);
+
     showModalBottomSheet(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.only(topLeft: Radius.circular(12), topRight: Radius.circular(12)),
@@ -71,7 +73,7 @@ class _WifiConnectState extends State<WifiConnect> {
                           Icon(Icons.delete_outline_outlined, size: 35, color: primaryColor),
                           MyText(
                             top: 6,
-                            text: 'Forget Network',
+                            text: _lang.translate('forget_network'),
                             fontSize: 12,
                             color: '#000000',
                           )
@@ -90,7 +92,7 @@ class _WifiConnectState extends State<WifiConnect> {
                           Icon(Icons.wifi_off_outlined, size: 35, color: primaryColor),
                           MyText(
                             top: 6,
-                            text: 'Disconnent Network',
+                            text: _lang.translate('disconnect_network'),
                             fontSize: 12,
                             color: '#000000',
                           )
@@ -121,6 +123,7 @@ class _WifiConnectState extends State<WifiConnect> {
      String ssid,
     ) {
     var _lang = AppLocalizeService.of(context);
+
     return showDialog(
       context: context,
       barrierDismissible: false,
@@ -253,6 +256,8 @@ class _WifiConnectState extends State<WifiConnect> {
 
 
   Widget isConnected() {
+    var _lang = AppLocalizeService.of(context);
+
     return FutureBuilder(
       future: WiFiForIoTPlugin.getSSID(),
       builder: (BuildContext context, AsyncSnapshot<String> ssid) {
@@ -266,7 +271,7 @@ class _WifiConnectState extends State<WifiConnect> {
                 trailing: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text('Connected', style: TextStyle(color: Colors.green),),
+                    Text(_lang.translate('connected'), style: TextStyle(color: Colors.green),),
                     SizedBox(width: 10),
                     GestureDetector(
                       onTap: () => _wifiOptionBottomSheet(context, ssid.data), 
@@ -287,13 +292,15 @@ class _WifiConnectState extends State<WifiConnect> {
 
   @override
   Widget build(BuildContext context) {
+    var _lang = AppLocalizeService.of(context);
+
     return Scaffold(
       appBar: AppBar(
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "Wi-Fi",
+              _lang.translate('wifi'),
               style: TextStyle(
                 color: Colors.black,
                 fontFamily: "Poppins-Bold",
@@ -307,7 +314,7 @@ class _WifiConnectState extends State<WifiConnect> {
                 });
               },
               icon: Icon(Icons.search, color: primaryColor),
-              label: Text('Scan',style: TextStyle(color: primaryColor)),
+              label: Text(_lang.translate('scan'),style: TextStyle(color: primaryColor)),
             ),
           ],
         ),
@@ -372,6 +379,8 @@ class _WifiConnectState extends State<WifiConnect> {
   }
 
   Widget gpsTurnOff(BuildContext context){
+    var _lang = AppLocalizeService.of(context);
+
     return Container(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -390,7 +399,7 @@ class _WifiConnectState extends State<WifiConnect> {
             child: Padding(
               padding: const EdgeInsets.fromLTRB(30.0, 20, 30, 20),
               child: Text(
-                'To show Wi-Fi list is depended on GPS. Please enable GPS!',
+                _lang.translate('wifi_no_gps_warning'),
                 textAlign: TextAlign.center,
               ),
             ),
@@ -408,7 +417,7 @@ class _WifiConnectState extends State<WifiConnect> {
                     EdgeInsets.symmetric(vertical: 10, horizontal: 35)
                 ),
               ),
-              child: Text('Enable GPS'),
+              child: Text( _lang.translate('enable_gps')),
               onPressed: () {
                 loc.Location locationR = loc.Location();
                 locationR.requestService();

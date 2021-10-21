@@ -133,5 +133,14 @@
     "btn_update": "Update Now",
     "tf_change_password": "You have has been changed password successfully, Please sign in again with your new password.",
     "tf_reset_password": "You have has been reset password successfully, Please sign in again with your new password.",
-    "koompi_web": "KOOMPI Web"
+    "koompi_web": "KOOMPI Web",
+    "wifi": "Wi-Fi",
+    "scan": "Scan",
+    "wifi_no_gps_warning": "To show Wi-Fi list is depended on GPS. Please enable GPS!",
+    "enable_gps": "Enable GPS",
+    "connected": "Connected",
+    "forget_network": "Forget Network",
+    "disconnect_network": "Disconnect Network",
+    "notifications": "Notifications",
+    "fifi_map": "Fi-Fi Map"
 }

@@ -28,10 +28,12 @@ class _NotificationDetailState extends State<NotificationDetail> {
   
   @override
   Widget build(BuildContext context) {
+    var _lang = AppLocalizeService.of(context);
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Text('Notification', style: TextStyle(color: Colors.black, fontFamily: 'Medium')),
+        title: Text(_lang.translate('notifications'), style: TextStyle(color: Colors.black, fontFamily: 'Medium')),
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.black), 
           onPressed: (){

@@ -262,7 +262,7 @@ class MyLocationViewState extends State<MyLocationView>
     return Scaffold(
       key: mykey,
       appBar: AppBar(
-        title: Text('Fi-Fi Map', style: TextStyle(color: Colors.black, fontFamily: 'Medium')),
+        title: Text(_lang.translate('fifi_map'), style: TextStyle(color: Colors.black, fontFamily: 'Medium')),
         backgroundColor: Colors.white,  
         iconTheme: IconThemeData(
           color: Colors.black, //change your color here

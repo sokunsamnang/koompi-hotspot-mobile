@@ -162,8 +162,7 @@ class _NavbarState extends State<Navbar> with WidgetsBindingObserver {
                   ),
                   GButton(
                     icon: Icons.wifi_outlined,
-                    // text: _lang.translate('speed_test'),
-                    text: 'Wi-Fi',
+                    text: _lang.translate('wifi'),
                   ),
                   GButton(
                     icon: LineIcons.bars,
