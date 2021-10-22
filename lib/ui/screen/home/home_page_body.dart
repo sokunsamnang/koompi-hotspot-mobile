@@ -3,6 +3,8 @@ import 'package:koompi_hotspot/all_export.dart';
 import 'package:provider/provider.dart';
 
 Widget bodyPage(BuildContext context) {
+  var _lang = AppLocalizeService.of(context);
+
   return Container(
     // height: MediaQuery.of(context).size.height,
     child: Column(
@@ -13,7 +15,7 @@ Widget bodyPage(BuildContext context) {
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 15),
           child: Text(
-            'MY PLAN',
+            _lang.translate('my_plan').toUpperCase(),
             style: GoogleFonts.nunito(
             textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
             ),
@@ -26,7 +28,7 @@ Widget bodyPage(BuildContext context) {
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 15),
           child: Text(
-            'ACCOUNT BALANCE',
+            _lang.translate('account').toUpperCase(),
             style: GoogleFonts.nunito(
             textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
             ),
@@ -39,7 +41,7 @@ Widget bodyPage(BuildContext context) {
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 15),
           child: Text(
-            "What's Hots",
+            _lang.translate('whats_hots').toUpperCase(),
             style: GoogleFonts.nunito(
             textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
             ),
@@ -276,22 +278,37 @@ Widget _planViewButton(context){
                 padding: EdgeInsets.symmetric(vertical: 20),
                 child: Column(
                   children: [
-                    Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Image.asset('assets/images/Koompi-WiFi-Icon.png', width: 25),
-                            SizedBox(width: 10),
-                            Text(
-                              _lang.translate('hotspot_plan'),
-                              style: GoogleFonts.nunito(
-                              textStyle: TextStyle(color: HexColor('0CACDA'), fontSize: 25, fontWeight: FontWeight.w800)
+                    Padding(
+                      padding: const EdgeInsets.only(left: 55),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Image.asset('assets/images/Koompi-WiFi-Icon.png', width: 30),
+                              SizedBox(width: 10),
+                              Text(
+                                _lang.translate('hotspot'),
+                                style: GoogleFonts.nunito(
+                                textStyle: TextStyle(color: HexColor('0CACDA'), fontSize: 25, fontWeight: FontWeight.w800)
+                                ),
                               ),
-                            ),
-                          ],
-                        )
-                      ],
+                            ],
+                          ),
+                          IconButton(
+                            icon: Icon(Icons.more_vert, color: Colors.white), 
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                PageTransition(type: PageTransitionType.rightToLeft, 
+                                  child: PlanView(),
+                                ),
+                              );
+                            }
+                          ),
+                        ],
+                      ),
                     ),
                     Container(
                       padding: EdgeInsets.all(20),
@@ -415,7 +432,7 @@ Widget _planExpire(context){
         child: InkWell(
           child: Container(
             width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height * .30,
+            height: MediaQuery.of(context).size.height * .22,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12.0),
               color: HexColor('083C5A'),
@@ -440,50 +457,27 @@ Widget _planExpire(context){
                 padding: EdgeInsets.symmetric(vertical: 20),
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 333),
+                        child: IconButton(
+                          icon: Icon(Icons.more_vert, color: Colors.white), 
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              PageTransition(type: PageTransitionType.rightToLeft, 
+                                child: PlanView(),
+                              ),
+                            );
+                          }
+                        ),
+                      ),
+                      SizedBox(height: 5),
                       Text(
                         _lang.translate('plan_expire'),
                         style: GoogleFonts.nunito(
                         textStyle: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w700)
-                        ),
-                      ),
-                      SizedBox(height: 20),
-                      Container(
-                        width: 100,
-                        padding: EdgeInsets.symmetric(horizontal: 1, vertical: 1),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(12)),
-                          border: Border.all(color: Colors.white, width: 1)),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: <Widget>[
-                            TextButton(
-                              onPressed: () {
-                                Navigator.push(
-                                  context, 
-                                  PageTransition(type: PageTransitionType.rightToLeft, 
-                                    child: PlanView(),
-                                  )
-                                );
-                              },
-                              child: Row(
-                                children: <Widget>[
-                                  Icon(
-                                    Icons.more_vert,
-                                    color: Colors.white,
-                                    size: 20,
-                                  ),
-                                  SizedBox(width: 5),
-                                  Text(_lang.translate('detial'),
-                                    style: TextStyle(
-                                      fontFamily: "Medium",
-                                      color: Colors.white),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
                         ),
                       ),
                     ],
@@ -508,9 +502,6 @@ Widget _myWalletButton(context){
         child: InkWell(
           child: Container(
             width: MediaQuery.of(context).size.width,
-            // height: MediaQuery.of(context).size.height * .30,
-            // width: ScreenUtil.getInstance().setWidth(330),
-            // height: ScreenUtil.getInstance().setHeight(100),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12.0),
               color: Colors.grey[900],
@@ -521,8 +512,6 @@ Widget _myWalletButton(context){
                 customBorder: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
-                // highlightColor: Colors.transparent,
-                // splashColor: Colors.transparent,
                 onTap: () async {
                   Navigator.push(
                     context, 
@@ -546,32 +535,14 @@ Widget _myWalletButton(context){
                       )
                     ),
                     child: Stack(
-                      // fit: StackFit,
                       children: <Widget>[
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 20),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.end,
                             children: <Widget>[
-                              Column(
-                                children: [
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Image.asset('assets/images/sld.png', width: 18),
-                                      SizedBox(width: 10),
-                                      Text(
-                                        'SELENDRA', 
-                                        style: GoogleFonts.nunito(
-                                        textStyle: TextStyle(color: Colors.white, fontSize: 25, fontWeight: FontWeight.w800)
-                                        ),
-                                      ),
-                                    ],
-                                  )
-                                ],
-                              ),
-                              SizedBox(height: 25),
+                              SizedBox(height: 5),
                               Container(
                                 child: Padding(
                                   padding: EdgeInsets.symmetric(horizontal: 50),
@@ -581,6 +552,7 @@ Widget _myWalletButton(context){
                                       Text(
                                         _lang.translate('asset'),
                                         style: TextStyle(
+                                          fontSize: 17,
                                           color: Colors.white,
                                           fontWeight: FontWeight.w700,
                                         ),
@@ -589,6 +561,7 @@ Widget _myWalletButton(context){
                                       Text(
                                         _lang.translate('total'),
                                         style: TextStyle(
+                                          fontSize: 17,
                                           color: Colors.white,
                                           fontWeight: FontWeight.w700,
                                         ),
@@ -607,12 +580,12 @@ Widget _myWalletButton(context){
                                       Container(
                                         child: Row(
                                           children: [
-                                            Image.asset('assets/images/sld.png', width: 15),
+                                            Image.asset('assets/images/rise-coin-icon.png', width: 20),
                                             SizedBox(width: 10),
                                             Text(
                                               '${balance.balanceList[0].symbol}',
                                               style: GoogleFonts.nunito(
-                                              textStyle: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w700)
+                                              textStyle: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w700)
                                               ),
                                             ),
                                           ],
@@ -622,7 +595,7 @@ Widget _myWalletButton(context){
                                       Text(
                                         '${balance.balanceList[0].token}',
                                         style: GoogleFonts.nunito(
-                                        textStyle: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w700)
+                                        textStyle: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w700)
                                         ),
                                       )
                                       : CircularProgressIndicator(),
@@ -630,6 +603,7 @@ Widget _myWalletButton(context){
                                   ),
                                 ),
                               ),
+                              SizedBox(height: 10),
                               Container(
                                 child: Padding(
                                   padding: EdgeInsets.symmetric(horizontal: 50),
@@ -639,12 +613,12 @@ Widget _myWalletButton(context){
                                       Container(
                                         child: Row(
                                           children: [
-                                            Image.asset('assets/images/sld.png', width: 15),
+                                            Image.asset('assets/images/sel-coin-icon.png', width: 22),
                                             SizedBox(width: 10),
                                             Text(
                                               '${balance.balanceList[1].symbol}',
                                               style: GoogleFonts.nunito(
-                                              textStyle: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w700)
+                                              textStyle: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w700)
                                               ),
                                             ),
                                           ],
@@ -654,7 +628,7 @@ Widget _myWalletButton(context){
                                       Text(
                                         '${balance.balanceList[1].token}',
                                         style: GoogleFonts.nunito(
-                                        textStyle: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w700)
+                                        textStyle: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w700)
                                         ),
                                       )
                                       : CircularProgressIndicator(),
@@ -662,74 +636,54 @@ Widget _myWalletButton(context){
                                   ),
                                 ),
                               ),
-                              SizedBox(height: 20),
-                              Container(
-                                width: 100,
-                                padding: EdgeInsets.symmetric(horizontal: 1, vertical: 1),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.all(Radius.circular(12)),
-                                  border: Border.all(color: Colors.white, width: 1)),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: <Widget>[
-                                    TextButton(
-                                      onPressed: () {
-                                        Navigator.push(
-                                          context, 
-                                          PageTransition(type: PageTransitionType.rightToLeft, 
-                                            child: WalletScreen(),
-                                          )
-                                        );
-                                      },
-                                      child: Row(
-                                        children: <Widget>[
-                                          Icon(
-                                            Icons.more_vert,
-                                            color: Colors.white,
-                                            size: 20,
-                                          ),
-                                          SizedBox(width: 5),
-                                          Text(_lang.translate('detial'),
-                                            style: TextStyle(
-                                              fontFamily: "Medium",
-                                              color: Colors.white),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
+                              SizedBox(height: 10),
                             ],
                           ),
                         ),
                         Positioned(
-                          left: -170,
-                          top: -170,
+                          left: 345,
+                          top: 12,
+                          child: IconButton(
+                            icon: Icon(Icons.more_vert, color: Colors.white), 
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                PageTransition(type: PageTransitionType.rightToLeft, 
+                                  child: WalletScreen(),
+                                ),
+                              );
+                            }
+                          ),
+                        ),
+                        Positioned(
+                          right: 280,
+                          left: -185,
+                          top: -214,
                           child: CircleAvatar(
                             radius: 130,
                             backgroundColor: Colors.lightBlueAccent[50],
                           ),
                         ),
                         Positioned(
-                          left: -160,
-                          top: -190,
+                          left: -180,
+                          top: -210,
                           child: CircleAvatar(
                             radius: 130,
                             backgroundColor: Colors.lightBlue[300],
                           ),
                         ),
                         Positioned(
-                          right: -170,
-                          bottom: -170,
+                          left: 280,
+                          right: -180,
+                          bottom: -215,
                           child: CircleAvatar(
                             radius: 130,
                             backgroundColor: Colors.deepOrangeAccent,
                           ),
                         ),
                         Positioned(
-                          right: -160,
-                          bottom: -190,
+                          right: -180,
+                          bottom: -210,
                           child: CircleAvatar(
                             radius: 130,
                             backgroundColor: Colors.orangeAccent,

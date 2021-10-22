@@ -149,7 +149,7 @@ class _MorePageState extends State<MorePage> {
                       },
                     ),
                     _buildDivider(),
-                    Center(child: _infoApp('${_packageInfo.appName}: ', _packageInfo.version)),
+                    Center(child: _infoApp('KOOMPI Fi-Fi: ', _packageInfo.version)),
                   ],
                 ),
               ),

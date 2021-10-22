@@ -100,7 +100,7 @@ class _MyWalletState extends State<MyWallet> {
                         height: 6,
                       ),
                       Container(
-                        height: 80.0,
+                        height: 85.0,
                         margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 15.0),
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -122,7 +122,7 @@ class _MyWalletState extends State<MyWallet> {
                                   padding: const EdgeInsets.all(5.0),
                                   child: Column(
                                     children: <Widget>[
-                                      Image.asset('assets/images/ico_send_money.png'),
+                                      Image.asset('assets/images/send.png', scale: 2),
                                       Text(_lang.translate('send_money'),
                                         style: TextStyle(fontWeight: FontWeight.w700),
                                       )
@@ -154,7 +154,7 @@ class _MyWalletState extends State<MyWallet> {
                                   padding: const EdgeInsets.all(5.0),
                                   child: Column(
                                     children: <Widget>[
-                                      Image.asset('assets/images/ico_receive_money.png'),
+                                      Image.asset('assets/images/receive.png', scale: 2),
                                       Text(_lang.translate('receive_money'),
                                         style: TextStyle(fontWeight: FontWeight.w700),)
                                     ],
@@ -224,8 +224,7 @@ class _MyWalletState extends State<MyWallet> {
     var _lang = AppLocalizeService.of(context);
     return Container(
       padding: const EdgeInsets.only(
-        right: 16,
-        left: 16,
+        left: 20,
         top: 22,
         bottom: 22
       ),
@@ -238,39 +237,41 @@ class _MyWalletState extends State<MyWallet> {
           colors: [HexColor('0F4471'), HexColor('083358')]
         )
       ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          Image.asset(
-            'assets/images/sld.png',
-            // height: 30,
-            width: 35,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            _lang.translate('total_balance'),
+            style: GoogleFonts.nunito(
+            textStyle: TextStyle(color: Colors.white, fontWeight: FontWeight.w700)
+            ),
           ),
-          SizedBox(width: 10),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          SizedBox(height: 5),
+          Row(
             children: [
-              Text(
-                _lang.translate('total_balance'),
-                style: GoogleFonts.nunito(
-                textStyle: TextStyle(color: Colors.white, fontWeight: FontWeight.w700)
-                ),
-              ),
+              Image.asset('assets/images/rise-coin-icon.png', width: 20),
               SizedBox(width: 10),
               balance.balanceList[0].token != null ?
               Text(
                 '${balance.balanceList[0].token} ${balance.balanceList[0].symbol}',
-                style: GoogleFonts.inter(
-                fontSize: 25.0,
+                style: GoogleFonts.nunito(
+                fontSize: 18.0,
                 textStyle: TextStyle(color: Colors.white, fontWeight: FontWeight.w700)
                 ),
               )
               : CircularProgressIndicator(),
+            ],
+          ),
+          SizedBox(height: 7),
+          Row(
+            children: [
+              Image.asset('assets/images/sel-coin-icon.png', width: 22),
+              SizedBox(width: 10),
               balance.balanceList[1].token != null ?
               Text(
                 '${balance.balanceList[1].token} ${balance.balanceList[1].symbol}',
-                style: GoogleFonts.inter(
-                fontSize: 25.0,
+                style: GoogleFonts.nunito(
+                fontSize: 18.0,
                 textStyle: TextStyle(color: Colors.white, fontWeight: FontWeight.w700)
                 ),
               )
@@ -291,6 +292,8 @@ void _sendWalletBottomSheet(context, String walletKey){
     isScrollControlled: true,
     context: context,
     builder: (BuildContext context){
+
+      var _lang = AppLocalizeService.of(context);
       return Container(
         height: 153,
         decoration: BoxDecoration(
@@ -304,7 +307,7 @@ void _sendWalletBottomSheet(context, String walletKey){
               child: MyText(
                 top: 20,
                 bottom: 20,
-                text: "Transaction options",
+                text: _lang.translate('transaction_options'),
                 color: '#000000',
               ),
             ),
@@ -326,7 +329,7 @@ void _sendWalletBottomSheet(context, String walletKey){
                         Icon(Icons.qr_code_scanner_outlined, size: 35, color: primaryColor),
                         MyText(
                           top: 6,
-                          text: 'Scan QR',
+                          text: _lang.translate('scan_qr'),
                           fontSize: 12,
                           color: '#000000',
                         )
@@ -350,7 +353,7 @@ void _sendWalletBottomSheet(context, String walletKey){
                         Icon(Icons.description_outlined, size: 35, color: primaryColor),
                         MyText(
                           top: 6,
-                          text: 'Fill Wallet',
+                          text: _lang.translate('fill_address'),
                           fontSize: 12,
                           color: '#000000'
                         )

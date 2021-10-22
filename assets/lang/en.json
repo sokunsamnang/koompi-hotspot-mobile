@@ -49,8 +49,7 @@
     "asset": "Asset",
     "total": "Total",
     "detial": "Detail",
-    "hotspot_plan": "HOTSPOT PLAN",
-    "hotspot_plan_appbar": "Hotspot Plan",
+    "hotspot": "Fi-Fi",
     "buy_hotspot_plan": "Buy Hotspot Plan",
     "buy_plan": "Buy Plan",
     "choose_plan": "Choose Plan",
@@ -100,7 +99,7 @@
     "complete": "Completed",
     "renew": "Renew",
     "payment_complete": "Your transfer is successfully.",
-    "plan_expire": "Hotspot Plan Expired",
+    "plan_expire": "Subscribe Fi-Fi",
     "expired": "Plan Expired",
     "selendra_down": "Selendra server is in maintenance",
     "change_plan": "Change Plan",
@@ -147,5 +146,11 @@
     "request_timeout": "Request Timeout. Please try again later!!!",
     "server_error": "Something went wrong or the server is in maintenance. Please try again later!!!",
     "register_error": "Register not successfully",
-    "update_info_error": "Update info not successfully"
+    "update_info_error": "Update info not successfully",
+    "my_plan": "My Plan",
+    "account": "Account",
+    "whats_hots": "What's Hots?",
+    "transaction_options": "Transaction Options",
+    "scan_qr": "Scan QR",
+    "fill_address": "Fill Address"
 }

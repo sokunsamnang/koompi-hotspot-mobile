@@ -119,12 +119,17 @@ class _PlanViewState extends State<PlanView> {
             Navigator.pop(context);
           }
         ),
-        centerTitle: true,
         backgroundColor: Colors.white,
-        title: Image.asset(
-          "assets/images/appbar_logo.png",
-          scale: 2,
+        title: Text(
+          _lang.translate('my_plan'),
+          style: GoogleFonts.nunito(
+          textStyle: TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.w700)
+          ),
         ),
+        // title: Image.asset(
+        //   "assets/images/appbar_logo.png",
+        //   scale: 2,
+        // ),
       ),
       body: Container(
         height: MediaQuery.of(context).size.height * 2,
@@ -237,230 +242,248 @@ class _PlanViewState extends State<PlanView> {
                 blurRadius: 10.0),
           ],
         ),
-        child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          SizedBox(height: 20),
-          SingleChildScrollView(
-            child: Container(
-              width: MediaQuery.of(context).size.width / 0.25,
-              child: Center(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 35, right: 0),
-                      child: Row(
-                        children: [
-                          Image.asset('assets/images/Koompi-WiFi-Icon.png', scale: 50,),
-                          SizedBox(width: 5),
-                          Text(
-                            _lang.translate('hotspot_plan'),
-                            style: GoogleFonts.nunito(
-                            textStyle: TextStyle(color: primaryColor,fontSize: 24, fontWeight: FontWeight.w700)
-                            ),
-                          ),
-                        ],
+        child: Stack(
+          children:[
+            Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              SizedBox(height: 20),
+              SingleChildScrollView(
+                child: Container(
+                  width: MediaQuery.of(context).size.width / 0.25,
+                  child: Center(
+                    child: Text(
+                      _lang.translate('hotspot'),
+                      style: GoogleFonts.nunito(
+                      textStyle: TextStyle(color: primaryColor,fontSize: 24, fontWeight: FontWeight.w700)
                       ),
                     ),
-                    Row(
-                      children: [
-                        IconButton(
-                          icon: Icon(Icons.more_vert), 
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              PageTransition(type: PageTransitionType.rightToLeft, 
-                                child: RenewOption(),
-                              ),
-                            );
-                          }
-                        )
-                      ],
+                  )
+                ),
+              ),
+              // SizedBox(height: 20),
+              // Center(
+              //   child: Text(
+              //     '${mPlan.balance} RISE', 
+              //     style: GoogleFonts.nunito(
+              //     textStyle: TextStyle(color: primaryColor, fontSize: 22, fontWeight: FontWeight.w700)
+              //     ),
+              //   ),
+              // ),
+              Divider(
+                thickness: 1.5,
+                color: Colors.grey[300],
+                indent: 20,
+                endIndent: 20,
+              ),
+              SizedBox(height: 20),
+              Padding(
+                padding: EdgeInsets.only(right: 35, left:35),
+                child: Row(
+                  children: [
+                    Text(
+                      '${_lang.translate('device')}:',
+                      style: GoogleFonts.nunito(
+                      textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
+                      ),
+                    ),
+                    Expanded(child: Container()),
+                    Text(
+                      '${mPlan.device} ${_lang.translate('devices')}', 
+                      style: GoogleFonts.nunito(
+                      textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
+                      ),
                     ),
                   ],
                 ),
               ),
-            ),
-          ),
-          SizedBox(height: 20),
-          Center(
-            child: Text(
-              '${mPlan.balance} RISE', 
-              style: GoogleFonts.nunito(
-              textStyle: TextStyle(color: primaryColor, fontSize: 22, fontWeight: FontWeight.w700)
+              SizedBox(height: 10),
+              Padding(
+                padding: EdgeInsets.only(right: 35, left:35),
+                child: Row(
+                  children: [
+                    Text(
+                      '${_lang.translate('speed')}:',
+                      style: GoogleFonts.nunito(
+                      textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
+                      ),
+                    ),
+                    Expanded(child: Container()),
+                    Text(
+                      '5 ${_lang.translate('mb')}', 
+                      style: GoogleFonts.nunito(
+                      textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ),
-          Divider(
-            thickness: 1.5,
-            color: Colors.grey[300],
-            indent: 20,
-            endIndent: 20,
-          ),
-          SizedBox(height: 20),
-          Padding(
-            padding: EdgeInsets.only(right: 35, left:35),
-            child: Row(
-              children: [
-                Text(
-                  '${_lang.translate('device')}:',
-                  style: GoogleFonts.nunito(
-                  textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
-                  ),
+              SizedBox(height: 10),
+              Padding(
+                padding: EdgeInsets.only(right: 35, left:35),
+                child: Row(
+                  children: [
+                    Text(
+                      '${_lang.translate('plan')}:',
+                      style: GoogleFonts.nunito(
+                      textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
+                      ),
+                    ),
+                    Expanded(child: Container()),
+                    Text(
+                      '${mPlan.plan} ${_lang.translate('day')}',
+                      style: GoogleFonts.nunito(
+                      textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
+                      ),
+                    ),
+                  ],
                 ),
-                Expanded(child: Container()),
-                Text(
-                  '${mPlan.device} ${_lang.translate('devices')}', 
-                  style: GoogleFonts.nunito(
-                  textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
-                  ),
+              ),
+              
+              Padding(
+                padding: EdgeInsets.only(right: 35, left:35, top: 10),
+                child: Row(
+                  children: [
+                    Text(
+                      '${_lang.translate('expire')}:',
+                      style: GoogleFonts.nunito(
+                      textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
+                      ),
+                    ),
+                    Expanded(child: Container()),
+                    mPlan.status == true 
+                    ? 
+                    Text(
+                      different == 0 
+                      ?
+                      'Today'
+                      :
+                      different == 1 
+                      ?
+                      'Tomorrow'
+                      :
+                      'In ${different.toString()} Days',
+                      style: GoogleFonts.nunito(
+                      textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
+                      ),
+                    )
+                    :
+                    Text(
+                      "${_lang.translate('expired')}",
+                      style: GoogleFonts.nunito(
+                      textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
+                      ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
-          ),
-          SizedBox(height: 10),
-          Padding(
-            padding: EdgeInsets.only(right: 35, left:35),
-            child: Row(
-              children: [
-                Text(
-                  '${_lang.translate('speed')}:',
-                  style: GoogleFonts.nunito(
-                  textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
-                  ),
+              ),
+              SizedBox(height: 10),
+              Padding(
+                padding: EdgeInsets.only(right: 35, left:35),
+                child: Row(
+                  children: [
+                    Text(
+                      '${_lang.translate('valid_until')}:',
+                      style: GoogleFonts.nunito(
+                      textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
+                      ),
+                    ),
+                    Expanded(child: Container()),
+                    Text(
+                      '${mPlan.timeLeft.split(' ').reversed.join(' ')}', 
+                      style: GoogleFonts.nunito(
+                      textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
+                      ),
+                    ),
+                  ],
                 ),
-                Expanded(child: Container()),
-                Text(
-                  '5 ${_lang.translate('mb')}', 
-                  style: GoogleFonts.nunito(
-                  textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
-                  ),
-                ),
-              ],
-            ),
-          ),
-          SizedBox(height: 10),
-          Padding(
-            padding: EdgeInsets.only(right: 35, left:35),
-            child: Row(
-              children: [
-                Text(
-                  '${_lang.translate('plan')}:',
-                  style: GoogleFonts.nunito(
-                  textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
-                  ),
-                ),
-                Expanded(child: Container()),
-                Text(
-                  '${mPlan.plan} ${_lang.translate('day')}',
-                  style: GoogleFonts.nunito(
-                  textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
-                  ),
-                ),
-              ],
-            ),
-          ),
-          
-          Padding(
-            padding: EdgeInsets.only(right: 35, left:35, top: 10),
-            child: Row(
-              children: [
-                Text(
-                   '${_lang.translate('expire')}:',
-                  style: GoogleFonts.nunito(
-                  textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
-                  ),
-                ),
-                Expanded(child: Container()),
-                mPlan.status == true 
-                ? 
-                Text(
-                  different == 0 
-                  ?
-                  'Today'
-                  :
-                  different == 1 
-                  ?
-                  'Tomorrow'
-                  :
-                  'In ${different.toString()} Days',
-                  style: GoogleFonts.nunito(
-                  textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
-                  ),
-                )
-                :
-                Text(
-                  "${_lang.translate('expired')}",
-                  style: GoogleFonts.nunito(
-                  textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
-                  ),
-                ),
-              ],
-            ),
-          ),
-          SizedBox(height: 10),
-          Padding(
-            padding: EdgeInsets.only(right: 35, left:35),
-            child: Row(
-              children: [
-                Text(
-                  '${_lang.translate('valid_until')}:',
-                  style: GoogleFonts.nunito(
-                  textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
-                  ),
-                ),
-                Expanded(child: Container()),
-                Text(
-                  '${mPlan.timeLeft.split(' ').reversed.join(' ')}', 
-                  style: GoogleFonts.nunito(
-                  textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
-                  ),
-                ),
-              ],
-            ),
-          ),
-          SizedBox(height: 20),
-          Divider(
-            thickness: 1.5,
-            color: Colors.grey[300],
-            indent: 20,
-            endIndent: 20,
-          ),
-          SizedBox(height: 10),
-          Container(
-            child: Padding(
-              padding: EdgeInsets.only(right: 35, left:35),
-              child: Row(
-                children: [
-                  mPlan.automatically == true
-                  ?
-                  Icon(Icons.autorenew, color: Colors.blue[700])
-                  :
-                  Icon(Icons.touch_app_sharp, color: Colors.blue[700]),
+              ),
+              SizedBox(height: 20),
+              Divider(
+                thickness: 1.5,
+                color: Colors.grey[300],
+                indent: 20,
+                endIndent: 20,
+              ),
+              SizedBox(height: 10),
+              Container(
+                child: Padding(
+                  padding: EdgeInsets.only(right: 0, left:35),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          mPlan.automatically == true
+                          ?
+                          Icon(Icons.autorenew, color: primaryColor)
+                          :
+                          Icon(Icons.touch_app_sharp, color: primaryColor),
+                          
+                          SizedBox(width: 10),
 
-                  mPlan.automatically == true 
-                  ? 
-                  Text(
-                    '${_lang.translate('auto_renew_every')} ${mPlan.plan} ${_lang.translate('day')}', 
-                    style: GoogleFonts.nunito(
-                    textStyle: TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.w700)
-                    ),
-                  ) 
-                  : 
-                  Text(_lang.translate('manual_renew'),
-                    style: GoogleFonts.nunito(
-                    textStyle: TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.w700)
-                    ),
+                          mPlan.automatically == true 
+                          ? 
+                          Text(
+                            '${_lang.translate('auto_renew_every')} \n${mPlan.plan} ${_lang.translate('day')}',
+                            style: GoogleFonts.nunito(
+                            textStyle: TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.w700)
+                            ),
+                          ) 
+                          : 
+                          Text(_lang.translate('manual_renew'),
+                            style: GoogleFonts.nunito(
+                            textStyle: TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.w700)
+                            ),
+                          ),
+                        ],
+                      ),
+                      Container(
+                        height: 50,
+                        width: 100,
+                        decoration: BoxDecoration(
+                          color: primaryColor,
+                          borderRadius: new BorderRadius.only(
+                            topLeft: const Radius.circular(30.0),
+                            bottomLeft: const Radius.circular(30.0),
+                          ),
+                        ),
+                        child: Center(
+                          child: Text(
+                            '${mPlan.balance} RISE', 
+                            style: GoogleFonts.nunito(
+                            textStyle: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w700)
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
                   ),
-                ],
+                ),
+              ),
+              SizedBox(height: 30),
+              mPlan.automatically == false && mPlan.status == false ? renewButton(context) : Container(),
+              // SizedBox(height: 60),
+              ],
+              
+            ),
+            Positioned(
+              left: 300,
+              top: 15,
+              child: IconButton(
+                icon: Icon(Icons.more_vert, color: Colors.black), 
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    PageTransition(type: PageTransitionType.rightToLeft, 
+                      child: RenewOption(),
+                    ),
+                  );
+                }
               ),
             ),
-          ),
-          SizedBox(height: 30),
-          mPlan.automatically == false && mPlan.status == false ? renewButton(context) : Container(),
-          ],
+          ] 
         ),
       ),
     );

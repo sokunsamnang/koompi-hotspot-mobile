@@ -154,10 +154,13 @@ class _TransactionDetailState extends State<TransactionDetail> {
                                 ),
                                 Row(
                                   children: [
-                                    Image.asset('assets/images/sld.png', width: 15,),
+                                    history[i].symbol == 'SEL' ?
+                                    Image.asset('assets/images/sel-coin-icon.png', width: 22)
+                                    :
+                                    Image.asset('assets/images/rise-coin-icon.png', width: 22),
                                     SizedBox(width: 5),
                                     Text(
-                                      '${history[i].amount} ${history[i].symbol}  ',
+                                      '${history[i].amount} ${history[i].symbol}',
                                       style: GoogleFonts.nunito(
                                       textStyle: TextStyle(color: Colors.black, fontSize: 15, fontWeight: FontWeight.w400)
                                       ),
@@ -411,9 +414,9 @@ class _TransactionDetailState extends State<TransactionDetail> {
                           fit: BoxFit.cover,
                           image: mData.wallet == history[i].destination 
                             ?
-                            AssetImage('assets/images/circle_down_left.png')
+                            AssetImage('assets/images/receive.png')
                             :
-                            AssetImage('assets/images/circle_right_up.png'),
+                            AssetImage('assets/images/send.png'),
                         )
                       ),
                     ),

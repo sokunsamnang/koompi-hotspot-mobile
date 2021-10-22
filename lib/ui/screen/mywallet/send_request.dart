@@ -27,8 +27,8 @@ class _SendRequestState extends State<SendRequest> {
 
 
   final List<TokenTypeModel> _tokenTypeModelList = [
-    TokenTypeModel(tokenName: 'RISE', imageToken: Image.asset('assets/images/sld_fit.png', scale: 40,)),
-    TokenTypeModel(tokenName: 'SEL', imageToken: Image.asset('assets/images/sld_fit.png', scale: 40,)),
+    TokenTypeModel(tokenName: 'RISE', imageToken: Image.asset('assets/images/rise-coin-icon.png', width: 22,)),
+    TokenTypeModel(tokenName: 'SEL', imageToken: Image.asset('assets/images/sel-coin-icon.png', width: 22,)),
   ];
   TokenTypeModel _tokenTypeModel = TokenTypeModel();
   List<DropdownMenuItem<TokenTypeModel>> _tokenTypeModelDropdownList;
@@ -41,6 +41,7 @@ class _SendRequestState extends State<SendRequest> {
         child: Row(
           children: [
             tokenTypeModel.imageToken,
+            SizedBox(width: 10.0),
             Text(tokenTypeModel.tokenName),
           ],
         ),
@@ -303,7 +304,7 @@ class _SendRequestState extends State<SendRequest> {
                       maxLength: null,
                       controller: recieveWallet ?? widget.walletKey,
                       decoration: InputDecoration(
-                        prefixIcon: Icon(Icons.contact_page_outlined, color: HexColor('0CACDA')),
+                        prefixIcon: Icon(Icons.contact_page, color: HexColor('0CACDA')),
                         hintText: _lang.translate('receive_address'),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12.0),
@@ -355,7 +356,7 @@ class _SendRequestState extends State<SendRequest> {
                       ],
                       controller: amount,
                       decoration: InputDecoration(
-                        prefixIcon: Image.asset('assets/images/sld_fit.png', scale: 40,),
+                        prefixIcon: Icon(FontAwesomeIcons.coins, color: primaryColor,),
                         hintText: _lang.translate('amount'),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12.0),
@@ -389,7 +390,7 @@ class _SendRequestState extends State<SendRequest> {
                     TextFormField(
                       controller: memo,
                       decoration: InputDecoration(
-                        prefixIcon: Icon(Icons.my_library_books_outlined, color: HexColor('0CACDA')),
+                        prefixIcon: Icon(Icons.my_library_books, color: HexColor('0CACDA')),
                         hintText: 'Memo (Optional)',
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12.0),

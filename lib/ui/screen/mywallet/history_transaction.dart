@@ -68,29 +68,32 @@ Widget trxHistory(BuildContext context) {
                     children: [
                       Row(
                         children: [
-                          history[i].memo == 'Buy Hotspot Plan 30 Days' || history[i].memo == 'Buy Hotspot Plan 365 Days' || history[i].memo == 'Automatically top-up for renew plan.'
-                            ? 
-                            Image.asset('assets/images/Koompi-WiFi-Icon.png')
-                            : 
-                            Image.asset('assets/images/sld_fit.png'
-                            ),
+                          history[i].memo == 'Subscribed Fi-Fi Plan 30 Days' || history[i].memo == 'Subscribed Fi-Fi Plan 365 Days' || history[i].memo == 'Automatically top-up for renew plan.' || history[i].memo == 'Renew plan.' 
+                          ? 
+                          Image.asset('assets/images/Koompi-WiFi-Icon.png', scale: 30)
+                          : 
+                          history[i].symbol == 'SEL' ?
+                          Image.asset('assets/images/sel-coin-icon.png', width: 40)
+                          :
+                          Image.asset('assets/images/rise-coin-icon.png', width: 40),
+                          
                           SizedBox(width: 10),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              history[i].memo == 'Buy Hotspot Plan' || history[i].memo == 'Automatically top-up for renew plan.' || history[i].memo == 'Renew plan.' 
+                              history[i].memo == 'Subscribed Fi-Fi Plan 30 Days' || history[i].memo == 'Subscribed Fi-Fi Plan 365 Days' || history[i].memo == 'Automatically top-up for renew plan.' || history[i].memo == 'Renew plan.' 
                               ? 
                               Text('KOOMPI Fi-Fi',
                                 style: GoogleFonts.nunito(
-                                  textStyle: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w700)
+                                  textStyle: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w700)
                                 ),
                               ) 
                               :
                               Text(
                                 userWallet == history[i].destination ? _lang.translate('recieved') : _lang.translate('sent'),
                                 style: GoogleFonts.nunito(
-                                  textStyle: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w700)
+                                  textStyle: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w700)
                                 ),
                               ),
                               Text(

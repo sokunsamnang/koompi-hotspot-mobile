@@ -275,7 +275,7 @@ class _HotspotPlanState extends State<HotspotPlan> {
                   Text(
                     '2 ${_lang.translate('devices')}', 
                     style: GoogleFonts.nunito(
-                    textStyle: TextStyle(color: Colors.black, fontSize: 16,)
+                    textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
                     ),
                   ),
                 ],
@@ -296,7 +296,7 @@ class _HotspotPlanState extends State<HotspotPlan> {
                   Text(
                     '5 ${_lang.translate('mb')}', 
                     style: GoogleFonts.nunito(
-                    textStyle: TextStyle(color: Colors.black, fontSize: 16,)
+                    textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
                     ),
                   ),
                 ],
@@ -318,7 +318,7 @@ class _HotspotPlanState extends State<HotspotPlan> {
                   Text(
                     '30 ${_lang.translate('day')}', 
                     style: GoogleFonts.nunito(
-                    textStyle: TextStyle(color: Colors.black, fontSize: 16,)
+                    textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
                     ),
                   ),
                 ],
@@ -436,7 +436,7 @@ class _HotspotPlanState extends State<HotspotPlan> {
                   Text(
                     '2 ${_lang.translate('devices')}', 
                     style: GoogleFonts.nunito(
-                    textStyle: TextStyle(color: Colors.black, fontSize: 16,)
+                    textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
                     ),
                   ),
                 ],
@@ -457,7 +457,7 @@ class _HotspotPlanState extends State<HotspotPlan> {
                   Text(
                     '5 ${_lang.translate('mb')}', 
                     style: GoogleFonts.nunito(
-                    textStyle: TextStyle(color: Colors.black, fontSize: 16,)
+                    textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
                     ),
                   ),
                 ],
@@ -479,7 +479,7 @@ class _HotspotPlanState extends State<HotspotPlan> {
                   Text(
                     '365 ${_lang.translate('day')}', 
                     style: GoogleFonts.nunito(
-                    textStyle: TextStyle(color: Colors.black, fontSize: 16,)
+                    textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
                     ),
                   ),
                 ],
