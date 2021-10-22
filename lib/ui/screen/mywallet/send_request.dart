@@ -352,7 +352,7 @@ class _SendRequestState extends State<SendRequest> {
                       autovalidateMode: AutovalidateMode.always,
                       keyboardType: TextInputType.number,
                       inputFormatters: [
-                        FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,4}')),
+                        FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,5}')),
                       ],
                       controller: amount,
                       decoration: InputDecoration(

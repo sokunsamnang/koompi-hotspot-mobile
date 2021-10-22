@@ -23,7 +23,7 @@ Widget trxHistory(BuildContext context) {
       if (today == dateString) {
         dateString = "Today";
       } else if (yesterday == dateString) {
-        dateString = "Yesteday";
+        dateString = "Yesterday";
       }
 
       bool showHeader = prevDay != dateString;
@@ -70,12 +70,12 @@ Widget trxHistory(BuildContext context) {
                         children: [
                           history[i].memo == 'Subscribed Fi-Fi Plan 30 Days' || history[i].memo == 'Subscribed Fi-Fi Plan 365 Days' || history[i].memo == 'Automatically top-up for renew plan.' || history[i].memo == 'Renew plan.' 
                           ? 
-                          Image.asset('assets/images/Koompi-WiFi-Icon.png', scale: 30)
+                          Image.asset('assets/images/Koompi-WiFi-Icon.png', scale: 39)
                           : 
                           history[i].symbol == 'SEL' ?
-                          Image.asset('assets/images/sel-coin-icon.png', width: 40)
+                          Image.asset('assets/images/sel-coin-icon.png', width: 30)
                           :
-                          Image.asset('assets/images/rise-coin-icon.png', width: 40),
+                          Image.asset('assets/images/rise-coin-icon.png', width: 30),
                           
                           SizedBox(width: 10),
                           Column(
@@ -99,7 +99,7 @@ Widget trxHistory(BuildContext context) {
                               Text(
                                 AppUtils.timeStampToDateTime(history[i].datetime),
                                 style: GoogleFonts.nunito(
-                                  textStyle: TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.w400)
+                                  textStyle: TextStyle(color: Colors.white, fontSize: 9, fontWeight: FontWeight.w400)
                                 ),
                               ),
                             ],
@@ -112,14 +112,14 @@ Widget trxHistory(BuildContext context) {
                         Text(
                           '+ ${history[i].amount} ${history[i].symbol}',
                           style: GoogleFonts.nunito(
-                            textStyle: TextStyle(color: Colors.green, fontSize: 18, fontWeight: FontWeight.w700)
+                            textStyle: TextStyle(color: Colors.green, fontSize: 16, fontWeight: FontWeight.w700)
                           ),
                         )
                         : 
                         Text(
                           '- ${history[i].amount} ${history[i].symbol}',
                           style: GoogleFonts.nunito(
-                            textStyle: TextStyle(color: Colors.red, fontSize: 18, fontWeight: FontWeight.w700)
+                            textStyle: TextStyle(color: Colors.red, fontSize: 16, fontWeight: FontWeight.w700)
                           ),
                         )
                     ],
