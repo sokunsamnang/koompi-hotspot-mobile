@@ -249,7 +249,7 @@ class _ChangeHotspotPlanState extends State<ChangeHotspotPlan> {
             SizedBox(height: 20),
             Center(
               child: Text(
-                '50 RISE', 
+                '5.000 RISE', 
                 style: GoogleFonts.nunito(
                 textStyle: TextStyle(color: primaryColor, fontSize: 30, fontWeight: FontWeight.w700)
                 ),
@@ -427,7 +427,7 @@ class _ChangeHotspotPlanState extends State<ChangeHotspotPlan> {
             SizedBox(height: 20),
             Center(
               child: Text(
-                '600 RISE', 
+                '50.000 RISE', 
                 style: GoogleFonts.nunito(
                 textStyle: TextStyle(color: primaryColor, fontSize: 30, fontWeight: FontWeight.w700)
                 ),
