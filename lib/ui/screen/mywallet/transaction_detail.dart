@@ -57,7 +57,7 @@ class _TransactionDetailState extends State<TransactionDetail> {
                       ),
 
                       SizedBox(
-                        height: 40.0,
+                        height: 45.0,
                       ),
 
                       mData.wallet == history[i].destination

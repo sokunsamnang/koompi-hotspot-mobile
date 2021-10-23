@@ -73,9 +73,9 @@ Widget trxHistory(BuildContext context) {
                           Image.asset('assets/images/Koompi-WiFi-Icon.png', scale: 39)
                           : 
                           history[i].symbol == 'SEL' ?
-                          Image.asset('assets/images/sel-coin-icon.png', width: 30)
+                          Image.asset('assets/images/sel-coin-icon.png', width: 27)
                           :
-                          Image.asset('assets/images/rise-coin-icon.png', width: 30),
+                          Image.asset('assets/images/rise-coin-icon.png', width: 27),
                           
                           SizedBox(width: 10),
                           Column(

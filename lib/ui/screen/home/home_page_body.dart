@@ -63,7 +63,7 @@ Widget startGetWallet(context) {
         borderRadius: BorderRadius.all(Radius.circular(12)),
         child: Container(
           width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height * 0.30,
+          height: MediaQuery.of(context).size.height * 0.25,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12.0),
             // color: Colors.grey[900],
@@ -76,7 +76,7 @@ Widget startGetWallet(context) {
           child: Stack(
             children: <Widget>[
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 80),
+                padding: const EdgeInsets.symmetric(vertical: 50),
                 child: Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -178,7 +178,7 @@ Widget noPlanView(BuildContext context) {
         children: <Widget>[
           Container(
             width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height * .30,
+            height: MediaQuery.of(context).size.height * .25,
             padding: EdgeInsets.all(16),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.all(
@@ -200,7 +200,7 @@ Widget noPlanView(BuildContext context) {
                 ),
                 SizedBox(height: 20),
                 Container(
-                  width: 145,
+                  width: 200,
                   padding: EdgeInsets.symmetric(horizontal: 1, vertical: 1),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(12)),
