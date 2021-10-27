@@ -127,7 +127,7 @@ class _RenewOptionState extends State<RenewOption>
                     GestureDetector(
                       onTap: () => setState(() => changeIndex(true)),
                       child: ListTile(
-                        leading: Icon(Icons.autorenew),
+                        leading: Icon(Icons.autorenew, color: primaryColor),
                         title: Text(_lang.translate('auto')),
                         trailing: renewOption == true 
                           ? 
@@ -158,7 +158,7 @@ class _RenewOptionState extends State<RenewOption>
                     GestureDetector(
                       onTap: () => setState(() => changeIndex(false)),
                       child: ListTile(
-                        leading: Icon(Icons.touch_app_sharp),
+                        leading: Icon(Icons.touch_app_sharp, color: primaryColor),
                         trailing: renewOption == false 
                           ? 
                           Icon(

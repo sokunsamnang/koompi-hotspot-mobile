@@ -11,7 +11,7 @@ description: A new Flutter project.
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 0.8.20+40
+version: 0.8.25+42
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
@@ -32,6 +32,7 @@ dependencies:
   flutter_absolute_path: ^1.0.6
   flutter_form_builder: ^6.0.1
   flutter_image_compress: ^1.0.0
+  flutter_inappwebview: ^5.3.2
   flutter_launcher_icons: ^0.9.0
   flutter_localizations:
     sdk: flutter
@@ -40,7 +41,6 @@ dependencies:
   flutter_material_pickers: ^3.1.0
   flutter_screenutil: ^0.4.2
   flutter_svg: ^0.22.0
-  flutter_inappwebview: ^5.3.2
   flutter_webview_plugin: ^0.4.0
   fluttertoast: ^8.0.7
   font_awesome_flutter: ^9.1.0
@@ -75,6 +75,8 @@ dependencies:
   share: ^2.0.4
   shared_preferences: ^2.0.6
   shimmer: ^2.0.0
+  sliding_sheet: ^0.5.2
+  sliding_up_panel: ^2.0.0+1
   syncfusion_flutter_gauges: ^19.1.69
   url_launcher: ^6.0.6
   wifi_connector: ^1.0.2

@@ -6,10 +6,11 @@ import 'package:provider/provider.dart';
 
 Widget trxHistory(BuildContext context) {
 
+  DateTime now = DateTime.now();
   String prevDay;
-  String today = DateFormat("EEEE, d MMMM, y").format(DateTime.now());
-  String yesterday = DateFormat("EEEE, d MMMM, y").format(DateTime.now().add(Duration(days: -1)));
-
+  String today = DateFormat("EEEE, d MMMM, y").format(now.toLocal());
+  String yesterday = DateFormat("EEEE, d MMMM, y").format(now.toLocal().add(Duration(days: -1)));
+  
   var _lang = AppLocalizeService.of(context);
   List _buildList(List<TrxHistoryModel> history, BuildContext context, String userWallet) {
     List<Widget> listItems = [];
@@ -18,8 +19,9 @@ Widget trxHistory(BuildContext context) {
     print('My History: ${history.length}');
     for (int i = 0; i < history.length; i++) {
       DateTime date = DateTime.parse(history[i].datetime);
-      String dateString = DateFormat("EEEE, d MMMM, y").format(date);
+      String dateString = DateFormat("EEEE, d MMMM, y").format(date.toLocal());
 
+      
       if (today == dateString) {
         dateString = "Today";
       } else if (yesterday == dateString) {
@@ -40,11 +42,12 @@ Widget trxHistory(BuildContext context) {
                 child: Text(
                   dateString,
                   style: GoogleFonts.nunito(
-                    textStyle: TextStyle(color: Colors.black, fontWeight: FontWeight.w700)
+                    textStyle: TextStyle(color: Colors.black, fontSize: 12, fontWeight: FontWeight.w700)
                     ),
                   ),
                 )
               : Offstage(),
+            
             GestureDetector(
               onTap: () async {
                 Navigator.push(
@@ -59,7 +62,15 @@ Widget trxHistory(BuildContext context) {
                 height: 80.0,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12.0),
-                  color: HexColor('00336A'),
+                  color: Colors.white,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.5),
+                      spreadRadius: 2,
+                      blurRadius: 7,
+                      offset: Offset(0, 3), // changes position of shadow
+                    ),
+                  ],
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(10.0),
@@ -86,20 +97,20 @@ Widget trxHistory(BuildContext context) {
                               ? 
                               Text('KOOMPI Fi-Fi',
                                 style: GoogleFonts.nunito(
-                                  textStyle: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w700)
+                                  textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
                                 ),
                               ) 
                               :
                               Text(
                                 userWallet == history[i].destination ? _lang.translate('recieved') : _lang.translate('sent'),
                                 style: GoogleFonts.nunito(
-                                  textStyle: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w700)
+                                  textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
                                 ),
                               ),
                               Text(
                                 AppUtils.timeStampToDateTime(history[i].datetime),
                                 style: GoogleFonts.nunito(
-                                  textStyle: TextStyle(color: Colors.white, fontSize: 9, fontWeight: FontWeight.w400)
+                                  textStyle: TextStyle(color: Colors.black, fontSize: 9, fontWeight: FontWeight.w400)
                                 ),
                               ),
                             ],

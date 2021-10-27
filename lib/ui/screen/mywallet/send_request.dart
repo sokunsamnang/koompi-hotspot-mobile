@@ -54,6 +54,7 @@ class _SendRequestState extends State<SendRequest> {
     setState(() {
       _tokenTypeModel = tokenTypeModel;
       asset = _tokenTypeModel.tokenName;
+      amount.clear();
     });
   }
 
@@ -352,7 +353,9 @@ class _SendRequestState extends State<SendRequest> {
                       autovalidateMode: AutovalidateMode.always,
                       keyboardType: TextInputType.number,
                       inputFormatters: [
-                        FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,5}')),
+                         _tokenTypeModel == _tokenTypeModelList[0] ? FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,3}'))
+                         :
+                         FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,5}'))
                       ],
                       controller: amount,
                       decoration: InputDecoration(

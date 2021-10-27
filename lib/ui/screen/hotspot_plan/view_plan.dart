@@ -453,7 +453,7 @@ class _PlanViewState extends State<PlanView> {
                           child: Text(
                             '${mPlan.balance} RISE', 
                             style: GoogleFonts.nunito(
-                            textStyle: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w700)
+                            textStyle: TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.w700)
                             ),
                           ),
                         ),

@@ -17,6 +17,9 @@ class PromotionScreen extends StatefulWidget {
 
 class _PromotionScreenState extends State<PromotionScreen> {
   
+  bool isUpVoted = false;
+  bool isDownVoted = false;
+
   @override
   void initState(){
     super.initState();
@@ -49,6 +52,7 @@ class _PromotionScreenState extends State<PromotionScreen> {
           child: Padding(
             padding: const EdgeInsets.only(bottom: 30.0),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Stack(
                   children: <Widget>[
@@ -65,6 +69,116 @@ class _PromotionScreenState extends State<PromotionScreen> {
                       ),
                     ),
                   ],
+                ),
+                SizedBox(height: 10),
+                Container(
+                  color: Colors.white,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 8,right: 8),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Row(
+                          children: <Widget>[
+                            isUpVoted == false ?
+                            Container(
+                              alignment: Alignment.center,
+                              child:IconButton(
+                                highlightColor: Colors.transparent,
+                                splashColor: Colors.transparent,
+                                icon: Image.asset('assets/images/up-vote-grey.png'),
+                                onPressed: () {
+                                  setState(() {
+                                    isUpVoted = true;
+                                    isDownVoted = false;
+                                  });
+                                },
+                              ),
+                            )
+                            :
+                            Container(
+                              alignment: Alignment.center,
+                              child:IconButton(
+                                highlightColor: Colors.transparent,
+                                splashColor: Colors.transparent,
+                                icon: Image.asset('assets/images/up-vote-blue.png'),
+                                onPressed: () {
+                                  setState(() {
+                                    isUpVoted = false;
+                                  });
+                                },
+                              ),
+                            ),
+                            SizedBox(width: 5,),
+                            Text('Vote', style: TextStyle(color: Colors.grey)),
+                            SizedBox(width: 5,),
+                            isDownVoted == false ?
+                            Container(
+                              alignment: Alignment.center,
+                              child:IconButton(
+                                highlightColor: Colors.transparent,
+                                splashColor: Colors.transparent,
+                                icon: Image.asset('assets/images/down-vote-grey.png'),
+                                onPressed: () {
+                                  setState(() {
+                                    isDownVoted = true;
+                                    isUpVoted = false;
+                                  });
+                                },
+                              ),
+                            )
+                            :
+                            Container(
+                              alignment: Alignment.center,
+                              child:IconButton(
+                                highlightColor: Colors.transparent,
+                                splashColor: Colors.transparent,
+                                icon: Image.asset('assets/images/down-vote-blue.png'),
+                                onPressed: () {
+                                  setState(() {
+                                    isDownVoted = false;
+                                  });
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          children: <Widget>[
+                            ElevatedButton.icon(
+                              style: ButtonStyle(
+                                backgroundColor: MaterialStateProperty.all<Color>(primaryColor),
+                                shadowColor: MaterialStateProperty.all<Color>(Colors.transparent),
+                              ),
+                              icon: Icon(Icons.share_outlined), 
+                              label: Text('Share'),
+                              onPressed: () {
+                                Share.share('https://koompi.com', subject: 'HOT Promotion!');
+                              },
+                            ),
+                          ],
+                        ),
+                        
+                      ],
+                    ),
+                  ),
+                ),
+                SizedBox(height: 10),
+                Container(
+                  margin: EdgeInsets.symmetric(horizontal: 15),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        AppUtils.timeStampToDate(widget.promotion.date),
+                        style: TextStyle(
+                          fontSize: 11,
+                          color: Colors.black,
+                          letterSpacing: 1.2,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
                 SizedBox(height: 10),
                 Container(
