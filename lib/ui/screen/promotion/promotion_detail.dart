@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:koompi_hotspot/all_export.dart';
 import 'package:koompi_hotspot/core/models/model_notification.dart';
+import 'package:koompi_hotspot/core/models/vote_result.dart';
 import 'package:provider/provider.dart';
 import 'package:linkable/linkable.dart';
 
@@ -19,6 +20,11 @@ class _PromotionScreenState extends State<PromotionScreen> {
   
   bool isUpVoted = false;
   bool isDownVoted = false;
+  
+  // int countVoted = 0;
+
+  Backend _backend = Backend();
+
 
   @override
   void initState(){
@@ -30,6 +36,104 @@ class _PromotionScreenState extends State<PromotionScreen> {
     super.dispose();
   }
   
+  Future<void> _onSubmitUpVoteAdsPost() async {
+    var _lang = AppLocalizeService.of(context);
+
+    dialogLoading(context);
+    try {
+      final result = await InternetAddress.lookup('google.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        print('Internet connected');
+        _backend.response = await PostRequest().upVoteAdsPost(widget.promotion.id.toString());
+        var responseJson = json.decode(_backend.response.body);
+        if (_backend.response.statusCode == 200) {
+          await Provider.of<VoteResultProvider>(context, listen: false).fetchVoteResult(widget.promotion.id);
+          await Provider.of<NotificationProvider>(context, listen: false).fetchNotification();
+          Navigator.of(context).pop();
+        } else {
+          await Components.dialog(
+            context,
+            textAlignCenter(text: responseJson['message']),
+            warningTitleDialog()
+          );
+          Navigator.of(context).pop();
+        }
+      }
+    } on SocketException catch (_) {
+      await Components.dialog(
+        context,
+        textAlignCenter(text: _lang.translate('no_internet_message')),
+        warningTitleDialog()
+      );
+      Navigator.of(context).pop();
+    }
+  }
+
+  Future<void> _onSubmitDownVoteAdsPost() async {
+    var _lang = AppLocalizeService.of(context);
+
+    dialogLoading(context);
+    try {
+      final result = await InternetAddress.lookup('google.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        print('Internet connected');
+        _backend.response = await PostRequest().downVoteAdsPost(widget.promotion.id.toString());
+        var responseJson = json.decode(_backend.response.body);
+        if (_backend.response.statusCode == 200) {
+          await Provider.of<VoteResultProvider>(context, listen: false).fetchVoteResult(widget.promotion.id);
+          await Provider.of<NotificationProvider>(context, listen: false).fetchNotification();
+          Navigator.of(context).pop();
+        } else {
+          await Components.dialog(
+            context,
+            textAlignCenter(text: responseJson['message']),
+            warningTitleDialog()
+          );
+          Navigator.of(context).pop();
+        }
+      }
+    } on SocketException catch (_) {
+      await Components.dialog(
+        context,
+        textAlignCenter(text: _lang.translate('no_internet_message')),
+        warningTitleDialog()
+      );
+      Navigator.of(context).pop();
+    }
+  }
+
+  Future<void> _onSubmitUnVoteAdsPut() async {
+    var _lang = AppLocalizeService.of(context);
+    dialogLoading(context);
+    // dialogLoading(context);
+    try {
+      final result = await InternetAddress.lookup('google.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        print('Internet connected');
+        _backend.response = await PostRequest().unVoteAdsPut(widget.promotion.id.toString());
+        var responseJson = json.decode(_backend.response.body);
+        if (_backend.response.statusCode == 200) {
+          await Provider.of<VoteResultProvider>(context, listen: false).fetchVoteResult(widget.promotion.id);
+          Navigator.of(context).pop();
+        } else {
+          await Components.dialog(
+            context,
+            textAlignCenter(text: responseJson['message']),
+            warningTitleDialog()
+          );
+          Navigator.of(context).pop();
+        }
+      }
+    } on SocketException catch (_) {
+      await Components.dialog(
+        context,
+        textAlignCenter(text: _lang.translate('no_internet_message')),
+        warningTitleDialog()
+      );
+      Navigator.of(context).pop();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     var _lang = AppLocalizeService.of(context);
@@ -80,17 +184,19 @@ class _PromotionScreenState extends State<PromotionScreen> {
                       children: <Widget>[
                         Row(
                           children: <Widget>[
-                            isUpVoted == false ?
+                            voteResult.votedType != "Voted Up" || voteResult.votedType == null ?
                             Container(
                               alignment: Alignment.center,
                               child:IconButton(
                                 highlightColor: Colors.transparent,
                                 splashColor: Colors.transparent,
                                 icon: Image.asset('assets/images/up-vote-grey.png'),
-                                onPressed: () {
+                                onPressed: () async{
+                                  await Provider.of<NotificationProvider>(context, listen: false).fetchNotification();
                                   setState(() {
-                                    isUpVoted = true;
-                                    isDownVoted = false;
+                                    voteResult.votedType = "Voted Up";
+                                    _onSubmitUpVoteAdsPost();
+                                    // if(voteResult.votedType == "Voted Up") _onSubmitUnVoteAdsPut();
                                   });
                                 },
                               ),
@@ -102,27 +208,33 @@ class _PromotionScreenState extends State<PromotionScreen> {
                                 highlightColor: Colors.transparent,
                                 splashColor: Colors.transparent,
                                 icon: Image.asset('assets/images/up-vote-blue.png'),
-                                onPressed: () {
+                                onPressed: () async{
+                                  await Provider.of<NotificationProvider>(context, listen: false).fetchNotification();
                                   setState(() {
-                                    isUpVoted = false;
+                                    voteResult.votedType = null;
+                                    _onSubmitUnVoteAdsPut();
+                                    // if(voteResult.votedType == null) _onSubmitUpVoteAdsPost();
+                                    // else if(voteResult.votedType == "NULL") _onSubmitUpVoteAdsPut();
+                                    // else _onSubmitUpVoteAdsPut();
                                   });
                                 },
                               ),
                             ),
                             SizedBox(width: 5,),
-                            Text('Vote', style: TextStyle(color: Colors.grey)),
+                            Text(widget.promotion.vote.toString(), style: TextStyle(color: Colors.grey)),
                             SizedBox(width: 5,),
-                            isDownVoted == false ?
+                            voteResult.votedType != "Voted Down" || voteResult.votedType == null ?
                             Container(
                               alignment: Alignment.center,
                               child:IconButton(
                                 highlightColor: Colors.transparent,
                                 splashColor: Colors.transparent,
                                 icon: Image.asset('assets/images/down-vote-grey.png'),
-                                onPressed: () {
+                                onPressed: () async{
+                                  await Provider.of<NotificationProvider>(context, listen: false).fetchNotification();
                                   setState(() {
-                                    isDownVoted = true;
-                                    isUpVoted = false;
+                                    voteResult.votedType = "Voted Down";
+                                   _onSubmitDownVoteAdsPost();
                                   });
                                 },
                               ),
@@ -134,9 +246,11 @@ class _PromotionScreenState extends State<PromotionScreen> {
                                 highlightColor: Colors.transparent,
                                 splashColor: Colors.transparent,
                                 icon: Image.asset('assets/images/down-vote-blue.png'),
-                                onPressed: () {
+                                onPressed: () async{
+                                  await Provider.of<NotificationProvider>(context, listen: false).fetchNotification();
                                   setState(() {
-                                    isDownVoted = false;
+                                    voteResult.votedType = null;
+                                    _onSubmitUnVoteAdsPut();
                                   });
                                 },
                               ),

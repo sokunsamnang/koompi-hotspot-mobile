@@ -495,7 +495,7 @@ Widget _planExpire(context){
 Widget _myWalletButton(context){
   var balance = Provider.of<BalanceProvider>(context);
   var _lang = AppLocalizeService.of(context);
-  return Container(
+  return balance.balanceList.isNotEmpty ? Container(
     child: Padding(
       padding: EdgeInsets.symmetric(horizontal: 15),
       child: Center(
@@ -695,6 +695,40 @@ Widget _myWalletButton(context){
                 ),
               ),
             ),
+          ),
+        )
+      ),
+    ),
+  ) : _myWalletError(context);
+}
+
+Widget _myWalletError(context){
+  var _lang = AppLocalizeService.of(context);
+  return Container(
+    child: Padding(
+      padding: EdgeInsets.symmetric(horizontal: 15),
+      child: Center(
+        child: Container(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height * .22,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12.0),
+            color: HexColor('083C5A'),
+          ),
+        child: Padding(
+          padding: EdgeInsets.symmetric(vertical: 20),
+          child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  _lang.translate('selendra_down'),
+                  style: GoogleFonts.nunito(
+                  textStyle: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w700)
+                  ),
+                ),
+              ],
+            ), 
           ),
         )
       ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:koompi_hotspot/all_export.dart';
 import 'package:koompi_hotspot/core/models/model_notification.dart';
+import 'package:koompi_hotspot/core/models/vote_result.dart';
 import 'package:koompi_hotspot/ui/screen/promotion/promotion_detail.dart';
 import 'package:provider/provider.dart';
 
@@ -20,15 +21,18 @@ class PromotionCarousel extends StatelessWidget {
             itemBuilder: (BuildContext context, int index) {
               NotificationModel promotion = notification.notificationList[index];
               return notification.notificationList[index].category == 'Promotion' ? GestureDetector(
-                onTap: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => PromotionScreen(
-                      promotion: promotion,
-                      index: index,
+                onTap: () async => {
+                  await Provider.of<VoteResultProvider>(context, listen: false).fetchVoteResult(promotion.id),
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => PromotionScreen(
+                        promotion: promotion,
+                        index: index,
+                      ),
                     ),
                   ),
-                ),
+                },
                 child: Container(
                   margin: EdgeInsets.symmetric(horizontal: 15),
                   // width: 150.0,
