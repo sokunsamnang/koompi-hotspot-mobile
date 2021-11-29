@@ -261,29 +261,6 @@ class PostRequest with ChangeNotifier {
     return null;
   }
 
-  Future<http.Response> upVoteAdsPut(String id) async {
-
-    await _prefService.read('token').then((value) {
-      _backend.token = Map<String, dynamic>.from({'token': value});
-    });
-
-    if (_backend.token != null) {
-      _backend.bodyEncode = json.encode({
-        /* Convert to Json String */
-        "id": id,
-        "vote": "Voted Up"
-      });
-
-      _backend.response = await http.put(Uri.parse('${ApiService.url}/ads/upvote-ads'),
-          headers: _backend.conceteHeader("authorization", "Bearer ${_backend.token['token']}"),
-          body: _backend.bodyEncode);
-
-      print(_backend.response.body);
-      return _backend.response;
-    }
-    return null;
-  }
-
   Future<http.Response> downVoteAdsPost(String id) async {
 
     await _prefService.read('token').then((value) {
@@ -298,29 +275,6 @@ class PostRequest with ChangeNotifier {
       });
 
       _backend.response = await http.post(Uri.parse('${ApiService.url}/ads/downvote-ads'),
-          headers: _backend.conceteHeader("authorization", "Bearer ${_backend.token['token']}"),
-          body: _backend.bodyEncode);
-
-      print(_backend.response.body);
-      return _backend.response;
-    }
-    return null;
-  }
-
-  Future<http.Response> downVoteAdsPut(String id) async {
-
-    await _prefService.read('token').then((value) {
-      _backend.token = Map<String, dynamic>.from({'token': value});
-    });
-
-    if (_backend.token != null) {
-      _backend.bodyEncode = json.encode({
-        /* Convert to Json String */
-        "id": id,
-        "vote": "Voted Down"
-      });
-
-      _backend.response = await http.put(Uri.parse('${ApiService.url}/ads/downvote-ads'),
           headers: _backend.conceteHeader("authorization", "Bearer ${_backend.token['token']}"),
           body: _backend.bodyEncode);
 
