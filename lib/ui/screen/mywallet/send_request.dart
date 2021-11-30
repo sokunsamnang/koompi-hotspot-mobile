@@ -9,8 +9,9 @@ import 'package:provider/provider.dart';
 
 class SendRequest extends StatefulWidget {
   final String walletKey;
+  final String assetName;
   final String amount;
-  SendRequest(this.walletKey, this.amount);
+  SendRequest(this.walletKey, this.assetName, this.amount);
   @override
   _SendRequestState createState() => _SendRequestState();
 }
@@ -30,6 +31,7 @@ class _SendRequestState extends State<SendRequest> {
     TokenTypeModel(tokenName: 'RISE', imageToken: Image.asset('assets/images/rise-coin-icon.png', width: 22,)),
     TokenTypeModel(tokenName: 'SEL', imageToken: Image.asset('assets/images/sel-coin-icon.png', width: 22,)),
   ];
+
   TokenTypeModel _tokenTypeModel = TokenTypeModel();
   List<DropdownMenuItem<TokenTypeModel>> _tokenTypeModelDropdownList;
   List<DropdownMenuItem<TokenTypeModel>> _buildTokenTypeModelDropdown(
@@ -237,6 +239,17 @@ class _SendRequestState extends State<SendRequest> {
     _tokenTypeModelDropdownList = _buildTokenTypeModelDropdown(_tokenTypeModelList);
     _tokenTypeModel = _tokenTypeModelList[0];
     asset = _tokenTypeModel.tokenName;
+
+    if(widget.assetName == "RISE"){
+      _tokenTypeModel = _tokenTypeModelList[0];
+      asset = _tokenTypeModel.tokenName;  
+    }
+
+    if(widget.assetName == "SEL"){
+      _tokenTypeModel = _tokenTypeModelList[1];
+      asset = _tokenTypeModel.tokenName;  
+    }
+    
     super.initState();
   }
 

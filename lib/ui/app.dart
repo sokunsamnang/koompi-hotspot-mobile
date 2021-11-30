@@ -78,7 +78,7 @@ class _AppState extends State<App> {
           initialRoute: '/',
           navigatorKey: globals.appNavigator,
           routes: {
-            '/navbar': (context) => Navbar(),
+            '/navbar': (context) => Navbar(0),
             '/plan': (context) => HotspotPlan(),
             // '/loginEmail':(context) => LoginPage(),
             '/loginPhone': (context) => LoginPhone(),

@@ -78,7 +78,7 @@ class _CompletePaymentState extends State<CompletePayment> {
                                     () => Navigator.pushAndRemoveUntil(
                                           context,
                                           PageTransition(type: PageTransitionType.bottomToTop, 
-                                            child: Navbar(),
+                                            child: Navbar(0),
                                           ),
                                           ModalRoute.withName('/navbar'),
                                         ));
@@ -106,7 +106,7 @@ class _CompletePaymentState extends State<CompletePayment> {
         onWillPop: () => Navigator.pushAndRemoveUntil(
           context,
           PageTransition(type: PageTransitionType.bottomToTop, 
-            child: Navbar(),
+            child: Navbar(0),
           ),
           ModalRoute.withName('/navbar'),
         ),

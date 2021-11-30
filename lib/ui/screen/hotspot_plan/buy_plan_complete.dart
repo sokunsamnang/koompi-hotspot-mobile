@@ -74,7 +74,7 @@ class _CompletePlanState extends State<CompletePlan> {
                                 Timer(Duration(milliseconds: 500), () => Navigator.pushAndRemoveUntil(
                                   context,
                                   PageTransition(type: PageTransitionType.bottomToTop, 
-                                    child: Navbar(),
+                                    child: Navbar(0),
                                   ),
                                   ModalRoute.withName('/navbar'),
                                 ));
@@ -102,7 +102,7 @@ class _CompletePlanState extends State<CompletePlan> {
         onWillPop: () => Navigator.pushAndRemoveUntil(
           context,
           PageTransition(type: PageTransitionType.bottomToTop, 
-            child: Navbar(),
+            child: Navbar(0),
           ),
           ModalRoute.withName('/navbar'),
         ),

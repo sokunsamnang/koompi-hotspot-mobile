@@ -82,7 +82,7 @@ class StorageServices{
       Navigator.pushAndRemoveUntil(
         context, 
         PageTransition(type: PageTransitionType.rightToLeft, 
-          child: Navbar(),
+          child: Navbar(0),
         ),
         ModalRoute.withName('/navbar'),
       );
@@ -110,7 +110,7 @@ class StorageServices{
           Navigator.pushAndRemoveUntil(
             context, 
             PageTransition(type: PageTransitionType.bottomToTop, 
-              child: Navbar(),
+              child: Navbar(0),
             ),
             ModalRoute.withName('/navbar'),
           );

@@ -30,7 +30,7 @@ class QrScannerState extends State<QrScanner> {
       Navigator.pushReplacement(
         context,
         PageTransition(type: PageTransitionType.bottomToTop, 
-          child: SendRequest(result.code, ""),
+          child: SendRequest(result.code, "", ""),
         ),
         // ModalRoute.withName('/navbar'),
       );

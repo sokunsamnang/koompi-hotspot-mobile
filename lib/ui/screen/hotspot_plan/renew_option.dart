@@ -51,7 +51,7 @@ class _RenewOptionState extends State<RenewOption>
           Navigator.pushAndRemoveUntil(
             context,
             PageTransition(type: PageTransitionType.bottomToTop, 
-              child: Navbar(),
+              child: Navbar(0),
             ),
             ModalRoute.withName('/navbar'),
           );

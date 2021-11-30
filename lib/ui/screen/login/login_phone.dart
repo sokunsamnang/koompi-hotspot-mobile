@@ -90,7 +90,7 @@ class _LoginPhoneState extends State<LoginPhone> {
             Navigator.pushAndRemoveUntil(
               context,
               PageTransition(type: PageTransitionType.rightToLeft, 
-                child: Navbar(),
+                child: Navbar(0),
               ),
               ModalRoute.withName('/navbar'),
             );

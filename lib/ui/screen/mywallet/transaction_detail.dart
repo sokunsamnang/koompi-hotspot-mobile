@@ -320,7 +320,7 @@ class _TransactionDetailState extends State<TransactionDetail> {
                                   Navigator.push(
                                     context,
                                     PageTransition(type: PageTransitionType.bottomToTop, 
-                                      child: SendRequest(history[i].sender, history[i].amount.toString()),
+                                      child: SendRequest(history[i].sender, history[i].symbol, history[i].amount.toString()),
                                     ),
                                   );
                                 },
@@ -351,7 +351,7 @@ class _TransactionDetailState extends State<TransactionDetail> {
                                   Navigator.push(
                                     context,
                                     PageTransition(type: PageTransitionType.bottomToTop, 
-                                      child: SendRequest(history[i].destination, history[i].amount.toString()),
+                                      child: SendRequest(history[i].destination, history[i].symbol, history[i].amount.toString()),
                                     ),
                                   );
                                 },

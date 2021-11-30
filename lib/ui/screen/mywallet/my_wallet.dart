@@ -45,7 +45,7 @@ class _MyWalletState extends State<MyWallet> {
       onWillPop: () => Navigator.pushAndRemoveUntil(
         context,
         PageTransition(type: PageTransitionType.leftToRight, 
-          child: Navbar(),
+          child: Navbar(0),
         ),
         ModalRoute.withName('/navbar'),
       ),
@@ -63,7 +63,7 @@ class _MyWalletState extends State<MyWallet> {
               Navigator.pushAndRemoveUntil(
                 context,
                 PageTransition(type: PageTransitionType.leftToRight, 
-                  child: Navbar(),
+                  child: Navbar(0),
                 ),
                 ModalRoute.withName('/navbar'),
               );
@@ -231,15 +231,29 @@ class _MyWalletState extends State<MyWallet> {
             children: [
               Image.asset('assets/images/rise-coin-icon.png', width: 20),
               SizedBox(width: 10),
-              balance.balanceList[0].token != null ?
+              balance.balanceList[0].token == "Token Suspended" || balance.balanceList[0].token == null ?
               Text(
-                '${balance.balanceList[0].token} ${balance.balanceList[0].symbol}',
+                '${balance.balanceList[0].token}',
+                style: GoogleFonts.nunito(
+                fontSize: 18.0,
+                textStyle: TextStyle(color: Colors.red, fontWeight: FontWeight.w700)
+                ),
+              )
+              : 
+              Text(
+                '${balance.balanceList[0].token}',
+                style: GoogleFonts.nunito(
+                fontSize: 18.0,
+                textStyle: TextStyle(color: Colors.white, fontWeight: FontWeight.w700)
+                ),
+              ),
+              Text(
+                ' ${balance.balanceList[0].symbol}',
                 style: GoogleFonts.nunito(
                 fontSize: 18.0,
                 textStyle: TextStyle(color: Colors.white, fontWeight: FontWeight.w700)
                 ),
               )
-              : CircularProgressIndicator(),
             ],
           ),
           SizedBox(height: 7),
@@ -247,15 +261,29 @@ class _MyWalletState extends State<MyWallet> {
             children: [
               Image.asset('assets/images/sel-coin-icon.png', width: 22),
               SizedBox(width: 10),
-              balance.balanceList[1].token != null ?
+              balance.balanceList[1].token == "Token Suspended" || balance.balanceList[1].token == null ?
               Text(
-                '${balance.balanceList[1].token} ${balance.balanceList[1].symbol}',
+                '${balance.balanceList[1].token}',
+                style: GoogleFonts.nunito(
+                fontSize: 18.0,
+                textStyle: TextStyle(color: Colors.red, fontWeight: FontWeight.w700)
+                ),
+              )
+              : 
+              Text(
+                '${balance.balanceList[1].token}',
+                style: GoogleFonts.nunito(
+                fontSize: 18.0,
+                textStyle: TextStyle(color: Colors.white, fontWeight: FontWeight.w700)
+                ),
+              ),
+              Text(
+                ' ${balance.balanceList[1].symbol}',
                 style: GoogleFonts.nunito(
                 fontSize: 18.0,
                 textStyle: TextStyle(color: Colors.white, fontWeight: FontWeight.w700)
                 ),
               )
-              : CircularProgressIndicator(),
             ],
           ),
         ],
@@ -324,7 +352,7 @@ void _sendWalletBottomSheet(context, String walletKey){
                       await Navigator.push(
                         context, 
                         PageTransition(type: PageTransitionType.bottomToTop,
-                          child: SendRequest(walletKey, "")
+                          child: SendRequest(walletKey, "", "")
                         )
                       );
                     },

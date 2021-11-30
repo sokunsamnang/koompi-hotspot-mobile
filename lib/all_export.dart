@@ -186,3 +186,6 @@ export 'package:koompi_hotspot/ui/components/socialmedia.dart';
 
 // Reuse Widget
 export 'package:koompi_hotspot/ui/reuse_widget/reuse_widget.dart';
+
+// Side Menu Drawer
+export 'package:koompi_hotspot/ui/components/drawer_menu.dart';

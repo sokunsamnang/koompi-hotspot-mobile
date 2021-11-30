@@ -591,14 +591,20 @@ Widget _myWalletButton(context){
                                           ],
                                         ),
                                       ),
-                                      balance.balanceList[0].token != null ?
+                                      balance.balanceList[0].token == "Token Suspended" || balance.balanceList[0].token == null ? 
+                                      Text(
+                                        '${balance.balanceList[0].token}',
+                                        style: GoogleFonts.nunito(
+                                        textStyle: TextStyle(color: Colors.red, fontSize: 18, fontWeight: FontWeight.w700)
+                                        ),
+                                      )
+                                      : 
                                       Text(
                                         '${balance.balanceList[0].token}',
                                         style: GoogleFonts.nunito(
                                         textStyle: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w700)
                                         ),
                                       )
-                                      : CircularProgressIndicator(),
                                     ],
                                   ),
                                 ),
@@ -624,14 +630,20 @@ Widget _myWalletButton(context){
                                           ],
                                         ),
                                       ),
-                                      balance.balanceList[1].token != null ?
+                                      balance.balanceList[1].token == "Token Suspended" || balance.balanceList[1].token == null ? 
+                                      Text(
+                                        '${balance.balanceList[1].token}',
+                                        style: GoogleFonts.nunito(
+                                        textStyle: TextStyle(color: Colors.red, fontSize: 18, fontWeight: FontWeight.w700)
+                                        ),
+                                      )
+                                      : 
                                       Text(
                                         '${balance.balanceList[1].token}',
                                         style: GoogleFonts.nunito(
                                         textStyle: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w700)
                                         ),
                                       )
-                                      : CircularProgressIndicator(),
                                     ],
                                   ),
                                 ),

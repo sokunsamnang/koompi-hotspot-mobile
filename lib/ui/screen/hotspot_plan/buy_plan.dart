@@ -164,7 +164,7 @@ class _HotspotPlanState extends State<HotspotPlan> {
             Navigator.pushAndRemoveUntil(
               context,
               PageTransition(type: PageTransitionType.rightToLeft, 
-                child: Navbar(),
+                child: Navbar(0),
               ),
               ModalRoute.withName('/navbar'),
             );
@@ -209,7 +209,7 @@ class _HotspotPlanState extends State<HotspotPlan> {
         onWillPop: () => Navigator.pushAndRemoveUntil(
           context,
           PageTransition(type: PageTransitionType.rightToLeft, 
-            child: Navbar(),
+            child: Navbar(0),
           ),
           ModalRoute.withName('/navbar'),
         ),

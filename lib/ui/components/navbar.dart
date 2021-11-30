@@ -7,8 +7,9 @@ import 'package:koompi_hotspot/ui/utils/data_connectiviy_service.dart';
 import 'package:koompi_hotspot/ui/utils/auto_login_hotspot_constants.dart' as global;
 
 class Navbar extends StatefulWidget {
-  
-  Navbar({Key key}) : super(key: key);
+  final int selectedIndex;
+
+  Navbar(this.selectedIndex);
   @override
   _NavbarState createState() => _NavbarState();
 }
@@ -99,6 +100,21 @@ class _NavbarState extends State<Navbar> with WidgetsBindingObserver {
   @override
   void initState(){
     super.initState();
+
+    if(widget.selectedIndex == 0){
+      _selectedIndex = 0;
+    }
+    if(widget.selectedIndex == 1){
+      _selectedIndex = 1;
+    }
+    if(widget.selectedIndex == 2){
+      _selectedIndex = 2;
+    }
+    if(widget.selectedIndex == 3){
+      _selectedIndex = 3;
+    }
+
+    // Data Connection AppLifecycleState
     WidgetsBinding.instance.addObserver(this);
     DataConnectivityService()
         .connectivityStreamController
@@ -129,6 +145,7 @@ class _NavbarState extends State<Navbar> with WidgetsBindingObserver {
   Widget build(BuildContext context) {
     var _lang = AppLocalizeService.of(context);
     return Scaffold(
+      drawer: const SideMenu(),
       body: Center(
         child: SafeArea(
           child: _widgetOptions.elementAt(_selectedIndex),
