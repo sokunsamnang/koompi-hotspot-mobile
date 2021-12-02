@@ -67,8 +67,7 @@ class Components {
     {
       Widget action, 
       // String firsTxtBtn = "OK", 
-      Color bgColor = Colors.white, 
-      Color barrierColor, 
+      Color bgColor = Colors.white,
       bool removeBtn: false,
       double pLeft: 10,
       double pRight: 10,
@@ -79,7 +78,6 @@ class Components {
     var result = await showDialog(
       context: context,
       barrierDismissible: false,
-      barrierColor: barrierColor ?? Colors.white.withOpacity(0),
       builder: (BuildContext context) {
         return StatefulBuilder(builder: (context2, setState){
           return AlertDialog(
@@ -110,7 +108,6 @@ class Components {
       Widget action, 
       String firsTxtBtn = "OK", 
       Color bgColor = Colors.white, 
-      Color barrierColor, 
       bool removeBtn: false,
       double pLeft: 10,
       double pRight: 10,
@@ -120,7 +117,6 @@ class Components {
   ) async {
     var result = await showDialog(
       context: context,
-      barrierColor: barrierColor ?? Colors.white.withOpacity(0),
       builder: (BuildContext context) {
         return StatefulBuilder(builder: (context2, setState){
           return AlertDialog(
@@ -172,7 +168,6 @@ class Components {
       String firsTxtBtn = "OK",
       String secTxtBtn = "CANCEL",  
       Color bgColor = Colors.white, 
-      Color barrierColor, 
       bool removeBtn: false,
       double pLeft: 10,
       double pRight: 10,
@@ -182,7 +177,6 @@ class Components {
   ) async {
     var result = await showDialog(
       context: context,
-      barrierColor: barrierColor ?? Colors.white.withOpacity(0),
       builder: (BuildContext context) {
         return StatefulBuilder(builder: (context2, setState){
           return AlertDialog(
@@ -258,8 +252,7 @@ class Components {
     {
       Widget action, 
       String firsTxtBtn = "OK",
-      Color bgColor = Colors.white, 
-      Color barrierColor, 
+      Color bgColor = Colors.white,
       bool removeBtn: false,
       double pLeft: 10,
       double pRight: 10,
@@ -270,7 +263,6 @@ class Components {
     var result = await showDialog(
       context: context,
       barrierDismissible: false,
-      barrierColor: barrierColor ?? Colors.white.withOpacity(0),
       builder: (BuildContext context) {
         return StatefulBuilder(builder: (context2, setState){
           return AlertDialog(
@@ -333,7 +325,6 @@ class Components {
       Widget action, 
       String firsTxtBtn, 
       Color bgColor = Colors.white, 
-      Color barrierColor, 
       bool removeBtn: false,
       double pLeft: 10,
       double pRight: 10,
@@ -346,7 +337,6 @@ class Components {
     var result = await showDialog(
       context: context,
       barrierDismissible: false,
-      barrierColor: barrierColor ?? Colors.white.withOpacity(0),
       builder: (BuildContext context) {
         return StatefulBuilder(builder: (context2, setState){
           return WillPopScope(
@@ -403,7 +393,6 @@ class Components {
       String firsTxtBtn = "OK",
       String secTxtBtn = "CANCEL",  
       Color bgColor = Colors.white, 
-      Color barrierColor, 
       bool removeBtn: false,
       double pLeft: 10,
       double pRight: 10,
@@ -413,7 +402,6 @@ class Components {
   ) async {
     var result = await showDialog(
       context: context,
-      barrierColor: barrierColor ?? Colors.white.withOpacity(0),
       builder: (BuildContext context) {
         return StatefulBuilder(builder: (context2, setState){
           return AlertDialog(
@@ -480,8 +468,7 @@ class Components {
       Widget action, 
       String firsTxtBtn = "OK",
       String secTxtBtn = "CANCEL",  
-      Color bgColor = Colors.white, 
-      Color barrierColor, 
+      Color bgColor = Colors.white,
       bool removeBtn: false,
       double pLeft: 10,
       double pRight: 10,
@@ -494,7 +481,6 @@ class Components {
     var result = await showDialog(
       context: context,
       barrierDismissible: false,
-      barrierColor: barrierColor ?? Colors.white.withOpacity(0),
       builder: (BuildContext context) {
         return StatefulBuilder(builder: (context2, setState){
           return AlertDialog(

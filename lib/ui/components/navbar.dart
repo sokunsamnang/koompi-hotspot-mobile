@@ -19,6 +19,7 @@ class _NavbarState extends State<Navbar> with WidgetsBindingObserver {
 
   int _selectedIndex = 0;
 
+
   final List<Widget> _widgetOptions = <Widget>[
     HomePage(),
     MyLocationView(),

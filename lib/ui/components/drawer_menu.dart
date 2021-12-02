@@ -8,20 +8,43 @@ class SideMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     var _lang = AppLocalizeService.of(context);
     return Drawer(
       child: ListView(
+        physics: NeverScrollableScrollPhysics(),
         children: [
-          // DrawerHeader(
-          //   child: Image.asset("assets/images/logo.png"),
-          // ),
+          DrawerHeader(
+            margin : EdgeInsets.zero,
+            padding: EdgeInsets.zero,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                CircleAvatar(
+                  radius: 40.0,
+                  backgroundImage: mData.image == null ? AssetImage('assets/images/avatar.png') : NetworkImage("${ApiService.getAvatar}/${mData.image}"),
+                ),
+                Text(
+                  mData.fullname ?? 'KOOMPI',
+                  style: TextStyle(
+                      color: Colors.black, fontFamily: "Poppins-Bold"),
+                ),
+                Text(
+                  mData.phone ?? 'KOOMPI',
+                  style: TextStyle(
+                    color: Colors.black),
+                ),
+              ],
+            ),
+          ),
           DrawerListTile(
             title: "Home",
             iconSrc: LineIcons.home,
             press: () {
               Navigator.pushAndRemoveUntil(
                 context,
-                PageTransition(type: PageTransitionType.leftToRight, 
+                PageTransition(type: PageTransitionType.rightToLeft, 
                   child: Navbar(0),
                 ),
                 ModalRoute.withName('/navbar'),
@@ -114,7 +137,7 @@ class DrawerListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      onTap: press,
+      onTap: (press),
       horizontalTitleGap: 0.0,
       leading: Icon(
         iconSrc,
@@ -122,7 +145,7 @@ class DrawerListTile extends StatelessWidget {
       ),
       title: Text(
         title,
-        style: const TextStyle(color: Colors.black54),
+        style: const TextStyle(color: Colors.black),
       ),
     );
   }
