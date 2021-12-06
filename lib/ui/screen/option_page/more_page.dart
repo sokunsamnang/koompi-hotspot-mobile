@@ -1,4 +1,5 @@
 import 'package:koompi_hotspot/all_export.dart';
+import 'package:koompi_hotspot/ui/reuse_widget/customSwitchButton.dart';
 import 'package:koompi_hotspot/ui/screen/option_page/flag_language.dart';
 import 'package:package_info/package_info.dart';
 
@@ -135,6 +136,23 @@ class _MorePageState extends State<MorePage> {
                           ),
                         );
                       },
+                    ),
+                    _buildDivider(),
+                    Row(
+                      children: [
+                        Flexible(
+                          child: ListTile(
+                            leading: Icon(Icons.notifications_active_outlined, color: primaryColor),
+                            title: Text('Alert Notification'),
+                          ),
+                        ),
+                        SwitchControl(
+                          onChanged: (bool value) { 
+                            print(value);
+                          },
+                        ),
+                        SizedBox(width: 15),
+                      ],
                     ),
                     _buildDivider(),
                     ListTile(

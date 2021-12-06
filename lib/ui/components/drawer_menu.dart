@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:koompi_hotspot/all_export.dart';
+import 'package:koompi_hotspot/ui/reuse_widget/customSwitchButton.dart';
 
 class SideMenu extends StatelessWidget {
   const SideMenu({
@@ -87,6 +88,22 @@ class SideMenu extends StatelessWidget {
                 ),
               );
             },
+          ),
+          Row(
+            children: [
+              Flexible(
+                child: DrawerListTile(
+                  title: "Alert Notification",
+                  iconSrc: Icons.notifications_active,
+                ),
+              ),
+              SwitchControl(
+                onChanged: (bool value) { 
+                  print(value);
+                },
+              ),
+              SizedBox(width: 15),
+            ],
           ),
           DrawerListTile(
             title: "More",
