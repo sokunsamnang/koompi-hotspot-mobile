@@ -6,72 +6,67 @@ import 'package:badges/badges.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:koompi_hotspot/ui/utils/globals.dart' as globals;
 
-class HomePage extends StatefulWidget{
-
+class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage>{
+class _HomePageState extends State<HomePage> {
   GlobalKey<ScaffoldState> globalKey = GlobalKey<ScaffoldState>();
 
-  Future<void> configOneSignal() async {
+  // Future<void> configOneSignal() async {
 
-    OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
+  //   OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
 
-    /// Set App Id.
-    OneSignal.shared.setAppId("05805743-ce69-4224-9afb-b2f36bf6c1db");
+  //   /// Set App Id.
+  //   OneSignal.shared.setAppId("05805743-ce69-4224-9afb-b2f36bf6c1db");
 
+  //   /// Get the Onesignal userId and update that into the firebase.
+  //   /// So, that it can be used to send Notifications to users later.̥
+  //   final status = await OneSignal.shared.getDeviceState();
+  //   final String osUserID = status.userId;
+  //   // We will update this once he logged in and goes to dashboard.
+  //   ////updateUserProfile(osUserID);
+  //   // Store it into shared prefs, So that later we can use it.
+  //   // Preferences.setOnesignalUserId(osUserID);
 
-    /// Get the Onesignal userId and update that into the firebase.
-    /// So, that it can be used to send Notifications to users later.̥
-    final status = await OneSignal.shared.getDeviceState();
-    final String osUserID = status.userId;
-    // We will update this once he logged in and goes to dashboard.
-    ////updateUserProfile(osUserID);
-    // Store it into shared prefs, So that later we can use it.
-    // Preferences.setOnesignalUserId(osUserID);
+  //   print(osUserID);
 
-    print(osUserID);
-  
-    // The promptForPushNotificationsWithUserResponse function will show the iOS push notification prompt. We recommend removing the following code and instead using an In-App Message to prompt for notification permission
-    await OneSignal.shared.promptUserForPushNotificationPermission(
-      fallbackToSettings: true,
-    );
+  //   // The promptForPushNotificationsWithUserResponse function will show the iOS push notification prompt. We recommend removing the following code and instead using an In-App Message to prompt for notification permission
+  //   await OneSignal.shared.promptUserForPushNotificationPermission(
+  //     fallbackToSettings: true,
+  //   );
 
+  //   // // The promptForPushNotificationsWithUserResponse function will show the iOS push notification prompt. We recommend removing the following code and instead using an In-App Message to prompt for notification permission
+  //   // OneSignal.shared.promptUserForPushNotificationPermission().then((accepted) {
+  //   //     print("Accepted permission: $accepted");
+  //   // });
 
-    // // The promptForPushNotificationsWithUserResponse function will show the iOS push notification prompt. We recommend removing the following code and instead using an In-App Message to prompt for notification permission
-    // OneSignal.shared.promptUserForPushNotificationPermission().then((accepted) {
-    //     print("Accepted permission: $accepted");
-    // });
+  //   // // Navigator Handler
+  //   // OneSignal.shared.setNotificationOpenedHandler((openedResult) async{
 
-    // // Navigator Handler 
-    // OneSignal.shared.setNotificationOpenedHandler((openedResult) async{
-      
-    //   await Provider.of<NotificationProvider>(context, listen: false).fetchNotification();
+  //   //   await Provider.of<NotificationProvider>(context, listen: false).fetchNotification();
 
-    //   globals.appNavigator.currentState.push(
-    //     PageTransition(type: PageTransitionType.rightToLeft, 
-    //       child: NotificationScreen())
-    //   );
-    // });
-  }
-
+  //   //   globals.appNavigator.currentState.push(
+  //   //     PageTransition(type: PageTransitionType.rightToLeft,
+  //   //       child: NotificationScreen())
+  //   //   );
+  //   // });
+  // }
 
   @override
   void initState() {
     super.initState();
-    configOneSignal();
+    // configOneSignal();
     AppServices.noInternetConnection(globalKey);
     versionCheck(context);
   }
 
-
-  void dispose(){
+  void dispose() {
     super.dispose();
   }
 
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return Scaffold(
       key: globalKey,
       appBar: AppBar(
@@ -81,34 +76,34 @@ class _HomePageState extends State<HomePage>{
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             InkWell(
-              onTap: () async{
+              onTap: () async {
                 Navigator.push(
-                  context, 
-                  PageTransition(type: PageTransitionType.bottomToTop, 
-                    child: MyAccount(),
-                  )
-                );
+                    context,
+                    PageTransition(
+                      type: PageTransitionType.bottomToTop,
+                      child: MyAccount(),
+                    ));
               },
               child: CircleAvatar(
                 backgroundImage: mData.image == null
-                  ? AssetImage('assets/images/avatar.png')
-                  : NetworkImage("${ApiService.getAvatar}/${mData.image}"),
+                    ? AssetImage('assets/images/avatar.png')
+                    : NetworkImage("${ApiService.getAvatar}/${mData.image}"),
               ),
             ),
             RichText(
               text: TextSpan(
                 text: 'KOOMPI ',
                 style: GoogleFonts.nunito(
-                fontSize: 18,
-                letterSpacing: 1.0,
-                textStyle: TextStyle(color: Colors.black, fontWeight: FontWeight.w700)
-                ),
+                    fontSize: 18,
+                    letterSpacing: 1.0,
+                    textStyle: TextStyle(
+                        color: Colors.black, fontWeight: FontWeight.w700)),
                 children: <TextSpan>[
                   TextSpan(
-                    text: 'Fi-Fi', 
+                    text: 'Fi-Fi',
                     style: GoogleFonts.nunito(
-                      textStyle: TextStyle(color: primaryColor, fontWeight: FontWeight.w700)
-                    ),
+                        textStyle: TextStyle(
+                            color: primaryColor, fontWeight: FontWeight.w700)),
                   )
                 ],
               ),
@@ -132,55 +127,60 @@ class _HomePageState extends State<HomePage>{
                 badgeContent: Container(
                   height: 20,
                   width: 20,
-                  child: FlareActor( 
-                    'assets/animations/notification_badge.flr', 
+                  child: FlareActor(
+                    'assets/animations/notification_badge.flr',
                     animation: 'hasNotification',
                   ),
                 ),
                 child: IconButton(
-                  icon: Icon(Icons.notifications), 
-                  color: Colors.grey,
-                  onPressed: (){
-                    Navigator.push(
-                      context, 
-                      PageTransition(type: PageTransitionType.rightToLeft, 
-                        child: NotificationScreen()));
-                  }
-                ),
+                    icon: Icon(Icons.notifications),
+                    color: Colors.grey,
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          PageTransition(
+                              type: PageTransitionType.rightToLeft,
+                              child: NotificationScreen()));
+                    }),
               ),
-              onTap: (){
-              Navigator.push(
-                context, 
-                PageTransition(type: PageTransitionType.rightToLeft, 
-                  child: NotificationScreen()));
+              onTap: () {
+                Navigator.push(
+                    context,
+                    PageTransition(
+                        type: PageTransitionType.rightToLeft,
+                        child: NotificationScreen()));
               },
             ),
             // Badge(
-              // badgeContent: FlareActor( 
-              //   'assets/animations/notification_badge.flr', 
-              //   animation: 'hasNotification',
-              // ),
-              // child: IconButton(
-              //   icon: Icon(Icons.notifications), 
-              //   color: Colors.grey,
-              //   onPressed: (){
-              //     Navigator.push(
-              //       context, 
-              //       PageTransition(type: PageTransitionType.rightToLeft, 
-              //         child: NotificationScreen()));
-              //   }
-              // ),
-            // ),    
+            // badgeContent: FlareActor(
+            //   'assets/animations/notification_badge.flr',
+            //   animation: 'hasNotification',
+            // ),
+            // child: IconButton(
+            //   icon: Icon(Icons.notifications),
+            //   color: Colors.grey,
+            //   onPressed: (){
+            //     Navigator.push(
+            //       context,
+            //       PageTransition(type: PageTransitionType.rightToLeft,
+            //         child: NotificationScreen()));
+            //   }
+            // ),
+            // ),
           ],
         ),
         backgroundColor: Colors.white,
       ),
       body: RefreshIndicator(
-        onRefresh: () async{
-          await Provider.of<GetPlanProvider>(context, listen: false).fetchHotspotPlan();
-          await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
-          await Provider.of<BalanceProvider>(context, listen: false).fetchPortfolio();
-          await Provider.of<NotificationProvider>(context, listen: false).fetchNotification();
+        onRefresh: () async {
+          await Provider.of<GetPlanProvider>(context, listen: false)
+              .fetchHotspotPlan();
+          await Provider.of<TrxHistoryProvider>(context, listen: false)
+              .fetchTrxHistory();
+          await Provider.of<BalanceProvider>(context, listen: false)
+              .fetchPortfolio();
+          await Provider.of<NotificationProvider>(context, listen: false)
+              .fetchNotification();
         },
         child: Container(
           height: MediaQuery.of(context).size.height,
@@ -190,6 +190,6 @@ class _HomePageState extends State<HomePage>{
           ),
         ),
       ),
-    );   
+    );
   }
 }

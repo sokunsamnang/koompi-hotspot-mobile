@@ -16,7 +16,7 @@ class MyLocationViewState extends State<MyLocationView>
   ///=========================================[Declare]=============================================
   /// Controller for FloatActionButtons
   AnimationController _controller;
-  
+
   /// Icons List For FloatActionButtons
   List<IconData> icons = [
     Icons.gps_fixed,
@@ -26,7 +26,6 @@ class MyLocationViewState extends State<MyLocationView>
 
   final Geolocator geolocator = Geolocator();
 
-
   double lat;
   double long;
   double _outZoom = 3.0;
@@ -34,17 +33,18 @@ class MyLocationViewState extends State<MyLocationView>
   double _maxZoom = 18.0;
   double _minZoom = 5.0;
   MapController mapController = new MapController();
+
   /// Is camera Position Lock is enabled default false
   bool isMoving = false;
 
   final PopupController _popupController = PopupController();
-  
+
   // Marker Map
   List<LatLng> _latLngList = [
     // S'ang school
     LatLng(11.357523855156012, 105.00719501166897),
 
-    // The Natte 
+    // The Natte
     LatLng(11.55810367571426, 104.91961299234609),
 
     // NIPTICT
@@ -52,25 +52,23 @@ class MyLocationViewState extends State<MyLocationView>
   ];
   List<Marker> _markers = [];
 
-
-
   ///=========================================[initState]=============================================
-  
+
   @override
   void initState() {
     super.initState();
     AppServices.noInternetConnection(mykey);
     _markers = _latLngList
-    .map((point) => Marker(
-          point: point,
-          width: 50,
-          height: 50,
-          builder: (context) => Image.asset(
-            'assets/images/KOOMPI-Hotspot-Point.png',
-          ),
-          anchorPos: AnchorPos.align(AnchorAlign.top),
-        ))
-    .toList();
+        .map((point) => Marker(
+              point: point,
+              width: 50,
+              height: 50,
+              builder: (context) => Image.asset(
+                'assets/images/KOOMPI-Hotspot-Point.png',
+              ),
+              anchorPos: AnchorPos.align(AnchorAlign.top),
+            ))
+        .toList();
 
     if (long == null || lat == null) {
       ///checks GPS then call localize
@@ -83,7 +81,6 @@ class MyLocationViewState extends State<MyLocationView>
       vsync: this,
       duration: const Duration(milliseconds: 500),
     );
-
   }
 
   @override
@@ -108,11 +105,12 @@ class MyLocationViewState extends State<MyLocationView>
     if (status == LocationPermission.denied && !isGPSOn) {
       loc.Location locationR = loc.Location();
       locationR.requestService();
-    } 
+    }
   }
 
   void localize() {
-    Geolocator.getPositionStream(desiredAccuracy: LocationAccuracy.high).listen((Position position) {
+    Geolocator.getPositionStream(desiredAccuracy: LocationAccuracy.high)
+        .listen((Position position) {
       /// To not call setState when this state is not active
       if (!mounted) {
         return;
@@ -132,10 +130,8 @@ class MyLocationViewState extends State<MyLocationView>
     });
   }
 
-
   ///to show a snackBar after copy
   final GlobalKey<ScaffoldState> mykey = new GlobalKey<ScaffoldState>();
-
 
   ///=========================================[BUILD]=============================================
 
@@ -149,7 +145,8 @@ class MyLocationViewState extends State<MyLocationView>
           child: new FlutterMap(
             mapController: mapController,
             options: new MapOptions(
-              interactiveFlags: InteractiveFlag.pinchZoom | InteractiveFlag.drag,
+              interactiveFlags:
+                  InteractiveFlag.pinchZoom | InteractiveFlag.drag,
               center: new LatLng(lat, long),
               zoom: _inZoom,
               maxZoom: _maxZoom,
@@ -157,13 +154,13 @@ class MyLocationViewState extends State<MyLocationView>
               plugins: [
                 new MarkerClusterPlugin(),
               ],
-              onTap: (_) => _popupController.hidePopup(),
+              onTap: (_) => _popupController.hideAllPopups(),
             ),
             layers: [
               new TileLayerOptions(
-                urlTemplate: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-                subdomains: ['a', 'b', 'c']
-              ),
+                  urlTemplate:
+                      "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                  subdomains: ['a', 'b', 'c']),
               new MarkerLayerOptions(
                 markers: [
                   ///========[Live Location]==========
@@ -205,13 +202,12 @@ class MyLocationViewState extends State<MyLocationView>
                 popupOptions: PopupOptions(
                     popupSnap: PopupSnap.markerTop,
                     popupController: _popupController,
-                    popupBuilder: (_, marker) => Container()
-                ),
+                    popupBuilder: (_, marker) => Container()),
                 builder: (context, markers) {
                   return Container(
                     alignment: Alignment.center,
-                    decoration:
-                        BoxDecoration(color: primaryColor, shape: BoxShape.circle),
+                    decoration: BoxDecoration(
+                        color: primaryColor, shape: BoxShape.circle),
                     child: Text('${markers.length}'),
                   );
                 },
@@ -229,17 +225,17 @@ class MyLocationViewState extends State<MyLocationView>
           child: new FlutterMap(
             mapController: mapController,
             options: new MapOptions(
-              interactiveFlags: InteractiveFlag.pinchZoom | InteractiveFlag.drag,
-              center: new LatLng(11.5564, 104.9282),
-              zoom: _outZoom,
-              minZoom: _minZoom,
-              maxZoom: _maxZoom
-            ),
+                interactiveFlags:
+                    InteractiveFlag.pinchZoom | InteractiveFlag.drag,
+                center: new LatLng(11.5564, 104.9282),
+                zoom: _outZoom,
+                minZoom: _minZoom,
+                maxZoom: _maxZoom),
             layers: [
               new TileLayerOptions(
-                urlTemplate: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-                subdomains: ['a', 'b', 'c']
-              ),
+                  urlTemplate:
+                      "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                  subdomains: ['a', 'b', 'c']),
             ],
           ),
         );
@@ -252,8 +248,9 @@ class MyLocationViewState extends State<MyLocationView>
 
     /// Show Snack Bar Messages
     _showSnackBar(String message) {
-      final snackBar =  SnackBar(content: Text('$message'), duration: Duration(seconds: 1));
-     
+      final snackBar =
+          SnackBar(content: Text('$message'), duration: Duration(seconds: 1));
+
       // ignore: deprecated_member_use
       mykey.currentState..showSnackBar(snackBar);
     }
@@ -262,8 +259,9 @@ class MyLocationViewState extends State<MyLocationView>
     return Scaffold(
       key: mykey,
       appBar: AppBar(
-        title: Text(_lang.translate('fifi_map'), style: TextStyle(color: Colors.black, fontFamily: 'Medium')),
-        backgroundColor: Colors.white,  
+        title: Text(_lang.translate('fifi_map'),
+            style: TextStyle(color: Colors.black, fontFamily: 'Medium')),
+        backgroundColor: Colors.white,
         iconTheme: IconThemeData(
           color: Colors.black, //change your color here
         ),
@@ -280,7 +278,10 @@ class MyLocationViewState extends State<MyLocationView>
         heroTag: null,
         backgroundColor: backgroundColor,
         mini: false,
-        child: Icon(icons[0], color: foregroundColor,),
+        child: Icon(
+          icons[0],
+          color: foregroundColor,
+        ),
         onPressed: () {
           ///onPress LockCamera button
           if (isMoving == false) {

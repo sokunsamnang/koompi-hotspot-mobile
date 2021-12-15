@@ -1,6 +1,7 @@
 import 'package:koompi_hotspot/all_export.dart';
 import 'package:koompi_hotspot/core/models/model_notification.dart';
 import 'package:koompi_hotspot/ui/screen/option_page/flag_language.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:provider/provider.dart';
 
 class LoginPhone extends StatefulWidget {
@@ -21,7 +22,7 @@ class _LoginPhoneState extends State<LoginPhone> {
   String token;
   String messageAlert;
   bool isLoading = false;
-  
+
   @override
   void initState() {
     AppServices.noInternetConnection(globalKey);
@@ -41,14 +42,13 @@ class _LoginPhoneState extends State<LoginPhone> {
     passwordController.dispose();
   }
 
-  void _submitLogin(){
+  void _submitLogin() {
     final form = formKey.currentState;
 
-    if(form.validate()){
+    if (form.validate()) {
       form.save();
       login();
-    }
-    else{
+    } else {
       setState(() {
         autovalidateMode = AutovalidateMode.always;
       });
@@ -56,8 +56,10 @@ class _LoginPhoneState extends State<LoginPhone> {
   }
 
   //check connection and login
-  Future <void> login() async {
+  Future<void> login() async {
     var _lang = AppLocalizeService.of(context);
+    var status = await OneSignal.shared.getPermissionSubscriptionState();
+    String tokenId = status.subscriptionStatus.userId;
 
     dialogLoading(context);
     try {
@@ -65,37 +67,43 @@ class _LoginPhoneState extends State<LoginPhone> {
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
         print('Internet connected');
         var response = await PostRequest().userLogInPhone(
-          StorageServices.removeZero(phoneController.text),
-          passwordController.text);
-          
+            StorageServices.removeZero(phoneController.text),
+            passwordController.text);
+
         var responseJson = json.decode(response.body);
 
         if (response.statusCode == 200) {
           token = responseJson['token'];
-            await GetRequest().getUserProfile(token)
-              .then((values) {
-                setState(() {
-                  isLoading = true;
-                });
-
+          await PostRequest().addOnesignalId(token, tokenId);
+          await GetRequest().getUserProfile(token).then((values) {
+            setState(() {
+              isLoading = true;
+            });
           });
-          if(token != null){
+          if (token != null) {
+            await PostRequest().addOnesignalId(token, tokenId);
             await StorageServices().saveString('token', token);
-            await StorageServices().saveString('phone', '0${StorageServices.removeZero(phoneController.text)}');
-            await StorageServices().saveString('password', passwordController.text);
-            await Provider.of<BalanceProvider>(context, listen: false).fetchPortfolio();
-            await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory(); 
-            await Provider.of<GetPlanProvider>(context, listen: false).fetchHotspotPlan();
-            await Provider.of<NotificationProvider>(context, listen: false).fetchNotification();
+            await StorageServices().saveString('phone',
+                '0${StorageServices.removeZero(phoneController.text)}');
+            await StorageServices()
+                .saveString('password', passwordController.text);
+            await Provider.of<BalanceProvider>(context, listen: false)
+                .fetchPortfolio();
+            await Provider.of<TrxHistoryProvider>(context, listen: false)
+                .fetchTrxHistory();
+            await Provider.of<GetPlanProvider>(context, listen: false)
+                .fetchHotspotPlan();
+            await Provider.of<NotificationProvider>(context, listen: false)
+                .fetchNotification();
             Navigator.pushAndRemoveUntil(
               context,
-              PageTransition(type: PageTransitionType.rightToLeft, 
+              PageTransition(
+                type: PageTransitionType.rightToLeft,
                 child: Navbar(0),
               ),
               ModalRoute.withName('/navbar'),
             );
-          }
-          else {
+          } else {
             Navigator.of(context).pop();
             try {
               messageAlert = responseJson['error']['message'];
@@ -103,52 +111,40 @@ class _LoginPhoneState extends State<LoginPhone> {
               messageAlert = responseJson['message'];
             }
           }
-        } 
-        else if (response.statusCode == 401){
-          
+        } else if (response.statusCode == 401) {
           await Components.dialog(
-            context,
-            textAlignCenter(text: responseJson['message']),
-            warningTitleDialog()
-          );
+              context,
+              textAlignCenter(text: responseJson['message']),
+              warningTitleDialog());
           Navigator.of(context).pop();
-        }
-        else if (response.statusCode >= 500 && response.statusCode < 600){
-
+        } else if (response.statusCode >= 500 && response.statusCode < 600) {
           await Components.dialog(
-            context,
-            textAlignCenter(text: responseJson['message']),
-            warningTitleDialog()
-          );
+              context,
+              textAlignCenter(text: responseJson['message']),
+              warningTitleDialog());
           Navigator.of(context).pop();
         }
       }
-    } 
-    on SocketException catch(_){
+    } on SocketException catch (_) {
       print('No network socket exception');
       await Components.dialog(
-        context,
-        textAlignCenter(text: _lang.translate('no_internet_message')),
-        warningTitleDialog()
-      );
+          context,
+          textAlignCenter(text: _lang.translate('no_internet_message')),
+          warningTitleDialog());
       Navigator.of(context).pop();
-    }
-    on TimeoutException catch(_) {
+    } on TimeoutException catch (_) {
       print('Time out exception');
       await Components.dialog(
-        context,
-        textAlignCenter(text: _lang.translate('request_timeout')),
-        warningTitleDialog()
-      );
+          context,
+          textAlignCenter(text: _lang.translate('request_timeout')),
+          warningTitleDialog());
       Navigator.of(context).pop();
-    }
-    on FormatException catch(_){
+    } on FormatException catch (_) {
       print('FormatException');
       await Components.dialog(
-        context,
-        textAlignCenter(text: _lang.translate('server_error')),
-        warningTitleDialog()
-      );
+          context,
+          textAlignCenter(text: _lang.translate('server_error')),
+          warningTitleDialog());
       Navigator.of(context).pop();
     }
   }
@@ -162,11 +158,12 @@ class _LoginPhoneState extends State<LoginPhone> {
       _obscureText = !_obscureText;
     });
   }
-  
+
   @override
   Widget build(BuildContext context) {
     ScreenUtil.instance = ScreenUtil.getInstance()..init(context);
-    ScreenUtil.instance = ScreenUtil(width: 750, height: 1334, allowFontScaling: true);
+    ScreenUtil.instance =
+        ScreenUtil(width: 750, height: 1334, allowFontScaling: true);
 
     return Scaffold(
       key: globalKey,
@@ -197,11 +194,10 @@ class _LoginPhoneState extends State<LoginPhone> {
                         child: Icon(Icons.language, color: Colors.black),
                         onPressed: () {
                           Navigator.push(
-                            context, 
-                            PageTransition(type: PageTransitionType.rightToLeft, 
-                              child: LanguageView()
-                            )
-                          );
+                              context,
+                              PageTransition(
+                                  type: PageTransitionType.rightToLeft,
+                                  child: LanguageView()));
                         },
                       ),
                     ),
@@ -210,13 +206,21 @@ class _LoginPhoneState extends State<LoginPhone> {
                       width: 150,
                       height: 100,
                       child: CircleAvatar(
-                        backgroundImage: AssetImage('assets/images/Koompi-WiFi-Icon.png')
-                      ),
+                          backgroundImage:
+                              AssetImage('assets/images/Koompi-WiFi-Icon.png')),
                     ),
                     Padding(
                       padding: EdgeInsets.only(left: 28.0, right: 28.0),
-                      child: formLoginPhone(context, phoneController, passwordController,
-                          _obscureText, _toggle, _email, _password, formKey, _submitLogin),
+                      child: formLoginPhone(
+                          context,
+                          phoneController,
+                          passwordController,
+                          _obscureText,
+                          _toggle,
+                          _email,
+                          _password,
+                          formKey,
+                          _submitLogin),
                     ),
                   ],
                 ),

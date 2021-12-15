@@ -1,23 +1,20 @@
 import 'package:http/http.dart' as http;
 import 'package:koompi_hotspot/all_export.dart';
 
-class GetRequest with ChangeNotifier{
-
+class GetRequest with ChangeNotifier {
   String alertText;
   var _mData = new ModelUserData();
   ModelUserData get mUser => _mData;
 
-  
   StorageServices _prefService = StorageServices();
   Backend _backend = Backend();
 
-
   Future<http.Response> getUserProfile(String _token) async {
-    var response = await http.get(Uri.parse("${ApiService.url}/dashboard"), 
+    var response = await http.get(Uri.parse("${ApiService.url}/dashboard"),
         headers: <String, String>{
-        "accept": "application/json",
-        "authorization": "Bearer " + _token,
-    });
+          "accept": "application/json",
+          "authorization": "Bearer " + _token,
+        });
     var responseBody = json.decode(response.body);
     mData = ModelUserData.fromJson(responseBody);
 
@@ -32,8 +29,10 @@ class GetRequest with ChangeNotifier{
       _backend.token = Map<String, dynamic>.from({"token": value});
     });
     if (_backend.token != null) {
-      _backend.response = await http.get(Uri.parse("${ApiService.url}/selendra/get-wallet"),
-      headers: _backend.conceteHeader("authorization", "Bearer ${_backend.token['token']}"));
+      _backend.response = await http.get(
+          Uri.parse("${ApiService.url}/selendra/get-wallet"),
+          headers: _backend.conceteHeader(
+              "authorization", "Bearer ${_backend.token['token']}"));
       return _backend.response;
     }
     return null;
@@ -45,8 +44,10 @@ class GetRequest with ChangeNotifier{
       _backend.token = Map<String, dynamic>.from({"token": value});
     });
     if (_backend.token != null) {
-      _backend.response = await http.get(Uri.parse("${ApiService.url}/selendra/history"),
-      headers: _backend.conceteHeader("authorization", "Bearer ${_backend.token['token']}"));
+      _backend.response = await http.get(
+          Uri.parse("${ApiService.url}/selendra/history"),
+          headers: _backend.conceteHeader(
+              "authorization", "Bearer ${_backend.token['token']}"));
       return _backend.response;
     }
     return null;
@@ -58,8 +59,10 @@ class GetRequest with ChangeNotifier{
       _backend.token = Map<String, dynamic>.from({"token": value});
     });
     if (_backend.token != null) {
-      _backend.response = await http.get(Uri.parse("${ApiService.url}/dashboard/notification"),
-      headers: _backend.conceteHeader("authorization", "Bearer ${_backend.token['token']}"));
+      _backend.response = await http.get(
+          Uri.parse("${ApiService.url}/dashboard/notification"),
+          headers: _backend.conceteHeader(
+              "authorization", "Bearer ${_backend.token['token']}"));
       return _backend.response;
     }
     return null;
@@ -71,13 +74,14 @@ class GetRequest with ChangeNotifier{
       _backend.token = Map<String, dynamic>.from({"token": value});
     });
     if (_backend.token != null) {
-      _backend.response = await http.get(Uri.parse("${ApiService.url}/ads/get-voted/36"),
-      headers: _backend.conceteHeader("authorization", "Bearer ${_backend.token['token']}"));
+      _backend.response = await http.get(
+          Uri.parse("${ApiService.url}/ads/get-voted/36"),
+          headers: _backend.conceteHeader(
+              "authorization", "Bearer ${_backend.token['token']}"));
       return _backend.response;
     }
     return null;
   }
-  
 
   Future<http.Response> getPortfolio() async {
     /* Expired Token In Welcome Screen */
@@ -85,11 +89,12 @@ class GetRequest with ChangeNotifier{
       _backend.token = Map<String, dynamic>.from({"token": value});
     });
     if (_backend.token != null) {
-      _backend.response = await http.get(Uri.parse("${ApiService.url}/selendra/portfolio"),
-      headers: _backend.conceteHeader("authorization", "Bearer ${_backend.token['token']}"));
+      _backend.response = await http.get(
+          Uri.parse("${ApiService.url}/selendra/portfolio"),
+          headers: _backend.conceteHeader(
+              "authorization", "Bearer ${_backend.token['token']}"));
       return _backend.response;
     }
     return null;
   }
-
 }

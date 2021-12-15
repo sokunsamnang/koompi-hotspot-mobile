@@ -4,7 +4,8 @@ import 'package:koompi_hotspot/all_export.dart';
 import 'package:koompi_hotspot/ui/screen/web_view/captive_portal_web.dart';
 import 'package:koompi_hotspot/ui/screen/wifi/wifi.dart';
 import 'package:koompi_hotspot/ui/utils/data_connectiviy_service.dart';
-import 'package:koompi_hotspot/ui/utils/auto_login_hotspot_constants.dart' as global;
+import 'package:koompi_hotspot/ui/utils/auto_login_hotspot_constants.dart'
+    as global;
 
 class Navbar extends StatefulWidget {
   final int selectedIndex;
@@ -15,10 +16,7 @@ class Navbar extends StatefulWidget {
 }
 
 class _NavbarState extends State<Navbar> with WidgetsBindingObserver {
-
-
   int _selectedIndex = 0;
-
 
   final List<Widget> _widgetOptions = <Widget>[
     HomePage(),
@@ -27,27 +25,23 @@ class _NavbarState extends State<Navbar> with WidgetsBindingObserver {
     MorePage(),
   ];
 
-  
-
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     super.didChangeAppLifecycleState(state);
-    switch(state) {
+    switch (state) {
       case AppLifecycleState.resumed:
         break;
       case AppLifecycleState.paused:
-          DataConnectivityService()
+        DataConnectivityService()
             .connectivityStreamController
             .stream
             .listen((event) {
           print(event);
           if (event == DataConnectionStatus.connected) {
             return null;
-          } 
-          else if(event == DataConnectionStatus.disconnected){
+          } else if (event == DataConnectionStatus.disconnected) {
             _paused();
-          }
-          else {
+          } else {
             return null;
           }
         });
@@ -64,13 +58,11 @@ class _NavbarState extends State<Navbar> with WidgetsBindingObserver {
     return inputWeb();
   }
 
-
   final flutterWebViewPlugin = FlutterWebviewPlugin();
 
+  StreamSubscription<WebViewStateChanged> _onchanged;
 
-  StreamSubscription<WebViewStateChanged> _onchanged; 
-
-  Future inputWeb() async{
+  Future inputWeb() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
       global.phone = prefs.getString('phone');
@@ -78,18 +70,26 @@ class _NavbarState extends State<Navbar> with WidgetsBindingObserver {
 
       print('Run web portal');
       flutterWebViewPlugin.close();
-      flutterWebViewPlugin.launch(selectedUrl, hidden: true, withJavascript: true, ignoreSSLErrors: true);
-      _onchanged = flutterWebViewPlugin.onStateChanged.listen((WebViewStateChanged state) {
+      flutterWebViewPlugin.launch(selectedUrl,
+          hidden: true, withJavascript: true, ignoreSSLErrors: true);
+      _onchanged = flutterWebViewPlugin.onStateChanged
+          .listen((WebViewStateChanged state) {
         if (mounted) {
-          if(state.type== WebViewState.finishLoad){ // if the full website page loaded
+          if (state.type == WebViewState.finishLoad) {
+            // if the full website page loaded
             print('web laoded');
-            flutterWebViewPlugin.evalJavascript('document.getElementById("user").value="${global.phone}"'); // Replace with the id of username field
-            flutterWebViewPlugin.evalJavascript('document.getElementById("password").value="${global.password}"'); // Replace with the id of password field
-            flutterWebViewPlugin.evalJavascript('document.getElementById("btnlogin").click()');  // Replace with Submit button id
+            flutterWebViewPlugin.evalJavascript(
+                'document.getElementById("user").value="${global.phone}"'); // Replace with the id of username field
+            flutterWebViewPlugin.evalJavascript(
+                'document.getElementById("password").value="${global.password}"'); // Replace with the id of password field
+            flutterWebViewPlugin.evalJavascript(
+                'document.getElementById("btnlogin").click()'); // Replace with Submit button id
 
-          }else if (state.type== WebViewState.abortLoad){ // if there is a problem with loading the url
+          } else if (state.type == WebViewState.abortLoad) {
+            // if there is a problem with loading the url
             print("there is a problem...");
-          } else if(state.type== WebViewState.startLoad){ // if the url started loading
+          } else if (state.type == WebViewState.startLoad) {
+            // if the url started loading
             print("start loading...");
           }
         }
@@ -97,21 +97,20 @@ class _NavbarState extends State<Navbar> with WidgetsBindingObserver {
     });
   }
 
-
   @override
-  void initState(){
+  void initState() {
     super.initState();
 
-    if(widget.selectedIndex == 0){
+    if (widget.selectedIndex == 0) {
       _selectedIndex = 0;
     }
-    if(widget.selectedIndex == 1){
+    if (widget.selectedIndex == 1) {
       _selectedIndex = 1;
     }
-    if(widget.selectedIndex == 2){
+    if (widget.selectedIndex == 2) {
       _selectedIndex = 2;
     }
-    if(widget.selectedIndex == 3){
+    if (widget.selectedIndex == 3) {
       _selectedIndex = 3;
     }
 
@@ -124,24 +123,21 @@ class _NavbarState extends State<Navbar> with WidgetsBindingObserver {
       print(event);
       if (event == DataConnectionStatus.connected) {
         return null;
-      } 
-      else if(event == DataConnectionStatus.disconnected){
+      } else if (event == DataConnectionStatus.disconnected) {
         _paused();
-      }
-      else {
+      } else {
         return null;
       }
     });
   }
 
   @override
-  void dispose(){
+  void dispose() {
     // _onchanged.cancel();
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
 
-  
   @override
   Widget build(BuildContext context) {
     var _lang = AppLocalizeService.of(context);
@@ -154,7 +150,7 @@ class _NavbarState extends State<Navbar> with WidgetsBindingObserver {
       ),
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
-          color: Colors.white, 
+          color: Colors.white,
           boxShadow: [
             BoxShadow(blurRadius: 20, color: Colors.black.withOpacity(.1))
           ],

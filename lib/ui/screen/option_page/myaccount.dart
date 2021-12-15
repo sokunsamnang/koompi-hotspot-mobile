@@ -5,7 +5,6 @@ import 'package:koompi_hotspot/all_export.dart';
 import 'package:koompi_hotspot/ui/reuse_widget/datePicker.dart';
 import 'package:koompi_hotspot/ui/reuse_widget/locationDropDown.dart';
 
-
 class MyAccount extends StatefulWidget {
   @override
   _MyAccountState createState() => _MyAccountState();
@@ -48,7 +47,8 @@ class _MyAccountState extends State<MyAccount>
 
   Future<void> getAssettoFile(List<Asset> resultList) async {
     for (Asset asset in resultList) {
-      final filePath = await FlutterAbsolutePath.getAbsolutePath(asset.identifier);
+      final filePath =
+          await FlutterAbsolutePath.getAbsolutePath(asset.identifier);
       _image = File(filePath);
       if (filePath != null) {
         print("Image $filePath");
@@ -89,7 +89,8 @@ class _MyAccountState extends State<MyAccount>
           phoneController.text,
           gender,
           birthdate,
-          address);
+          address,
+        );
         if (response.statusCode == 200) {
           setState(() {
             StorageServices().updateUserData(context);
@@ -97,19 +98,17 @@ class _MyAccountState extends State<MyAccount>
         } else {
           print('update info not Successful');
           await Components.dialog(
-            context,
-            textAlignCenter(text: _lang.translate('update_info_error')),
-            warningTitleDialog()
-          );
+              context,
+              textAlignCenter(text: _lang.translate('update_info_error')),
+              warningTitleDialog());
           Navigator.of(context).pop();
         }
       }
     } on SocketException catch (_) {
       await Components.dialog(
-        context,
-        textAlignCenter(text: _lang.translate('no_internet_message')),
-        warningTitleDialog()
-      );
+          context,
+          textAlignCenter(text: _lang.translate('no_internet_message')),
+          warningTitleDialog());
       Navigator.of(context).pop();
     }
   }
@@ -159,7 +158,6 @@ class _MyAccountState extends State<MyAccount>
 
   var dateFormart = new DateFormat('dd-MMM-yyyy');
 
-
   Future<Null> _selectDate(BuildContext context) async {
     final DateTime picked = await showDatePicker(
       context: context,
@@ -170,9 +168,7 @@ class _MyAccountState extends State<MyAccount>
         return Theme(
           data: ThemeData.light().copyWith(
             colorScheme: ColorScheme.light(primary: primaryColor),
-            buttonTheme: ButtonThemeData(
-              textTheme: ButtonTextTheme.primary
-            ),
+            buttonTheme: ButtonThemeData(textTheme: ButtonTextTheme.primary),
           ),
           child: child,
         );
@@ -191,7 +187,8 @@ class _MyAccountState extends State<MyAccount>
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Text(_lang.translate('edit_account'), style: TextStyle(color: Colors.black, fontFamily: 'Medium')),
+        title: Text(_lang.translate('edit_account'),
+            style: TextStyle(color: Colors.black, fontFamily: 'Medium')),
         leading: Builder(builder: (BuildContext context) {
           return IconButton(
               icon: Icon(
@@ -256,11 +253,11 @@ class _MyAccountState extends State<MyAccount>
                                     fit: BoxFit.cover,
                                   )
                                 : CircleAvatar(
-                                  backgroundImage: mData.image == null
-                                      ? AssetImage('assets/images/avatar.png')
-                                      : NetworkImage(
-                                          "${ApiService.getAvatar}/${mData.image}"),
-                                ),
+                                    backgroundImage: mData.image == null
+                                        ? AssetImage('assets/images/avatar.png')
+                                        : NetworkImage(
+                                            "${ApiService.getAvatar}/${mData.image}"),
+                                  ),
                           ),
                         ),
                       ),
@@ -268,10 +265,10 @@ class _MyAccountState extends State<MyAccount>
                     Center(
                       child: TextButton(
                         child: Text(_lang.translate('edit_profile_picture'),
-                          style: TextStyle(
-                              color: primaryColor,
-                              fontSize: 20.0,
-                              fontFamily: 'Medium')),
+                            style: TextStyle(
+                                color: primaryColor,
+                                fontSize: 20.0,
+                                fontFamily: 'Medium')),
                         onPressed: () => loadAsset(),
                       ),
                     ),
@@ -279,13 +276,17 @@ class _MyAccountState extends State<MyAccount>
                     Text(_lang.translate('fullname')),
                     SizedBox(height: 10.0),
                     TextFormField(
-                      validator: (val) =>
-                          val.length < 3 ? _lang.translate('fullname_validate') : null,
+                      validator: (val) => val.length < 3
+                          ? _lang.translate('fullname_validate')
+                          : null,
                       onSaved: (val) => fullnameController.text = val,
                       autovalidateMode: AutovalidateMode.always,
                       controller: fullnameController ?? '',
                       decoration: InputDecoration(
-                        prefixIcon: Icon(LineIcons.user, color: primaryColor,),
+                        prefixIcon: Icon(
+                          LineIcons.user,
+                          color: primaryColor,
+                        ),
                         hintText: _lang.translate('fullname'),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12.0),
@@ -301,15 +302,11 @@ class _MyAccountState extends State<MyAccount>
                         ),
                         errorBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12.0),
-                          borderSide: BorderSide(
-                            color: Colors.red
-                          ),
+                          borderSide: BorderSide(color: Colors.red),
                         ),
                         focusedErrorBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12.0),
-                          borderSide: BorderSide(
-                            color: Colors.red
-                          ),
+                          borderSide: BorderSide(color: Colors.red),
                         ),
                       ),
                     ),
@@ -320,7 +317,10 @@ class _MyAccountState extends State<MyAccount>
                       readOnly: true,
                       controller: phoneController ?? '',
                       decoration: InputDecoration(
-                        prefixIcon: Icon(LineIcons.phone, color: primaryColor,),
+                        prefixIcon: Icon(
+                          LineIcons.phone,
+                          color: primaryColor,
+                        ),
                         hintText: _lang.translate('phone_number_tf'),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12.0),
@@ -336,22 +336,19 @@ class _MyAccountState extends State<MyAccount>
                         ),
                         errorBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12.0),
-                          borderSide: BorderSide(
-                            color: Colors.red
-                          ),
+                          borderSide: BorderSide(color: Colors.red),
                         ),
                         focusedErrorBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12.0),
-                          borderSide: BorderSide(
-                            color: Colors.red
-                          ),
+                          borderSide: BorderSide(color: Colors.red),
                         ),
                       ),
                     ),
                     SizedBox(height: 16.0),
                     Text(_lang.translate('dateofbirth')),
                     SizedBox(height: 10.0),
-                    dateOfbirth(selectedDate, _selectDate, dateFormart, context),
+                    dateOfbirth(
+                        selectedDate, _selectDate, dateFormart, context),
                     SizedBox(height: 16.0),
                     Text(_lang.translate('locaton')),
                     SizedBox(height: 10.0),
@@ -459,4 +456,3 @@ class _MyAccountState extends State<MyAccount>
     );
   }
 }
-

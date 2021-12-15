@@ -1,7 +1,6 @@
 import 'package:koompi_hotspot/all_export.dart';
 import 'package:http/http.dart' as http;
 
-
 class PostRequest with ChangeNotifier {
   Backend _backend = Backend();
   var _mUser = new ModelUserData();
@@ -18,8 +17,10 @@ class PostRequest with ChangeNotifier {
       "password": password
     });
 
-    _backend.response = await http.post(Uri.parse('${ApiService.url}/auth/login-phone'),
-        headers: _backend.conceteHeader(null, null), body: _backend.bodyEncode);
+    _backend.response = await http.post(
+        Uri.parse('${ApiService.url}/auth/login-phone'),
+        headers: _backend.conceteHeader(null, null),
+        body: _backend.bodyEncode);
 
     print(_backend.response.body);
     return _backend.response;
@@ -35,16 +36,37 @@ class PostRequest with ChangeNotifier {
       "phone": phone,
       "email": "",
       "birthdate": birthdate,
-      "address": address
+      "address": address,
     });
-    _backend.response = await http.put(Uri.parse('${ApiService.url}/auth/complete-info'),
-        headers: _backend.conceteHeader(null, null), body: _backend.bodyEncode);
+    _backend.response = await http.put(
+        Uri.parse('${ApiService.url}/auth/complete-info'),
+        headers: _backend.conceteHeader(null, null),
+        body: _backend.bodyEncode);
     return _backend.response;
   }
 
+  /* one signal alert notification id Information */
+  Future<http.Response> addOnesignalId(String token, String playerid) async {
+    if (token != null) {
+      _backend.bodyEncode = json.encode({
+        /* Convert to Json String */
+        "player_id": playerid,
+      });
+
+      _backend.response = await http.put(
+          Uri.parse('${ApiService.url}/alert-notification'),
+          headers: _backend.conceteHeader("authorization", "Bearer $token"),
+          body: _backend.bodyEncode);
+
+      print(_backend.response.body);
+      return _backend.response;
+    }
+    return null;
+  }
+
   /* Update User Information */
-  Future<http.Response> updateInfo(String name, String gender,
-      String phone, String birthdate, String address) async {
+  Future<http.Response> updateInfo(String name, String gender, String phone,
+      String birthdate, String address) async {
     _backend.bodyEncode = json.encode(/* Convert to Json Data ( String ) */
         {
       "fullname": name,
@@ -54,11 +76,12 @@ class PostRequest with ChangeNotifier {
       "birthdate": birthdate,
       "address": address
     });
-    _backend.response = await http.put(Uri.parse('${ApiService.url}/auth/complete-info'),
-        headers: _backend.conceteHeader(null, null), body: _backend.bodyEncode);
+    _backend.response = await http.put(
+        Uri.parse('${ApiService.url}/auth/complete-info'),
+        headers: _backend.conceteHeader(null, null),
+        body: _backend.bodyEncode);
     return _backend.response;
   }
-
 
   /*register account by phone number */
   Future<http.Response> signUpWithPhone(String phone, String password) async {
@@ -68,13 +91,14 @@ class PostRequest with ChangeNotifier {
       "password": password
     });
 
-    _backend.response = await http.post(Uri.parse('${ApiService.url}/auth/register-phone'),
-        headers: _backend.conceteHeader(null, null), body: _backend.bodyEncode);
+    _backend.response = await http.post(
+        Uri.parse('${ApiService.url}/auth/register-phone'),
+        headers: _backend.conceteHeader(null, null),
+        body: _backend.bodyEncode);
 
     print(_backend.response.body);
     return _backend.response;
   }
-
 
   // Confirm User Account By Phone Number
   Future<http.Response> confirmAccountPhone(String phone, String vCode) async {
@@ -94,15 +118,18 @@ class PostRequest with ChangeNotifier {
       "phone": "+855$phone",
     });
 
-    _backend.response = await http.post(Uri.parse('${ApiService.url}/forgot-password-phone'),
-        headers: _backend.conceteHeader(null, null), body: _backend.bodyEncode);
+    _backend.response = await http.post(
+        Uri.parse('${ApiService.url}/forgot-password-phone'),
+        headers: _backend.conceteHeader(null, null),
+        body: _backend.bodyEncode);
 
     print(_backend.response.body);
     return _backend.response;
   }
 
   //Hotspot Plan
-  Future<http.Response> buyHotspotPlan(String phone, String password, String value) async {
+  Future<http.Response> buyHotspotPlan(
+      String phone, String password, String value) async {
     await _prefService.read('token').then((value) {
       _backend.token = Map<String, dynamic>.from({'token': value});
     });
@@ -118,7 +145,8 @@ class PostRequest with ChangeNotifier {
         "memo": "Buy Hotspot Plan"
       });
 
-      _backend.response = await http.post(Uri.parse('${ApiService.url}/hotspot/set-plan'),
+      _backend.response = await http.post(
+          Uri.parse('${ApiService.url}/hotspot/set-plan'),
           headers: _backend.conceteHeader(
               "authorization", "Bearer ${_backend.token['token']}"),
           body: _backend.bodyEncode);
@@ -129,7 +157,6 @@ class PostRequest with ChangeNotifier {
     return null;
   }
 
-
   Future<http.Response> resetHotspotPlan(String username, String value) async {
     _backend.bodyEncode = json.encode({
       /* Convert to Json String */
@@ -138,14 +165,17 @@ class PostRequest with ChangeNotifier {
       "value": value,
     });
 
-    _backend.response = await http.put(Uri.parse('${ApiService.url}/hotspot/reset-plan'),
-        headers: _backend.conceteHeader(null, null), body: _backend.bodyEncode);
+    _backend.response = await http.put(
+        Uri.parse('${ApiService.url}/hotspot/reset-plan'),
+        headers: _backend.conceteHeader(null, null),
+        body: _backend.bodyEncode);
 
     print(_backend.response.body);
     return _backend.response;
   }
 
-  Future<http.Response> sendPayment(String password, String dest, String asset, String amount, String memo) async {
+  Future<http.Response> sendPayment(String password, String dest, String asset,
+      String amount, String memo) async {
     await _prefService.read('token').then((value) {
       _backend.token = Map<String, dynamic>.from({'token': value});
     });
@@ -160,7 +190,8 @@ class PostRequest with ChangeNotifier {
         "memo": memo
       });
 
-      _backend.response = await http.post(Uri.parse('${ApiService.url}/selendra/transfer'),
+      _backend.response = await http.post(
+          Uri.parse('${ApiService.url}/selendra/transfer'),
           headers: _backend.conceteHeader(
               "authorization", "Bearer ${_backend.token['token']}"),
           body: _backend.bodyEncode);
@@ -172,7 +203,6 @@ class PostRequest with ChangeNotifier {
   }
 
   Future<http.Response> changePlanHotspot(String password, String value) async {
-
     await _prefService.read('token').then((value) {
       _backend.token = Map<String, dynamic>.from({'token': value});
     });
@@ -184,8 +214,10 @@ class PostRequest with ChangeNotifier {
         "value": value
       });
 
-      _backend.response = await http.put(Uri.parse('${ApiService.url}/hotspot/change-plan'),
-          headers: _backend.conceteHeader("authorization", "Bearer ${_backend.token['token']}"),
+      _backend.response = await http.put(
+          Uri.parse('${ApiService.url}/hotspot/change-plan'),
+          headers: _backend.conceteHeader(
+              "authorization", "Bearer ${_backend.token['token']}"),
           body: _backend.bodyEncode);
 
       print(_backend.response.body);
@@ -195,7 +227,6 @@ class PostRequest with ChangeNotifier {
   }
 
   Future<http.Response> renewPlanHotspot(String password) async {
-
     await _prefService.read('token').then((value) {
       _backend.token = Map<String, dynamic>.from({'token': value});
     });
@@ -206,9 +237,11 @@ class PostRequest with ChangeNotifier {
         "password": password,
       });
 
-      _backend.response = await http.put(Uri.parse('${ApiService.url}/hotspot/renew'),
-        headers: _backend.conceteHeader("authorization", "Bearer ${_backend.token['token']}"),
-        body: _backend.bodyEncode);
+      _backend.response = await http.put(
+          Uri.parse('${ApiService.url}/hotspot/renew'),
+          headers: _backend.conceteHeader(
+              "authorization", "Bearer ${_backend.token['token']}"),
+          body: _backend.bodyEncode);
 
       print(_backend.response.body);
       return _backend.response;
@@ -217,7 +250,6 @@ class PostRequest with ChangeNotifier {
   }
 
   Future<http.Response> renewOption(bool automatically) async {
-
     await _prefService.read('token').then((value) {
       _backend.token = Map<String, dynamic>.from({'token': value});
     });
@@ -228,8 +260,10 @@ class PostRequest with ChangeNotifier {
         "automatically": automatically,
       });
 
-      _backend.response = await http.put(Uri.parse('${ApiService.url}/hotspot/auto'),
-          headers: _backend.conceteHeader("authorization", "Bearer ${_backend.token['token']}"),
+      _backend.response = await http.put(
+          Uri.parse('${ApiService.url}/hotspot/auto'),
+          headers: _backend.conceteHeader(
+              "authorization", "Bearer ${_backend.token['token']}"),
           body: _backend.bodyEncode);
 
       print(_backend.response.body);
@@ -239,7 +273,6 @@ class PostRequest with ChangeNotifier {
   }
 
   Future<http.Response> upVoteAdsPost(String id) async {
-
     await _prefService.read('token').then((value) {
       _backend.token = Map<String, dynamic>.from({'token': value});
     });
@@ -251,8 +284,10 @@ class PostRequest with ChangeNotifier {
         "vote": "Voted Up"
       });
 
-      _backend.response = await http.post(Uri.parse('${ApiService.url}/ads/upvote-ads'),
-          headers: _backend.conceteHeader("authorization", "Bearer ${_backend.token['token']}"),
+      _backend.response = await http.post(
+          Uri.parse('${ApiService.url}/ads/upvote-ads'),
+          headers: _backend.conceteHeader(
+              "authorization", "Bearer ${_backend.token['token']}"),
           body: _backend.bodyEncode);
 
       print(_backend.response.body);
@@ -262,7 +297,6 @@ class PostRequest with ChangeNotifier {
   }
 
   Future<http.Response> downVoteAdsPost(String id) async {
-
     await _prefService.read('token').then((value) {
       _backend.token = Map<String, dynamic>.from({'token': value});
     });
@@ -274,8 +308,10 @@ class PostRequest with ChangeNotifier {
         "vote": "Voted Down"
       });
 
-      _backend.response = await http.post(Uri.parse('${ApiService.url}/ads/downvote-ads'),
-          headers: _backend.conceteHeader("authorization", "Bearer ${_backend.token['token']}"),
+      _backend.response = await http.post(
+          Uri.parse('${ApiService.url}/ads/downvote-ads'),
+          headers: _backend.conceteHeader(
+              "authorization", "Bearer ${_backend.token['token']}"),
           body: _backend.bodyEncode);
 
       print(_backend.response.body);
@@ -285,7 +321,6 @@ class PostRequest with ChangeNotifier {
   }
 
   Future<http.Response> unVoteAdsPut(String id) async {
-
     await _prefService.read('token').then((value) {
       _backend.token = Map<String, dynamic>.from({'token': value});
     });
@@ -297,8 +332,10 @@ class PostRequest with ChangeNotifier {
         "vote": "Un Voted"
       });
 
-      _backend.response = await http.put(Uri.parse('${ApiService.url}/ads/unvote-ads'),
-          headers: _backend.conceteHeader("authorization", "Bearer ${_backend.token['token']}"),
+      _backend.response = await http.put(
+          Uri.parse('${ApiService.url}/ads/unvote-ads'),
+          headers: _backend.conceteHeader(
+              "authorization", "Bearer ${_backend.token['token']}"),
           body: _backend.bodyEncode);
 
       print(_backend.response.body);
@@ -347,7 +384,7 @@ class PostRequest with ChangeNotifier {
 
     var request = new http.MultipartRequest(
         'POST', Uri.parse('${ApiService.url}/upload-avatar'));
-        request.headers['Authorization'] = "Bearer ${_backend.token['token']}";
+    request.headers['Authorization'] = "Bearer ${_backend.token['token']}";
     /* Make Form of Multipart */
     var multipartFile = new http.MultipartFile.fromBytes(
       'file',

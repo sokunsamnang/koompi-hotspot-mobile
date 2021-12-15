@@ -4,21 +4,22 @@ import 'package:koompi_hotspot/core/models/lang.dart';
 import 'package:koompi_hotspot/core/models/model_notification.dart';
 import 'package:koompi_hotspot/core/models/vote_result.dart';
 import 'package:koompi_hotspot/ui/utils/shortcut.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:quick_actions/quick_actions.dart';
 import 'package:koompi_hotspot/ui/screen/web_view/captive_portal_web.dart';
-import 'package:koompi_hotspot/ui/utils/auto_login_hotspot_constants.dart' as global;
+import 'package:koompi_hotspot/ui/utils/auto_login_hotspot_constants.dart'
+    as global;
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:koompi_hotspot/ui/utils/globals.dart' as globals;
 
-class App extends StatefulWidget{
+class App extends StatefulWidget {
   @override
   _AppState createState() => _AppState();
 }
 
 class _AppState extends State<App> {
-  
-  Widget build (context){
+  Widget build(context) {
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
@@ -32,8 +33,7 @@ class _AppState extends State<App> {
           create: (context) => BalanceProvider(),
         ),
         ChangeNotifierProvider<TrxHistoryProvider>(
-          create: (context) => TrxHistoryProvider()
-        ),
+            create: (context) => TrxHistoryProvider()),
         ChangeNotifierProvider<GetPlanProvider>(
           create: (context) => GetPlanProvider(),
         ),
@@ -65,9 +65,9 @@ class _AppState extends State<App> {
           ),
           locale: value.manualLocale,
           supportedLocales: [
-              const Locale('en', 'US'),
-              const Locale('km', 'KH'),
-            ],
+            const Locale('en', 'US'),
+            const Locale('km', 'KH'),
+          ],
           localizationsDelegates: [
             AppLocalizeService.delegate,
             //build-in localization for material widgets
@@ -89,49 +89,47 @@ class _AppState extends State<App> {
           home: Splash(),
         ),
       ),
-
     );
   }
 }
 
 class Splash extends StatefulWidget {
-    @override
-    _SplashState createState() => new _SplashState();
+  @override
+  _SplashState createState() => new _SplashState();
 }
 
 class _SplashState extends State<Splash> {
-
   startTime() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool firstTime = prefs.getBool('first_time');
 
     // var _duration = new Duration(seconds: 3);
 
-    if (firstTime != null && !firstTime) {// Not first time
+    if (firstTime != null && !firstTime) {
+      // Not first time
       return isLoggedIn();
-    } 
-    else {// First time
+    } else {
+      // First time
       prefs.setBool('first_time', false);
       return navigationOnboardingScreen();
     }
   }
 
-
   void navigationOnboardingScreen() {
-
     Navigator.pushReplacement(
-      context, 
-      PageTransition(type: PageTransitionType.rightToLeft, 
+      context,
+      PageTransition(
+        type: PageTransitionType.rightToLeft,
         child: IntroScreen(),
       ),
     );
 
     // Navigator.pushReplacement(context,
     //   MaterialPageRoute(builder: (context) => IntroScreen())
-    // ); 
+    // );
   }
 
-  void isLoggedIn() async{
+  void isLoggedIn() async {
     setState(() {
       StorageServices().checkUser(context);
     });
@@ -155,12 +153,11 @@ class _SplashState extends State<Splash> {
     print('${global.phone}');
     print('${global.password}');
   }
-  
-
 
   @override
   void initState() {
     super.initState();
+    configOneSignal();
     setState(() {
       isInternet();
       getValue();
@@ -173,15 +170,16 @@ class _SplashState extends State<Splash> {
   }
 
   final quickActions = QuickActions();
-  
+
   void initQuickActions() {
     quickActions.initialize((type) {
       if (type == null) return;
 
       if (type == ShortcutItems.actionCaptivePortal.type) {
         Navigator.push(
-          context, 
-          PageTransition(type: PageTransitionType.bottomToTop, 
+          context,
+          PageTransition(
+            type: PageTransitionType.bottomToTop,
             child: CaptivePortalWeb(),
           ),
         );
@@ -198,8 +196,13 @@ class _SplashState extends State<Splash> {
   }
 
   @override
-  void dispose(){
+  void dispose() {
     super.dispose();
+  }
+
+  void configOneSignal() {
+    /// Set App Id.
+    OneSignal.shared.init("05805743-ce69-4224-9afb-b2f36bf6c1db");
   }
 
   Future<bool> isInternet() async {
@@ -217,7 +220,8 @@ class _SplashState extends State<Splash> {
       }
     } else if (connectivityResult == ConnectivityResult.wifi) {
       // I am connected to a WIFI network, make sure there is actually a net connection.
-      print('I am connected to a WIFI network, make sure there is actually a net connection.');
+      print(
+          'I am connected to a WIFI network, make sure there is actually a net connection.');
       if (await DataConnectionChecker().hasConnection) {
         // Wifi detected & internet connection confirmed.
         print('Wifi detected & internet connection confirmed.');
@@ -227,8 +231,9 @@ class _SplashState extends State<Splash> {
         print('Wifi detected but no internet connection found.');
 
         Navigator.push(
-          context, 
-          PageTransition(type: PageTransitionType.rightToLeft, 
+          context,
+          PageTransition(
+            type: PageTransitionType.rightToLeft,
             child: CaptivePortalWeb(),
           ),
         );
@@ -242,7 +247,8 @@ class _SplashState extends State<Splash> {
       }
     } else {
       // Neither mobile data or WIFI detected, not internet connection found.
-      print('Neither mobile data or WIFI detected, not internet connection found.');
+      print(
+          'Neither mobile data or WIFI detected, not internet connection found.');
       return false;
     }
   }
@@ -252,8 +258,8 @@ class _SplashState extends State<Splash> {
     return Scaffold(
       backgroundColor: Color(0xff0caddb),
       body: Center(
-        child: FlareActor( 
-          'assets/animations/koompi_splash_screen.flr', 
+        child: FlareActor(
+          'assets/animations/koompi_splash_screen.flr',
           animation: 'Splash_Loop',
         ),
       ),
