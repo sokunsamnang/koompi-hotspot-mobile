@@ -70,105 +70,68 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       key: globalKey,
       appBar: AppBar(
+        centerTitle: true,
         automaticallyImplyLeading: false,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            InkWell(
-              onTap: () async {
-                Navigator.push(
-                    context,
-                    PageTransition(
-                      type: PageTransitionType.bottomToTop,
-                      child: MyAccount(),
-                    ));
-              },
-              child: CircleAvatar(
-                backgroundImage: mData.image == null
-                    ? AssetImage('assets/images/avatar.png')
-                    : NetworkImage("${ApiService.getAvatar}/${mData.image}"),
-              ),
-            ),
-            RichText(
-              text: TextSpan(
-                text: 'KOOMPI ',
-                style: GoogleFonts.nunito(
-                    fontSize: 18,
-                    letterSpacing: 1.0,
-                    textStyle: TextStyle(
-                        color: Colors.black, fontWeight: FontWeight.w700)),
-                children: <TextSpan>[
-                  TextSpan(
-                    text: 'Fi-Fi',
-                    style: GoogleFonts.nunito(
-                        textStyle: TextStyle(
-                            color: primaryColor, fontWeight: FontWeight.w700)),
-                  )
-                ],
-              ),
-            ),
-            // Badge(
-            //   position: BadgePosition.topEnd(top: 10, end: 10),
-            //   badgeContent: null,
-            //   child: IconButton(
-            //     icon: Icon(Icons.menu),
-            //     onPressed: () {},
-            //   ),
-            // ),
-            InkWell(
-              child: Badge(
-                elevation: 0,
-                badgeColor: Colors.transparent,
-                toAnimate: false,
-                position: BadgePosition.topEnd(top: 0, end: -2.5),
-                // animationDuration: Duration(milliseconds: 300),
-                // animationType: BadgeAnimationType.slide,
-                badgeContent: Container(
-                  height: 20,
-                  width: 20,
-                  child: FlareActor(
-                    'assets/animations/notification_badge.flr',
-                    animation: 'hasNotification',
-                  ),
-                ),
-                child: IconButton(
-                    icon: Icon(Icons.notifications),
-                    color: Colors.grey,
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          PageTransition(
-                              type: PageTransitionType.rightToLeft,
-                              child: NotificationScreen()));
-                    }),
-              ),
-              onTap: () {
-                Navigator.push(
-                    context,
-                    PageTransition(
-                        type: PageTransitionType.rightToLeft,
-                        child: NotificationScreen()));
-              },
-            ),
-            // Badge(
-            // badgeContent: FlareActor(
-            //   'assets/animations/notification_badge.flr',
-            //   animation: 'hasNotification',
-            // ),
-            // child: IconButton(
-            //   icon: Icon(Icons.notifications),
-            //   color: Colors.grey,
-            //   onPressed: (){
-            //     Navigator.push(
-            //       context,
-            //       PageTransition(type: PageTransitionType.rightToLeft,
-            //         child: NotificationScreen()));
-            //   }
-            // ),
-            // ),
-          ],
+        leading: IconButton(
+          icon: Icon(LineIcons.bars),
+          color: primaryColor,
+          onPressed: () => Scaffold.of(context).openDrawer(),
         ),
+        title: RichText(
+          text: TextSpan(
+            text: 'KOOMPI ',
+            style: GoogleFonts.nunito(
+                fontSize: 18,
+                letterSpacing: 1.0,
+                textStyle: TextStyle(
+                    color: Colors.black, fontWeight: FontWeight.w700)),
+            children: <TextSpan>[
+              TextSpan(
+                text: 'Fi-Fi',
+                style: GoogleFonts.nunito(
+                    textStyle: TextStyle(
+                        color: primaryColor, fontWeight: FontWeight.w700)),
+              )
+            ],
+          ),
+        ),
+        actions: [
+          InkWell(
+            child: Badge(
+              elevation: 0,
+              badgeColor: Colors.transparent,
+              toAnimate: false,
+              position: BadgePosition.topEnd(top: 0, end: -2.5),
+              // animationDuration: Duration(milliseconds: 300),
+              // animationType: BadgeAnimationType.slide,
+              badgeContent: Container(
+                height: 20,
+                width: 20,
+                child: FlareActor(
+                  'assets/animations/notification_badge.flr',
+                  animation: 'hasNotification',
+                ),
+              ),
+              child: IconButton(
+                  icon: Icon(Icons.notifications),
+                  color: primaryColor,
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        PageTransition(
+                            type: PageTransitionType.rightToLeft,
+                            child: NotificationScreen()));
+                  }),
+            ),
+            onTap: () {
+              Navigator.push(
+                  context,
+                  PageTransition(
+                      type: PageTransitionType.rightToLeft,
+                      child: NotificationScreen()));
+            },
+          ),
+        ],
         backgroundColor: Colors.white,
       ),
       body: RefreshIndicator(

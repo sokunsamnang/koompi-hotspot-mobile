@@ -200,9 +200,20 @@ class _SplashState extends State<Splash> {
     super.dispose();
   }
 
-  void configOneSignal() {
+  void configOneSignal() async {
+    OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
+
     /// Set App Id.
-    OneSignal.shared.init("05805743-ce69-4224-9afb-b2f36bf6c1db");
+    OneSignal.shared.init("05805743-ce69-4224-9afb-b2f36bf6c1db", iOSSettings: {
+      OSiOSSettings.autoPrompt: false,
+      OSiOSSettings.inAppLaunchUrl: false
+    });
+
+    OneSignal.shared
+        .setInFocusDisplayType(OSNotificationDisplayType.notification);
+
+    await OneSignal.shared
+        .promptUserForPushNotificationPermission(fallbackToSettings: true);
   }
 
   Future<bool> isInternet() async {

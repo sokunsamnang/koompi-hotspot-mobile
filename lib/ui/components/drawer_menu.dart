@@ -26,6 +26,7 @@ class SideMenu extends StatelessWidget {
               );
             }),
           ),
+          buildDivider(),
           // DrawerHeader(
           //   margin: EdgeInsets.zero,
           //   padding: EdgeInsets.zero,
@@ -92,35 +93,6 @@ class SideMenu extends StatelessWidget {
                 ModalRoute.withName('/navbar'),
               );
             },
-          ),
-          DrawerListTile(
-            title: "Profile",
-            iconSrc: LineIcons.portrait,
-            press: () {
-              Navigator.push(
-                context,
-                PageTransition(
-                  type: PageTransitionType.rightToLeft,
-                  child: MyAccount(),
-                ),
-              );
-            },
-          ),
-          Row(
-            children: [
-              Flexible(
-                child: DrawerListTile(
-                  title: "Alert Notification",
-                  iconSrc: Icons.notifications_active,
-                ),
-              ),
-              SwitchControl(
-                onChanged: (bool value) {
-                  print(value);
-                },
-              ),
-              SizedBox(width: 15),
-            ],
           ),
           DrawerListTile(
             title: "More",
@@ -213,27 +185,33 @@ class UserProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(10),
-      child: InkWell(
-        borderRadius: BorderRadius.circular(10),
-        onTap: onPressed,
-        child: Padding(
-          padding: const EdgeInsets.all(10),
-          child: Row(
-            children: [
-              _buildImage(),
-              const SizedBox(width: 10),
-              Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _buildName(),
-                    _buildPhone(),
-                  ],
-                ),
-              )
-            ],
+      padding: const EdgeInsets.all(10.0),
+      child: Card(
+        elevation: 10.0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(10),
+          onTap: onPressed,
+          child: Padding(
+            padding: const EdgeInsets.all(10),
+            child: Row(
+              children: [
+                _buildImage(),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _buildName(),
+                      _buildPhone(),
+                    ],
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),

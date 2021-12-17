@@ -2,7 +2,6 @@ import 'package:koompi_hotspot/all_export.dart';
 import 'package:http/http.dart' as http;
 
 class BalanceModel {
-  
   String id;
   String token;
   String symbol;
@@ -24,7 +23,6 @@ class BalanceProvider with ChangeNotifier {
   GetRequest _getRequest;
 
   List<BalanceModel> balanceList = [];
-
 
   Future<void> fetchPortfolio() async {
     StorageServices _prefService = StorageServices();
@@ -50,6 +48,7 @@ class BalanceProvider with ChangeNotifier {
           }
         } else {
           var responseBody = json.decode(response.body);
+          print(responseBody);
           return responseBody;
         }
       });
@@ -59,24 +58,23 @@ class BalanceProvider with ChangeNotifier {
 
     notifyListeners();
 
+    //   // Fetch Balance
+    //   await _getRequest.getPortfolio().then((value) {
+    //     _backend.listData = json.decode(value.body);
+    //     // _backend.listData = List<dynamic>.from(
+    //     //   balanceList.map<dynamic>(
+    //     //     (dynamic item) => value.body,
+    //     //   ),
+    //     // );
+    //     if (_backend.listData.isEmpty)
+    //       balanceList = null;
+    //     else {
+    //       for (var l in _backend.listData) {
+    //         balanceList.add(BalanceModel(l));
+    //       }
+    //     }
+    //   });
 
-  //   // Fetch Balance
-  //   await _getRequest.getPortfolio().then((value) {
-  //     _backend.listData = json.decode(value.body);
-  //     // _backend.listData = List<dynamic>.from(
-  //     //   balanceList.map<dynamic>(
-  //     //     (dynamic item) => value.body,
-  //     //   ),
-  //     // );
-  //     if (_backend.listData.isEmpty)
-  //       balanceList = null;
-  //     else {
-  //       for (var l in _backend.listData) {
-  //         balanceList.add(BalanceModel(l));
-  //       }
-  //     }
-  //   });
-
-  //   notifyListeners();
+    //   notifyListeners();
   }
 }

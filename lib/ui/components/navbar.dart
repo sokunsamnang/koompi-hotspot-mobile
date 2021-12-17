@@ -142,7 +142,7 @@ class _NavbarState extends State<Navbar> with WidgetsBindingObserver {
   Widget build(BuildContext context) {
     var _lang = AppLocalizeService.of(context);
     return Scaffold(
-      drawer: const SideMenu(),
+      drawer: SideMenu(),
       body: Center(
         child: SafeArea(
           child: _widgetOptions.elementAt(_selectedIndex),

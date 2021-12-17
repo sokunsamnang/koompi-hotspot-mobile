@@ -9,9 +9,8 @@ class MorePage extends StatefulWidget {
 }
 
 class _MorePageState extends State<MorePage> {
-
   GlobalKey<ScaffoldState> globalKey = GlobalKey<ScaffoldState>();
-  
+
   String name = mData.fullname;
 
   PackageInfo _packageInfo = PackageInfo(
@@ -21,14 +20,13 @@ class _MorePageState extends State<MorePage> {
     buildNumber: '',
   );
 
-
   Future<void> _initPackageInfo() async {
     final PackageInfo info = await PackageInfo.fromPlatform();
     setState(() {
       _packageInfo = info;
     });
   }
-  
+
   Widget _infoApp(String title, String subtitle) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -49,8 +47,6 @@ class _MorePageState extends State<MorePage> {
     super.initState();
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     var _lang = AppLocalizeService.of(context);
@@ -69,9 +65,14 @@ class _MorePageState extends State<MorePage> {
                 margin: const EdgeInsets.all(8.0),
                 color: Colors.white,
                 child: ListTile(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
                   onTap: () async {
-                    Navigator.push(context,
-                      PageTransition(type: PageTransitionType.rightToLeft, 
+                    Navigator.push(
+                      context,
+                      PageTransition(
+                        type: PageTransitionType.rightToLeft,
                         child: MyAccount(),
                       ),
                     );
@@ -82,7 +83,10 @@ class _MorePageState extends State<MorePage> {
                         color: Colors.black, fontFamily: "Poppins-Bold"),
                   ),
                   leading: CircleAvatar(
-                    backgroundImage: mData.image == null ? AssetImage('assets/images/avatar.png') : NetworkImage("${ApiService.getAvatar}/${mData.image}"),
+                    backgroundImage: mData.image == null
+                        ? AssetImage('assets/images/avatar.png')
+                        : NetworkImage(
+                            "${ApiService.getAvatar}/${mData.image}"),
                   ),
                   trailing: Icon(LineIcons.edit),
                 ),
@@ -97,19 +101,24 @@ class _MorePageState extends State<MorePage> {
                 child: Column(
                   children: <Widget>[
                     ListTile(
-                      leading: Icon(LineIcons.key, color: primaryColor),
-                      title: Text(_lang.translate('change_password')),
-                      trailing: Icon(LineIcons.angleRight),
-                      onTap: () async {
-                        Navigator.push(
-                          context,
-                          PageTransition(type: PageTransitionType.rightToLeft, 
-                            child: ChangePassword(),
-                          ),
-                        );
-                      }
-                    ),
-                    _buildDivider(),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                              topRight: Radius.circular(10),
+                              topLeft: Radius.circular(10)),
+                        ),
+                        leading: Icon(LineIcons.key, color: primaryColor),
+                        title: Text(_lang.translate('change_password')),
+                        trailing: Icon(LineIcons.angleRight),
+                        onTap: () async {
+                          Navigator.push(
+                            context,
+                            PageTransition(
+                              type: PageTransitionType.rightToLeft,
+                              child: ChangePassword(),
+                            ),
+                          );
+                        }),
+                    buildDivider(),
                     ListTile(
                       leading: Icon(LineIcons.language, color: primaryColor),
                       title: Text(_lang.translate('language')),
@@ -117,13 +126,14 @@ class _MorePageState extends State<MorePage> {
                       onTap: () async {
                         Navigator.push(
                           context,
-                          PageTransition(type: PageTransitionType.rightToLeft, 
+                          PageTransition(
+                            type: PageTransitionType.rightToLeft,
                             child: LanguageView(),
                           ),
                         );
                       },
                     ),
-                    _buildDivider(),
+                    buildDivider(),
                     ListTile(
                       leading: Icon(LineIcons.wifi, color: primaryColor),
                       title: Text(_lang.translate('login_hotspot')),
@@ -131,43 +141,33 @@ class _MorePageState extends State<MorePage> {
                       onTap: () async {
                         Navigator.push(
                           context,
-                          PageTransition(type: PageTransitionType.rightToLeft, 
-                            child: CaptivePortalWeb()
-                          ),
+                          PageTransition(
+                              type: PageTransitionType.rightToLeft,
+                              child: CaptivePortalWeb()),
                         );
                       },
                     ),
-                    _buildDivider(),
-                    Row(
-                      children: [
-                        Flexible(
-                          child: ListTile(
-                            leading: Icon(Icons.notifications_active_outlined, color: primaryColor),
-                            title: Text('Alert Notification'),
-                          ),
-                        ),
-                        SwitchControl(
-                          onChanged: (bool value) { 
-                            print(value);
-                          },
-                        ),
-                        SizedBox(width: 15),
-                      ],
-                    ),
-                    _buildDivider(),
+                    buildDivider(),
                     ListTile(
-                      leading: Icon(LineIcons.alternateSignOut, color: Colors.red),
+                      leading:
+                          Icon(LineIcons.alternateSignOut, color: Colors.red),
                       title: Text(_lang.translate('sign_out')),
                       onTap: () async {
                         await Components.dialogSignOut(
                           context,
-                          Text(_lang.translate('sign_out_warn'), textAlign: TextAlign.center),
-                          Text(_lang.translate('warning'), style: TextStyle(fontFamily: 'Poppins-Bold'),),
+                          Text(_lang.translate('sign_out_warn'),
+                              textAlign: TextAlign.center),
+                          Text(
+                            _lang.translate('warning'),
+                            style: TextStyle(fontFamily: 'Poppins-Bold'),
+                          ),
                         );
                       },
                     ),
-                    _buildDivider(),
-                    Center(child: _infoApp('KOOMPI Fi-Fi: ', _packageInfo.version)),
+                    buildDivider(),
+                    Center(
+                        child:
+                            _infoApp('KOOMPI Fi-Fi: ', _packageInfo.version)),
                   ],
                 ),
               ),
@@ -177,14 +177,4 @@ class _MorePageState extends State<MorePage> {
       ),
     );
   }
-    
-  Container _buildDivider() {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 8.0),
-      width: double.infinity,
-      height: 1.0,
-      color: Colors.grey.shade400,
-    );
-  }
-
 }
