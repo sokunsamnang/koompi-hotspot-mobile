@@ -230,7 +230,7 @@ class _TransactionDetailState extends State<TransactionDetail> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: <Widget>[
                                 Text(
-                                  'Transaction ID',
+                                  'Transaction Hash ID',
                                   style: GoogleFonts.nunito(
                                       textStyle: TextStyle(
                                           color: HexColor('0CACDA'),
@@ -238,7 +238,7 @@ class _TransactionDetailState extends State<TransactionDetail> {
                                           fontWeight: FontWeight.w600)),
                                 ),
                                 Text(
-                                  history[i].id,
+                                  history[i].hash,
                                   style: GoogleFonts.nunito(
                                       textStyle: TextStyle(
                                           color: Colors.black,

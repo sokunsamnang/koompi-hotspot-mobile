@@ -2,7 +2,6 @@ import 'package:koompi_hotspot/all_export.dart';
 import 'package:http/http.dart' as http;
 
 class TrxHistoryModel {
-  String id;
   String hash;
   String sender;
   String destination;
@@ -18,7 +17,6 @@ class TrxHistoryModel {
   }
 
   void _fromJson(Map<String, dynamic> data) {
-    id = data['tx_id'];
     hash = data['hash'];
     sender = data['sender'];
     destination = data['destination'];
@@ -27,8 +25,8 @@ class TrxHistoryModel {
     symbol = data['symbol'];
     memo = data['memo'];
     datetime = data['datetime'];
-    from = data['from'];
-    to = data['to'];
+    from = data['fromname'];
+    to = data['toname'];
   }
 }
 
