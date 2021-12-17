@@ -1,5 +1,4 @@
 import 'package:koompi_hotspot/all_export.dart';
-import 'package:koompi_hotspot/ui/reuse_widget/customSwitchButton.dart';
 import 'package:koompi_hotspot/ui/screen/option_page/flag_language.dart';
 import 'package:package_info/package_info.dart';
 

@@ -11,6 +11,8 @@ class TrxHistoryModel {
   String symbol;
   String memo;
   String datetime;
+  String from;
+  String to;
   TrxHistoryModel(Map<String, dynamic> data) {
     _fromJson(data);
   }
@@ -25,13 +27,15 @@ class TrxHistoryModel {
     symbol = data['symbol'];
     memo = data['memo'];
     datetime = data['datetime'];
+    from = data['from'];
+    to = data['to'];
   }
 }
 
 class TrxHistoryProvider with ChangeNotifier {
   Backend _backend;
 
-  GetRequest _getRequest;
+  // GetRequest _getRequest;
 
   List<TrxHistoryModel> trxHistoryList = [];
 
@@ -39,12 +43,11 @@ class TrxHistoryProvider with ChangeNotifier {
   //   fetchTrxHistory();
   // }
 
-
   Future<void> fetchTrxHistory() async {
     StorageServices _prefService = StorageServices();
 
     _backend = Backend();
-    _getRequest = GetRequest();
+    // _getRequest = GetRequest();
     trxHistoryList = [];
 
     try {
@@ -76,9 +79,8 @@ class TrxHistoryProvider with ChangeNotifier {
     }
 
     notifyListeners();
-
   }
-  
+
   // Future<void> fetchTrxHistory() async {
   //   _backend = Backend();
   //   _getRequest = GetRequest();
@@ -87,13 +89,13 @@ class TrxHistoryProvider with ChangeNotifier {
   //   // Fetch History
   //   await _getRequest.getTrxHistory().then((value) {
   //     _backend.listData = json.decode(value.body);
-      // if (_backend.listData.isEmpty)
-      //   trxHistoryList = null;
-      // else {
-      //   for (var l in _backend.listData) {
-      //     trxHistoryList.add(TrxHistoryModel(l));
-      //   }
-      // }
+  // if (_backend.listData.isEmpty)
+  //   trxHistoryList = null;
+  // else {
+  //   for (var l in _backend.listData) {
+  //     trxHistoryList.add(TrxHistoryModel(l));
+  //   }
+  // }
   //   });
 
   //   notifyListeners();

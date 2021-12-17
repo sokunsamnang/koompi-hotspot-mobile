@@ -3,8 +3,6 @@ import 'package:koompi_hotspot/core/models/model_notification.dart';
 import 'package:koompi_hotspot/ui/screen/notification/notification_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:badges/badges.dart';
-import 'package:onesignal_flutter/onesignal_flutter.dart';
-import 'package:koompi_hotspot/ui/utils/globals.dart' as globals;
 
 class HomePage extends StatefulWidget {
   @override

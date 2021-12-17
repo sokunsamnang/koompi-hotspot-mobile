@@ -1,18 +1,18 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:groovin_widgets/groovin_widgets.dart';
 import 'package:koompi_hotspot/all_export.dart';
 import 'package:koompi_hotspot/ui/screen/mywallet/transaction_detail.dart';
 import 'package:provider/provider.dart';
 
 Widget trxHistory(BuildContext context) {
-
   DateTime now = DateTime.now();
   String prevDay;
   String today = DateFormat("EEEE, d MMMM, y").format(now.toLocal());
-  String yesterday = DateFormat("EEEE, d MMMM, y").format(now.toLocal().add(Duration(days: -1)));
-  
+  String yesterday = DateFormat("EEEE, d MMMM, y")
+      .format(now.toLocal().add(Duration(days: -1)));
+
   var _lang = AppLocalizeService.of(context);
-  List _buildList(List<TrxHistoryModel> history, BuildContext context, String userWallet) {
+  List _buildList(
+      List<TrxHistoryModel> history, BuildContext context, String userWallet) {
     List<Widget> listItems = [];
     // List<Widget> listItems = List.filled(history.length, Container());
 
@@ -21,7 +21,6 @@ Widget trxHistory(BuildContext context) {
       DateTime date = DateTime.parse(history[i].datetime);
       String dateString = DateFormat("EEEE, d MMMM, y").format(date.toLocal());
 
-      
       if (today == dateString) {
         dateString = "Today";
       } else if (yesterday == dateString) {
@@ -37,28 +36,32 @@ Widget trxHistory(BuildContext context) {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             showHeader
-              ? Container(
-                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 7),
-                child: Text(
-                  dateString,
-                  style: GoogleFonts.nunito(
-                    textStyle: TextStyle(color: Colors.black, fontSize: 12, fontWeight: FontWeight.w700)
+                ? Container(
+                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 7),
+                    child: Text(
+                      dateString,
+                      style: GoogleFonts.nunito(
+                          textStyle: TextStyle(
+                              color: Colors.black,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w700)),
                     ),
-                  ),
-                )
-              : Offstage(),
-            
+                  )
+                : Offstage(),
             GestureDetector(
               onTap: () async {
                 Navigator.push(
-                  context, 
-                  PageTransition(type: PageTransitionType.bottomToTop,
-                    child: TransactionDetail(history: history, index: i,)
-                  )
-                );
+                    context,
+                    PageTransition(
+                        type: PageTransitionType.bottomToTop,
+                        child: TransactionDetail(
+                          history: history,
+                          index: i,
+                        )));
               },
               child: Container(
-                margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 0.0),
+                margin:
+                    const EdgeInsets.symmetric(horizontal: 10.0, vertical: 0.0),
                 height: 80.0,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12.0),
@@ -79,60 +82,82 @@ Widget trxHistory(BuildContext context) {
                     children: [
                       Row(
                         children: [
-                          history[i].memo == 'Subscribed Fi-Fi Plan 30 Days' || history[i].memo == 'Subscribed Fi-Fi Plan 365 Days' || history[i].memo == 'Automatically top-up for renew plan.' || history[i].memo == 'Renew plan.' 
-                          ? 
-                          Image.asset('assets/images/Koompi-WiFi-Icon.png', scale: 39)
-                          : 
-                          history[i].symbol == 'SEL' ?
-                          Image.asset('assets/images/sel-coin-icon.png', width: 27)
-                          :
-                          Image.asset('assets/images/rise-coin-icon.png', width: 27),
-                          
+                          history[i].memo == 'Subscribed Fi-Fi Plan 30 Days' ||
+                                  history[i].memo ==
+                                      'Subscribed Fi-Fi Plan 365 Days' ||
+                                  history[i].memo ==
+                                      'Automatically top-up for renew plan.' ||
+                                  history[i].memo == 'Renew plan.'
+                              ? Image.asset(
+                                  'assets/images/Koompi-WiFi-Icon.png',
+                                  scale: 39)
+                              : history[i].symbol == 'SEL'
+                                  ? Image.asset(
+                                      'assets/images/sel-coin-icon.png',
+                                      width: 27)
+                                  : Image.asset(
+                                      'assets/images/rise-coin-icon.png',
+                                      width: 27),
                           SizedBox(width: 10),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              history[i].memo == 'Subscribed Fi-Fi Plan 30 Days' || history[i].memo == 'Subscribed Fi-Fi Plan 365 Days' || history[i].memo == 'Automatically top-up for renew plan.' || history[i].memo == 'Renew plan.' 
-                              ? 
-                              Text('KOOMPI Fi-Fi',
-                                style: GoogleFonts.nunito(
-                                  textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
-                                ),
-                              ) 
-                              :
+                              history[i].memo ==
+                                          'Subscribed Fi-Fi Plan 30 Days' ||
+                                      history[i].memo ==
+                                          'Subscribed Fi-Fi Plan 365 Days' ||
+                                      history[i].memo ==
+                                          'Automatically top-up for renew plan.' ||
+                                      history[i].memo == 'Renew plan.'
+                                  ? Text(
+                                      'KOOMPI Fi-Fi',
+                                      style: GoogleFonts.nunito(
+                                          textStyle: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w700)),
+                                    )
+                                  : Text(
+                                      userWallet == history[i].destination
+                                          ? _lang.translate('recieved')
+                                          : _lang.translate('sent'),
+                                      style: GoogleFonts.nunito(
+                                          textStyle: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w700)),
+                                    ),
                               Text(
-                                userWallet == history[i].destination ? _lang.translate('recieved') : _lang.translate('sent'),
+                                AppUtils.timeStampToDateTime(
+                                    history[i].datetime),
                                 style: GoogleFonts.nunito(
-                                  textStyle: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w700)
-                                ),
-                              ),
-                              Text(
-                                AppUtils.timeStampToDateTime(history[i].datetime),
-                                style: GoogleFonts.nunito(
-                                  textStyle: TextStyle(color: Colors.black, fontSize: 9, fontWeight: FontWeight.w400)
-                                ),
+                                    textStyle: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 9,
+                                        fontWeight: FontWeight.w400)),
                               ),
                             ],
                           ),
                         ],
                       ),
-                      
                       userWallet == history[i].destination
-                        ? 
-                        Text(
-                          '+ ${history[i].amount} ${history[i].symbol}',
-                          style: GoogleFonts.nunito(
-                            textStyle: TextStyle(color: Colors.green, fontSize: 16, fontWeight: FontWeight.w700)
-                          ),
-                        )
-                        : 
-                        Text(
-                          '- ${history[i].amount} ${history[i].symbol}',
-                          style: GoogleFonts.nunito(
-                            textStyle: TextStyle(color: Colors.red, fontSize: 16, fontWeight: FontWeight.w700)
-                          ),
-                        )
+                          ? Text(
+                              '+ ${history[i].amount} ${history[i].symbol}',
+                              style: GoogleFonts.nunito(
+                                  textStyle: TextStyle(
+                                      color: Colors.green,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w700)),
+                            )
+                          : Text(
+                              '- ${history[i].amount} ${history[i].symbol}',
+                              style: GoogleFonts.nunito(
+                                  textStyle: TextStyle(
+                                      color: Colors.red,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w700)),
+                            )
                     ],
                   ),
                 ),
@@ -169,8 +194,10 @@ Widget trxHistory(BuildContext context) {
                     child: Text(
                       "No Activity",
                       style: GoogleFonts.nunito(
-                        textStyle: TextStyle(color: Colors.black, fontSize: 24,fontWeight: FontWeight.w700)
-                        ),
+                          textStyle: TextStyle(
+                              color: Colors.black,
+                              fontSize: 24,
+                              fontWeight: FontWeight.w700)),
                     ),
                   ),
                 ],
@@ -190,7 +217,8 @@ Widget trxHistory(BuildContext context) {
                   slivers: [
                     SliverList(
                       delegate: SliverChildListDelegate(
-                        _buildList(history.trxHistoryList, context, mData.wallet),
+                        _buildList(
+                            history.trxHistoryList, context, mData.wallet),
                       ),
                     ),
                   ],

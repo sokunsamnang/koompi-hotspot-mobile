@@ -20,7 +20,7 @@ class BalanceModel {
 class BalanceProvider with ChangeNotifier {
   Backend _backend;
 
-  GetRequest _getRequest;
+  // GetRequest _getRequest;
 
   List<BalanceModel> balanceList = [];
 
@@ -28,7 +28,7 @@ class BalanceProvider with ChangeNotifier {
     StorageServices _prefService = StorageServices();
 
     _backend = Backend();
-    _getRequest = GetRequest();
+    // _getRequest = GetRequest();
     balanceList = [];
 
     try {
@@ -57,24 +57,5 @@ class BalanceProvider with ChangeNotifier {
     }
 
     notifyListeners();
-
-    //   // Fetch Balance
-    //   await _getRequest.getPortfolio().then((value) {
-    //     _backend.listData = json.decode(value.body);
-    //     // _backend.listData = List<dynamic>.from(
-    //     //   balanceList.map<dynamic>(
-    //     //     (dynamic item) => value.body,
-    //     //   ),
-    //     // );
-    //     if (_backend.listData.isEmpty)
-    //       balanceList = null;
-    //     else {
-    //       for (var l in _backend.listData) {
-    //         balanceList.add(BalanceModel(l));
-    //       }
-    //     }
-    //   });
-
-    //   notifyListeners();
   }
 }
