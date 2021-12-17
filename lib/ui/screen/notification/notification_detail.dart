@@ -2,32 +2,145 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:koompi_hotspot/all_export.dart';
 import 'package:koompi_hotspot/core/models/model_notification.dart';
+import 'package:koompi_hotspot/core/models/vote_result.dart';
 import 'package:linkable/linkable.dart';
+import 'package:provider/provider.dart';
 
 class NotificationDetail extends StatefulWidget {
   final List<NotificationModel> notification;
   final int index;
   NotificationDetail({this.notification, this.index});
-  
+
   @override
   _NotificationDetailState createState() => _NotificationDetailState();
 }
 
 class _NotificationDetailState extends State<NotificationDetail> {
-
   bool isUpVoted = false;
   bool isDownVoted = false;
 
+  Backend _backend = Backend();
+
   @override
-  void initState(){
+  void initState() {
     super.initState();
+    getVoteResult();
   }
 
   @override
-  void dispose(){
+  void dispose() {
     super.dispose();
   }
-  
+
+  Future getVoteResult() async {
+    await Provider.of<VoteResultProvider>(context, listen: false)
+        .fetchVoteResult(widget.notification[widget.index].id);
+    await Provider.of<NotificationProvider>(context, listen: false)
+        .fetchNotification();
+  }
+
+  Future<void> _onSubmitUpVoteAdsPost() async {
+    var _lang = AppLocalizeService.of(context);
+
+    dialogLoading(context);
+    try {
+      final result = await InternetAddress.lookup('google.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        print('Internet connected');
+        _backend.response = await PostRequest()
+            .upVoteAdsPost(widget.notification[widget.index].id.toString());
+        var responseJson = json.decode(_backend.response.body);
+        if (_backend.response.statusCode == 200) {
+          await Provider.of<VoteResultProvider>(context, listen: false)
+              .fetchVoteResult(widget.notification[widget.index].id);
+          await Provider.of<NotificationProvider>(context, listen: false)
+              .fetchNotification();
+          Navigator.of(context).pop();
+        } else {
+          await Components.dialog(
+              context,
+              textAlignCenter(text: responseJson['message']),
+              warningTitleDialog());
+          Navigator.of(context).pop();
+        }
+      }
+    } on SocketException catch (_) {
+      await Components.dialog(
+          context,
+          textAlignCenter(text: _lang.translate('no_internet_message')),
+          warningTitleDialog());
+      Navigator.of(context).pop();
+    }
+  }
+
+  Future<void> _onSubmitDownVoteAdsPost() async {
+    var _lang = AppLocalizeService.of(context);
+
+    dialogLoading(context);
+    try {
+      final result = await InternetAddress.lookup('google.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        print('Internet connected');
+        _backend.response = await PostRequest()
+            .downVoteAdsPost(widget.notification[widget.index].id.toString());
+        var responseJson = json.decode(_backend.response.body);
+        if (_backend.response.statusCode == 200) {
+          await Provider.of<VoteResultProvider>(context, listen: false)
+              .fetchVoteResult(widget.notification[widget.index].id);
+          await Provider.of<NotificationProvider>(context, listen: false)
+              .fetchNotification();
+          Navigator.of(context).pop();
+        } else {
+          await Components.dialog(
+              context,
+              textAlignCenter(text: responseJson['message']),
+              warningTitleDialog());
+          Navigator.of(context).pop();
+        }
+      }
+    } on SocketException catch (_) {
+      await Components.dialog(
+          context,
+          textAlignCenter(text: _lang.translate('no_internet_message')),
+          warningTitleDialog());
+      Navigator.of(context).pop();
+    }
+  }
+
+  Future<void> _onSubmitUnVoteAdsPut() async {
+    var _lang = AppLocalizeService.of(context);
+    dialogLoading(context);
+    // dialogLoading(context);
+    try {
+      final result = await InternetAddress.lookup('google.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        print('Internet connected');
+        _backend.response = await PostRequest()
+            .unVoteAdsPut(widget.notification[widget.index].id.toString());
+        var responseJson = json.decode(_backend.response.body);
+        if (_backend.response.statusCode == 200) {
+          await Provider.of<VoteResultProvider>(context, listen: false)
+              .fetchVoteResult(widget.notification[widget.index].id);
+          await Provider.of<NotificationProvider>(context, listen: false)
+              .fetchNotification();
+          Navigator.of(context).pop();
+        } else {
+          await Components.dialog(
+              context,
+              textAlignCenter(text: responseJson['message']),
+              warningTitleDialog());
+          Navigator.of(context).pop();
+        }
+      }
+    } on SocketException catch (_) {
+      await Components.dialog(
+          context,
+          textAlignCenter(text: _lang.translate('no_internet_message')),
+          warningTitleDialog());
+      Navigator.of(context).pop();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     var _lang = AppLocalizeService.of(context);
@@ -35,13 +148,13 @@ class _NotificationDetailState extends State<NotificationDetail> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Text(_lang.translate('notifications'), style: TextStyle(color: Colors.black, fontFamily: 'Medium')),
+        title: Text(_lang.translate('notifications'),
+            style: TextStyle(color: Colors.black, fontFamily: 'Medium')),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.black), 
-          onPressed: (){
-            Navigator.pop(context);
-          }
-        ),
+            icon: Icon(Icons.arrow_back, color: Colors.black),
+            onPressed: () {
+              Navigator.pop(context);
+            }),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -53,101 +166,135 @@ class _NotificationDetailState extends State<NotificationDetail> {
               children: <Widget>[
                 Center(
                   child: Image(
-                    fit: BoxFit.contain,
-                    image: NetworkImage(
-                      "${ApiService.notiImage}/${widget.notification[widget.index].image}"
-                    )
-                  ),
+                      fit: BoxFit.contain,
+                      image: NetworkImage(
+                          "${ApiService.notiImage}/${widget.notification[widget.index].image}")),
                 ),
                 SizedBox(height: 10),
                 Container(
                   color: Colors.white,
                   child: Padding(
-                    padding: const EdgeInsets.only(left: 8,right: 8),
+                    padding: const EdgeInsets.only(left: 8, right: 8),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         Row(
                           children: <Widget>[
-                            isUpVoted == false ?
-                            Container(
-                              alignment: Alignment.center,
-                              child:IconButton(
-                                highlightColor: Colors.transparent,
-                                splashColor: Colors.transparent,
-                                icon: Image.asset('assets/images/up-vote-grey.png'),
-                                onPressed: () {
-                                  setState(() {
-                                    isUpVoted = true;
-                                    isDownVoted = false;
-                                  });
-                                },
-                              ),
-                            )
-                            :
-                            Container(
-                              alignment: Alignment.center,
-                              child:IconButton(
-                                highlightColor: Colors.transparent,
-                                splashColor: Colors.transparent,
-                                icon: Image.asset('assets/images/up-vote-blue.png'),
-                                onPressed: () {
-                                  setState(() {
-                                    isUpVoted = false;
-                                  });
-                                },
-                              ),
+                            voteResult.votedType != "Voted Up" ||
+                                    voteResult.votedType == null
+                                ? Container(
+                                    alignment: Alignment.center,
+                                    child: IconButton(
+                                      highlightColor: Colors.transparent,
+                                      splashColor: Colors.transparent,
+                                      icon: Image.asset(
+                                          'assets/images/up-vote-grey.png'),
+                                      onPressed: () async {
+                                        await Provider.of<NotificationProvider>(
+                                                context,
+                                                listen: false)
+                                            .fetchNotification();
+                                        setState(() {
+                                          voteResult.votedType = "Voted Up";
+                                          _onSubmitUpVoteAdsPost();
+                                          // if(voteResult.votedType == "Voted Up") _onSubmitUnVoteAdsPut();
+                                        });
+                                      },
+                                    ),
+                                  )
+                                : Container(
+                                    alignment: Alignment.center,
+                                    child: IconButton(
+                                      highlightColor: Colors.transparent,
+                                      splashColor: Colors.transparent,
+                                      icon: Image.asset(
+                                          'assets/images/up-vote-blue.png'),
+                                      onPressed: () async {
+                                        await Provider.of<NotificationProvider>(
+                                                context,
+                                                listen: false)
+                                            .fetchNotification();
+                                        setState(() {
+                                          voteResult.votedType = null;
+                                          _onSubmitUnVoteAdsPut();
+                                          // if(voteResult.votedType == null) _onSubmitUpVoteAdsPost();
+                                          // else if(voteResult.votedType == "NULL") _onSubmitUpVoteAdsPut();
+                                          // else _onSubmitUpVoteAdsPut();
+                                        });
+                                      },
+                                    ),
+                                  ),
+                            SizedBox(
+                              width: 5,
                             ),
-                            SizedBox(width: 5,),
-                            Text('Vote', style: TextStyle(color: Colors.grey)),
-                            SizedBox(width: 5,),
-                            isDownVoted == false ?
-                            Container(
-                              alignment: Alignment.center,
-                              child:IconButton(
-                                highlightColor: Colors.transparent,
-                                splashColor: Colors.transparent,
-                                icon: Image.asset('assets/images/down-vote-grey.png'),
-                                onPressed: () {
-                                  setState(() {
-                                    isDownVoted = true;
-                                    isUpVoted = false;
-                                  });
-                                },
-                              ),
-                            )
-                            :
-                            Container(
-                              alignment: Alignment.center,
-                              child:IconButton(
-                                highlightColor: Colors.transparent,
-                                splashColor: Colors.transparent,
-                                icon: Image.asset('assets/images/down-vote-blue.png'),
-                                onPressed: () {
-                                  setState(() {
-                                    isDownVoted = false;
-                                  });
-                                },
-                              ),
+                            Text(
+                                widget.notification[widget.index].vote
+                                    .toString(),
+                                style: TextStyle(color: Colors.grey)),
+                            SizedBox(
+                              width: 5,
                             ),
+                            voteResult.votedType != "Voted Down" ||
+                                    voteResult.votedType == null
+                                ? Container(
+                                    alignment: Alignment.center,
+                                    child: IconButton(
+                                      highlightColor: Colors.transparent,
+                                      splashColor: Colors.transparent,
+                                      icon: Image.asset(
+                                          'assets/images/down-vote-grey.png'),
+                                      onPressed: () async {
+                                        await Provider.of<NotificationProvider>(
+                                                context,
+                                                listen: false)
+                                            .fetchNotification();
+                                        setState(() {
+                                          voteResult.votedType = "Voted Down";
+                                          _onSubmitDownVoteAdsPost();
+                                        });
+                                      },
+                                    ),
+                                  )
+                                : Container(
+                                    alignment: Alignment.center,
+                                    child: IconButton(
+                                      highlightColor: Colors.transparent,
+                                      splashColor: Colors.transparent,
+                                      icon: Image.asset(
+                                          'assets/images/down-vote-blue.png'),
+                                      onPressed: () async {
+                                        await Provider.of<NotificationProvider>(
+                                                context,
+                                                listen: false)
+                                            .fetchNotification();
+                                        setState(() {
+                                          voteResult.votedType = null;
+                                          _onSubmitUnVoteAdsPut();
+                                        });
+                                      },
+                                    ),
+                                  ),
                           ],
                         ),
                         Row(
                           children: <Widget>[
                             ElevatedButton.icon(
                               style: ButtonStyle(
-                                backgroundColor: MaterialStateProperty.all<Color>(primaryColor),
-                                shadowColor: MaterialStateProperty.all<Color>(Colors.transparent),
+                                backgroundColor:
+                                    MaterialStateProperty.all<Color>(
+                                        primaryColor),
+                                shadowColor: MaterialStateProperty.all<Color>(
+                                    Colors.transparent),
                               ),
-                              icon: Icon(Icons.share_outlined), 
+                              icon: Icon(Icons.share_outlined),
                               label: Text('Share'),
                               onPressed: () {
-                                Share.share('https://koompi.com', subject: 'HOT Promotion!');
+                                Share.share('https://koompi.com',
+                                    subject: 'HOT Promotion!');
                               },
                             ),
                           ],
                         ),
-                        
                       ],
                     ),
                   ),
@@ -159,7 +306,8 @@ class _NotificationDetailState extends State<NotificationDetail> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        AppUtils.timeStampToDate(widget.notification[widget.index].date),
+                        AppUtils.timeStampToDate(
+                            widget.notification[widget.index].date),
                         style: TextStyle(
                           fontSize: 11,
                           color: Colors.black,
@@ -205,9 +353,11 @@ class _NotificationDetailState extends State<NotificationDetail> {
                 Container(
                   margin: EdgeInsets.symmetric(horizontal: 15),
                   child: Linkable(
-                    text: widget.notification[widget.index].description,
-                    style: TextStyle(color: Colors.black, fontSize: 16, fontFamily: 'Poppins-Regular')
-                  ),
+                      text: widget.notification[widget.index].description,
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                          fontFamily: 'Poppins-Regular')),
                 ),
               ],
             ),

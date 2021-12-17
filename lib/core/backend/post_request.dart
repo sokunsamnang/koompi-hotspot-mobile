@@ -129,7 +129,7 @@ class PostRequest with ChangeNotifier {
 
   //Hotspot Plan
   Future<http.Response> buyHotspotPlan(
-      String phone, String password, String value) async {
+      String phone, String password, String value, String memo) async {
     await _prefService.read('token').then((value) {
       _backend.token = Map<String, dynamic>.from({'token': value});
     });
@@ -142,7 +142,7 @@ class PostRequest with ChangeNotifier {
         "simultaneous": "2",
         "value": value,
         "asset": "RISE",
-        "memo": "Buy Hotspot Plan"
+        "memo": memo
       });
 
       _backend.response = await http.post(

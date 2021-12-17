@@ -46,11 +46,8 @@ class _HotspotPlanState extends State<HotspotPlan> {
 
     dialogLoading(context);
 
-    var response = await PostRequest().buyHotspotPlan(
-      mData.phone,
-      _passwordController.text,
-      '30',
-    );
+    var response = await PostRequest().buyHotspotPlan(mData.phone,
+        _passwordController.text, '30', 'Subscribed Fi-Fi Plan 30 Days');
     var responseJson = json.decode(response.body);
 
     try {
@@ -94,11 +91,8 @@ class _HotspotPlanState extends State<HotspotPlan> {
 
     dialogLoading(context);
 
-    var response = await PostRequest().buyHotspotPlan(
-      mData.phone,
-      _passwordController.text,
-      '365',
-    );
+    var response = await PostRequest().buyHotspotPlan(mData.phone,
+        _passwordController.text, '365', 'Subscribed Fi-Fi Plan 365 Days');
     var responseJson = json.decode(response.body);
 
     try {

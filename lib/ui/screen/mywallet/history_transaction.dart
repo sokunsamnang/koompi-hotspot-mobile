@@ -86,8 +86,8 @@ Widget trxHistory(BuildContext context) {
                                   history[i].memo ==
                                       'Subscribed Fi-Fi Plan 365 Days' ||
                                   history[i].memo ==
-                                      'Automatically top-up for renew plan.' ||
-                                  history[i].memo == 'Renew plan.'
+                                      'Automatically Renew Plan' ||
+                                  history[i].memo == 'Renew Plan'
                               ? Image.asset(
                                   'assets/images/Koompi-WiFi-Icon.png',
                                   scale: 39)
@@ -108,8 +108,8 @@ Widget trxHistory(BuildContext context) {
                                       history[i].memo ==
                                           'Subscribed Fi-Fi Plan 365 Days' ||
                                       history[i].memo ==
-                                          'Automatically top-up for renew plan.' ||
-                                      history[i].memo == 'Renew plan.'
+                                          'Automatically Renew Plan' ||
+                                      history[i].memo == 'Renew Plan'
                                   ? Text(
                                       'KOOMPI Fi-Fi',
                                       style: GoogleFonts.nunito(

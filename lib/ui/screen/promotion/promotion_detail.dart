@@ -17,25 +17,29 @@ class PromotionScreen extends StatefulWidget {
 }
 
 class _PromotionScreenState extends State<PromotionScreen> {
-  
   bool isUpVoted = false;
   bool isDownVoted = false;
-  
-  // int countVoted = 0;
 
   Backend _backend = Backend();
 
+  @override
+  void initState() {
+    super.initState();
+    getVoteResult();
+  }
 
   @override
-  void initState(){
-    super.initState();
-  }
-  
-  @override
-  void dispose(){
+  void dispose() {
     super.dispose();
   }
-  
+
+  Future getVoteResult() async {
+    await Provider.of<VoteResultProvider>(context, listen: false)
+        .fetchVoteResult(widget.promotion.id);
+    await Provider.of<NotificationProvider>(context, listen: false)
+        .fetchNotification();
+  }
+
   Future<void> _onSubmitUpVoteAdsPost() async {
     var _lang = AppLocalizeService.of(context);
 
@@ -44,27 +48,28 @@ class _PromotionScreenState extends State<PromotionScreen> {
       final result = await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
         print('Internet connected');
-        _backend.response = await PostRequest().upVoteAdsPost(widget.promotion.id.toString());
+        _backend.response =
+            await PostRequest().upVoteAdsPost(widget.promotion.id.toString());
         var responseJson = json.decode(_backend.response.body);
         if (_backend.response.statusCode == 200) {
-          await Provider.of<VoteResultProvider>(context, listen: false).fetchVoteResult(widget.promotion.id);
-          await Provider.of<NotificationProvider>(context, listen: false).fetchNotification();
+          await Provider.of<VoteResultProvider>(context, listen: false)
+              .fetchVoteResult(widget.promotion.id);
+          await Provider.of<NotificationProvider>(context, listen: false)
+              .fetchNotification();
           Navigator.of(context).pop();
         } else {
           await Components.dialog(
-            context,
-            textAlignCenter(text: responseJson['message']),
-            warningTitleDialog()
-          );
+              context,
+              textAlignCenter(text: responseJson['message']),
+              warningTitleDialog());
           Navigator.of(context).pop();
         }
       }
     } on SocketException catch (_) {
       await Components.dialog(
-        context,
-        textAlignCenter(text: _lang.translate('no_internet_message')),
-        warningTitleDialog()
-      );
+          context,
+          textAlignCenter(text: _lang.translate('no_internet_message')),
+          warningTitleDialog());
       Navigator.of(context).pop();
     }
   }
@@ -77,27 +82,28 @@ class _PromotionScreenState extends State<PromotionScreen> {
       final result = await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
         print('Internet connected');
-        _backend.response = await PostRequest().downVoteAdsPost(widget.promotion.id.toString());
+        _backend.response =
+            await PostRequest().downVoteAdsPost(widget.promotion.id.toString());
         var responseJson = json.decode(_backend.response.body);
         if (_backend.response.statusCode == 200) {
-          await Provider.of<VoteResultProvider>(context, listen: false).fetchVoteResult(widget.promotion.id);
-          await Provider.of<NotificationProvider>(context, listen: false).fetchNotification();
+          await Provider.of<VoteResultProvider>(context, listen: false)
+              .fetchVoteResult(widget.promotion.id);
+          await Provider.of<NotificationProvider>(context, listen: false)
+              .fetchNotification();
           Navigator.of(context).pop();
         } else {
           await Components.dialog(
-            context,
-            textAlignCenter(text: responseJson['message']),
-            warningTitleDialog()
-          );
+              context,
+              textAlignCenter(text: responseJson['message']),
+              warningTitleDialog());
           Navigator.of(context).pop();
         }
       }
     } on SocketException catch (_) {
       await Components.dialog(
-        context,
-        textAlignCenter(text: _lang.translate('no_internet_message')),
-        warningTitleDialog()
-      );
+          context,
+          textAlignCenter(text: _lang.translate('no_internet_message')),
+          warningTitleDialog());
       Navigator.of(context).pop();
     }
   }
@@ -110,26 +116,28 @@ class _PromotionScreenState extends State<PromotionScreen> {
       final result = await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
         print('Internet connected');
-        _backend.response = await PostRequest().unVoteAdsPut(widget.promotion.id.toString());
+        _backend.response =
+            await PostRequest().unVoteAdsPut(widget.promotion.id.toString());
         var responseJson = json.decode(_backend.response.body);
         if (_backend.response.statusCode == 200) {
-          await Provider.of<VoteResultProvider>(context, listen: false).fetchVoteResult(widget.promotion.id);
+          await Provider.of<VoteResultProvider>(context, listen: false)
+              .fetchVoteResult(widget.promotion.id);
+          await Provider.of<NotificationProvider>(context, listen: false)
+              .fetchNotification();
           Navigator.of(context).pop();
         } else {
           await Components.dialog(
-            context,
-            textAlignCenter(text: responseJson['message']),
-            warningTitleDialog()
-          );
+              context,
+              textAlignCenter(text: responseJson['message']),
+              warningTitleDialog());
           Navigator.of(context).pop();
         }
       }
     } on SocketException catch (_) {
       await Components.dialog(
-        context,
-        textAlignCenter(text: _lang.translate('no_internet_message')),
-        warningTitleDialog()
-      );
+          context,
+          textAlignCenter(text: _lang.translate('no_internet_message')),
+          warningTitleDialog());
       Navigator.of(context).pop();
     }
   }
@@ -142,13 +150,13 @@ class _PromotionScreenState extends State<PromotionScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Text(_lang.translate('promotion'), style: TextStyle(color: Colors.black, fontFamily: 'Medium')),
+        title: Text(_lang.translate('promotion'),
+            style: TextStyle(color: Colors.black, fontFamily: 'Medium')),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.black), 
-          onPressed: (){
-            Navigator.pop(context);
-          }
-        ),
+            icon: Icon(Icons.arrow_back, color: Colors.black),
+            onPressed: () {
+              Navigator.pop(context);
+            }),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -161,13 +169,13 @@ class _PromotionScreenState extends State<PromotionScreen> {
                 Stack(
                   children: <Widget>[
                     Hero(
-                      tag: "${ApiService.notiImage}/${notification.notificationList[widget.index].image}",
+                      tag:
+                          "${ApiService.notiImage}/${notification.notificationList[widget.index].image}",
                       child: ClipRRect(
                         // borderRadius: BorderRadius.circular(12.0),
                         child: Image(
                           image: NetworkImage(
-                              "${ApiService.notiImage}/${notification.notificationList[widget.index].image}"
-                            ),
+                              "${ApiService.notiImage}/${notification.notificationList[widget.index].image}"),
                           fit: BoxFit.contain,
                         ),
                       ),
@@ -178,101 +186,125 @@ class _PromotionScreenState extends State<PromotionScreen> {
                 Container(
                   color: Colors.white,
                   child: Padding(
-                    padding: const EdgeInsets.only(left: 8,right: 8),
+                    padding: const EdgeInsets.only(left: 8, right: 8),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         Row(
                           children: <Widget>[
-                            voteResult.votedType != "Voted Up" || voteResult.votedType == null ?
-                            Container(
-                              alignment: Alignment.center,
-                              child:IconButton(
-                                highlightColor: Colors.transparent,
-                                splashColor: Colors.transparent,
-                                icon: Image.asset('assets/images/up-vote-grey.png'),
-                                onPressed: () async{
-                                  await Provider.of<NotificationProvider>(context, listen: false).fetchNotification();
-                                  setState(() {
-                                    voteResult.votedType = "Voted Up";
-                                    _onSubmitUpVoteAdsPost();
-                                    // if(voteResult.votedType == "Voted Up") _onSubmitUnVoteAdsPut();
-                                  });
-                                },
-                              ),
-                            )
-                            :
-                            Container(
-                              alignment: Alignment.center,
-                              child:IconButton(
-                                highlightColor: Colors.transparent,
-                                splashColor: Colors.transparent,
-                                icon: Image.asset('assets/images/up-vote-blue.png'),
-                                onPressed: () async{
-                                  await Provider.of<NotificationProvider>(context, listen: false).fetchNotification();
-                                  setState(() {
-                                    voteResult.votedType = null;
-                                    _onSubmitUnVoteAdsPut();
-                                    // if(voteResult.votedType == null) _onSubmitUpVoteAdsPost();
-                                    // else if(voteResult.votedType == "NULL") _onSubmitUpVoteAdsPut();
-                                    // else _onSubmitUpVoteAdsPut();
-                                  });
-                                },
-                              ),
+                            voteResult.votedType != "Voted Up" ||
+                                    voteResult.votedType == null
+                                ? Container(
+                                    alignment: Alignment.center,
+                                    child: IconButton(
+                                      highlightColor: Colors.transparent,
+                                      splashColor: Colors.transparent,
+                                      icon: Image.asset(
+                                          'assets/images/up-vote-grey.png'),
+                                      onPressed: () async {
+                                        await Provider.of<NotificationProvider>(
+                                                context,
+                                                listen: false)
+                                            .fetchNotification();
+                                        setState(() {
+                                          voteResult.votedType = "Voted Up";
+                                          _onSubmitUpVoteAdsPost();
+                                          // if(voteResult.votedType == "Voted Up") _onSubmitUnVoteAdsPut();
+                                        });
+                                      },
+                                    ),
+                                  )
+                                : Container(
+                                    alignment: Alignment.center,
+                                    child: IconButton(
+                                      highlightColor: Colors.transparent,
+                                      splashColor: Colors.transparent,
+                                      icon: Image.asset(
+                                          'assets/images/up-vote-blue.png'),
+                                      onPressed: () async {
+                                        await Provider.of<NotificationProvider>(
+                                                context,
+                                                listen: false)
+                                            .fetchNotification();
+                                        setState(() {
+                                          voteResult.votedType = null;
+                                          _onSubmitUnVoteAdsPut();
+                                          // if(voteResult.votedType == null) _onSubmitUpVoteAdsPost();
+                                          // else if(voteResult.votedType == "NULL") _onSubmitUpVoteAdsPut();
+                                          // else _onSubmitUpVoteAdsPut();
+                                        });
+                                      },
+                                    ),
+                                  ),
+                            SizedBox(
+                              width: 5,
                             ),
-                            SizedBox(width: 5,),
-                            Text(widget.promotion.vote.toString(), style: TextStyle(color: Colors.grey)),
-                            SizedBox(width: 5,),
-                            voteResult.votedType != "Voted Down" || voteResult.votedType == null ?
-                            Container(
-                              alignment: Alignment.center,
-                              child:IconButton(
-                                highlightColor: Colors.transparent,
-                                splashColor: Colors.transparent,
-                                icon: Image.asset('assets/images/down-vote-grey.png'),
-                                onPressed: () async{
-                                  await Provider.of<NotificationProvider>(context, listen: false).fetchNotification();
-                                  setState(() {
-                                    voteResult.votedType = "Voted Down";
-                                   _onSubmitDownVoteAdsPost();
-                                  });
-                                },
-                              ),
-                            )
-                            :
-                            Container(
-                              alignment: Alignment.center,
-                              child:IconButton(
-                                highlightColor: Colors.transparent,
-                                splashColor: Colors.transparent,
-                                icon: Image.asset('assets/images/down-vote-blue.png'),
-                                onPressed: () async{
-                                  await Provider.of<NotificationProvider>(context, listen: false).fetchNotification();
-                                  setState(() {
-                                    voteResult.votedType = null;
-                                    _onSubmitUnVoteAdsPut();
-                                  });
-                                },
-                              ),
+                            Text(widget.promotion.vote.toString(),
+                                style: TextStyle(color: Colors.grey)),
+                            SizedBox(
+                              width: 5,
                             ),
+                            voteResult.votedType != "Voted Down" ||
+                                    voteResult.votedType == null
+                                ? Container(
+                                    alignment: Alignment.center,
+                                    child: IconButton(
+                                      highlightColor: Colors.transparent,
+                                      splashColor: Colors.transparent,
+                                      icon: Image.asset(
+                                          'assets/images/down-vote-grey.png'),
+                                      onPressed: () async {
+                                        await Provider.of<NotificationProvider>(
+                                                context,
+                                                listen: false)
+                                            .fetchNotification();
+                                        setState(() {
+                                          voteResult.votedType = "Voted Down";
+                                          _onSubmitDownVoteAdsPost();
+                                        });
+                                      },
+                                    ),
+                                  )
+                                : Container(
+                                    alignment: Alignment.center,
+                                    child: IconButton(
+                                      highlightColor: Colors.transparent,
+                                      splashColor: Colors.transparent,
+                                      icon: Image.asset(
+                                          'assets/images/down-vote-blue.png'),
+                                      onPressed: () async {
+                                        await Provider.of<NotificationProvider>(
+                                                context,
+                                                listen: false)
+                                            .fetchNotification();
+                                        setState(() {
+                                          voteResult.votedType = null;
+                                          _onSubmitUnVoteAdsPut();
+                                        });
+                                      },
+                                    ),
+                                  ),
                           ],
                         ),
                         Row(
                           children: <Widget>[
                             ElevatedButton.icon(
                               style: ButtonStyle(
-                                backgroundColor: MaterialStateProperty.all<Color>(primaryColor),
-                                shadowColor: MaterialStateProperty.all<Color>(Colors.transparent),
+                                backgroundColor:
+                                    MaterialStateProperty.all<Color>(
+                                        primaryColor),
+                                shadowColor: MaterialStateProperty.all<Color>(
+                                    Colors.transparent),
                               ),
-                              icon: Icon(Icons.share_outlined), 
+                              icon: Icon(Icons.share_outlined),
                               label: Text('Share'),
                               onPressed: () {
-                                Share.share('https://koompi.com', subject: 'HOT Promotion!');
+                                Share.share('https://koompi.com',
+                                    subject: 'HOT Promotion!');
                               },
                             ),
                           ],
                         ),
-                        
                       ],
                     ),
                   ),
@@ -332,9 +364,11 @@ class _PromotionScreenState extends State<PromotionScreen> {
                 Container(
                   margin: EdgeInsets.symmetric(horizontal: 15),
                   child: Linkable(
-                    text: widget.promotion.description,
-                    style: TextStyle(color: Colors.black, fontSize: 16, fontFamily: 'Poppins-Regular')
-                  ),
+                      text: widget.promotion.description,
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                          fontFamily: 'Poppins-Regular')),
                 )
               ],
             ),
