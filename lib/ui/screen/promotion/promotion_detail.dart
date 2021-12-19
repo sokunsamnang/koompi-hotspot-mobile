@@ -137,7 +137,7 @@ class _PromotionScreenState extends State<PromotionScreen> {
   @override
   Widget build(BuildContext context) {
     var _lang = AppLocalizeService.of(context);
-    var notification = Provider.of<NotificationProvider>(context);
+    var _notification = Provider.of<NotificationProvider>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -162,12 +162,12 @@ class _PromotionScreenState extends State<PromotionScreen> {
                   children: <Widget>[
                     Hero(
                       tag:
-                          "${ApiService.notiImage}/${notification.notificationList[widget.index].image}",
+                          "${ApiService.notiImage}/${_notification.notificationList[widget.index].image}",
                       child: ClipRRect(
                         // borderRadius: BorderRadius.circular(12.0),
                         child: Image(
                           image: NetworkImage(
-                              "${ApiService.notiImage}/${notification.notificationList[widget.index].image}"),
+                              "${ApiService.notiImage}/${_notification.notificationList[widget.index].image}"),
                           fit: BoxFit.contain,
                         ),
                       ),
@@ -201,7 +201,6 @@ class _PromotionScreenState extends State<PromotionScreen> {
                                         setState(() {
                                           voteResult.votedType = "Voted Up";
                                           _onSubmitUpVoteAdsPost();
-                                          // if(voteResult.votedType == "Voted Up") _onSubmitUnVoteAdsPut();
                                         });
                                       },
                                     ),
@@ -221,9 +220,6 @@ class _PromotionScreenState extends State<PromotionScreen> {
                                         setState(() {
                                           voteResult.votedType = null;
                                           _onSubmitUnVoteAdsPut();
-                                          // if(voteResult.votedType == null) _onSubmitUpVoteAdsPost();
-                                          // else if(voteResult.votedType == "NULL") _onSubmitUpVoteAdsPut();
-                                          // else _onSubmitUpVoteAdsPut();
                                         });
                                       },
                                     ),
@@ -231,7 +227,10 @@ class _PromotionScreenState extends State<PromotionScreen> {
                             SizedBox(
                               width: 5,
                             ),
-                            Text(widget.promotion.vote.toString(),
+                            Text(
+                                _notification
+                                    .notificationList[widget.index].vote
+                                    .toString(),
                                 style: TextStyle(color: Colors.grey)),
                             SizedBox(
                               width: 5,

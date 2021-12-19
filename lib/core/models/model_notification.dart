@@ -1,7 +1,6 @@
 import 'package:koompi_hotspot/all_export.dart';
 
 class NotificationModel {
-  
   int id;
   String title;
   String category;

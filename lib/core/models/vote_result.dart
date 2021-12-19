@@ -14,30 +14,30 @@ class VoteResult {
   String votedType;
   String adsId;
 
-  factory VoteResult.fromJson(String str) => VoteResult.fromMap(json.decode(str));
+  factory VoteResult.fromJson(String str) =>
+      VoteResult.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
   factory VoteResult.fromMap(Map<String, dynamic> json) => VoteResult(
-    id: json['user_id'],
-    voted: json['voted'],
-    adsId: json['ads_id'],
-    votedType: json['voted_type'],
-  );
+        id: json['user_id'],
+        voted: json['voted'],
+        adsId: json['ads_id'],
+        votedType: json['voted_type'],
+      );
 
   Map<String, dynamic> toMap() => {
-    "user_id": id,
-    "voted": voted,
-    "ads_id": adsId,
-    "voted_type": votedType,
-  };
+        "user_id": id,
+        "voted": voted,
+        "ads_id": adsId,
+        "voted_type": votedType,
+      };
 }
-
 
 VoteResult voteResult = VoteResult();
 
 class VoteResultProvider with ChangeNotifier {
-   StorageServices _prefService = StorageServices();
+  StorageServices _prefService = StorageServices();
   String alertText;
 
   var _voteResult = new VoteResult();
@@ -57,7 +57,6 @@ class VoteResultProvider with ChangeNotifier {
           var responseBody = json.decode(response.body);
           // if (mPlan.username != null) mPlan.username;
           voteResult = VoteResult.fromMap(responseBody);
-
         } else {
           voteResult = VoteResult();
           alertText = response.body;

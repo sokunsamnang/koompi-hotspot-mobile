@@ -145,6 +145,8 @@ class _NotificationDetailState extends State<NotificationDetail> {
   Widget build(BuildContext context) {
     var _lang = AppLocalizeService.of(context);
 
+    var _notification = Provider.of<NotificationProvider>(context);
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -228,7 +230,8 @@ class _NotificationDetailState extends State<NotificationDetail> {
                               width: 5,
                             ),
                             Text(
-                                widget.notification[widget.index].vote
+                                _notification
+                                    .notificationList[widget.index].vote
                                     .toString(),
                                 style: TextStyle(color: Colors.grey)),
                             SizedBox(
