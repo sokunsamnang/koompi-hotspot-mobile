@@ -25,19 +25,11 @@ class _PromotionScreenState extends State<PromotionScreen> {
   @override
   void initState() {
     super.initState();
-    getVoteResult();
   }
 
   @override
   void dispose() {
     super.dispose();
-  }
-
-  Future getVoteResult() async {
-    await Provider.of<VoteResultProvider>(context, listen: false)
-        .fetchVoteResult(widget.promotion.id);
-    await Provider.of<NotificationProvider>(context, listen: false)
-        .fetchNotification();
   }
 
   Future<void> _onSubmitUpVoteAdsPost() async {

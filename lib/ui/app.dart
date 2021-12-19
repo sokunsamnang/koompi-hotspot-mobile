@@ -85,7 +85,7 @@ class _AppState extends State<App> {
             // '/welcome': (context) => WelcomeScreen(),
             '/walletScreen': (context) => WalletScreen(),
           },
-          title: 'KOOMPI Hotspot',
+          title: 'KOOMPI Fi-Fi',
           home: Splash(),
         ),
       ),

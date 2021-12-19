@@ -80,7 +80,7 @@ class SideMenu extends StatelessWidget {
             },
           ),
           DrawerListTile(
-            title: "Fi-Fi",
+            title: "Wi-Fi",
             iconSrc: Icons.wifi_outlined,
             press: () {
               Navigator.pushAndRemoveUntil(

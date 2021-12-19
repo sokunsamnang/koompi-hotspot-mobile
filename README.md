@@ -1,8 +1,8 @@
-# KOOMPI Hotspot
+# KOOMPI Fi-Fi
 
 
 
-### Welcome To KOOMPI Hotspot 
+### Welcome To KOOMPI Fi-Fi 
 
 KOOMPI Wi-Fi Hotspot is for accessable and affordable for everyone and  KOOMPI school partner.
 
@@ -11,7 +11,7 @@ KOOMPI Wi-Fi Hotspot is for accessable and affordable for everyone and  KOOMPI s
 
 - [x] Register vai SMS. 
 - [x] Send to token by QR Code.
-- [x] Send payment.
+- [x] Payment with Selendra Network.
 - [x] View transaction histroy.
 - [x] Subscribe hotspot plan.
 - [x] Unsubscribe hotspot plan.
@@ -25,7 +25,7 @@ KOOMPI Wi-Fi Hotspot is for accessable and affordable for everyone and  KOOMPI s
 
 ## Prerequisite: 
 
-* Installed Flutter and Android Studio on your machine.
+* Installed Flutter and Android Studio or VSCode on your machine.
 
 
 ## Usage:

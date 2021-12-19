@@ -9,14 +9,13 @@ class NotificationScreen extends StatefulWidget {
 }
 
 class _NotificationScreenState extends State<NotificationScreen> {
-
   @override
-  void initState(){ 
+  void initState() {
     super.initState();
   }
 
   @override
-  void dispose(){
+  void dispose() {
     super.dispose();
   }
 
@@ -36,8 +35,9 @@ class _NotificationScreenState extends State<NotificationScreen> {
         ),
       ),
       body: RefreshIndicator(
-        onRefresh: () async{
-          await Provider.of<NotificationProvider>(context, listen: false).fetchNotification();
+        onRefresh: () async {
+          await Provider.of<NotificationProvider>(context, listen: false)
+              .fetchNotification();
         },
         child: Container(
           child: notificationList(context),

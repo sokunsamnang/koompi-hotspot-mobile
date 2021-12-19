@@ -23,7 +23,12 @@ class PromotionCarousel extends StatelessWidget {
               return notification.notificationList[index].category ==
                       'Promotion'
                   ? GestureDetector(
-                      onTap: () {
+                      onTap: () async {
+                        dialogLoading(context);
+                        await Provider.of<VoteResultProvider>(context,
+                                listen: false)
+                            .fetchVoteResult(promotion.id);
+                        Navigator.of(context).pop();
                         Navigator.push(
                           context,
                           MaterialPageRoute(
