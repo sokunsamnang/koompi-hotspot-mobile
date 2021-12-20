@@ -86,8 +86,15 @@ Widget trxHistory(BuildContext context) {
                                   history[i].memo ==
                                       'Subscribed Fi-Fi Plan 365 Days' ||
                                   history[i].memo ==
-                                      'Automatically Renew Plan' ||
-                                  history[i].memo == 'Renew Plan'
+                                      'Automatically Renewed Fi-Fi Plan 30 Days' ||
+                                  history[i].memo ==
+                                      'Automatically Renewed Fi-Fi Plan 365' ||
+                                  history[i].memo == 'Renewed Plan 30 Days' ||
+                                  history[i].memo == 'Renewed Plan 365 Days' ||
+                                  history[i].memo ==
+                                      'Changed Subscribe Fi-Fi Plan To 30 Days' ||
+                                  history[i].memo ==
+                                      'Changed Subscribe Fi-Fi Plan To 365 Days'
                               ? Image.asset(
                                   'assets/images/Koompi-WiFi-Icon.png',
                                   scale: 39)
