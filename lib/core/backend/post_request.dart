@@ -141,7 +141,7 @@ class PostRequest with ChangeNotifier {
         "password": password,
         "simultaneous": "2",
         "value": value,
-        "asset": "RISE",
+        "asset": "SEL",
         "memo": memo
       });
 

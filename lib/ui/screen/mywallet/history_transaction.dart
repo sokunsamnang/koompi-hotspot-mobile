@@ -110,13 +110,21 @@ Widget trxHistory(BuildContext context) {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              history[i].memo ==
-                                          'Subscribed Fi-Fi Plan 30 Days' ||
+                              history[i].memo == 'Subscribed Fi-Fi Plan 30 Days' ||
                                       history[i].memo ==
                                           'Subscribed Fi-Fi Plan 365 Days' ||
                                       history[i].memo ==
-                                          'Automatically Renew Plan' ||
-                                      history[i].memo == 'Renew Plan'
+                                          'Automatically Renewed Fi-Fi Plan 30 Days' ||
+                                      history[i].memo ==
+                                          'Automatically Renewed Fi-Fi Plan 365' ||
+                                      history[i].memo ==
+                                          'Renewed Plan 30 Days' ||
+                                      history[i].memo ==
+                                          'Renewed Plan 365 Days' ||
+                                      history[i].memo ==
+                                          'Changed Subscribe Fi-Fi Plan To 30 Days' ||
+                                      history[i].memo ==
+                                          'Changed Subscribe Fi-Fi Plan To 365 Days'
                                   ? Text(
                                       'KOOMPI Fi-Fi',
                                       style: GoogleFonts.nunito(
