@@ -88,7 +88,7 @@ Widget trxHistory(BuildContext context) {
                                   history[i].memo ==
                                       'Automatically Renewed Fi-Fi Plan 30 Days' ||
                                   history[i].memo ==
-                                      'Automatically Renewed Fi-Fi Plan 365' ||
+                                      'Automatically Renewed Fi-Fi Plan 365 Days' ||
                                   history[i].memo ==
                                       'Renewed Fi-Fi Plan 30 Days' ||
                                   history[i].memo ==
@@ -119,7 +119,7 @@ Widget trxHistory(BuildContext context) {
                                       history[i].memo ==
                                           'Automatically Renewed Fi-Fi Plan 30 Days' ||
                                       history[i].memo ==
-                                          'Automatically Renewed Fi-Fi Plan 365' ||
+                                          'Automatically Renewed Fi-Fi Plan 365 Days' ||
                                       history[i].memo ==
                                           'Renewed Fi-Fi Plan 30 Days' ||
                                       history[i].memo ==
