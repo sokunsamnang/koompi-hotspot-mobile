@@ -248,46 +248,6 @@ class _ChangePasswordState extends State<ChangePassword>
     }
   }
 
-// showChangePasswordDialog(context) async {
-//   var _lang = AppLocalizeService.of(context);
-//   return showDialog(
-//       context: context,
-//       barrierDismissible: false,
-//       builder: (BuildContext context) {
-//         return WillPopScope(
-//           onWillPop: () async => false,
-//           child: AlertDialog(
-//             title: Text(
-//               _lang.translate('complete'),
-//               textAlign: TextAlign.center,
-//             ),
-//             content: SingleChildScrollView(
-//               child: ListBody(
-//                 children: <Widget>[
-//                   Text(_lang.translate('tf_change_password')),
-//                 ],
-//               ),
-//             ),
-//             actions: <Widget>[
-//               FlatButton(
-//                 child: Text(_lang.translate('ok')),
-//                 onPressed: () async {
-//                   dialogLoading(context);
-//                   Future.delayed(Duration(seconds: 2), () {
-//                     Timer(Duration(milliseconds: 500), () => Navigator.pushAndRemoveUntil(
-//                       context,
-//                       MaterialPageRoute(builder: (context) => LoginPhone()),
-//                       ModalRoute.withName('/loginPhone'),
-//                     ));
-//                   });
-//                 },
-//               ),
-//             ],
-//           ),
-//         );
-//       });
-// }
-
   @override
   Widget build(BuildContext context) {
     var _lang = AppLocalizeService.of(context);

@@ -12,7 +12,7 @@ class _LanguageViewState extends State<LanguageView>
   AnimationController _controller;
 
   String lang;
-  
+
   @override
   void initState() {
     super.initState();
@@ -25,8 +25,6 @@ class _LanguageViewState extends State<LanguageView>
     _controller.dispose();
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     var data = Provider.of<LangProvider>(context);
@@ -34,7 +32,8 @@ class _LanguageViewState extends State<LanguageView>
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Text(_lang.translate('language'), style: TextStyle(color: Colors.black, fontFamily: 'Medium')),
+        title: Text(_lang.translate('language'),
+            style: TextStyle(color: Colors.black, fontFamily: 'Medium')),
         leading: Builder(builder: (BuildContext context) {
           return IconButton(
               icon: Icon(
@@ -53,8 +52,10 @@ class _LanguageViewState extends State<LanguageView>
             children: <Widget>[
               Card(
                 elevation: 4.0,
-                margin:const EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+                margin:
+                    const EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12.0)),
                 child: Column(
                   children: <Widget>[
                     ListTile(
@@ -75,45 +76,33 @@ class _LanguageViewState extends State<LanguageView>
                                 color: Colors.transparent,
                               ),
                       ),
-                      onTap: () async { 
+                      onTap: () async {
                         data.setLocal('KH', context);
-
-                        // Navigator.pushAndRemoveUntil(
-                        //   context,
-                        //   MaterialPageRoute(builder: (context) => LoginPhone()),
-                        //   ModalRoute.withName('/loginPhone'),
-                        // );
                       },
                     ),
                     _buildDivider(),
                     ListTile(
-                      leading: Image.asset(
-                        'assets/images/eng_flag.png',
-                        width: 50,
-                        height: 50,
-                      ),
-                      trailing: Consumer<LangProvider>(
-                        builder: (context, value, child) =>
-                          value.lang == 'EN' || value.lang == 'US'
-                              ? Icon(
-                                  Icons.check_circle,
-                                  color: Colors.blue[700],
-                                )
-                              : Icon(
-                                  Icons.check_circle,
-                                  color: Colors.transparent,
-                                ),
-                      ),
-                      title: Text(_lang.translate('english')),
-                      onTap: () async {
-                        data.setLocal('EN', context);
-                        // Navigator.pushAndRemoveUntil(
-                        //   context,
-                        //   MaterialPageRoute(builder: (context) => LoginPhone()),
-                        //   ModalRoute.withName('/loginPhone'),
-                        // );
-                      }
-                    ),
+                        leading: Image.asset(
+                          'assets/images/eng_flag.png',
+                          width: 50,
+                          height: 50,
+                        ),
+                        trailing: Consumer<LangProvider>(
+                          builder: (context, value, child) =>
+                              value.lang == 'EN' || value.lang == 'US'
+                                  ? Icon(
+                                      Icons.check_circle,
+                                      color: Colors.blue[700],
+                                    )
+                                  : Icon(
+                                      Icons.check_circle,
+                                      color: Colors.transparent,
+                                    ),
+                        ),
+                        title: Text(_lang.translate('english')),
+                        onTap: () async {
+                          data.setLocal('EN', context);
+                        }),
                   ],
                 ),
               ),

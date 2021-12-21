@@ -46,11 +46,6 @@ class _AppState extends State<App> {
       ],
       child: Consumer<LangProvider>(
         builder: (context, value, child) => MaterialApp(
-          // builder: (context, child) => ScrollConfiguration(
-          //   behavior: ScrollBehavior()
-          //     ..buildViewportChrome(context, child, AxisDirection.down),
-          //   child: child,
-          // ),
           builder: (context, widget) => ResponsiveWrapper.builder(
             BouncingScrollWrapper.builder(context, widget),
             maxWidth: 2460,
@@ -123,10 +118,6 @@ class _SplashState extends State<Splash> {
         child: IntroScreen(),
       ),
     );
-
-    // Navigator.pushReplacement(context,
-    //   MaterialPageRoute(builder: (context) => IntroScreen())
-    // );
   }
 
   void isLoggedIn() async {
@@ -183,12 +174,6 @@ class _SplashState extends State<Splash> {
             child: CaptivePortalWeb(),
           ),
         );
-
-        // Navigator.push(
-        //   context,
-        //   MaterialPageRoute(
-        //     builder: (_) => CaptivePortalWeb()),
-        // );
       }
     });
 
@@ -248,12 +233,6 @@ class _SplashState extends State<Splash> {
             child: CaptivePortalWeb(),
           ),
         );
-
-        // Navigator.push(
-        //   context,
-        //   MaterialPageRoute(
-        //     builder: (_) => CaptivePortalWeb()),
-        // );
         return false;
       }
     } else {

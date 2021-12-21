@@ -304,7 +304,6 @@ class _HotspotPlanState extends State<HotspotPlan> {
                   ],
                 ),
               ),
-
               SizedBox(height: 10),
               Padding(
                 padding: EdgeInsets.only(right: 25, left: 25),
@@ -330,15 +329,12 @@ class _HotspotPlanState extends State<HotspotPlan> {
                   ],
                 ),
               ),
-
-              // SizedBox(height: 20),
               Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Center(
                     child: InkWell(
                   child: Container(
                     width: MediaQuery.of(context).size.width,
-                    // width: ScreenUtil.getInstance().setWidth(330),
                     height: 50,
                     decoration: BoxDecoration(
                         gradient: LinearGradient(
@@ -388,9 +384,6 @@ class _HotspotPlanState extends State<HotspotPlan> {
   Widget plan365DaysButton(BuildContext context) {
     var _lang = AppLocalizeService.of(context);
     return Container(
-      // width: MediaQuery.of(context).size.width,
-      // height: MediaQuery.of(context).size.height * .27,
-      // padding: EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.white,
         boxShadow: [
@@ -481,7 +474,6 @@ class _HotspotPlanState extends State<HotspotPlan> {
                   ],
                 ),
               ),
-
               SizedBox(height: 10),
               Padding(
                 padding: EdgeInsets.only(right: 25, left: 25),
@@ -507,8 +499,6 @@ class _HotspotPlanState extends State<HotspotPlan> {
                   ],
                 ),
               ),
-
-              // SizedBox(height: 20),
               Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Center(
@@ -559,70 +549,6 @@ class _HotspotPlanState extends State<HotspotPlan> {
       ),
     );
   }
-
-  // Future<String> _showDialog30Days(BuildContext context){
-  //   var _lang = AppLocalizeService.of(context);
-  //   return showDialog(
-  //     context: context,
-  //     barrierDismissible: false,
-  //     builder: (BuildContext context) {
-  //       // return object of type Dialog
-  //       return WillPopScope(
-  //         onWillPop: () async => false,
-  //         child:AlertDialog(
-  //           title: new Text(_lang.translate('enter_password')),
-  //           content: Form(
-  //             key: formKey,
-  //             child: TextFormField(
-  //               validator: (val) {
-  //                 if(val.isEmpty) return _lang.translate('password_is_required_validate');
-  //                 if(val.length < 6) return _lang.translate('password_too_short_validate');
-  //                 return null;
-  //               },
-  //               autovalidateMode: AutovalidateMode.onUserInteraction,
-  //               controller: _passwordController,
-  //               onSaved: (val) => _passwordController.text = val,
-  //               keyboardType: TextInputType.visiblePassword,
-  //               decoration: InputDecoration(
-  //                 fillColor: Colors.grey[100],
-  //                 filled: true,
-  //                 hintText: _lang.translate('password_tf'),
-  //                 hintStyle: TextStyle(color: Colors.black, fontSize: 12.0),
-  //                 border: OutlineInputBorder(
-  //                   borderSide: BorderSide(color: Colors.black),
-  //                   borderRadius: BorderRadius.all(Radius.circular(12.0))
-  //                 ),
-  //               ),
-  //               obscureText: true,
-  //             ),
-  //           ),
-  //           actions: <Widget>[
-  //             // usually buttons at the bottom of the dialog
-  //             Row(
-  //               children: <Widget>[
-  //                 new FlatButton(
-  //                   child: new Text(_lang.translate('cancel'),),
-  //                   onPressed: () {
-  //                     Navigator.of(context).pop();
-  //                     _passwordController.clear();
-  //                   },
-  //                 ),
-  //                 new FlatButton(
-  //                     onPressed: () {
-  //                       // Navigator.of(context).pop();
-  //                       dialogLoading(context);
-  //                       _submitHotspotPlan30Days();
-  //                       Navigator.of(context).pop();
-  //                     },
-  //                     child: new Text(_lang.translate('ok'),))
-  //               ],
-  //             ),
-  //           ],
-  //         ),
-  //       );
-  //     },
-  //   );
-  // }
 
   Future<void> _showDialog30Days(BuildContext context) async {
     var _lang = AppLocalizeService.of(context);
@@ -839,68 +765,4 @@ class _HotspotPlanState extends State<HotspotPlan> {
       },
     );
   }
-
-  // Future<String> _showDialog365Days(BuildContext context) {
-  //   var _lang = AppLocalizeService.of(context);
-  //   return showDialog(
-  //     context: context,
-  //     barrierDismissible: false,
-  //     builder: (BuildContext context) {
-  //       // return object of type Dialog
-  //       return WillPopScope(
-  //         onWillPop: () async => false,
-  //         child:AlertDialog(
-  //           title: new Text(_lang.translate('enter_password'),),
-  //           content: Form(
-  //             key: formKey,
-  //             child: TextFormField(
-  //               validator: (val) {
-  //                 if(val.isEmpty) return _lang.translate('password_is_required_validate');
-  //                 if(val.length < 6) return _lang.translate('password_too_short_validate');
-  //                 return null;
-  //               },
-  //               autovalidateMode: AutovalidateMode.onUserInteraction,
-  //               controller: _passwordController,
-  //               onSaved: (val) => _passwordController.text = val,
-  //               keyboardType: TextInputType.visiblePassword,
-  //               decoration: InputDecoration(
-  //                 fillColor: Colors.grey[100],
-  //                 filled: true,
-  //                 hintText: _lang.translate('password_tf'),
-  //                 hintStyle: TextStyle(color: Colors.black, fontSize: 12.0),
-  //                 border: OutlineInputBorder(
-  //                   borderSide: BorderSide(color: Colors.black),
-  //                   borderRadius: BorderRadius.all(Radius.circular(12.0))
-  //                 ),
-  //               ),
-  //               obscureText: true,
-  //             ),
-  //           ),
-  //           actions: <Widget>[
-  //             // usually buttons at the bottom of the dialog
-  //             Row(
-  //               children: <Widget>[
-  //                 new FlatButton(
-  //                   child: new Text(_lang.translate('cancel'),),
-  //                   onPressed: () {
-  //                     Navigator.of(context).pop();
-  //                     _passwordController.clear();
-  //                   },
-  //                 ),
-  //                 new FlatButton(
-  //                     onPressed: () {
-  //                       dialogLoading(context);
-  //                       _submitHotspotPlan365Days();
-  //                       Navigator.of(context).pop();
-  //                     },
-  //                     child: new Text(_lang.translate('ok')))
-  //               ],
-  //             ),
-  //           ],
-  //         ),
-  //       );
-  //     },
-  //   );
-  // }
-
 }

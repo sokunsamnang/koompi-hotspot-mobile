@@ -32,8 +32,6 @@ class _MorePageState extends State<MorePage> {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Text(title),
-        // SizedBox(width: 5),
-        // Text(subtitle.isNotEmpty ? subtitle : 'Not set'),
         Text(subtitle),
       ],
     );

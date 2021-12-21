@@ -23,13 +23,20 @@ class _SendRequestState extends State<SendRequest> {
   TextEditingController memo = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
   Backend _backend = Backend();
-  
-
-
 
   final List<TokenTypeModel> _tokenTypeModelList = [
-    TokenTypeModel(tokenName: 'RISE', imageToken: Image.asset('assets/images/rise-coin-icon.png', width: 22,)),
-    TokenTypeModel(tokenName: 'SEL', imageToken: Image.asset('assets/images/sel-coin-icon.png', width: 22,)),
+    TokenTypeModel(
+        tokenName: 'RISE',
+        imageToken: Image.asset(
+          'assets/images/rise-coin-icon.png',
+          width: 22,
+        )),
+    TokenTypeModel(
+        tokenName: 'SEL',
+        imageToken: Image.asset(
+          'assets/images/sel-coin-icon.png',
+          width: 22,
+        )),
   ];
 
   TokenTypeModel _tokenTypeModel = TokenTypeModel();
@@ -86,17 +93,25 @@ class _SendRequestState extends State<SendRequest> {
       final result = await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
         print('Internet connected');
-        _backend.response = await PostRequest().sendPayment(_passwordController.text, recieveWallet.text, asset, amount.text, memo.text);
+        _backend.response = await PostRequest().sendPayment(
+            _passwordController.text,
+            recieveWallet.text,
+            asset,
+            amount.text,
+            memo.text);
         var responseJson = json.decode(_backend.response.body);
         if (_backend.response.statusCode == 200) {
-          Future.delayed(Duration(seconds: 2), () async{
-            await Provider.of<BalanceProvider>(context, listen: false).fetchPortfolio();
-            await Provider.of<TrxHistoryProvider>(context, listen: false).fetchTrxHistory();
+          Future.delayed(Duration(seconds: 2), () async {
+            await Provider.of<BalanceProvider>(context, listen: false)
+                .fetchPortfolio();
+            await Provider.of<TrxHistoryProvider>(context, listen: false)
+                .fetchTrxHistory();
             Timer(
                 Duration(milliseconds: 500),
                 () => Navigator.pushAndRemoveUntil(
                       context,
-                      PageTransition(type: PageTransitionType.bottomToTop, 
+                      PageTransition(
+                        type: PageTransitionType.bottomToTop,
                         child: CompletePayment(),
                       ),
                       ModalRoute.withName('/navbar'),
@@ -104,31 +119,29 @@ class _SendRequestState extends State<SendRequest> {
           });
         } else {
           await Components.dialog(
-            context,
-            textAlignCenter(text: responseJson['message']),
-            warningTitleDialog()
-          );
+              context,
+              textAlignCenter(text: responseJson['message']),
+              warningTitleDialog());
           Navigator.of(context).pop();
           _passwordController.clear();
         }
       }
     } on SocketException catch (_) {
       await Components.dialog(
-        context,
-        textAlignCenter(text: _lang.translate('no_internet_message')),
-        warningTitleDialog()
-      );
+          context,
+          textAlignCenter(text: _lang.translate('no_internet_message')),
+          warningTitleDialog());
       Navigator.of(context).pop();
       _passwordController.clear();
     }
   }
 
   Future<String> _showDialogPassword(
-     BuildContext context, 
-     TextEditingController recieveWallet, 
-     TextEditingController amount,
-     TextEditingController memo,
-    ) {
+    BuildContext context,
+    TextEditingController recieveWallet,
+    TextEditingController amount,
+    TextEditingController memo,
+  ) {
     var _lang = AppLocalizeService.of(context);
     return showDialog(
       context: context,
@@ -137,11 +150,16 @@ class _SendRequestState extends State<SendRequest> {
         // return object of type Dialog
         return WillPopScope(
           onWillPop: () async => false,
-          child:AlertDialog(
+          child: AlertDialog(
             // backgroundColor: Col,
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
-            contentPadding: EdgeInsets.only(left: 10, top: 15, right: 10, bottom: 5),
-            title: new Text('Enter Password', textAlign: TextAlign.center,),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12.0)),
+            contentPadding:
+                EdgeInsets.only(left: 10, top: 15, right: 10, bottom: 5),
+            title: new Text(
+              'Enter Password',
+              textAlign: TextAlign.center,
+            ),
             content: TextFormField(
               controller: _passwordController,
               onSaved: (val) => _passwordController.text = val,
@@ -165,15 +183,11 @@ class _SendRequestState extends State<SendRequest> {
                 ),
                 errorBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12.0),
-                  borderSide: BorderSide(
-                    color: Colors.red
-                  ),
+                  borderSide: BorderSide(color: Colors.red),
                 ),
                 focusedErrorBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12.0),
-                  borderSide: BorderSide(
-                    color: Colors.red
-                  ),
+                  borderSide: BorderSide(color: Colors.red),
                 ),
               ),
               obscureText: true,
@@ -184,41 +198,40 @@ class _SendRequestState extends State<SendRequest> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   TextButton(
-                    style: ButtonStyle(
-                      foregroundColor: MaterialStateProperty.all<Color>(HexColor('0CACDA')),
-                      backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
-                      padding: MaterialStateProperty.all(
-                        EdgeInsets.symmetric(vertical: 10, horizontal: 35)
+                      style: ButtonStyle(
+                        foregroundColor: MaterialStateProperty.all<Color>(
+                            HexColor('0CACDA')),
+                        backgroundColor:
+                            MaterialStateProperty.all<Color>(Colors.white),
+                        padding: MaterialStateProperty.all(
+                            EdgeInsets.symmetric(vertical: 10, horizontal: 35)),
                       ),
-                    ),
-                    child: Text('CANCEL'),
-                    onPressed: () => {
-                      Navigator.of(context).pop(),
-                      _passwordController.clear(),
-                    }
-                  ),
-
+                      child: Text('CANCEL'),
+                      onPressed: () => {
+                            Navigator.of(context).pop(),
+                            _passwordController.clear(),
+                          }),
                   TextButton(
-                    style: ButtonStyle(
-                      foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-                      backgroundColor: MaterialStateProperty.all<Color>(HexColor('0CACDA')),
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
+                      style: ButtonStyle(
+                        foregroundColor:
+                            MaterialStateProperty.all<Color>(Colors.white),
+                        backgroundColor: MaterialStateProperty.all<Color>(
+                            HexColor('0CACDA')),
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
-                        )
+                        )),
+                        padding: MaterialStateProperty.all(
+                            EdgeInsets.symmetric(vertical: 10, horizontal: 50)),
                       ),
-                      padding: MaterialStateProperty.all(
-                        EdgeInsets.symmetric(vertical: 10, horizontal: 50)
-                      ),
-                    ),
-                    child: Text('OK'),
-                    onPressed: () => {
-                      Navigator.of(context).pop(),
-                      dialogLoading(context),
-                      _onSubmit(),
-                      Navigator.of(context).pop(),
-                    }
-                  ),
+                      child: Text('OK'),
+                      onPressed: () => {
+                            Navigator.of(context).pop(),
+                            dialogLoading(context),
+                            _onSubmit(),
+                            Navigator.of(context).pop(),
+                          }),
                 ],
               ),
             ],
@@ -228,7 +241,6 @@ class _SendRequestState extends State<SendRequest> {
     );
   }
 
-
   @override
   void initState() {
     AppServices.noInternetConnection(globalKey);
@@ -236,20 +248,21 @@ class _SendRequestState extends State<SendRequest> {
     amount = TextEditingController(text: widget.amount.toString());
 
     // Value Dropdown
-    _tokenTypeModelDropdownList = _buildTokenTypeModelDropdown(_tokenTypeModelList);
+    _tokenTypeModelDropdownList =
+        _buildTokenTypeModelDropdown(_tokenTypeModelList);
     _tokenTypeModel = _tokenTypeModelList[0];
     asset = _tokenTypeModel.tokenName;
 
-    if(widget.assetName == "RISE"){
+    if (widget.assetName == "RISE") {
       _tokenTypeModel = _tokenTypeModelList[0];
-      asset = _tokenTypeModel.tokenName;  
+      asset = _tokenTypeModel.tokenName;
     }
 
-    if(widget.assetName == "SEL"){
+    if (widget.assetName == "SEL") {
       _tokenTypeModel = _tokenTypeModelList[1];
-      asset = _tokenTypeModel.tokenName;  
+      asset = _tokenTypeModel.tokenName;
     }
-    
+
     super.initState();
   }
 
@@ -265,16 +278,10 @@ class _SendRequestState extends State<SendRequest> {
       key: globalKey,
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.black), 
-          onPressed: (){
-            Navigator.pop(context);
-            // Navigator.pushAndRemoveUntil(
-            //   context,
-            //   MaterialPageRoute(builder: (context) => WalletScreen()),
-            //   ModalRoute.withName('/walletScreen'),
-            // );
-          }
-        ),
+            icon: Icon(Icons.arrow_back, color: Colors.black),
+            onPressed: () {
+              Navigator.pop(context);
+            }),
         backgroundColor: Colors.white,
         iconTheme: IconThemeData(
           color: Colors.black, //change your color here
@@ -282,9 +289,7 @@ class _SendRequestState extends State<SendRequest> {
         title: Text(
           _lang.translate('send_request'),
           style: TextStyle(
-              color: Colors.black,
-              fontFamily: 'Medium',
-              fontSize: 22.0),
+              color: Colors.black, fontFamily: 'Medium', fontSize: 22.0),
         ),
       ),
       body: GestureDetector(
@@ -318,7 +323,8 @@ class _SendRequestState extends State<SendRequest> {
                       maxLength: null,
                       controller: recieveWallet ?? widget.walletKey,
                       decoration: InputDecoration(
-                        prefixIcon: Icon(Icons.contact_page, color: HexColor('0CACDA')),
+                        prefixIcon:
+                            Icon(Icons.contact_page, color: HexColor('0CACDA')),
                         hintText: _lang.translate('receive_address'),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12.0),
@@ -334,15 +340,11 @@ class _SendRequestState extends State<SendRequest> {
                         ),
                         errorBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12.0),
-                          borderSide: BorderSide(
-                            color: Colors.red
-                          ),
+                          borderSide: BorderSide(color: Colors.red),
                         ),
                         focusedErrorBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12.0),
-                          borderSide: BorderSide(
-                            color: Colors.red
-                          ),
+                          borderSide: BorderSide(color: Colors.red),
                         ),
                       ),
                     ),
@@ -355,24 +357,29 @@ class _SendRequestState extends State<SendRequest> {
                       value: _tokenTypeModel,
                       isEnabled: true,
                     ),
-
                     SizedBox(height: 16.0),
                     Text(_lang.translate('amount')),
                     SizedBox(height: 10.0),
                     TextFormField(
-                      validator: (val) =>
-                          val.isEmpty ? _lang.translate('amount_validate') : null,
+                      validator: (val) => val.isEmpty
+                          ? _lang.translate('amount_validate')
+                          : null,
                       onSaved: (val) => amount.text = val,
                       autovalidateMode: AutovalidateMode.always,
                       keyboardType: TextInputType.number,
                       inputFormatters: [
-                         _tokenTypeModel == _tokenTypeModelList[0] ? FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,3}'))
-                         :
-                         FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,5}'))
+                        _tokenTypeModel == _tokenTypeModelList[0]
+                            ? FilteringTextInputFormatter.allow(
+                                RegExp(r'^\d+\.?\d{0,3}'))
+                            : FilteringTextInputFormatter.allow(
+                                RegExp(r'^\d+\.?\d{0,5}'))
                       ],
                       controller: amount,
                       decoration: InputDecoration(
-                        prefixIcon: Icon(FontAwesomeIcons.coins, color: primaryColor,),
+                        prefixIcon: Icon(
+                          FontAwesomeIcons.coins,
+                          color: primaryColor,
+                        ),
                         hintText: _lang.translate('amount'),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12.0),
@@ -388,15 +395,11 @@ class _SendRequestState extends State<SendRequest> {
                         ),
                         errorBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12.0),
-                          borderSide: BorderSide(
-                            color: Colors.red
-                          ),
+                          borderSide: BorderSide(color: Colors.red),
                         ),
                         focusedErrorBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12.0),
-                          borderSide: BorderSide(
-                            color: Colors.red
-                          ),
+                          borderSide: BorderSide(color: Colors.red),
                         ),
                       ),
                     ),
@@ -406,7 +409,8 @@ class _SendRequestState extends State<SendRequest> {
                     TextFormField(
                       controller: memo,
                       decoration: InputDecoration(
-                        prefixIcon: Icon(Icons.my_library_books, color: HexColor('0CACDA')),
+                        prefixIcon: Icon(Icons.my_library_books,
+                            color: HexColor('0CACDA')),
                         hintText: 'Memo (Optional)',
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12.0),
@@ -422,15 +426,11 @@ class _SendRequestState extends State<SendRequest> {
                         ),
                         errorBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12.0),
-                          borderSide: BorderSide(
-                            color: Colors.red
-                          ),
+                          borderSide: BorderSide(color: Colors.red),
                         ),
                         focusedErrorBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12.0),
-                          borderSide: BorderSide(
-                            color: Colors.red
-                          ),
+                          borderSide: BorderSide(color: Colors.red),
                         ),
                       ),
                     ),
@@ -448,8 +448,7 @@ class _SendRequestState extends State<SendRequest> {
                               borderRadius: BorderRadius.circular(12),
                               boxShadow: [
                                 BoxShadow(
-                                    color:
-                                        Color(0xFF6078ea).withOpacity(.3),
+                                    color: Color(0xFF6078ea).withOpacity(.3),
                                     offset: Offset(0.0, 8.0),
                                     blurRadius: 8.0)
                               ]),

@@ -20,15 +20,12 @@ class BalanceModel {
 class BalanceProvider with ChangeNotifier {
   Backend _backend;
 
-  // GetRequest _getRequest;
-
   List<BalanceModel> balanceList = [];
 
   Future<void> fetchPortfolio() async {
     StorageServices _prefService = StorageServices();
 
     _backend = Backend();
-    // _getRequest = GetRequest();
     balanceList = [];
 
     try {

@@ -55,7 +55,6 @@ class VoteResultProvider with ChangeNotifier {
             });
         if (response.statusCode == 200) {
           var responseBody = json.decode(response.body);
-          // if (mPlan.username != null) mPlan.username;
           voteResult = VoteResult.fromMap(responseBody);
         } else {
           voteResult = VoteResult();

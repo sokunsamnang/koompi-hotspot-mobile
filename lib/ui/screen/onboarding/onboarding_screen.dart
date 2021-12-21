@@ -6,7 +6,6 @@ import 'package:koompi_hotspot/all_export.dart';
 import 'package:koompi_hotspot/ui/screen/login/login_phone.dart';
 import 'package:koompi_hotspot/ui/screen/onboarding/styles.dart';
 
-
 class IntroScreen extends StatefulWidget {
   IntroScreen({Key key}) : super(key: key);
 
@@ -15,7 +14,7 @@ class IntroScreen extends StatefulWidget {
 }
 
 class IntroScreenState extends State<IntroScreen> {
-  List<Slide> slides =  <Slide>[];
+  List<Slide> slides = <Slide>[];
 
   Function goToTab;
 
@@ -27,8 +26,7 @@ class IntroScreenState extends State<IntroScreen> {
       new Slide(
         title: 'Connect people\naround the world',
         styleTitle: kTitleStyle,
-        description:
-            'KOOMPI Fi-Fi hotspot is accessable and affordable',
+        description: 'KOOMPI Fi-Fi is accessable and affordable',
         styleDescription: kSubtitleStyle,
         pathImage: "assets/images/onboarding0.png",
       ),
@@ -46,7 +44,8 @@ class IntroScreenState extends State<IntroScreen> {
       new Slide(
         title: 'Get a new experience of imagination',
         styleTitle: kTitleStyle,
-        description: 'We all are connected by the internet, like neurons in a giant brain',
+        description:
+            'We all are connected by the internet, like neurons in a giant brain',
         styleDescription: kSubtitleStyle,
         pathImage: "assets/images/onboarding2.png",
       ),
@@ -56,7 +55,8 @@ class IntroScreenState extends State<IntroScreen> {
   void onDonePress() {
     Navigator.pushAndRemoveUntil(
       context,
-      PageTransition(type: PageTransitionType.rightToLeft, 
+      PageTransition(
+        type: PageTransitionType.rightToLeft,
         child: LoginPhone(),
       ),
       ModalRoute.withName('/loginPhone'),

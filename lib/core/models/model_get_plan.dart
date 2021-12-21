@@ -2,15 +2,14 @@ import 'package:koompi_hotspot/all_export.dart';
 import 'package:http/http.dart' as http;
 
 class ModelPlan {
-  ModelPlan({
-    this.username,
-    this.balance,
-    this.device,
-    this.plan,
-    this.timeLeft,
-    this.status,
-    this.automatically
-  });
+  ModelPlan(
+      {this.username,
+      this.balance,
+      this.device,
+      this.plan,
+      this.timeLeft,
+      this.status,
+      this.automatically});
 
   String username;
   String balance;
@@ -25,23 +24,22 @@ class ModelPlan {
   String toJson() => json.encode(toMap());
 
   factory ModelPlan.fromMap(Map<String, dynamic> json) => ModelPlan(
-    username: json["username"],
-    balance: json["balance"],
-    device: json["device"],
-    plan: json["plan"],
-    timeLeft: json["time_left"],
-    status: json["status"],
-    automatically: json["automatically"]
-  );
+      username: json["username"],
+      balance: json["balance"],
+      device: json["device"],
+      plan: json["plan"],
+      timeLeft: json["time_left"],
+      status: json["status"],
+      automatically: json["automatically"]);
 
   Map<String, dynamic> toMap() => {
-    "username": username,
-    "balance": balance,
-    "device": device,
-    "plan": plan,
-    "status": status,
-    "automatically": automatically
-  };
+        "username": username,
+        "balance": balance,
+        "device": device,
+        "plan": plan,
+        "status": status,
+        "automatically": automatically
+      };
 }
 
 ModelPlan mPlan = ModelPlan();
@@ -64,9 +62,7 @@ class GetPlanProvider with ChangeNotifier {
             });
         if (response.statusCode == 200) {
           var responseBody = json.decode(response.body);
-          // if (mPlan.username != null) mPlan.username;
           mPlan = ModelPlan.fromMap(responseBody);
-
         } else {
           mPlan = ModelPlan();
           alertText = response.body;
@@ -80,4 +76,3 @@ class GetPlanProvider with ChangeNotifier {
     return alertText ?? '';
   }
 }
-

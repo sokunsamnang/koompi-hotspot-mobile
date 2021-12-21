@@ -2,34 +2,25 @@ import 'package:koompi_hotspot/all_export.dart';
 
 @override
 Widget formCardForgotPasswordPhone(
-  BuildContext context, 
-  TextEditingController _phoneController, 
-  String _phone,
-  Function _submit,
-  GlobalKey<FormState> formKey, 
-  bool _autoValidate) {
-
+    BuildContext context,
+    TextEditingController _phoneController,
+    String _phone,
+    Function _submit,
+    GlobalKey<FormState> formKey,
+    bool _autoValidate) {
   PhoneNumber number = PhoneNumber(isoCode: 'KH');
   var _lang = AppLocalizeService.of(context);
   return new Container(
     width: double.infinity,
-//      height: ScreenUtil.getInstance().setHeight(500),
-    // padding: EdgeInsets.only(bottom: 1),
-    // decoration: BoxDecoration(color: Colors.white, boxShadow: [
-    //   BoxShadow(
-    //       color: Colors.black12, offset: Offset(0.0, 15.0), blurRadius: 15.0),
-    //   BoxShadow(
-    //       color: Colors.black12, offset: Offset(0.0, -10.0), blurRadius: 10.0),
-    // ]),
     child: Padding(
-      padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 16.0),
-      child: Form(
-        key: formKey,
-        autovalidateMode: AutovalidateMode.onUserInteraction,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            InternationalPhoneNumberInput(
+        padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 16.0),
+        child: Form(
+          key: formKey,
+          autovalidateMode: AutovalidateMode.onUserInteraction,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              InternationalPhoneNumberInput(
                 countries: ['KH'],
                 onInputChanged: (PhoneNumber number) {
                   print(number.phoneNumber);
@@ -38,9 +29,6 @@ Widget formCardForgotPasswordPhone(
                   print(value);
                 },
                 errorMessage: _lang.translate('invalid_phone_number_validate'),
-                // selectorConfig: SelectorConfig(
-                //   selectorType: PhoneInputSelectorType.BOTTOM_SHEET,
-                // ),
                 ignoreBlank: false,
                 autoValidateMode: AutovalidateMode.onUserInteraction,
                 selectorTextStyle: TextStyle(color: Colors.black),
@@ -67,27 +55,22 @@ Widget formCardForgotPasswordPhone(
                   ),
                   errorBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12.0),
-                    borderSide: BorderSide(
-                      color: Colors.red
-                    ),
+                    borderSide: BorderSide(color: Colors.red),
                   ),
                   focusedErrorBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12.0),
-                    borderSide: BorderSide(
-                      color: Colors.red
-                    ),
+                    borderSide: BorderSide(color: Colors.red),
                   ),
                 ),
                 onSaved: (PhoneNumber number) {
                   print('On Saved: $number');
                 },
               ),
-            SizedBox(
-              height: ScreenUtil().setHeight(30),
-            ),
-          ],
-        ),
-      )
-    ),
+              SizedBox(
+                height: ScreenUtil().setHeight(30),
+              ),
+            ],
+          ),
+        )),
   );
 }

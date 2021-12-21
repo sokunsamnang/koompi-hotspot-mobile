@@ -9,25 +9,9 @@ class PlanView extends StatefulWidget {
 }
 
 class _PlanViewState extends State<PlanView> {
-  // final formKey = GlobalKey<FormState>();
-  // AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
   GlobalKey<ScaffoldState> globalKey = GlobalKey<ScaffoldState>();
 
   final TextEditingController _passwordController = new TextEditingController();
-
-  // void _submitRenewPlan(){
-  //   final form = formKey.currentState;
-
-  //   if(form.validate()){
-  //     form.save();
-  //     renewPlan();
-  //   }
-  //   else{
-  //     setState(() {
-  //       autovalidateMode = AutovalidateMode.always;
-  //     });
-  //   }
-  // }
 
   Future<void> renewPlan() async {
     var _lang = AppLocalizeService.of(context);
@@ -118,10 +102,6 @@ class _PlanViewState extends State<PlanView> {
                   fontSize: 20,
                   fontWeight: FontWeight.w700)),
         ),
-        // title: Image.asset(
-        //   "assets/images/appbar_logo.png",
-        //   scale: 2,
-        // ),
       ),
       body: Container(
         height: MediaQuery.of(context).size.height * 2,
@@ -641,69 +621,4 @@ class _PlanViewState extends State<PlanView> {
       },
     );
   }
-
-  // Future<String> _showDialogRenewPlan(BuildContext context){
-  //   var _lang = AppLocalizeService.of(context);
-  //   return showDialog(
-  //     context: context,
-  //     barrierDismissible: false,
-  //     builder: (BuildContext context) {
-  //       // return object of type Dialog
-  //       return WillPopScope(
-  //         onWillPop: () async => false,
-  //         child:AlertDialog(
-  //           title: new Text(_lang.translate('enter_password')),
-  //           content: Form(
-  //             key: formKey,
-  //             child: TextFormField(
-  //               validator: (val) {
-  //                 if(val.isEmpty) return _lang.translate('password_is_required_validate');
-  //                 if(val.length < 6) return _lang.translate('password_too_short_validate');
-  //                 return null;
-  //               },
-  //               autovalidateMode: AutovalidateMode.onUserInteraction,
-  //               controller: _passwordController,
-  //               onSaved: (val) => _passwordController.text = val,
-  //               keyboardType: TextInputType.visiblePassword,
-  //               decoration: InputDecoration(
-  //                 fillColor: Colors.grey[100],
-  //                 filled: true,
-  //                 hintText: _lang.translate('password_tf'),
-  //                 hintStyle: TextStyle(color: Colors.black, fontSize: 12.0),
-  //                 border: OutlineInputBorder(
-  //                   borderSide: BorderSide(color: Colors.black),
-  //                   borderRadius: BorderRadius.all(Radius.circular(12.0))
-  //                 ),
-  //               ),
-  //               obscureText: true,
-  //             ),
-  //           ),
-  //           actions: <Widget>[
-  //             // usually buttons at the bottom of the dialog
-  //             Row(
-  //               children: <Widget>[
-  //                 new FlatButton(
-  //                   child: new Text(_lang.translate('cancel'),),
-  //                   onPressed: () {
-  //                     Navigator.of(context).pop();
-  //                     _passwordController.clear();
-  //                   },
-  //                 ),
-  //                 new FlatButton(
-  //                     onPressed: () {
-  //                        // Navigator.of(context).pop();
-  // dialogLoading(context);
-  // _submitRenewPlan();
-  // Navigator.of(context).pop();
-  //                     },
-  //                     child: new Text(_lang.translate('ok'),))
-  //               ],
-  //             ),
-  //           ],
-  //         ),
-  //       );
-  //     },
-  //   );
-  // }
-
 }

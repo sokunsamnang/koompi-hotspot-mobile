@@ -14,10 +14,7 @@ class QrScanner extends StatefulWidget {
 class QrScannerState extends State<QrScanner> {
   final GlobalKey qrKey = GlobalKey();
 
-  // Backend _backend = Backend();
-
   Barcode result;
-
 
   void _onQrViewCreated(QRViewController controller) {
     controller.scannedDataStream.listen((scanData) async {
@@ -29,18 +26,18 @@ class QrScannerState extends State<QrScanner> {
       // Navigator.pop(context, scanData);
       Navigator.pushReplacement(
         context,
-        PageTransition(type: PageTransitionType.bottomToTop, 
+        PageTransition(
+          type: PageTransitionType.bottomToTop,
           child: SendRequest(result.code, "", ""),
         ),
-        // ModalRoute.withName('/navbar'),
       );
     });
   }
 
-Widget build(BuildContext context) {
-  var _lang = AppLocalizeService.of(context);
-  return Scaffold(
-    body: BodyScaffold(
+  Widget build(BuildContext context) {
+    var _lang = AppLocalizeService.of(context);
+    return Scaffold(
+        body: BodyScaffold(
       height: MediaQuery.of(context).size.height,
       bottom: 0,
       child: Column(

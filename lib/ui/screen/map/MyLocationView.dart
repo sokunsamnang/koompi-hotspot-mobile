@@ -46,9 +46,6 @@ class MyLocationViewState extends State<MyLocationView>
 
     // The Natte
     LatLng(11.55810367571426, 104.91961299234609),
-
-    // NIPTICT
-    LatLng(11.65482898034104, 104.9113345380725),
   ];
   List<Marker> _markers = [];
 

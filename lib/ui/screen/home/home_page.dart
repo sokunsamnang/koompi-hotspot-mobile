@@ -12,46 +12,6 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   GlobalKey<ScaffoldState> globalKey = GlobalKey<ScaffoldState>();
 
-  // Future<void> configOneSignal() async {
-
-  //   OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
-
-  //   /// Set App Id.
-  //   OneSignal.shared.setAppId("05805743-ce69-4224-9afb-b2f36bf6c1db");
-
-  //   /// Get the Onesignal userId and update that into the firebase.
-  //   /// So, that it can be used to send Notifications to users later.̥
-  //   final status = await OneSignal.shared.getDeviceState();
-  //   final String osUserID = status.userId;
-  //   // We will update this once he logged in and goes to dashboard.
-  //   ////updateUserProfile(osUserID);
-  //   // Store it into shared prefs, So that later we can use it.
-  //   // Preferences.setOnesignalUserId(osUserID);
-
-  //   print(osUserID);
-
-  //   // The promptForPushNotificationsWithUserResponse function will show the iOS push notification prompt. We recommend removing the following code and instead using an In-App Message to prompt for notification permission
-  //   await OneSignal.shared.promptUserForPushNotificationPermission(
-  //     fallbackToSettings: true,
-  //   );
-
-  //   // // The promptForPushNotificationsWithUserResponse function will show the iOS push notification prompt. We recommend removing the following code and instead using an In-App Message to prompt for notification permission
-  //   // OneSignal.shared.promptUserForPushNotificationPermission().then((accepted) {
-  //   //     print("Accepted permission: $accepted");
-  //   // });
-
-  //   // // Navigator Handler
-  //   // OneSignal.shared.setNotificationOpenedHandler((openedResult) async{
-
-  //   //   await Provider.of<NotificationProvider>(context, listen: false).fetchNotification();
-
-  //   //   globals.appNavigator.currentState.push(
-  //   //     PageTransition(type: PageTransitionType.rightToLeft,
-  //   //       child: NotificationScreen())
-  //   //   );
-  //   // });
-  // }
-
   @override
   void initState() {
     super.initState();
@@ -100,8 +60,6 @@ class _HomePageState extends State<HomePage> {
               badgeColor: Colors.transparent,
               toAnimate: false,
               position: BadgePosition.topEnd(top: 0, end: -2.5),
-              // animationDuration: Duration(milliseconds: 300),
-              // animationType: BadgeAnimationType.slide,
               badgeContent: Container(
                 height: 20,
                 width: 20,

@@ -11,13 +11,12 @@ export 'package:flutter/foundation.dart';
 export 'package:flutter/rendering.dart';
 export 'package:flutter/gestures.dart';
 
-
 /*Flutter Package*/
 
 // Groovin
 export 'package:groovin_widgets/groovin_widgets.dart';
 
-// Navigator 
+// Navigator
 export 'package:page_transition/page_transition.dart';
 
 // Responsive
@@ -32,7 +31,6 @@ export 'package:http_parser/http_parser.dart';
 // Connection and Wi-Fi
 export 'package:connectivity/connectivity.dart';
 export 'package:koompi_hotspot/core/services/connection.dart';
-
 
 // Widget
 export 'package:pin_code_fields/pin_code_fields.dart';
@@ -80,7 +78,6 @@ export 'package:koompi_hotspot/ui/utils/app_localization.dart';
 // Model
 export 'package:koompi_hotspot/core/models/model_balance.dart';
 export 'package:koompi_hotspot/core/models/model_userdata.dart';
-export 'package:koompi_hotspot/core/models/model_wallet.dart';
 export 'package:koompi_hotspot/core/models/model_location.dart';
 export 'package:koompi_hotspot/core/models/model_get_plan.dart';
 export 'package:koompi_hotspot/core/models/model_trx_history.dart';
@@ -97,8 +94,6 @@ export 'package:koompi_hotspot/core/services/updater.dart';
 // Component
 export 'package:koompi_hotspot/core/backend/component.dart';
 export 'package:koompi_hotspot/core/backend/api_service.dart';
-
-
 
 /* Screen UI */
 // Form Card Widget
@@ -161,7 +156,6 @@ export 'package:koompi_hotspot/ui/screen/mywallet/wallet_screen.dart';
 
 // Account Page
 export 'package:koompi_hotspot/ui/screen/option_page/myaccount.dart';
-
 
 // On Boading
 export 'package:koompi_hotspot/ui/screen/onboarding/styles.dart';

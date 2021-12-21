@@ -199,7 +199,6 @@ class _NotificationDetailState extends State<NotificationDetail> {
                                         setState(() {
                                           voteResult.votedType = "Voted Up";
                                           _onSubmitUpVoteAdsPost();
-                                          // if(voteResult.votedType == "Voted Up") _onSubmitUnVoteAdsPut();
                                         });
                                       },
                                     ),
@@ -219,9 +218,6 @@ class _NotificationDetailState extends State<NotificationDetail> {
                                         setState(() {
                                           voteResult.votedType = null;
                                           _onSubmitUnVoteAdsPut();
-                                          // if(voteResult.votedType == null) _onSubmitUpVoteAdsPost();
-                                          // else if(voteResult.votedType == "NULL") _onSubmitUpVoteAdsPut();
-                                          // else _onSubmitUpVoteAdsPut();
                                         });
                                       },
                                     ),

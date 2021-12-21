@@ -33,19 +33,12 @@ class TrxHistoryModel {
 class TrxHistoryProvider with ChangeNotifier {
   Backend _backend;
 
-  // GetRequest _getRequest;
-
   List<TrxHistoryModel> trxHistoryList = [];
-
-  // TrxHistoryProvider() {
-  //   fetchTrxHistory();
-  // }
 
   Future<void> fetchTrxHistory() async {
     StorageServices _prefService = StorageServices();
 
     _backend = Backend();
-    // _getRequest = GetRequest();
     trxHistoryList = [];
 
     try {
