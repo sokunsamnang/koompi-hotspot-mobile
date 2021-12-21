@@ -1,14 +1,18 @@
-import 'package:easy_localization/easy_localization.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'src/app.dart';
+import 'ui/app.dart';
+import 'ui/utils/globals.dart' as globals;
 
-void main() {
+Future <void> main() async{
 
-  //Fluter_inAppWebView
+  globals.appNavigator = GlobalKey<NavigatorState>();
+
   WidgetsFlutterBinding.ensureInitialized();
+
+
+  await Firebase.initializeApp();
 
 
   runApp(App());
 
 }
-

@@ -1,8 +1,8 @@
-# KOOMPI Hotspot
+# KOOMPI Fi-Fi
 
 
 
-### Welcome To KOOMPI Hotspot 
+### Welcome To KOOMPI Fi-Fi 
 
 KOOMPI Wi-Fi Hotspot is for accessable and affordable for everyone and  KOOMPI school partner.
 
@@ -11,18 +11,21 @@ KOOMPI Wi-Fi Hotspot is for accessable and affordable for everyone and  KOOMPI s
 
 - [x] Register vai SMS. 
 - [x] Send to token by QR Code.
-- [x] Send payment.
+- [x] Payment with Selendra Network.
 - [x] View transaction histroy.
 - [x] Subscribe hotspot plan.
 - [x] Unsubscribe hotspot plan.
 - [x] Speed Test.
-- [ ] Notification.
+- [x] Notification.
 - [x] KH Language
+- [x] Login Captive Portal in the app
+- [x] Quick action to login Captive Portal
+- [ ] Connect Wi-Fi From App
 
 
 ## Prerequisite: 
 
-* Installed Flutter and Android Studio on your machine.
+* Installed Flutter and Android Studio or VSCode on your machine.
 
 
 ## Usage:
