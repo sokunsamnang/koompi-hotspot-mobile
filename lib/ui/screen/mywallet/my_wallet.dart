@@ -187,7 +187,7 @@ class _MyWalletState extends State<MyWallet> {
                           left: 10,
                         ),
                         child: Text(
-                          _lang.translate('transactions'),
+                          _lang.translate('transaction_history'),
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: 17,

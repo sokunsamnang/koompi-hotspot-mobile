@@ -6,16 +6,16 @@ import 'package:koompi_hotspot/core/models/vote_result.dart';
 import 'package:linkable/linkable.dart';
 import 'package:provider/provider.dart';
 
-class NotificationDetail extends StatefulWidget {
+class AnnouncementsDetail extends StatefulWidget {
   final List<NotificationModel> notification;
   final int index;
-  NotificationDetail({this.notification, this.index});
+  AnnouncementsDetail({this.notification, this.index});
 
   @override
-  _NotificationDetailState createState() => _NotificationDetailState();
+  _AnnouncementsDetailState createState() => _AnnouncementsDetailState();
 }
 
-class _NotificationDetailState extends State<NotificationDetail> {
+class _AnnouncementsDetailState extends State<AnnouncementsDetail> {
   bool isUpVoted = false;
   bool isDownVoted = false;
 
@@ -150,7 +150,7 @@ class _NotificationDetailState extends State<NotificationDetail> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Text(_lang.translate('notifications'),
+        title: Text(_lang.translate('announcements'),
             style: TextStyle(color: Colors.black, fontFamily: 'Medium')),
         leading: IconButton(
             icon: Icon(Icons.arrow_back, color: Colors.black),

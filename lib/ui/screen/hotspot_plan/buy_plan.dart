@@ -240,7 +240,7 @@ class _HotspotPlanState extends State<HotspotPlan> {
               Center(
                 child: Text(
                   // '5.000 RISE',
-                  '5.000 SEL',
+                  '50.00000 SEL',
                   style: GoogleFonts.nunito(
                       textStyle: TextStyle(
                           color: HexColor('0CACDA'),
@@ -410,7 +410,7 @@ class _HotspotPlanState extends State<HotspotPlan> {
               Center(
                 child: Text(
                   // '50.000 RISE',
-                  '50.000 SEL',
+                  '500.00000 SEL',
                   style: GoogleFonts.nunito(
                       textStyle: TextStyle(
                           color: HexColor('0CACDA'),

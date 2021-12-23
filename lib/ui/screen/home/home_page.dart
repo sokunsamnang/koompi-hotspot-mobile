@@ -1,6 +1,6 @@
 import 'package:koompi_hotspot/all_export.dart';
 import 'package:koompi_hotspot/core/models/model_notification.dart';
-import 'package:koompi_hotspot/ui/screen/notification/notification_screen.dart';
+import 'package:koompi_hotspot/ui/screen/notification/notification.dart';
 import 'package:provider/provider.dart';
 import 'package:badges/badges.dart';
 
@@ -76,7 +76,7 @@ class _HomePageState extends State<HomePage> {
                         context,
                         PageTransition(
                             type: PageTransitionType.rightToLeft,
-                            child: NotificationScreen()));
+                            child: Notifications()));
                   }),
             ),
             onTap: () {
@@ -84,7 +84,7 @@ class _HomePageState extends State<HomePage> {
                   context,
                   PageTransition(
                       type: PageTransitionType.rightToLeft,
-                      child: NotificationScreen()));
+                      child: Notifications()));
             },
           ),
         ],
