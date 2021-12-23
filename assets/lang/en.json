@@ -64,7 +64,7 @@
     "total_balance": "TOTAL BALANCE",
     "send_money": "Send",
     "receive_money": "Receive",
-    "transactions": "Transaction History",
+    "transactions": "Transactions",
     "sent": "Sent",
     "recieved": "Recieved",
     "transaction_history": "Transaction History",
@@ -152,5 +152,6 @@
     "whats_hots": "What's Hots?",
     "transaction_options": "Transaction Options",
     "scan_qr": "Scan QR",
-    "fill_address": "Fill Address"
+    "fill_address": "Fill Address",
+    "announcements": "Announcements"
 }

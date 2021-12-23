@@ -64,7 +64,7 @@
     "total_balance": "ទឹកប្រាក់សរុប",
     "send_money": "ផ្ញើ",
     "receive_money": "ទទួល",
-    "transactions": "ប្រវត្តិប្រតិបត្តិការ",
+    "transactions": "ប្រតិបត្តិការ",
     "sent": "បានផ្ញើ",
     "recieved": "បានទទួល",
     "transaction_history": "ប្រវត្តិប្រតិបត្តិការ",
@@ -152,5 +152,6 @@
     "whats_hots": "មានអ្វីថ្មី?",
     "transaction_options": "ជម្រើសប្រតិបត្តិការ",
     "scan_qr": "ស្កេន QR",
-    "fill_address": "បំពេញអាសយដ្ឋាន"
+    "fill_address": "បំពេញអាសយដ្ឋាន",
+    "announcements": "សេចក្តីជូនដំណឹង"
 }

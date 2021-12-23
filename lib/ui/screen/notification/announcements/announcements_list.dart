@@ -2,11 +2,11 @@ import 'package:groovin_widgets/groovin_widgets.dart';
 import 'package:koompi_hotspot/all_export.dart';
 import 'package:koompi_hotspot/core/models/model_notification.dart';
 import 'package:koompi_hotspot/core/models/vote_result.dart';
-import 'package:koompi_hotspot/ui/screen/notification/notification_detail.dart';
+import 'package:koompi_hotspot/ui/screen/notification/announcements/announcements_detail.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
-Widget notificationList(BuildContext context) {
+Widget announcementsList(BuildContext context) {
   var notification = Provider.of<NotificationProvider>(context);
   return Scaffold(
     // Have No History
@@ -74,7 +74,7 @@ Widget notificationList(BuildContext context) {
                                 context,
                                 PageTransition(
                                     type: PageTransitionType.rightToLeft,
-                                    child: NotificationDetail(
+                                    child: AnnouncementsDetail(
                                       notification:
                                           notification.notificationList,
                                       index: index,
