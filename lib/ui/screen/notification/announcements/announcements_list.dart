@@ -10,7 +10,6 @@ Widget announcementsList(BuildContext context) {
   var notification = Provider.of<NotificationProvider>(context);
   return Scaffold(
     // Have No History
-    backgroundColor: Colors.grey[200],
     body: notification.notificationList == null
         ? Container(
             child: Column(
@@ -59,8 +58,17 @@ Widget announcementsList(BuildContext context) {
                         margin: const EdgeInsets.symmetric(
                             vertical: 8, horizontal: 8),
                         decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12.0),
                           color: Colors.white,
-                          borderRadius: BorderRadius.circular(12),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.5),
+                              spreadRadius: 2,
+                              blurRadius: 7,
+                              offset:
+                                  Offset(0, 3), // changes position of shadow
+                            ),
+                          ],
                         ),
                         child: ListTile(
                           onTap: () async {
