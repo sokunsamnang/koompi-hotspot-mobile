@@ -7,7 +7,6 @@ import 'package:koompi_hotspot/ui/utils/shortcut.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:quick_actions/quick_actions.dart';
-import 'package:koompi_hotspot/ui/screen/web_view/captive_portal_web.dart';
 import 'package:koompi_hotspot/ui/utils/auto_login_hotspot_constants.dart'
     as global;
 import 'package:responsive_framework/responsive_framework.dart';

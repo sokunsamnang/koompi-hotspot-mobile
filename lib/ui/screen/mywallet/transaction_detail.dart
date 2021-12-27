@@ -1,4 +1,3 @@
-import 'package:groovin_widgets/groovin_widgets.dart';
 import 'package:koompi_hotspot/all_export.dart';
 
 class TransactionDetail extends StatefulWidget {
@@ -21,7 +20,7 @@ class _TransactionDetailState extends State<TransactionDetail> {
 
     return Scaffold(
       appBar: AppBar(
-        brightness: Brightness.dark,
+        systemOverlayStyle: SystemUiOverlayStyle.dark,
         title: Text('Transaction Details',
             style: TextStyle(
                 color: Colors.white, fontSize: 18, fontFamily: 'Medium')),

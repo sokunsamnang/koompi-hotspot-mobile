@@ -2,18 +2,16 @@ import 'package:koompi_hotspot/all_export.dart';
 import 'package:intl/intl.dart';
 import 'package:koompi_hotspot/ui/reuse_widget/datePicker.dart';
 import 'package:koompi_hotspot/ui/reuse_widget/locationDropDown.dart';
-import 'package:koompi_hotspot/ui/reuse_widget/reuse_widget.dart';
 
 class CompleteInfo extends StatefulWidget {
-
   final String phone;
   CompleteInfo(this.phone);
-  
+
   @override
   _CompleteInfoState createState() => _CompleteInfoState();
 }
 
-class _CompleteInfoState extends State<CompleteInfo>{
+class _CompleteInfoState extends State<CompleteInfo> {
   final GlobalKey<FormBuilderState> formKey = GlobalKey<FormBuilderState>();
   AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
   String lastChoiceChipSelection = '';
@@ -21,7 +19,6 @@ class _CompleteInfoState extends State<CompleteInfo>{
   TextEditingController _usernameController = TextEditingController();
   TextEditingController _phoneController;
 
-  
   @override
   void initState() {
     _address = 'Phnom Penh';
@@ -42,8 +39,8 @@ class _CompleteInfoState extends State<CompleteInfo>{
   //Image Profile
   File image;
 
-  //Gender 
-  
+  //Gender
+
   List<String> lst = ['Male', 'Female'];
   String selectedIndex;
   String _gender;
@@ -55,12 +52,12 @@ class _CompleteInfoState extends State<CompleteInfo>{
 
   //DOB Picker
   DateTime selectedDate = DateTime.now();
-  
+
   String _birthdate;
 
   final dateFormart = new DateFormat('dd-MMM-yyyy');
-  
-  Future <void> _selectDate(BuildContext context) async {
+
+  Future<void> _selectDate(BuildContext context) async {
     final DateTime picked = await showDatePicker(
       context: context,
       initialDate: selectedDate,
@@ -70,9 +67,7 @@ class _CompleteInfoState extends State<CompleteInfo>{
         return Theme(
           data: ThemeData.light().copyWith(
             colorScheme: ColorScheme.light(primary: primaryColor),
-            buttonTheme: ButtonThemeData(
-              textTheme: ButtonTextTheme.primary
-            ),
+            buttonTheme: ButtonThemeData(textTheme: ButtonTextTheme.primary),
           ),
           child: child,
         );
@@ -84,22 +79,21 @@ class _CompleteInfoState extends State<CompleteInfo>{
         _birthdate = dateFormart.format(selectedDate);
       });
   }
-  
-  void _submitValidate(BuildContext context){
+
+  void _submitValidate(BuildContext context) {
     final form = formKey.currentState;
 
-    if(form.validate()){
+    if (form.validate()) {
       form.save();
       _submit();
-    }
-    else{
+    } else {
       setState(() {
         autovalidateMode = AutovalidateMode.always;
       });
     }
   }
-  
-  Future <void> _submit() async {
+
+  Future<void> _submit() async {
     var _lang = AppLocalizeService.of(context);
 
     // _submit(context);
@@ -109,39 +103,39 @@ class _CompleteInfoState extends State<CompleteInfo>{
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
         print('Internet connected');
         var response = await PostRequest().completeInfoUser(
-          _usernameController.text,
-          widget.phone,
-          _gender,
-          _birthdate,
-          _address);
-        
+            _usernameController.text,
+            widget.phone,
+            _gender,
+            _birthdate,
+            _address);
+
         if (response.statusCode == 200) {
           Future.delayed(Duration(seconds: 2), () {
-            Timer(Duration(milliseconds: 500), () => Navigator.pushAndRemoveUntil(
-              context,
-              PageTransition(type: PageTransitionType.rightToLeft, 
-                child: LoginPhone(),
-              ),
-              ModalRoute.withName('/loginPhone'),
-            ));
+            Timer(
+                Duration(milliseconds: 500),
+                () => Navigator.pushAndRemoveUntil(
+                      context,
+                      PageTransition(
+                        type: PageTransitionType.rightToLeft,
+                        child: LoginPhone(),
+                      ),
+                      ModalRoute.withName('/loginPhone'),
+                    ));
           });
-        } 
-        else {
+        } else {
           print('register not Successful');
           await Components.dialog(
-            context,
-            textAlignCenter(text: _lang.translate('register_error')),
-            warningTitleDialog()
-          );
+              context,
+              textAlignCenter(text: _lang.translate('register_error')),
+              warningTitleDialog());
           Navigator.of(context).pop();
         }
       }
     } on SocketException catch (_) {
       await Components.dialog(
-        context,
-        textAlignCenter(text: _lang.translate('no_internet_message')),
-        warningTitleDialog()
-      );
+          context,
+          textAlignCenter(text: _lang.translate('no_internet_message')),
+          warningTitleDialog());
       Navigator.of(context).pop();
     }
   }
@@ -152,7 +146,8 @@ class _CompleteInfoState extends State<CompleteInfo>{
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Text(_lang.translate('complete_profile_appbar'), style: TextStyle(color: Colors.black, fontFamily: 'Medium')),
+        title: Text(_lang.translate('complete_profile_appbar'),
+            style: TextStyle(color: Colors.black, fontFamily: 'Medium')),
         automaticallyImplyLeading: false,
         actions: <Widget>[
           Padding(
@@ -163,7 +158,7 @@ class _CompleteInfoState extends State<CompleteInfo>{
                   Icons.check,
                   color: Colors.blueAccent,
                 ),
-                onPressed: () async {        
+                onPressed: () async {
                   _submitValidate(context);
                 },
               ),
@@ -193,79 +188,78 @@ class _CompleteInfoState extends State<CompleteInfo>{
                     SizedBox(height: 10.0),
                     TextFormField(
                       controller: _usernameController,
-                      validator: (val) => val.length < 3 ? _lang.translate('fullname_validate') : null,
+                      validator: (val) => val.length < 3
+                          ? _lang.translate('fullname_validate')
+                          : null,
                       onSaved: (val) => _usernameController.text = val,
                       autovalidateMode: AutovalidateMode.always,
                       decoration: InputDecoration(
-                        prefixIcon: Icon(LineIcons.user, color: primaryColor),
-                        hintText: _lang.translate('fullname'),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12.0),
-                          borderSide: BorderSide(
-                            color: primaryColor,
+                          prefixIcon: Icon(LineIcons.user, color: primaryColor),
+                          hintText: _lang.translate('fullname'),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12.0),
+                            borderSide: BorderSide(
+                              color: primaryColor,
+                            ),
                           ),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12.0),
-                          borderSide: BorderSide(
-                            color: primaryColor,
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12.0),
+                            borderSide: BorderSide(
+                              color: primaryColor,
+                            ),
                           ),
-                        ),
-                        errorBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12.0),
-                          borderSide: BorderSide(
-                            color: Colors.red
+                          errorBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12.0),
+                            borderSide: BorderSide(color: Colors.red),
                           ),
-                        ),
-                        focusedErrorBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12.0),
-                          borderSide: BorderSide(
-                            color: Colors.red
-                          ),
-                        )
-                      ),
+                          focusedErrorBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12.0),
+                            borderSide: BorderSide(color: Colors.red),
+                          )),
                     ),
                     SizedBox(height: 16.0),
-                    Text(_lang.translate('phone_number_tf'),),
+                    Text(
+                      _lang.translate('phone_number_tf'),
+                    ),
                     SizedBox(height: 10.0),
                     TextFormField(
                       controller: _phoneController ?? widget.phone,
                       readOnly: true,
                       decoration: InputDecoration(
-                        hintText: _lang.translate('phone_number_tf'),
-                        prefixIcon: Icon(Icons.phone, color: primaryColor),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12.0),
-                          borderSide: BorderSide(
-                            color: primaryColor,
+                          hintText: _lang.translate('phone_number_tf'),
+                          prefixIcon: Icon(Icons.phone, color: primaryColor),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12.0),
+                            borderSide: BorderSide(
+                              color: primaryColor,
+                            ),
                           ),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12.0),
-                          borderSide: BorderSide(
-                            color: primaryColor,
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12.0),
+                            borderSide: BorderSide(
+                              color: primaryColor,
+                            ),
                           ),
-                        ),
-                        errorBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12.0),
-                          borderSide: BorderSide(
-                            color: Colors.red
+                          errorBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12.0),
+                            borderSide: BorderSide(color: Colors.red),
                           ),
-                        ),
-                        focusedErrorBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12.0),
-                          borderSide: BorderSide(
-                            color: Colors.red
-                          ),
-                        )
-                      ),
+                          focusedErrorBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12.0),
+                            borderSide: BorderSide(color: Colors.red),
+                          )),
                     ),
                     SizedBox(height: 16.0),
-                    Text(_lang.translate('dateofbirth'),),
+                    Text(
+                      _lang.translate('dateofbirth'),
+                    ),
                     SizedBox(height: 10.0),
-                    dateOfbirth(selectedDate, _selectDate, dateFormart, context),
+                    dateOfbirth(
+                        selectedDate, _selectDate, dateFormart, context),
                     SizedBox(height: 16.0),
-                    Text(_lang.translate('locaton'),),
+                    Text(
+                      _lang.translate('locaton'),
+                    ),
                     SizedBox(height: 10.0),
                     locationPicker(context),
                     SizedBox(height: 10.0),
@@ -273,24 +267,28 @@ class _CompleteInfoState extends State<CompleteInfo>{
                       onSaved: (newValue) => _gender = newValue,
                       validator: FormBuilderValidators.required(context),
                       decoration: InputDecoration(
-                        border: InputBorder.none,
-                        labelText: _lang.translate('gender'),
-                        labelStyle: TextStyle(color: Colors.black, fontSize: 20)
-                      ),
+                          border: InputBorder.none,
+                          labelText: _lang.translate('gender'),
+                          labelStyle:
+                              TextStyle(color: Colors.black, fontSize: 20)),
                       labelStyle: TextStyle(
-                        color: Colors.black,
-                        fontSize: 18,
-                        fontFamily: "Medium"
-                      ),
+                          color: Colors.black,
+                          fontSize: 18,
+                          fontFamily: "Medium"),
                       selectedColor: primaryColor,
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12.0)),
                       elevation: 2,
                       alignment: WrapAlignment.spaceBetween,
                       labelPadding: EdgeInsets.only(left: 35, right: 35),
                       // attribute: "gender",
                       options: [
-                        FormBuilderFieldOption(value: 'Male', child: Text(_lang.translate('male'))),
-                        FormBuilderFieldOption(value: 'Female', child: Text(_lang.translate('female')))
+                        FormBuilderFieldOption(
+                            value: 'Male',
+                            child: Text(_lang.translate('male'))),
+                        FormBuilderFieldOption(
+                            value: 'Female',
+                            child: Text(_lang.translate('female')))
                       ],
                       onChanged: (value) {
                         if (value == null) {
@@ -303,7 +301,8 @@ class _CompleteInfoState extends State<CompleteInfo>{
                             lastChoiceChipSelection = value;
                           });
                         }
-                      }, name: 'gender',
+                      },
+                      name: 'gender',
                     ),
                   ],
                 ),
@@ -324,17 +323,17 @@ class _CompleteInfoState extends State<CompleteInfo>{
         items: locationModel.khLocation,
         selectedItem: locationModel.selectedKhLocation,
         onChanged: (value) =>
-          setState(() => locationModel.selectedKhLocation = value),
+            setState(() => locationModel.selectedKhLocation = value),
         onCancelled: () => print("Scroll Picker cancelled"),
         onConfirmed: () => _address = locationModel.selectedKhLocation,
       ),
     );
   }
 
-  Widget dateOfbirth(DateTime selectedDate, _selectDate, dateFormart, context){
+  Widget dateOfbirth(DateTime selectedDate, _selectDate, dateFormart, context) {
     return DateDropdown(
       valueText: _birthdate ?? "Pick your DOB",
-      onPressed: (){
+      onPressed: () {
         _selectDate(context);
       },
     );

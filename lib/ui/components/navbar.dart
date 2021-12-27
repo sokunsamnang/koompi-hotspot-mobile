@@ -1,7 +1,6 @@
 import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 import 'package:koompi_hotspot/all_export.dart';
-import 'package:koompi_hotspot/ui/screen/web_view/captive_portal_web.dart';
 import 'package:koompi_hotspot/ui/screen/wifi/wifi.dart';
 import 'package:koompi_hotspot/ui/utils/data_connectiviy_service.dart';
 import 'package:koompi_hotspot/ui/utils/auto_login_hotspot_constants.dart'

@@ -1,9 +1,5 @@
 import 'package:http/http.dart' as http;
 import 'package:koompi_hotspot/all_export.dart';
-import 'package:koompi_hotspot/ui/reuse_widget/reuse_widget.dart';
-
-
-
 
 class PinCodeVerificationScreen extends StatefulWidget {
   final String phone, password;
@@ -22,7 +18,7 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
   // ..text = "123456";
 
   StreamController<ErrorAnimationType> errorController;
-  
+
   bool isLoading = false;
   bool hasError = false;
   String currentText = "";
@@ -56,60 +52,54 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
         isLoading = true;
       });
       var response = await http.post(Uri.parse(apiUrl),
-        headers: <String, String>{
-          "accept": "application/json",
-          "Content-Type": "application/json"
-        },
-        body: jsonEncode(<String, String>{
-          "phone": widget.phone,
-          "vCode": vCode,
-        }));
+          headers: <String, String>{
+            "accept": "application/json",
+            "Content-Type": "application/json"
+          },
+          body: jsonEncode(<String, String>{
+            "phone": widget.phone,
+            "vCode": vCode,
+          }));
 
       var responseJson = json.decode(response.body);
 
-        if (response.statusCode == 200 && response.body != "Incorrect Code!") {
-          print(response.body);
-          await Navigator.pushReplacement(
-            context, 
-            PageTransition(type: PageTransitionType.rightToLeft, 
-              child: CompleteInfo(widget.phone),
-            ),
-          );
-        } else {
-          await Components.dialog(
+      if (response.statusCode == 200 && response.body != "Incorrect Code!") {
+        print(response.body);
+        await Navigator.pushReplacement(
+          context,
+          PageTransition(
+            type: PageTransitionType.rightToLeft,
+            child: CompleteInfo(widget.phone),
+          ),
+        );
+      } else {
+        await Components.dialog(
             context,
             textAlignCenter(text: responseJson['message']),
-            warningTitleDialog()
-          );
-          Navigator.of(context).pop();
-          print(response.body);
+            warningTitleDialog());
+        Navigator.of(context).pop();
+        print(response.body);
       }
-    } 
-    on SocketException catch(_){
+    } on SocketException catch (_) {
       print('No network socket exception');
       await Components.dialog(
-        context,
-        textAlignCenter(text: _lang.translate('no_internet_message')),
-        warningTitleDialog()
-      );
+          context,
+          textAlignCenter(text: _lang.translate('no_internet_message')),
+          warningTitleDialog());
       Navigator.of(context).pop();
-    }
-    on TimeoutException catch(_) {
+    } on TimeoutException catch (_) {
       print('Time out exception');
       await Components.dialog(
-        context,
-        textAlignCenter(text: _lang.translate('request_timeout')),
-        warningTitleDialog()
-      );
+          context,
+          textAlignCenter(text: _lang.translate('request_timeout')),
+          warningTitleDialog());
       Navigator.of(context).pop();
-    }
-    on FormatException catch(_){
+    } on FormatException catch (_) {
       print('FormatException');
       await Components.dialog(
-        context,
-        textAlignCenter(text: _lang.translate('server_error')),
-        warningTitleDialog()
-      );
+          context,
+          textAlignCenter(text: _lang.translate('server_error')),
+          warningTitleDialog());
       Navigator.of(context).pop();
     }
   }
@@ -174,7 +164,10 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: Text(
                   _lang.translate('phone_number_verification'),
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22, color: primaryColor),
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 22,
+                      color: primaryColor),
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -229,7 +222,7 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
                             hasError ? Colors.orange : Colors.white,
                       ),
                       keyboardType: TextInputType.number,
-                      inputFormatters: <TextInputFormatter> [
+                      inputFormatters: <TextInputFormatter>[
                         FilteringTextInputFormatter.digitsOnly
                       ],
                       animationDuration: Duration(milliseconds: 300),
@@ -239,7 +232,7 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
                       controller: textEditingController,
                       onCompleted: (v) {
                         _submitOtp(currentText);
-                        print("Completed");              
+                        print("Completed");
                       },
                       onChanged: (value) {
                         print(value);
@@ -258,7 +251,10 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30.0),
                 child: Text(
-                  hasError ? _lang.translate('please_fill_up_all_the_cells_properly_validate') : "",
+                  hasError
+                      ? _lang.translate(
+                          'please_fill_up_all_the_cells_properly_validate')
+                      : "",
                   style: TextStyle(
                       color: Colors.red,
                       fontSize: 12,
@@ -313,9 +309,9 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
                       }
                     },
                     child: Center(
-                      child: Text(
-                        _lang.translate('verify_bt'),
-                        style: TextStyle(
+                        child: Text(
+                      _lang.translate('verify_bt'),
+                      style: TextStyle(
                           color: Colors.white,
                           fontSize: 18,
                           fontWeight: FontWeight.bold),

@@ -1,6 +1,3 @@
-import 'dart:io';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_launcher_icons/custom_exceptions.dart';
 import 'package:koompi_hotspot/all_export.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -8,9 +5,9 @@ import 'package:package_info/package_info.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 
 const APP_STORE_URL =
-'https://phobos.apple.com/WebObjects/MZStore.woa/wa/viewSoftwareUpdate?id=YOUR-APP-ID&mt=8';
+    'https://phobos.apple.com/WebObjects/MZStore.woa/wa/viewSoftwareUpdate?id=YOUR-APP-ID&mt=8';
 const PLAY_STORE_URL =
-'https://play.google.com/store/apps/details?id=com.koompi.hotspot';
+    'https://play.google.com/store/apps/details?id=com.koompi.hotspot';
 
 versionCheck(context) async {
   //Get Current installed version of app
@@ -19,7 +16,7 @@ versionCheck(context) async {
 
   //Get Latest version info from firebase config
   final RemoteConfig remoteConfig = RemoteConfig.instance;
-  
+
   var _lang = AppLocalizeService.of(context);
 
   try {
@@ -36,8 +33,13 @@ versionCheck(context) async {
       await Components.dialogUpdateApp(
         context,
         Text(_lang.translate('msg_update'), textAlign: TextAlign.center),
-        Text(_lang.translate('title_update'), style: TextStyle(fontFamily: 'Poppins-Bold'),),
-        callbackAction: Platform.isIOS ? _launchURL(APP_STORE_URL) : _launchURL(PLAY_STORE_URL),
+        Text(
+          _lang.translate('title_update'),
+          style: TextStyle(fontFamily: 'Poppins-Bold'),
+        ),
+        callbackAction: Platform.isIOS
+            ? _launchURL(APP_STORE_URL)
+            : _launchURL(PLAY_STORE_URL),
       );
     }
   } on NoConfigFoundException catch (exception) {
@@ -80,7 +82,7 @@ versionCheck(context) async {
 //                   onPressed: () => _launchURL(PLAY_STORE_URL),
 //                 ),
 //               ],
-//             ), 
+//             ),
 //         onWillPop: () async => false,
 //       );
 //     },

@@ -1,9 +1,7 @@
-import 'package:groovin_widgets/groovin_widgets.dart';
 import 'package:koompi_hotspot/all_export.dart';
 import 'package:koompi_hotspot/core/models/model_notification.dart';
 import 'package:koompi_hotspot/core/models/vote_result.dart';
 import 'package:koompi_hotspot/ui/screen/notification/announcements/announcements_detail.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
 Widget announcementsList(BuildContext context) {

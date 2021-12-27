@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:koompi_hotspot/all_export.dart';
-import 'package:koompi_hotspot/ui/utils/auto_login_hotspot_constants.dart' as global;
+import 'package:koompi_hotspot/ui/utils/auto_login_hotspot_constants.dart'
+    as global;
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
 String selectedUrl = 'http://connectivitycheck.android.com/generate_204';
@@ -10,30 +10,29 @@ class CaptivePortalWeb extends StatefulWidget {
   @override
   _CaptivePortalWebState createState() => _CaptivePortalWebState();
 }
+
 class _CaptivePortalWebState extends State<CaptivePortalWeb> {
-  
   final GlobalKey webViewKey = GlobalKey();
 
   InAppWebViewController webViewController;
   InAppWebViewGroupOptions options = InAppWebViewGroupOptions(
-    crossPlatform: InAppWebViewOptions(
-      useShouldOverrideUrlLoading: true,
-      mediaPlaybackRequiresUserGesture: false,
-    ),
-    android: AndroidInAppWebViewOptions(
-      useHybridComposition: true,
-    ),
-    ios: IOSInAppWebViewOptions(
-      allowsInlineMediaPlayback: true,
-    )
-  );
+      crossPlatform: InAppWebViewOptions(
+        useShouldOverrideUrlLoading: true,
+        mediaPlaybackRequiresUserGesture: false,
+      ),
+      android: AndroidInAppWebViewOptions(
+        useHybridComposition: true,
+      ),
+      ios: IOSInAppWebViewOptions(
+        allowsInlineMediaPlayback: true,
+      ));
 
   PullToRefreshController pullToRefreshController;
   String url = "";
   final urlController = TextEditingController();
 
   @override
-  void initState() { 
+  void initState() {
     super.initState();
   }
 
@@ -41,14 +40,15 @@ class _CaptivePortalWebState extends State<CaptivePortalWeb> {
   void dispose() {
     super.dispose();
   }
-  
+
   @override
   Widget build(BuildContext context) {
     var _lang = AppLocalizeService.of(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Text(_lang.translate('login_hotspot'), style: TextStyle(color: Colors.black, fontFamily: 'Medium')),
+        title: Text(_lang.translate('login_hotspot'),
+            style: TextStyle(color: Colors.black, fontFamily: 'Medium')),
         leading: Builder(builder: (BuildContext context) {
           return IconButton(
               icon: Icon(
@@ -61,13 +61,12 @@ class _CaptivePortalWebState extends State<CaptivePortalWeb> {
         }),
       ),
       body: WillPopScope(
-        onWillPop: () async{
+        onWillPop: () async {
           return Navigator.canPop(context);
         },
         child: InAppWebView(
           key: webViewKey,
-          initialUrlRequest:
-          URLRequest(url: Uri.parse(selectedUrl)),
+          initialUrlRequest: URLRequest(url: Uri.parse(selectedUrl)),
           initialOptions: options,
           pullToRefreshController: pullToRefreshController,
           onWebViewCreated: (controller) {
@@ -84,9 +83,9 @@ class _CaptivePortalWebState extends State<CaptivePortalWeb> {
                 resources: resources,
                 action: PermissionRequestResponseAction.GRANT);
           },
-           onReceivedServerTrustAuthRequest: (controller, challenge) async {
+          onReceivedServerTrustAuthRequest: (controller, challenge) async {
             return new ServerTrustAuthResponse(
-              action: ServerTrustAuthResponseAction.PROCEED);
+                action: ServerTrustAuthResponseAction.PROCEED);
           },
           onLoadResource: (controller, url) async {
             SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -95,31 +94,27 @@ class _CaptivePortalWebState extends State<CaptivePortalWeb> {
               global.phone = prefs.getString('phone');
               global.password = prefs.getString('password');
 
-              controller.evaluateJavascript(source: 
-              '''
+              controller.evaluateJavascript(source: '''
                 document.getElementById("user").value="${global.phone}";
                 document.getElementById("password").value="${global.password}";
                 document.getElementById("btnlogin").click();
-              '''
-              );
+              ''');
             });
           },
           onLoadStop: (controller, url) async {
             SharedPreferences prefs = await SharedPreferences.getInstance();
-            
+
             setState(() {
               global.phone = prefs.getString('phone');
               global.password = prefs.getString('password');
-              
+
               this.url = url.toString();
               urlController.text = this.url;
-              controller.evaluateJavascript(source: 
-              '''
+              controller.evaluateJavascript(source: '''
                 document.getElementById("user").value="${global.phone}";
                 document.getElementById("password").value="${global.password}";
                 document.getElementById("btnlogin").click();
-              '''
-              );
+              ''');
             });
           },
           onConsoleMessage: (controller, consoleMessage) {

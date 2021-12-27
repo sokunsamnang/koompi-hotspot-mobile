@@ -1,10 +1,7 @@
-import 'package:flutter/material.dart';
 import 'package:intro_slider/dot_animation_enum.dart';
 import 'package:intro_slider/intro_slider.dart';
 import 'package:intro_slider/slide_object.dart';
 import 'package:koompi_hotspot/all_export.dart';
-import 'package:koompi_hotspot/ui/screen/login/login_phone.dart';
-import 'package:koompi_hotspot/ui/screen/onboarding/styles.dart';
 
 class IntroScreen extends StatefulWidget {
   IntroScreen({Key key}) : super(key: key);

@@ -241,7 +241,7 @@ class MyLocationViewState extends State<MyLocationView>
 
     ///Float Action Button Background Color
     Color backgroundColor = Theme.of(context).cardColor;
-    Color foregroundColor = Theme.of(context).accentColor;
+    Color foregroundColor = Theme.of(context).colorScheme.secondary;
 
     /// Show Snack Bar Messages
     _showSnackBar(String message) {
