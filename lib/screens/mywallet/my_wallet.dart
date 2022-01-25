@@ -78,130 +78,146 @@ class _MyWalletState extends State<MyWallet> {
             await Provider.of<TrxHistoryProvider>(context, listen: false)
                 .fetchTrxHistory();
           },
-          child: SingleChildScrollView(
-            physics: BouncingScrollPhysics(),
-            child: Container(
-              height: MediaQuery.of(context).size.height,
-              child: Column(
-                children: <Widget>[
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      right: 10,
-                      left: 10,
+          child: CustomScrollView(
+            slivers: [
+              SliverFillRemaining(
+                hasScrollBody: false,
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  children: <Widget>[
+                    SizedBox(
+                      height: 20,
                     ),
-                    child: getTotalBalance(context),
-                  ),
-                  SizedBox(
-                    height: 6,
-                  ),
-                  Container(
-                    height: 85.0,
-                    margin:
-                        EdgeInsets.symmetric(horizontal: 10.0, vertical: 15.0),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: <Widget>[
-                        Expanded(
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              onPrimary: Colors.black87,
-                              primary: HexColor('94FAD5'),
-                              elevation: 5,
-                              shape: const RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(12)),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        right: 10,
+                        left: 10,
+                      ),
+                      child: getTotalBalance(context),
+                    ),
+                    SizedBox(
+                      height: 6,
+                    ),
+                    Container(
+                      height: 85.0,
+                      margin:
+                          EdgeInsets.symmetric(horizontal: 10.0, vertical: 15.0),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: <Widget>[
+                          Expanded(
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                onPrimary: Colors.black87,
+                                primary: HexColor('94FAD5'),
+                                elevation: 5,
+                                shape: const RoundedRectangleBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(12)),
+                                ),
+                              ),
+                              onPressed: () {
+                                _sendWalletBottomSheet(context, widget.walletKey);
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.all(5.0),
+                                child: Column(
+                                  children: <Widget>[
+                                    Image.asset('assets/images/send.png',
+                                        scale: 2),
+                                    Text(
+                                      _lang.translate('send_money'),
+                                      style:
+                                          TextStyle(fontWeight: FontWeight.w700),
+                                    )
+                                  ],
+                                ),
                               ),
                             ),
-                            onPressed: () {
-                              _sendWalletBottomSheet(context, widget.walletKey);
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.all(5.0),
-                              child: Column(
-                                children: <Widget>[
-                                  Image.asset('assets/images/send.png',
-                                      scale: 2),
-                                  Text(
-                                    _lang.translate('send_money'),
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.w700),
-                                  )
-                                ],
+                          ),
+                          SizedBox(width: 20),
+                          Expanded(
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                onPrimary: Colors.black87,
+                                primary: HexColor('7CDBFA'),
+                                elevation: 5,
+                                shape: const RoundedRectangleBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(12)),
+                                ),
                               ),
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    PageTransition(
+                                        type: PageTransitionType.rightToLeft,
+                                        child: ReceiveRequest()));
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.all(5.0),
+                                child: Column(
+                                  children: <Widget>[
+                                    Image.asset('assets/images/receive.png',
+                                        scale: 2),
+                                    Text(
+                                      _lang.translate('receive_money'),
+                                      style:
+                                          TextStyle(fontWeight: FontWeight.w700),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    Divider(
+                      thickness: 0.5,
+                      color: Colors.black,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            right: 10,
+                            left: 10,
+                          ),
+                          child: Text(
+                            _lang.translate('transaction_history'),
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 17,
+                              // color: AllCoustomTheme.getsecoundTextThemeColor(),
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
                         ),
-                        SizedBox(width: 20),
-                        Expanded(
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              onPrimary: Colors.black87,
-                              primary: HexColor('7CDBFA'),
-                              elevation: 5,
-                              shape: const RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(12)),
-                              ),
-                            ),
-                            onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  PageTransition(
-                                      type: PageTransitionType.rightToLeft,
-                                      child: ReceiveRequest()));
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.all(5.0),
-                              child: Column(
-                                children: <Widget>[
-                                  Image.asset('assets/images/receive.png',
-                                      scale: 2),
-                                  Text(
-                                    _lang.translate('receive_money'),
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.w700),
-                                  )
-                                ],
-                              ),
-                            ),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                PageTransition(
+                                  type: PageTransitionType.rightToLeft,
+                                  child: TrxHistory(),
+                                ));
+                          },
+                          child: Text(
+                            'View All',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: primaryColor),
                           ),
-                        )
+                        ),
                       ],
                     ),
-                  ),
-                  Divider(
-                    thickness: 0.5,
-                    color: Colors.black,
-                  ),
-                  Row(
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.only(
-                          right: 10,
-                          left: 10,
-                        ),
-                        child: Text(
-                          _lang.translate('transaction_history'),
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 17,
-                            // color: AllCoustomTheme.getsecoundTextThemeColor(),
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Expanded(child: trxHistory(context)),
-                ],
-              ),
-            ),
+                    Expanded(child: shortTrxHistory(context)),
+                  ],
+                ),
+              )
+            ]
           ),
         ),
       ),

@@ -82,7 +82,7 @@ dependencies:
   syncfusion_flutter_gauges: ^19.1.69
   url_launcher: ^6.0.6
   wifi_connector: ^1.0.2
-  wifi_iot: ^0.3.4
+  wifi_iot: ^0.3.14
 
 flutter_icons:
   image_path: "assets/images/Koompi-WiFi-Icon.png"

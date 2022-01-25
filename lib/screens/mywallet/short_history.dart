@@ -1,16 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:koompi_hotspot/all_export.dart';
 
-class TrxHistory extends StatefulWidget {
-  const TrxHistory({ Key key }) : super(key: key);
-
-  @override
-  _TrxHistoryState createState() => _TrxHistoryState();
-}
-
-class _TrxHistoryState extends State<TrxHistory> {
-
-Widget trxHistory(BuildContext context) {
+Widget shortTrxHistory(BuildContext context) {
   DateTime now = DateTime.now();
   String prevDay;
   String today = DateFormat("EEEE, d MMMM, y").format(now.toLocal());
@@ -238,7 +229,7 @@ Widget trxHistory(BuildContext context) {
             // Display History List
             : SafeArea(
                 child: CustomScrollView(
-                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
                   slivers: [
                     SliverList(
                       delegate: SliverChildListDelegate(
@@ -251,30 +242,3 @@ Widget trxHistory(BuildContext context) {
               ),
   );
 }
-
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        iconTheme: IconThemeData(
-          color: Colors.black,
-        ),
-        automaticallyImplyLeading: true,
-        title: Text(
-          'Transaction History',
-          style: TextStyle(color: Colors.black, fontFamily: 'Medium'),
-        ),
-      ),
-      body: RefreshIndicator(
-        onRefresh: () async {
-          await Provider.of<TrxHistoryProvider>(context, listen: false)
-                .fetchTrxHistory();
-        },
-        child: trxHistory(context)
-        )
-      );
-  }
-}
-

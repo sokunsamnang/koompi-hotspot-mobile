@@ -142,7 +142,7 @@ export 'package:koompi_hotspot/screens/option_page/more_page.dart';
 export 'package:koompi_hotspot/screens/home/home_page_body.dart';
 
 // Map Page
-export 'package:koompi_hotspot/screens/map/MyLocationView.dart';
+export 'package:koompi_hotspot/screens/map/location_view.dart';
 
 // Speed Test Page
 export 'package:koompi_hotspot/screens/speedtest/speedtest.dart';
@@ -181,6 +181,7 @@ export 'package:koompi_hotspot/screens/mywallet/my_wallet.dart';
 export 'package:koompi_hotspot/screens/mywallet/wallet_screen_body.dart';
 export 'package:koompi_hotspot/screens/mywallet/wallet_screen.dart';
 export 'package:koompi_hotspot/screens/mywallet/transaction_detail.dart';
+export 'package:koompi_hotspot/screens/mywallet/short_history.dart';
 
 // Account Page
 export 'package:koompi_hotspot/screens/option_page/myaccount.dart';
