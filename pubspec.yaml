@@ -43,7 +43,9 @@ dependencies:
   flutter_screenutil: ^0.4.2
   flutter_slider_drawer: ^2.0.0
   flutter_svg: ^0.22.0
-  flutter_webview_plugin: ^0.4.0
+  # flutter_webview_plugin: ^0.4.0
+  flutter_webview_plugin:
+    git: https://github.com/nuc134r/flutter_webview_plugin.git
   fluttertoast: ^8.0.7
   font_awesome_flutter: ^9.1.0
   geolocator: ^7.3.1
@@ -82,7 +84,7 @@ dependencies:
   syncfusion_flutter_gauges: ^19.1.69
   url_launcher: ^6.0.6
   wifi_connector: ^1.0.2
-  wifi_iot: ^0.3.14
+  wifi_iot: ^0.3.15
 
 flutter_icons:
   image_path: "assets/images/Koompi-WiFi-Icon.png"
