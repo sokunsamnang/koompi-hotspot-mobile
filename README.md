@@ -1,6 +1,6 @@
 # KOOMPI Fi-Fi
 
-
+# Moved to https://github.com/sokunsamnang/koompi-fifi-mobile
 
 ### Welcome To KOOMPI Fi-Fi 
 
